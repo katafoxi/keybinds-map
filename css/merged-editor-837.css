@@ -1,0 +1,1301 @@
+.clear {
+    clear: both
+}
+
+.gamePlace input[type=text] {
+    height: 15px;
+    margin: 0
+}
+
+.gamePlace input[type=button],
+.gamePlace input[type=submit] {
+    height: 24px;
+    padding: 3px;
+    margin: 0
+}
+
+.leftColumn {
+    float: left;
+    width: 375px
+}
+
+.rightColumn {
+    float: left;
+    width: 290px;
+    margin: 19px 0 0 2px;
+    padding-left: 2px
+}
+
+#status {
+    height: 15px;
+    margin-left: 28px;
+    margin-bottom: 5px;
+    font-size: 14px
+}
+
+.fformCont {
+    position: relative;
+    z-index: 1000
+}
+
+#fform {
+    position: absolute;
+    left: 57px;
+    top: 121px;
+    display: none;
+    z-index: 1000;
+    width: 350px
+}
+
+#game_board_place {
+    width: 370px;
+    height: 375px;
+    padding: 0 0 0 5px
+}
+
+ul.gameMenu {
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0;
+    font-size: 12px
+}
+
+ul.gameMenu a {
+    border: none
+}
+
+ul.gameMenu li {
+    float: left;
+    margin: 0 12px 0 5px
+}
+
+li.optionsMenu {
+    position: relative
+}
+
+li.optionsMenu ul {
+    top: 15px;
+    left: 0;
+    padding: 5px;
+    width: 275px;
+    position: absolute;
+    display: none;
+    border: solid 1px #bbb;
+    background-color: #f4eee4;
+    z-index: 100000
+}
+
+li.optionsMenu ul li {
+    text-align: left;
+    float: none;
+    display: block;
+    margin: 2px 0
+}
+
+.message {
+    height: 40px;
+    margin-top: 5px;
+    background-color: #eef9eb;
+    border: 1px solid #eee
+}
+
+.message table {
+    width: 100%;
+    height: 100%
+}
+
+#msg {
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle
+}
+
+.msg_closer_place {
+    width: 15px;
+    vertical-align: middle;
+    text-align: center
+}
+
+a#msg_closer {
+    border: none!important;
+    display: none;
+    font-size: 16px;
+    font-family: courier
+}
+
+#chat_place {
+    width: 370px;
+    height: 87px;
+    border: solid 1px #eee;
+    margin-top: 4px;
+    background-color: #f4eee4
+}
+
+#chat_place .loader {
+    margin: 3px 1px;
+    display: none
+}
+
+#chat_place iframe {
+    width: 100%;
+    height: 85px
+}
+
+.chatMsgItem {
+    font-size: 11px;
+    padding: 3px;
+    margin-bottom: 2px;
+    width: 340px
+}
+
+.p1Msg {
+    background: #f3e2ca
+}
+
+#chatMsg {
+    width: 270px
+}
+
+.phead {
+    padding: 3px 0;
+    margin: 1px 1px 5px 1px;
+    background-color: #f4eee4
+}
+
+.wait {
+    padding: 10px;
+    font-style: italic
+}
+
+.pname {
+    font-size: 12px;
+    font-weight: 700;
+    margin: 2px 0 2px 5px;
+    color: indigo;
+    float: left;
+    line-height: 22px
+}
+
+.pname img {
+    float: left
+}
+
+.ptime {
+    float: right;
+    padding: 7px 0 0 0
+}
+
+.ptime input {
+    text-align: right;
+    padding-right: 3px;
+    width: 115px;
+    border: none;
+    background: none;
+    color: #7C7CAE;
+    height: 22px
+}
+
+.time_active {
+    font-weight: 700;
+    font-size: 16px;
+    color: black!important
+}
+
+.infoRow {
+    margin-bottom: 5px;
+    font-size: 12px;
+    padding: 0 5px
+}
+
+#cm_div {
+    margin: 4px 0 5px 0;
+    padding: 1px 3px 1px 2px;
+    background-color: #f4eee4;
+    font-size: 12px
+}
+
+.cm_field {
+    width: 25px;
+    color: #000;
+    border: none
+}
+
+#notation_kill {
+    width: 290px;
+    height: 180px;
+    font-size: 12px;
+    margin: 0 0 0 0
+}
+
+#notation_kill_notes {
+    height: 205px
+}
+
+#logBody {
+    margin: 2px 0 0 5px;
+    padding: 0
+}
+
+#log_place {
+    float: left;
+    width: 140px;
+    height: 175px;
+    background-color: #f4eee4;
+    margin-top: 4px
+}
+
+.notation-scroll {
+    overflow: auto
+}
+
+.log_num {
+    font-size: 12px;
+    width: 20px
+}
+
+.log_item {
+    font-size: 12px;
+    width: 40px
+}
+
+#notation {
+    padding: 5px 0 0 10px
+}
+
+#kills_place {
+    margin: 4px;
+    float: left;
+    width: 135px;
+    height: 175px;
+    background-color: #f4eee4
+}
+
+.kills_head {
+    padding: 15px 10px 7px 10px
+}
+
+.kills_fig {
+    height: 35px;
+    padding-left: 4px
+}
+
+.game_draw_block {
+    border: solid 1px #800;
+    background-color: #f4eee4;
+    margin: 5px;
+    padding: 5px
+}
+
+.game_info_block {
+    margin: 5px;
+    border: solid #ddd 1px;
+    background-color: #f4eee4;
+    padding: 5px
+}
+
+#restart {
+    margin: 5px;
+    padding: 5px;
+    display: none;
+    text-align: center;
+    font-size: 16px
+}
+
+#draw_status {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 5px
+}
+
+#info_place {
+    text-align: center;
+    font-size: 13px
+}
+
+#stat_ifr_id {
+    width: 100px;
+    height: 100px;
+    display: none
+}
+
+#control_id {
+    height: 60px;
+    display: none;
+    width: 100px;
+    height: 100px
+}
+
+#notes_block {
+    position: relative;
+    height: 174px;
+    padding: 5px;
+    font-size: 11px;
+    background-color: #f4eee4
+}
+
+#notes_block .loader {
+    position: absolute;
+    left: 130px;
+    top: 110px;
+    z-index: 1000;
+    display: none
+}
+
+#notes_msg {
+    position: absolute;
+    left: 2px;
+    top: 55px;
+    z-index: 1000;
+    display: none;
+    width: 265px;
+    text-align: right
+}
+
+.allow {
+    color: #080
+}
+
+.deny {
+    color: #800
+}
+
+.note_text {
+    margin: 5px 0
+}
+
+#notes {
+    width: 265px;
+    height: 68px;
+    margin: 0
+}
+
+#close_notes {
+    color: #800
+}
+
+#game_link_block {
+    position: absolute;
+    display: none;
+    z-index: 30
+}
+
+#game_link_block p {
+    font-size: 12px;
+    text-indent: 0!important
+}
+
+.loader {
+    background-image: url(../../i/loading_s.gif);
+    width: 16px;
+    height: 16px
+}
+
+#src {
+    display: none
+}
+
+.game_layout {
+    display: none
+}
+
+#connection_problems {
+    margin: 5px;
+    border: solid #800 1px;
+    background-color: #ededff;
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    display: none
+}
+
+#op_online_status div {
+    padding-bottom: 3px
+}
+
+.game_select_figure {
+    background: #FFF
+}
+
+.drawAsk {
+    width: 270px;
+    margin: 0 auto 5px auto
+}
+
+.drawAsk .game_draw_block {
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1)
+}
+
+.game_switch.active {
+    font-weight: 700
+}
+
+#game_comment_block {
+    padding: 5px
+}
+
+#introduce {
+    margin: 4px 0 4px 10px
+}
+
+#introduce form {
+    margin: 0;
+    padding: 0
+}
+
+#introduce input {
+    width: 100px;
+    height: 13px;
+    margin: 0
+}
+
+.battle-active-table {
+    font-size: 12px
+}
+
+.fig_text {
+    position: absolute;
+    z-index: 1;
+    font-size: 12px;
+    padding: 5px
+}
+
+.charnum {
+    font-weight: 700;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle
+}
+
+.top_chars {
+    height: 25px;
+    line-height: 25px
+}
+
+.bot_chars {
+    height: 25px
+}
+
+.left_num {
+    width: 25px
+}
+
+.right_num {
+    width: 25px
+}
+
+.marker {
+    position: absolute;
+    display: none;
+    margin: 0!important
+}
+
+#over_marker {
+    z-index: 2!important
+}
+
+#click_marker {
+    z-index: 3!important
+}
+
+.moveMarker {
+    z-index: 1!important
+}
+
+.fig-border {
+    border: 2px solid red;
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%
+}
+
+.last_move .fig-border {
+    display: block;
+    border-color: red
+}
+
+.board-my-cell-over .fig-border {
+    border-color: #0a0;
+    display: block
+}
+
+.board-cell-click .fig-border {
+    border-color: #0064cd;
+    display: block
+}
+
+.board-enemy-cell-over .fig-border {
+    border-color: #a00;
+    display: block
+}
+
+.fig {
+    position: relative;
+    z-index: 5
+}
+
+.fig_img {
+    z-index: 10!important
+}
+
+.fig_moving {
+    z-index: 20!important
+}
+
+.layout_small .chess-board {
+    width: 370px;
+    height: 370px
+}
+
+.layout_small .cell_td {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle
+}
+
+.layout_small .fig {
+    width: 40px;
+    height: 40px
+}
+
+.layout_small .fig_img {
+    width: 37px;
+    height: 37px
+}
+
+.layout_small .cell {
+    width: 40px;
+    height: 40px
+}
+
+.layout_small .gamePlace {
+    width: 670px;
+    padding: 10px 0
+}
+
+.layout_small .rightPanel {
+    height: 420px
+}
+
+.problem-container .boardContainer {
+    width: 760px;
+    margin: auto
+}
+
+.layout_medium {
+    width: 760px
+}
+
+.layout_medium .chess-board {
+    width: 450px;
+    height: 450px
+}
+
+.layout_medium .fig {
+    width: 50px!important;
+    height: 50px!important
+}
+
+.layout_medium .cell_td {
+    width: 50px;
+    height: 50px
+}
+
+.layout_medium .cell {
+    width: 50px!important;
+    height: 50px!important
+}
+
+.layout_medium .fig_img {
+    width: 48px;
+    height: 48px
+}
+
+.layout_medium .gamePlace {
+    width: 770px!important
+}
+
+.layout_medium #game_board_place {
+    width: 460px!important;
+    height: 460px!important
+}
+
+.layout_medium .leftColumn {
+    width: 460px
+}
+
+.layout_medium .message {
+    width: 445px
+}
+
+.layout_medium #chat_place {
+    width: 445px
+}
+
+.layout_medium .rightColumn {
+    height: 100%
+}
+
+.layout_medium .gameMenu {
+    margin-left: 40px
+}
+
+.layout_medium .rightPanel {
+    height: 510px
+}
+
+.layout_medium_2 {
+    width: 770px
+}
+
+.layout_medium_2 .chess-board {
+    width: 470px;
+    height: 470px
+}
+
+.layout_medium_2 .fig {
+    width: 56px!important;
+    height: 56px!important
+}
+
+.layout_medium_2 .cell_td {
+    width: 56px;
+    height: 56px
+}
+
+.layout_medium_2 .cell {
+    width: 56px!important;
+    height: 56px!important
+}
+
+.layout_medium .fig_img {
+    width: 53px;
+    height: 53px
+}
+
+.layout_medium_2 .gamePlace {
+    width: 770px!important
+}
+
+.layout_medium_2 #game_board_place {
+    width: 460px!important;
+    height: 460px!important
+}
+
+.layout_medium_2 .leftColumn {
+    width: 460px
+}
+
+.layout_medium_2 .rightColumn {
+    height: 100%
+}
+
+.layout_medium_2 .rightPanel {
+    height: 510px
+}
+
+.layout_big .chess-board {
+    width: 562px;
+    height: 562px
+}
+
+.layout_big#tpl_place {
+    width: 740px
+}
+
+.layout_big .gamePlace {
+    width: 675px!important
+}
+
+.layout_big .fig {
+    width: 64px!important;
+    height: 64px!important
+}
+
+.layout_big #game_board_place {
+    width: 560px!important;
+    height: 560px!important;
+    float: left
+}
+
+.layout_big .cell_td {
+    width: 64px;
+    height: 64px
+}
+
+.layout_big .cell {
+    width: 64px!important;
+    height: 64px!important
+}
+
+.layout_big #status {
+    float: left;
+    width: 215px;
+    margin: 10px 0!important
+}
+
+.layout_big #p_head {
+    float: right!important;
+    margin-right: 0px!important;
+    width: 270px!important
+}
+
+.layout_big #game_menu {
+    margin: 10px 0 10px 0px!important
+}
+
+.layout_big #game_info {
+    border: 1px solid #eee;
+    background-color: #f4eee4;
+    width: 370px!important;
+    margin-top: 4px;
+    padding-top: 4px
+}
+
+.layout_big .rightColumn {
+    height: auto!important;
+    margin-top: 5px!important;
+    border: 1px solid gray!important
+}
+
+.layout_big #fform {
+    top: 250px!important;
+    left: 160px!important;
+    width: 400px!important
+}
+
+.layout_big #cm_div {
+    float: left;
+    background-color: transparent!important
+}
+
+.layout_big .leftColumn {
+    margin: 0!important;
+    padding: 0!important
+}
+
+.layout_big .fig_img {
+    width: 61px;
+    height: 61px
+}
+
+.layout_big .rightPanel {
+    height: 615px
+}
+
+.layout_full .fig {
+    width: 80px!important;
+    height: 80px!important
+}
+
+.layout_full .chess-board {
+    width: 690px;
+    height: 690px
+}
+
+.layout_full .cell_td {
+    width: 80px;
+    height: 80px
+}
+
+.layout_full .cell {
+    width: 80px!important;
+    height: 80px!important
+}
+
+.layout_full #game_board_place {
+    width: 690px!important;
+    height: 690px!important;
+    float: left
+}
+
+.layout_full .fig_img {
+    width: 78px;
+    height: 78px
+}
+
+.layout_full .mainGamePart {
+    width: 905px
+}
+
+.fig_img img {
+    width: 100%;
+    height: 100%
+}
+
+.layout_small .end-popup {
+    left: 17px;
+    top: 15px
+}
+
+.layout_medium .end-popup {
+    left: 57px;
+    top: 40px
+}
+
+.layout_big .end-popup {
+    left: 113px;
+    top: 95px
+}
+
+.fig_with_bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover!important
+}
+
+.fig_shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .3;
+    z-index: 2
+}
+
+.bg-cell {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden
+}
+
+.hl_type_bg .my-from,
+.hl_type_bg .my-to {
+    background-color: rgba(0, 255, 0, .2)
+}
+
+.hl_type_bg .my-over {
+    background-color: rgba(0, 255, 0, .3)
+}
+
+.hl_type_bg .premove-from,
+.hl_type_bg .premove-to {
+    background-color: rgba(255, 255, 100, .3)
+}
+
+.hl_type_bg .op-from,
+.hl_type_bg .op-to {
+    background-color: rgba(255, 0, 0, .2)
+}
+
+.hl_type_bg .target {
+    background-color: rgba(255, 0, 0, .3)
+}
+
+.hl_type_marker .bg-cell div {
+    width: 20px;
+    height: 20px;
+    margin: -10px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0
+}
+
+.hl_type_marker .my-from div,
+.hl_type_marker .my-to div {
+    background-color: rgba(0, 100, 0, 1)
+}
+
+.hl_type_marker .op-from div,
+.hl_type_marker .op-to div {
+    background-color: rgba(100, 0, 0, 1)
+}
+
+.hl_type_marker .my-over div {
+    background-color: rgba(0, 100, 0, 1)
+}
+
+.hl_type_marker .premove-from div,
+.hl_type_marker .premove-to div {
+    background-color: rgba(100, 100, 10, 1)
+}
+
+.hl_type_marker .target div {
+    background-color: rgba(255, 0, 0, 1)
+}
+
+.layout_small.hl_type_marker .bg-cell div {
+    width: 12px;
+    height: 12px;
+    margin: -6px
+}
+
+.hl_type_border .bg-cell div {
+    width: 100%;
+    height: 100%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box
+}
+
+.hl_type_border .my-from div,
+.hl_type_border .my-to div {
+    border-color: rgba(0, 100, 0, .8)
+}
+
+.hl_type_border .op-from div,
+.hl_type_border .op-to div {
+    border-color: rgba(170, 0, 0, .8)
+}
+
+.hl_type_border .my-over div {
+    border-color: rgba(0, 100, 0, .8)
+}
+
+.hl_type_border .premove-from div,
+.hl_type_border .premove-to div {
+    border-color: rgba(100, 100, 100, .8)
+}
+
+.hl_type_border .target div {
+    border-color: rgba(170, 0, 0, .8)
+}
+
+.layout_small.hl_type_border .bg-cell div {
+    border-width: 2px
+}
+
+.board_tbl {
+    color: #eee;
+    text-shadow: 1px 1px #777, -1px -1px #333
+}
+
+.board_original .board_tbl {
+    background-image: url(/i/board/BG-1.jpg)
+}
+
+.board_original .board-col-white {
+    background-image: url(/i/board/white-cell.png)
+}
+
+.board_original .board-col-black {
+    background-image: url(/i/board/black-cell.png)
+}
+
+.board_original_plain .board_tbl {
+    background: #765120
+}
+
+.board_original_plain .board-col-white {
+    background: #e3cc8c
+}
+
+.board_original_plain .board-col-black {
+    background: #c39144
+}
+
+.board_green .board_tbl {
+    background: #526b47
+}
+
+.board_green .board-col-white {
+    background: #dbe3d7
+}
+
+.board_green .board-col-black {
+    background: #95b28a
+}
+
+.board_green_marble .board_tbl {
+    background: url(/i/board/green_bg.jpg)
+}
+
+.board_green_marble .board-col-white {
+    background: url(/i/board/green_white_cell.jpg)
+}
+
+.board_green_marble .board-col-black {
+    background: url(/i/board/green_black_cell.jpg)
+}
+
+.board_bw .board_tbl {
+    background-color: #000
+}
+
+.board_bw .board-col-white {
+    background-color: #DDD
+}
+
+.board_bw .board-col-black {
+    background-color: #999
+}
+
+.board_wood_3 .board_tbl {
+    background: url(/i/board/wood_3_bg.jpg)
+}
+
+.board_wood_3 .board-col-white {
+    background: url(/i/board/wood_3_w.jpg)
+}
+
+.board_wood_3 .board-col-black {
+    background: url(/i/board/wood_3_b.jpg)
+}
+
+.board_wood_4 .board_tbl {
+    background: url(/i/board/wood_4_bg.jpg)
+}
+
+.board_wood_4 .board-col-white {
+    background: url(/i/board/wood_4_w.jpg)
+}
+
+.board_wood_4 .board-col-black {
+    background: url(/i/board/wood_4_b.jpg)
+}
+
+.board_leather_1 .board_tbl {
+    background: url(/i/board/leather_1_bg.jpg)
+}
+
+.board_leather_1 .board-col-white {
+    background: url(/i/board/leather_1_w.jpg)
+}
+
+.board_leather_1 .board-col-black {
+    background: url(/i/board/leather_1_b.jpg)
+}
+
+.board_sand_1 .board_tbl {
+    background: url(/i/board/sand_1_bg.jpg)
+}
+
+.board_sand_1 .board-col-white {
+    background: url(/i/board/sand_1_w.jpg)
+}
+
+.board_sand_1 .board-col-black {
+    background: url(/i/board/sand_1_b.jpg)
+}
+
+.board_fabric_1 .board_tbl {
+    background: url(/i/board/fabric_1_bg.jpg)
+}
+
+.board_fabric_1 .board-col-white {
+    background: url(/i/board/fabric_1_w.jpg)
+}
+
+.board_fabric_1 .board-col-black {
+    background: url(/i/board/fabric_1_b.jpg)
+}
+
+.board_metal_1 .board_tbl {
+    background: url(/i/board/metal_1_bg.jpg)
+}
+
+.board_metal_1 .board-col-white {
+    background: url(/i/board/metal_1_w.jpg)
+}
+
+.board_metal_1 .board-col-black {
+    background: url(/i/board/metal_1_b.jpg)
+}
+
+.layout_small .pes_b {
+    background-position: -184px 0
+}
+
+.layout_small .pes_w {
+    background-position: -184px -42px
+}
+
+.layout_small .off_b {
+    background-position: -147px 0
+}
+
+.layout_small .off_w {
+    background-position: -147px -42px
+}
+
+.layout_small .lad_b {
+    background-position: -110px 0
+}
+
+.layout_small .lad_w {
+    background-position: -110px -42px
+}
+
+.layout_small .kor_b {
+    background-position: -73px 0
+}
+
+.layout_small .kor_w {
+    background-position: -73px -42px
+}
+
+.layout_small .kon_b {
+    background-position: -36px 0
+}
+
+.layout_small .kon_w {
+    background-position: -36px -42px
+}
+
+.layout_small .fer_b {
+    background-position: 0 0
+}
+
+.layout_small .fer_w {
+    background-position: 0 -42px
+}
+
+.layout_medium .pes_b {
+    background-position: -250px 0
+}
+
+.layout_medium .pes_w {
+    background-position: -250px -52px
+}
+
+.layout_medium .off_b {
+    background-position: -200px 0
+}
+
+.layout_medium .off_w {
+    background-position: -200px -52px
+}
+
+.layout_medium .lad_b {
+    background-position: -150px 0
+}
+
+.layout_medium .lad_w {
+    background-position: -150px -52px
+}
+
+.layout_medium .kor_b {
+    background-position: -100px 0
+}
+
+.layout_medium .kor_w {
+    background-position: -100px -52px
+}
+
+.layout_medium .kon_b {
+    background-position: -50px 0
+}
+
+.layout_medium .kon_w {
+    background-position: -50px -52px
+}
+
+.layout_medium .fer_b {
+    background-position: 0 0
+}
+
+.layout_medium .fer_w {
+    background-position: 0 -52px
+}
+
+.layout_big .pes_b {
+    background-position: -308px 0
+}
+
+.layout_big .pes_w {
+    background-position: -308px -62px
+}
+
+.layout_big .off_b {
+    background-position: -248px 0
+}
+
+.layout_big .off_w {
+    background-position: -248px -62px
+}
+
+.layout_big .lad_b {
+    background-position: -185px 0
+}
+
+.layout_big .lad_w {
+    background-position: -185px -62px
+}
+
+.layout_big .kor_b {
+    background-position: -124px 0
+}
+
+.layout_big .kor_w {
+    background-position: -124px -62px
+}
+
+.layout_big .kon_b {
+    background-position: -61px 0
+}
+
+.layout_big .kon_w {
+    background-position: -61px -62px
+}
+
+.layout_big .fer_b {
+    background-position: 0 0
+}
+
+.layout_big .fer_w {
+    background-position: 0 -62px
+}
+
+.layout_full .pes_b {
+    background-position: -400px 0
+}
+
+.layout_full .pes_w {
+    background-position: -400px -80px
+}
+
+.layout_full .off_b {
+    background-position: -319px 0
+}
+
+.layout_full .off_w {
+    background-position: -319px -80px
+}
+
+.layout_full .lad_b {
+    background-position: -240px 0
+}
+
+.layout_full .lad_w {
+    background-position: -240px -80px
+}
+
+.layout_full .kor_b {
+    background-position: -159px 0
+}
+
+.layout_full .kor_w {
+    background-position: -159px -80px
+}
+
+.layout_full .kon_b {
+    background-position: -80px 0
+}
+
+.layout_full .kon_w {
+    background-position: -80px -80px
+}
+
+.layout_full .fer_b {
+    background-position: 0 0
+}
+
+.layout_full .fer_w {
+    background-position: 0 -80px
+}
+
+.fig_img.empty {
+    background: none!important
+}
