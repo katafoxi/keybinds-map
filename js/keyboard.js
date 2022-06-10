@@ -1,84 +1,25 @@
-drawSmallBoard = function() {
-    var destObj = document.getElementById(destId);
-
-
-    //create row 1
-    var tableHtml = '';
-    var chars = 'abcdefgh';
-
-    var charsHtml = '<tr><td></td>';
-    for (var i = xStart; i != xFinish; i += xD) {
-        charsHtml += '<td class="char">' + chars.charAt(i) + '</td>';
-    }
-    charsHtml += '</tr>';
-    tableHtml += charsHtml;
-    destObj.innerHTML = tableHtml;
+let ArrowRowSymbols = {
+    rowF1: ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '', 'PrtSc', 'ScrLk', 'Pause'],
+    row12: ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Backspace', 'Ins', 'home', 'PageUp'],
+    rowQW: ['', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '/', 'Del', 'End', 'PageD'],
+    rowAS: ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '"', '', 'Enter', '', 'Up', ''],
+    rowZX: ['', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '', '', '', 'Left', 'Down', 'Right']
 }
 
-drawSmallBoard();
+drawButtonTable = function() {
+    //create row 1
+    var tableHtml = '';
+    var charsHtml = '<tr>';
 
-/*
-
-    for (var y = yStart; y != yFinish; y += yD) {
-        tableHtml += '<tr>';
-        tableHtml += '<td class="num">' + (y + 1) + '</td>';
-
-        for (var x = xStart; x != xFinish; x += xD) {
-            var classes = '';
-            classes += "f";
-
-            var colorClass = colors[1 - (x + y) % 2];
-            var code = boardStr.charAt(8 * y + x);
-            var figure = getImgName(code, getNameByCode(code), colorsNames[(x + y) % 2]);
-            classes += " " + colorClass;
-            var src = imgpath + figure;
-            tableHtml += '<td class="' + classes + '">';
-            if (figure != '') {
-
-                tableHtml += '<img src="' + src + '" />';
-            }
-            var cell = chars.charAt(x) + (y + 1);
-            if (hlCells[cell]) { tableHtml += '<div class="cellHL"></div>' };
-            tableHtml += '</td>';
+    for (rowButtons in ArrowRowSymbols) {
+        for (button of ArrowRowSymbols[rowButtons]) {
+            charsHtml += '<td class="char">' + button + '</td>';
         }
-        tableHtml += '<td class="num">' + (y + 1) + '</td>';
-        tableHtml += '</tr>';
-    }
+        charsHtml += '</tr>';
+    };
 
     tableHtml += charsHtml;
+    document.getElementById('keybordTable').innerHTML = tableHtml;
+}
 
-    var link_text = (_chess_small_board_lang && _chess_small_board_lang == 'en') ? 'Analyze position' : 'Анализ позиции';
-    if (!config.hide_analyze_link) {
-        tableHtml += '<tr><td colspan="10" style="padding: 2px 0px 0px 5px"><a target="_blank" href="' + location.protocol + '//' + _chess_small_board_domain + '/tools/editor.html?board=' + shortStr + '">' + link_text + ' &gt;&gt;</a></td></tr>';
-    }
-
-    var sizeCls = '';
-    if (config.size) {
-        if (config.size == 'm') sizeCls = 'size_medium';
-        else if (config.size == 'b') sizeCls = 'size_big';
-    }
-
-    var tableId = "tid" + Math.random().toString().replace(".", "");
-    tableHtml = '<table id="' + tableId + '" class="hide smallboard ' + sizeCls + '">' + tableHtml + '</table>';
-    if (destId == undefined) {
-        var destId = "board" + boardStr + "_" + Math.round(Math.random() * 1000);
-        document.write('<div id="' + destId + '"></div>');
-        destObj = document.getElementById(destId);
-    } else {
-        var destObj = document.getElementById(destId);
-        if (destObj.getElementsByClassName) {
-            var elems = destObj.getElementsByClassName('smallboard');
-            for (var i = 0; i < elems.length; i++) {
-                if (elems[i] && elems[i].parentElement) {
-                    elems[i].parentElement.removeChild(elems[i]);
-                }
-            }
-        }
-    }
-    destObj.innerHTML = tableHtml;
-    $("#" + tableId).removeClass('hide');
-
-};
-
-drawSmallBoard();
-*/
+drawButtonTable();

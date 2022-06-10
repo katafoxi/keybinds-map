@@ -5,6 +5,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Разработка сетки</title>
+    <meta charset="utf-8">
+    <title>Редактор комбинаций</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+    <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
+    <link rel="stylesheet" type="text/css" href="css/merged-top-837.css">
+    <link rel="stylesheet" type="text/css" href="css/merged-editor-837.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./i/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./i/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./i/favicon/favicon-16x16.png">
+    <!-- <link rel="manifest" href="./i/favicon/site.webmanifest">-->
+    <link rel="mask-icon" href="./i/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./i/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="./i/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
 </head>
 
@@ -16,53 +36,11 @@
             border: 2px dotted rgba(40, 207, 207, 0.473);
         }
     </style>
+
     <p> Рисуем клавиатуру</p>
-    <table id="destId">
+    <table id="keybordTable"></table>
 
-    </table>
-
-    <script>
-        var yStart = 7,
-            yD = -1,
-            yFinish = -1,
-            xStart = 0,
-            xD = 1,
-            xFinish = 13;
-
-        let ArrowRowSymbols = {
-            rowFuncButton: ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '', 'PrtSc', 'ScrLk', 'Pause'],
-            row123456: ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Backspace', 'Ins', 'home', 'PageUp'],
-            rowQWERT: ['', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '/', 'Del', 'End', 'PageD'],
-            rowASDFG: ['', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '"', '', 'Enter', '', 'Up', ''],
-            rowZXCVB: ['', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '', '', '', 'Left', 'Down', 'Right']
-
-        }
-
-        drawButtonTable = function(ArrowRowSymbols) {
-            //create row 1
-            var tableHtml = '';
-
-            var charsHtml = '<tr>';
-
-            for (rowButtons in ArrowRowSymbols) {
-                for (button of ArrowRowSymbols[rowButtons]) {
-                    charsHtml += '<td class="char">' + button + '</td>';
-                }
-                charsHtml += '</tr>';
-            };
-
-
-
-            tableHtml += charsHtml;
-            console.log(tableHtml);
-            document.getElementById('destId').innerHTML = tableHtml;
-        }
-
-        drawButtonTable(ArrowRowSymbols);
-    </script>
-
-
-
+    <script src="./js/keyboard.js"></script>
 
 </body>
 
