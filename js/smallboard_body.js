@@ -14,6 +14,7 @@ drawSmallBoard = function(boardStr, destId, cellsHL, config) {
     var hlCells = {};
     var config = config || {},
         imgpath;
+
     if (typeof cs_user != 'undefined' && cs_user.figures_type) {
         imgpath = pieces_folder + cs_user.figures_type + "/";
     } else {
@@ -25,6 +26,7 @@ drawSmallBoard = function(boardStr, destId, cellsHL, config) {
         xStart = 0,
         xD = 1,
         xFinish = 8;
+
     if (config.reverse) {
         yStart = 0;
         yD = 1;
@@ -112,6 +114,7 @@ drawSmallBoard = function(boardStr, destId, cellsHL, config) {
         $("#" + tableId).removeClass('hide');
     }
 };
+
 getNameByCode = function(code) {
     switch (code) {
         case "R":
