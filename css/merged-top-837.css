@@ -171,15 +171,6 @@ textarea {
     box-sizing: border-box
 }
 
-body {
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    line-height: 18px;
-    color: #333;
-    background-color: #fff
-}
-
 a {
     color: #08c;
     text-decoration: none
@@ -4838,63 +4829,6 @@ a.thumbnail:hover {
     margin-bottom: 0
 }
 
-html,
-body {
-    height: 100%;
-    min-height: 100%;
-    color: #111;
-    font-size: 13px
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 5px 0;
-    font-family: Arial, Helvetica
-}
-
-h1,
-h2,
-h3,
-h4 {
-    text-shadow: 0 0 1px rgba(51, 51, 51, .3);
-    -webkit-text-shadow: 0 0 1px rgba(51, 51, 51, .3);
-    -moz-text-shadow: 0 0 1px rgba(51, 51, 51, .3)
-}
-
-h1 small {
-    line-height: 25px
-}
-
-a {
-    color: #33b
-}
-
-header {
-    margin: 0 0 10px;
-    color: grey;
-    z-index: 110;
-    position: relative
-}
-
-.header-inner .container {
-    width: 990px;
-    height: 110px;
-    overflow: hidden
-}
-
-.header-inner {
-    background-color: #fff;
-    background-image: url(../i/top-bg-1.png);
-    border-bottom: 2px solid #FFC080;
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1)
-}
-
 .navbar .brand {
     color: #000000!important
 }
@@ -7201,16 +7135,6 @@ ul.pagination {
 }
 
 .ng-cloak {
-    display: none
-}
-
-.header-inner {
-    min-width: 1000px
-}
-
-.head-sub-logo {
-    width: 130px;
-    margin: 10px auto 0;
     display: none
 }
 
