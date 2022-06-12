@@ -1,0 +1,193 @@
+html,
+body {
+    height: 100%;
+    min-height: 100%;
+    color: #111;
+    font-size: 10px
+}
+
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: #333;
+    background-color: #fff
+}
+
+.top-head,
+.top-head a {
+    margin-top: 5px;
+    line-height: 20px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #A65400;
+    text-decoration: none;
+    -webkit-text-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    -moz-text-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .25)
+}
+
+.head-span {
+    border-right: 1px solid #d7cdb8;
+    margin-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    width: 210px
+}
+
+.logoImg {
+    height: 65px
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 3px 0;
+    font-family: Arial, Helvetica
+}
+
+p {
+    margin: 0 0 9px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 13px
+}
+
+h1,
+h2,
+h3,
+h4 {
+    text-shadow: 0 0 1px rgba(51, 51, 51, .3);
+    -webkit-text-shadow: 0 0 1px rgba(51, 51, 51, .3);
+    -moz-text-shadow: 0 0 1px rgba(51, 51, 51, .3)
+}
+
+h1 small {
+    line-height: 25px
+}
+
+a {
+    color: #33b
+}
+
+header {
+    margin: 0 0 10px;
+    color: grey;
+    z-index: 110;
+    position: relative
+}
+
+.header-inner .container {
+    width: 100%;
+    height: 85px;
+    overflow: hidden
+}
+
+.header-inner {
+    background-color: #fff;
+    background-image: url(../i/top-bg-1.png);
+    border-bottom: 2px solid #FFC080;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1)
+}
+
+.header-inner {
+    min-width: 1000px
+}
+
+.head-sub-logo {
+    width: 130px;
+    margin: 10px auto 0;
+    display: none
+}
+
+.signin-container {
+    width: 445px;
+    margin-left: 7px
+}
+
+.signin-form {
+    margin: 15px 0 0 0
+}
+
+.signin-form form {
+    margin-bottom: 5px
+}
+
+.pull-right {
+    float: right
+}
+
+.pull-left {
+    float: left
+}
+
+.hide {
+    display: none
+}
+
+#keybordTable {
+    margin-left: 20px;
+    width: 98%;
+}
+
+.char {
+    width: 100px;
+}
+
+#modificatorForChar {
+    font-size: smaller;
+    min-width: 100%;
+    height: 100%;
+    border: 2px solid rgba(28, 110, 164, 0.12);
+    border-radius: 5px;
+}
+
+.Comand {
+    height: 15px;
+    border: 1px solid rgba(28, 110, 164, 0.12);
+}
+
+.Color {
+    width: 25px;
+    border: 1px solid rgba(28, 110, 164, 0.12);
+}
+
+.AltColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(8, 250, 46, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 64%);
+}
+
+.CtrlColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(250, 8, 27, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 63%);
+}
+
+.ShiftColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(8, 31, 250, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 63%);
+}
+
+.CtrlAltColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 23%, rgba(35, 250, 8, 1) 43%, rgba(255, 255, 255, 0) 50%, rgba(251, 46, 46, 1) 55%, rgba(255, 255, 255, 0.22872899159663862) 75%);
+}
+
+.CtrlShiftColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 20%, rgba(8, 39, 250, 1) 40%, rgba(255, 255, 255, 0) 50%, rgba(251, 46, 46, 1) 60%, rgba(255, 255, 255, 0.22872899159663862) 80%);
+}
+
+.AltShiftColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 20%, rgba(0, 20, 255, 1) 40%, rgba(255, 255, 255, 0) 50%, rgba(0, 255, 40, 1) 60%, rgba(255, 255, 255, 0.22872899159663862) 80%);
+}
+
+.CtrlAltShiftColor {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(0deg, rgba(0, 20, 255, 0.25) 0%, rgba(0, 255, 40, 0.25) 50%, rgba(255, 0, 0, 0.25) 100%);
+}
