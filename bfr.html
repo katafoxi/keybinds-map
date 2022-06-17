@@ -5,13 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Редактор комбинаций</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
     <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
-    <link rel="stylesheet" type="text/css" href="css/merged-top-837.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/merged-top-837.css"> -->
 
     <link rel="stylesheet" href="css/top.css">
 
@@ -28,114 +26,104 @@
 </head>
 
 <body>
-    <header>
-        <!--        <i class="fa fa-bars fa-border xs-show top-menu-toggle"></i>-->
-        <div class="header-inner">
-            <div class="container a-layout">
-                <div class="pull-left logo">
-                    <a href="https://keybinds.ru/">
-                        <img class="logoImg" src="i/logo.png" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" width="200px" />
-                    </a>
+    <div class="mainPage">
+        <header class="header">
+
+            <div class="logo">
+                <div class="top-head">
+                    <a href="https://keybinds.ru/">онлайн редактор комбинаций </a>
                 </div>
-                <div class="pull-left head-span">
-                    <div class="top-head">
-                        <a href="https://keybinds.ru/">
-                            Редактор комбинаций онлайн
-                        </a>
-                    </div>
+                <a href="https://keybinds.ru/">
+                    <img class="logo" src="i/logo.png" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" />
+                </a>
+            </div>
+            <div class="guide">
+                <!-- <h1>Редактор комбинаций</h1> -->
+                <p class="redLine">
+                    Редактор клавиатурных комбинаций предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. Также можно применять редактор, как способ визуализации сущестующих штатных комбинаций в выбранной
+                    программе.
+                </p>
 
-                    <div class="head-sub-text">
-                        Больше хороших биндов.
-                    </div>
+                <p class="redLine">
+                    Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение.
+                </p>
+            </div>
+
+            <div class="header-inner">
+
+                <div class="signin-form">
+
+                    <form class="form-inline" action="https://chess-samara.ru/" method="post">
+                        <input type="hidden" name="function" value="enter">
+                        <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />
+                        <input type="password" name="pswd" class="input-small" placeholder="Пароль" />
+                        <label class="checkbox"> <input name="remember" type="checkbox" />Запомнить</label>
+                        <button type="submit" class="btn">Войти</button>
+                    </form>
+
+                    <!-- <div class="main-page-social-buttons">
+                        <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">
+                            <span class="social-likes__button social-likes__button_facebook">
+                                <span class="social-likes__icon social-likes__icon_facebook"></span>
+                            </span>
+                        </div>
+                        <div class="tooltip-under social-likes__widget social-likes__widget_vkontakte " data-url="https://chess-samara.ru/social_login.html?action=login&provider=vkontakte" title="Войти через ВКонтакте">
+                            <span class="social-likes__button social-likes__button_vkontakte">
+                                <span class="social-likes__icon social-likes__icon_vkontakte"></span>
+                            </span>
+                        </div>
+                        <div class="tooltip-under social-likes__widget social-likes__widget_odnoklassniki " data-url="https://chess-samara.ru/social_login.html?action=login&provider=odnoklassniki" title="Войти через Одноклассники">
+                            <span class="social-likes__button social-likes__button_odnoklassniki">
+                                <span class="social-likes__icon social-likes__icon_odnoklassniki"></span>
+                            </span>
+                        </div>
+                    </div> -->
+
                 </div>
-                <div class="header-breaker"></div>
-                <div class="pull-left signin-container">
-                    <div class="signin-btn">
-                        <a href="#" class="btn" style="width: 80px;">
-                            <i class="icon-user"></i> Войти
-                        </a>
-                    </div>
-                    <div class="hide already_registred" style="margin: 11px 0 10px;">
-                        <span style="margin: 0 20px 0 0">Уже зарегистрированы? </span>
-                        <a href="#" class="btn enter-btn btn-large">
-                            <i class="icon-user"></i> Войти на сайт
-                        </a>
-                    </div>
-                    <div class="signin-controls ">
-                        <div class="signin-form">
-                            <div class="pull-left">
-                                <form class="form-inline" action="https://chess-samara.ru/" method="post">
-                                    <input type="hidden" name="function" value="enter">
-                                    <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />
-                                    <input type="password" name="pswd" class="input-small" placeholder="Пароль" />
-                                    <label class="checkbox">
-                    <input name="remember" type="checkbox" /> Запомнить
-                </label>
-                                    <button type="submit" class="btn">Войти</button>
-                                </form>
-                            </div>
 
-                            <div class="main-page-social-buttons pull-left">
-                                <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">
-                                    <span class="social-likes__button social-likes__button_facebook">
-                <span class="social-likes__icon social-likes__icon_facebook"></span>
-                                    </span>
-                                </div>
-                                <div class="tooltip-under social-likes__widget social-likes__widget_vkontakte " data-url="https://chess-samara.ru/social_login.html?action=login&provider=vkontakte" title="Войти через ВКонтакте">
-                                    <span class="social-likes__button social-likes__button_vkontakte">
-                <span class="social-likes__icon social-likes__icon_vkontakte"></span>
-                                    </span>
-                                </div>
-                                <div class="tooltip-under social-likes__widget social-likes__widget_odnoklassniki " data-url="https://chess-samara.ru/social_login.html?action=login&provider=odnoklassniki" title="Войти через Одноклассники">
-                                    <span class="social-likes__button social-likes__button_odnoklassniki">
-                <span class="social-likes__icon social-likes__icon_odnoklassniki"></span>
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="clearfix"></div>
-                        <div class="hmargin signin-ad-links-simple">
-                            <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |
-                            <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>
-                        </div>
-                    </div>
-
-                    <div class="hmargin signin-ad-links">
-                        Мы можем <a href="https://chess-samara.ru/user/forgot_pswd.html">восстановить Вам пароль</a>, если Вы его забыли или потеряли.
-                        <br /> А если вы здесь впервые - <a href="https://chess-samara.ru/user/reg.html">зарегистрируйтесь</a>, это займет не больше минуты.
-                    </div>
-
+                <div class="hmargin signin-ad-links-simple">
+                    <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |
+                    <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>
                 </div>
             </div>
+
+        </header>
+
+        <div class="instructionAccumulator">
+            <div class="scheme">
+                <div class="subtable scheme">
+                    <div class="Cell Symbol">key</div>
+                    <div class="Cell Alt ">icon</div>
+                    <div class="Cell Ctrl "></div>
+                    <div class="Cell Shift "></div>
+                    <div class="Cell Ctrl_Alt schemeSwitchCell"></div>
+                    <div class="Cell CtrlShift schemeSwitchCell"></div>
+                    <div class="Cell AltShift schemeSwitchCell"></div>
+                    <div class="Cell CtrlAltShift schemeSwitchCell">
+
+                    </div>
+                    <div class="Cell Simple schemeSwitchCell"></div>
+                    <div class="Cell Alt-title schemeTitleCell"> +Alt</div>
+                    <div class="Cell Ctrl-title schemeTitleCell">+Ctrl</div>
+                    <div class="Cell Shift-title schemeTitleCell">+Shift</div>
+                    <div class="Cell CtrlAlt-title schemeTitleCell">+Ctrl+Alt</div>
+                    <div class="Cell CtrlShift-title schemeTitleCell">+Ctrl+Shift</div>
+                    <div class="Cell AltShift-title schemeTitleCell">+Alt+Shift</div>
+                    <div class="Cell CtrlAltShift-title schemeTitleCell">+Ctrl+Alt+Shift</div>
+                    <div class="Cell Simple-title ">modifers</div>
+                </div>';
+            </div>
+
+            <div class="comandIcons droppable">
+                <img class="icons" id="ball" src="i/ball.svg" id="ball">
+            </div>
         </div>
-    </header>
 
 
-    <div class="grid-container">
-        <div class="pull-left guide">
-            <h1>Редактор комбинаций</h1>
-            <p class="redLine">
-                Редактор клавиатурных комбинаций предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. Также можно применять редактор, как способ визуализации сущестующих штатных комбинаций в выбранной
-                программе.
-            </p>
-
-            <p class="redLine">
-                Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение. По доске фигуры также можно перетаскивать с клетки на клетку.
-            </p>
-        </div>
-
-        <div class="pull-left comandIcons droppable">
-            <img id="ball" src="i/ball.svg" style="cursor: pointer; position: absolute;  z-index: 1000;" width="40" height="40" id="ball">
-        </div>
+        <div id="keybordGrid" class="keybordGrid"></div>
     </div>
 
-
-
-    <table id="keybordTable"></table>
-
-    <script src="./js/keyboard.js"></script>
+    <script src="./js/grid.js"></script>
 
 </body>
 

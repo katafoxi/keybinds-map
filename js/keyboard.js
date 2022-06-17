@@ -1,9 +1,9 @@
 let ArrowRowSymbols = {
-    rowF1: ['mod', 'Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '', 'PSc', 'SLk', 'Pse'],
-    row12: ['mod', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Bck', 'Ins', 'home', 'PUp'],
-    rowQW: ['mod', '', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '/', 'Del', 'End', 'PD'],
-    rowAS: ['mod', '', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '"', '', 'Ent', '', 'Up', ''],
-    rowZX: ['mod', '', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '', '', '', 'Lft', 'Dwn', 'Rght']
+    rowF1: ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '', 'PSc', 'SLk', 'Pse'],
+    row12: ['mod', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Bck', 'Ins', 'home', 'PUp'],
+    rowQW: ['mod', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '/', 'Del', 'End', 'PD'],
+    rowAS: ['mod', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '„ “', '', 'Enter', '', 'Up', ''],
+    rowZX: ['mod', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '', '', '', 'Lft', 'Dwn', 'Rght']
 }
 
 let modificators = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', 'CtrlAltShift'];
@@ -39,7 +39,7 @@ generateModificatorsSubTable = function(flag = false) {
 addCharCellInModificatorSubTable = function(charButton) {
     let CharClass = charButton.textContent
 
-    let addCharCellsHTML = '<tr><td class="' + CharClass + '+ Color">' + CharClass + '</td> <td class= "Comand droppable"></td></tr>';
+    let addCharCellsHTML = '<tr><td class="' + CharClass + '+ Color Key">' + CharClass + '</td> <td class= "Comand droppable"></td></tr>';
     return addCharCellsHTML;
 }
 
@@ -111,16 +111,19 @@ ball.onmousedown = function(event) {
     document.addEventListener('mousemove', onMouseMove);
 
     ball.onmouseup = function() {
+
         document.removeEventListener('mousemove', onMouseMove);
         ball.onmouseup = null;
-
-        ball.style.position = 'static';
-        ball.style.width = '17px'
-        currentDroppable.appendChild(ball);
-        currentDroppable.style.background = '';
-
+        // alert(currentDroppable);
+        if (currentDroppable) {
+            ball.style.position = 'static';
+            currentDroppable.appendChild(ball);
+            currentDroppable.style.background = '';
+            ball.style.border = ''
+        } else {
+            ball.style.border = '5px solid rgb(255, 0, 0)';
+        }
     };
-
 };
 
 function enterDroppable(elem) {

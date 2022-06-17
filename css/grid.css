@@ -1,0 +1,141 @@
+.keybordGrid {
+    display: grid;
+    grid-template-columns: repeat(17, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1px 5px;
+    grid-auto-flow: row;
+    grid-template-areas: ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . .";
+}
+
+.subtable {
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 0.3743872549019608) 0%, rgba(148, 187, 233, 0.5144432773109244) 100%);
+    font-size: 12px;
+    display: grid;
+    /* border: 2px solid rgba(136, 93, 241, 0.5); */
+    border-top: 1px solid #5072ff;
+    border-right: 1px solid #5072ff;
+    border-bottom: 1px solid #5072ff;
+    border-radius: 5px;
+    grid-template-columns: 20% 20% 60%;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* gap: 2px 2px; */
+    grid-auto-flow: row;
+    grid-template-areas: "Symbol Simple Simple-title" "Alt Alt-title Alt-title" "Ctrl Ctrl-title Ctrl-title" "Shift Shift-title Shift-title" "CtrlAlt CtrlAlt-title CtrlAlt-title" "CtrlShift CtrlShift-title CtrlShift-title" "AltShift AltShift-title AltShift-title" "CtrlAltShift CtrlAltShift-title CtrlAltShift-title";
+    width: 100%;
+    height: 150px;
+}
+
+.Symbol {
+    grid-area: Symbol;
+    text-align: center;
+    background-color: bisque;
+    border-radius: 5px 5px 5px 0px;
+    -webkit-border-radius: 6px 4px 4px 0px;
+    -moz-border-radius: 6px 4px 4px 0px;
+    border-left: 1px solid #5072ff;
+}
+
+.Alt {
+    border-left: 2px solid rgb(59, 153, 51);
+    grid-area: Alt;
+}
+
+.Ctrl {
+    grid-area: Ctrl;
+    border-left: 2px solid rgb(250, 0, 0);
+}
+
+.Shift {
+    border-left: 2px solid rgb(25, 0, 255);
+    grid-area: Shift;
+}
+
+.CtrlAlt {
+    border-left: 2px solid rgb(255, 153, 0);
+    grid-area: CtrlAlt;
+}
+
+.CtrlShift {
+    border-left: 2px solid rgb(255, 0, 242);
+    grid-area: CtrlShift;
+}
+
+.AltShift {
+    border-left: 2px solid rgb(255, 102, 0);
+    grid-area: AltShift;
+}
+
+.CtrlAltShift {
+    border-left: 2px solid rgb(0, 0, 0);
+    grid-area: CtrlAltShift;
+}
+
+.Simple {
+    grid-area: Simple;
+}
+
+.Alt-title {
+    grid-area: Alt-title;
+}
+
+.Ctrl-title {
+    grid-area: Ctrl-title;
+}
+
+.Shift-title {
+    grid-area: Shift-title;
+}
+
+.CtrlAlt-title {
+    grid-area: CtrlAlt-title;
+}
+
+.CtrlShift-title {
+    grid-area: CtrlShift-title;
+}
+
+.AltShift-title {
+    grid-area: AltShift-title;
+}
+
+.CtrlAltShift-title {
+    grid-area: CtrlAltShift-title;
+}
+
+.Simple-title {
+    grid-area: Simple-title;
+}
+
+.subtable div {
+    margin: 0%;
+    border-top: 1px solid #5073ff2c;
+    border-right: 1px solid #5073ff2c;
+    border-bottom: 1px solid #5073ff2c;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 4px;
+}
+
+
+/* For presentation only, no need to copy the code below */
+
+.container {
+    border: 1px solid rgba(4, 0, 255, 0.377);
+    position: relative;
+}
+
+.container *:after {
+    /* content: attr(class); */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}

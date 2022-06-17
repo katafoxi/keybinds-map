@@ -1,92 +1,59 @@
-html,
-body {
+html {
     height: 100%;
-    min-height: 100%;
-    color: #111;
-    font-size: 10px
+    padding: 0px;
 }
 
 body {
-    margin: 0;
+    margin: 5px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
     color: #333;
     background-color: #fff
 }
 
+.mainPage {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content auto auto;
+    gap: 3px 3px;
+    grid-auto-flow: row;
+    grid-template-areas: "header" "instructionAccumulator " "keybordGrid";
+}
+
+.header {
+    display: grid;
+    grid-area: header;
+    grid-template-columns: min-content 400px auto 500px;
+    grid-template-rows: 1fr;
+    gap: 15px;
+    grid-auto-flow: row;
+    grid-template-areas: " logo guide . header-inner";
+}
+
+.logo * {
+    grid-area: logo;
+    width: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .top-head,
 .top-head a {
-    margin-top: 5px;
-    line-height: 20px;
-    margin-bottom: 5px;
-    font-size: 16px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 12px;
     color: #A65400;
     text-decoration: none;
-    -webkit-text-shadow: 0 1px 3px rgba(0, 0, 0, .25);
-    -moz-text-shadow: 0 1px 3px rgba(0, 0, 0, .25);
     text-shadow: 0 1px 3px rgba(0, 0, 0, .25)
 }
 
-.head-span {
-    border-right: 1px solid #d7cdb8;
-    margin-left: 5px;
-    padding-right: 5px;
-    padding-top: 2px;
-    width: 210px
-}
-
-.logoImg {
-    height: 65px
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 3px 0;
-    font-family: Arial, Helvetica
-}
-
-p {
-    margin: 0 0 9px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    line-height: 13px
-}
-
-h1,
-h2,
-h3,
-h4 {
-    text-shadow: 0 0 1px rgba(51, 51, 51, .3);
-    -webkit-text-shadow: 0 0 1px rgba(51, 51, 51, .3);
-    -moz-text-shadow: 0 0 1px rgba(51, 51, 51, .3)
-}
-
-h1 small {
-    line-height: 25px
-}
-
-a {
-    color: #33b
-}
-
-header {
-    margin: 0 0 10px;
-    color: grey;
-    z-index: 110;
-    position: relative
-}
-
-.header-inner .container {
-    width: 100%;
-    height: 85px;
-    overflow: hidden
-}
-
 .header-inner {
+    grid-area: header-inner;
+    display: inline;
+    overflow: hidden;
     background-color: #fff;
     background-image: url(../i/top-bg-1.png);
     border-bottom: 2px solid #FFC080;
@@ -95,99 +62,273 @@ header {
     box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1)
 }
 
-.header-inner {
-    min-width: 1000px
+input,
+textarea,
+select,
+.uneditable-input {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 18px;
+    color: #555;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px
 }
 
-.head-sub-logo {
-    width: 130px;
-    margin: 10px auto 0;
-    display: none
+label {
+    display: inline;
+    color: #333
 }
 
-.signin-container {
-    width: 445px;
-    margin-left: 7px
+.guide {
+    box-sizing: border-box;
 }
 
-.signin-form {
-    margin: 15px 0 0 0
+.instructionAccumulator {
+    grid-area: instructionAccumulator;
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content;
+    gap: 0px 5px;
+    grid-auto-flow: row;
+    grid-template-areas: "scheme comandIcons ";
 }
 
-.signin-form form {
-    margin-bottom: 5px
+.scheme {
+    grid-area: scheme;
+    /* height: min-content; */
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 0.19511554621848737) 0%, rgba(148, 187, 233, 0.19511554621848737) 100%);
 }
 
-.pull-right {
-    float: right
+.schemeSwitchCell {
+    width: 30px;
 }
 
-.pull-left {
-    float: left
-}
-
-.hide {
-    display: none
-}
-
-#keybordTable {
-    margin-left: 20px;
-    width: 98%;
-}
-
-.char {
+.schemeTitleCell {
     width: 100px;
+    text-align: right;
 }
 
-#modificatorForChar {
-    font-size: smaller;
-    min-width: 100%;
-    height: 100%;
-    border: 2px solid rgba(28, 110, 164, 0.12);
-    border-radius: 5px;
+.Simple-title {
+    text-align: right;
 }
 
-.Comand {
+.comandIcons {
+    grid-area: comandIcons;
+    border: 5px double rgba(136, 93, 241, 0.3);
+    border-radius: 9px;
+}
+
+.icons {
+    padding: 0%;
+    margin: 0%;
+    width: 15px;
     height: 15px;
-    border: 1px solid rgba(28, 110, 164, 0.12);
+    cursor: grab;
+    position: absolute;
+    z-index: 1000;
 }
 
-.Color {
-    width: 25px;
-    border: 1px solid rgba(28, 110, 164, 0.12);
+.keybordGrid {
+    display: grid;
+    grid-area: keybordGrid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1px 6px;
+    grid-auto-flow: row;
+    grid-template-areas: ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . .";
 }
 
-.AltColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(8, 250, 46, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 64%);
+.subtable {
+    padding: 0%;
+    margin: 0%;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 0.19511554621848737) 0%, rgba(148, 187, 233, 0.19511554621848737) 100%);
+    font-size: 12px;
+    display: grid;
+    /* border: 2px solid rgba(136, 93, 241, 0.5); */
+    border-top: 1px solid #5072ff;
+    border-right: 1px solid #5072ff;
+    border-bottom: 1px solid #5072ff;
+    border-radius: 5px;
+    grid-template-columns: 30px 30px auto;
+    grid-template-rows: repeat(8, 18px);
+    /* gap: 2px 2px; */
+    grid-auto-flow: row;
+    grid-template-areas: "Symbol Simple Simple-title" "Alt Alt-title Alt-title" "Ctrl Ctrl-title Ctrl-title" "Shift Shift-title Shift-title" "CtrlAlt CtrlAlt-title CtrlAlt-title" "CtrlShift CtrlShift-title CtrlShift-title" "AltShift AltShift-title AltShift-title" "CtrlAltShift CtrlAltShift-title CtrlAltShift-title";
+    width: 100%;
+    height: 100%;
 }
 
-.CtrlColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(250, 8, 27, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 63%);
+.subtable div {
+    border-top: 1px solid #5073ff2c;
+    border-right: 1px solid #5073ff2c;
+    border-bottom: 1px solid #5073ff2c;
 }
 
-.ShiftColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 38%, rgba(8, 31, 250, 1) 50%, rgba(255, 255, 255, 0.22872899159663862) 63%);
+.abbr {
+    font-size: 9px;
+    text-align: center;
 }
 
-.CtrlAltColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 23%, rgba(35, 250, 8, 1) 43%, rgba(255, 255, 255, 0) 50%, rgba(251, 46, 46, 1) 55%, rgba(255, 255, 255, 0.22872899159663862) 75%);
+.charmod {
+    text-align: center;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 0.6124824929971988) 0%, rgba(253, 29, 29, 0.5368522408963585) 50%, rgba(252, 176, 69, 0.5256477591036415) 100%);
 }
 
-.CtrlShiftColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 20%, rgba(8, 39, 250, 1) 40%, rgba(255, 255, 255, 0) 50%, rgba(251, 46, 46, 1) 60%, rgba(255, 255, 255, 0.22872899159663862) 80%);
+.Symbol {
+    grid-area: Symbol;
+    text-align: center;
+    background-color: bisque;
+    border-radius: 5px 5px 5px 0px;
+    -webkit-border-radius: 6px 4px 4px 0px;
+    -moz-border-radius: 6px 4px 4px 0px;
+    border-left: 1px solid #5072ff;
 }
 
-.AltShiftColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 20%, rgba(0, 20, 255, 1) 40%, rgba(255, 255, 255, 0) 50%, rgba(0, 255, 40, 1) 60%, rgba(255, 255, 255, 0.22872899159663862) 80%);
+.Alt {
+    border-left: 2px solid rgb(59, 153, 51);
+    grid-area: Alt;
 }
 
-.CtrlAltShiftColor {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(0deg, rgba(0, 20, 255, 0.25) 0%, rgba(0, 255, 40, 0.25) 50%, rgba(255, 0, 0, 0.25) 100%);
+.Ctrl {
+    grid-area: Ctrl;
+    border-left: 2px solid rgb(250, 0, 0);
+}
+
+.Shift {
+    border-left: 2px solid rgb(25, 0, 255);
+    grid-area: Shift;
+}
+
+.CtrlAlt {
+    border-left: 2px solid rgb(255, 153, 0);
+    grid-area: CtrlAlt;
+}
+
+.CtrlShift {
+    border-left: 2px solid rgb(255, 0, 242);
+    grid-area: CtrlShift;
+}
+
+.AltShift {
+    border-left: 2px solid rgb(255, 102, 0);
+    grid-area: AltShift;
+}
+
+.CtrlAltShift {
+    border-left: 2px solid rgb(0, 0, 0);
+    grid-area: CtrlAltShift;
+}
+
+.Simple {
+    grid-area: Simple;
+}
+
+.Alt-title {
+    grid-area: Alt-title;
+}
+
+.Ctrl-title {
+    grid-area: Ctrl-title;
+}
+
+.Shift-title {
+    grid-area: Shift-title;
+}
+
+.CtrlAlt-title {
+    grid-area: CtrlAlt-title;
+}
+
+.CtrlShift-title {
+    grid-area: CtrlShift-title;
+}
+
+.AltShift-title {
+    grid-area: AltShift-title;
+}
+
+.CtrlAltShift-title {
+    grid-area: CtrlAltShift-title;
+}
+
+.Simple-title {
+    grid-area: Simple-title;
+}
+
+.flipswitch {
+    position: relative;
+    width: 28px;
+}
+
+.flipswitch input[type=checkbox] {
+    display: none;
+}
+
+.flipswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #999999;
+    border-radius: 4px;
+}
+
+.flipswitch-inner {
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+.flipswitch-inner:before,
+.flipswitch-inner:after {
+    float: left;
+    width: 50%;
+    height: 9px;
+    padding: 0;
+    line-height: 9px;
+    font-size: 8px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.flipswitch-inner:before {
+    content: "ON";
+    padding-left: 5px;
+    background-color: #1ED424;
+    color: #FFFFFF;
+}
+
+.flipswitch-inner:after {
+    content: "OFF";
+    padding-right: 5px;
+    background-color: #EBEBEB;
+    color: #888888;
+    text-align: right;
+}
+
+.flipswitch-switch {
+    width: 5px;
+    margin: 2px;
+    background: #FFFFFF;
+    border: 1px solid #999999;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 19px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.flipswitch-cb:checked+.flipswitch-label .flipswitch-inner {
+    margin-left: 0;
+}
+
+.flipswitch-cb:checked+.flipswitch-label .flipswitch-switch {
+    right: 0;
 }
