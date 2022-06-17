@@ -29,17 +29,32 @@ showFlipswiths = function() {
 
 
 getModifiersList = function() {
-    let collectionFlipswitchKeys = document.getElementsByClassName('flipswitch');
+    let collectionFlipswitchKeys = document.getElementsByClassName('flipswitch-cb');
     for (let i = 0; i < collectionFlipswitchKeys.length; i++) {
         let elem = collectionFlipswitchKeys[i];
 
         elem.addEventListener("click", function() {
-            // alert();
-            alert(elem.parentNode.attributes);
-            // getModifiersList(elem.name);
+            let modifierFromClassCell = elem.closest('.Cell').getAttribute('class').split(' ')[1];
+            if (elem.checked) {
+
+            } else {
+                alert(modifierFromClassCell);
+                hideModifiersRows(modifierFromClassCell, elem.checked);
+            }
         });
     }
 }();
+
+hideModifiersRows = function(modifier, position) {
+    let collectionModRow = document.getElementsByClassName(modifier);
+    // alert(position);
+
+    for (let i = 0; i < collectionModRow.length; i++) {
+        let elem = collectionModRow[i];
+        elem.style.display = 'none';
+    }
+}
+
 
 getSubgridWithModifiers = function(keyboardKey) {
     let subtableHTML = '';

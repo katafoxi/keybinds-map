@@ -154,7 +154,7 @@ label {
     border-bottom: 1px solid #5072ff;
     border-radius: 5px;
     grid-template-columns: 30px 30px auto;
-    grid-template-rows: repeat(8, 18px);
+    grid-template-rows: repeat(8, auto);
     /* gap: 2px 2px; */
     grid-auto-flow: row;
     grid-template-areas: "Symbol Simple Simple-title" "Alt Alt-title Alt-title" "Ctrl Ctrl-title Ctrl-title" "Shift Shift-title Shift-title" "CtrlAlt CtrlAlt-title CtrlAlt-title" "CtrlShift CtrlShift-title CtrlShift-title" "AltShift AltShift-title AltShift-title" "CtrlAltShift CtrlAltShift-title CtrlAltShift-title";
