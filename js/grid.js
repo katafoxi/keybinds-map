@@ -36,25 +36,33 @@ getModifiersList = function() {
         elem.addEventListener("click", function() {
             let modifierFromClassCell = elem.closest('.Cell').getAttribute('class').split(' ')[1];
             if (elem.checked) {
-
+                showModifiersRows(modifierFromClassCell);
+                modifierFromClassCell += '-title';
+                showModifiersRows(modifierFromClassCell);
             } else {
-                alert(modifierFromClassCell);
-                hideModifiersRows(modifierFromClassCell, elem.checked);
+                hideModifiersRows(modifierFromClassCell);
+                modifierFromClassCell += '-title';
+                hideModifiersRows(modifierFromClassCell)
             }
         });
     }
 }();
 
-hideModifiersRows = function(modifier, position) {
+hideModifiersRows = function(modifier) {
     let collectionModRow = document.getElementsByClassName(modifier);
-    // alert(position);
-
-    for (let i = 0; i < collectionModRow.length; i++) {
+    for (let i = 1; i < collectionModRow.length; i++) {
         let elem = collectionModRow[i];
         elem.style.display = 'none';
     }
 }
 
+showModifiersRows = function(modifier) {
+    let collectionModRow = document.getElementsByClassName(modifier);
+    for (let i = 1; i < collectionModRow.length; i++) {
+        let elem = collectionModRow[i];
+        elem.style.display = '';
+    }
+}
 
 getSubgridWithModifiers = function(keyboardKey) {
     let subtableHTML = '';
@@ -148,10 +156,9 @@ ball.onmousedown = function(event) {
 
         document.removeEventListener('mousemove', onMouseMove);
         ball.onmouseup = null;
-        // alert(currentDroppable);
         if (currentDroppable) {
+
             if (lastCurentDroppable) {
-                // alert('5555');
                 if (lastCurentDroppable != currentDroppable) {
                     lastCurentDroppable.textContent = saveTextContent;
                 }
@@ -159,7 +166,6 @@ ball.onmousedown = function(event) {
 
             saveTextContent = currentDroppable.textContent;
             lastCurentDroppable = currentDroppable;
-            // alert(lastCurentDroppable);
             currentDroppable.textContent = '';
             ball.style.position = 'static';
             currentDroppable.appendChild(ball);

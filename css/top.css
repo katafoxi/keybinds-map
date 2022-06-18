@@ -14,7 +14,7 @@ body {
 .mainPage {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content auto auto;
+    grid-template-rows: min-content auto 1fr;
     gap: 3px 3px;
     grid-auto-flow: row;
     grid-template-areas: "header" "instructionAccumulator " "keybordGrid";
@@ -23,7 +23,7 @@ body {
 .header {
     display: grid;
     grid-area: header;
-    grid-template-columns: min-content 400px auto 500px;
+    grid-template-columns: min-content 400px auto;
     grid-template-rows: 1fr;
     gap: 15px;
     grid-auto-flow: row;
@@ -135,7 +135,7 @@ label {
     display: grid;
     grid-area: keybordGrid;
     grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(5, auto);
     gap: 1px 6px;
     grid-auto-flow: row;
     grid-template-areas: ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . .";
@@ -153,7 +153,7 @@ label {
     border-right: 1px solid #5072ff;
     border-bottom: 1px solid #5072ff;
     border-radius: 5px;
-    grid-template-columns: 30px 30px auto;
+    grid-template-columns: 20px 15px auto;
     grid-template-rows: repeat(8, auto);
     /* gap: 2px 2px; */
     grid-auto-flow: row;
@@ -171,6 +171,11 @@ label {
 .abbr {
     font-size: 9px;
     text-align: center;
+}
+
+.droppable {
+    background: rgb(218, 218, 218);
+    background: radial-gradient(circle, rgba(218, 218, 218, 0.6124824929971988) 0%, rgba(29, 253, 40, 0.055) 50%, rgba(255, 255, 255, 0.5256477591036415) 100%);
 }
 
 .charmod {
@@ -262,7 +267,7 @@ label {
 
 .flipswitch {
     position: relative;
-    width: 28px;
+    width: 30px;
 }
 
 .flipswitch input[type=checkbox] {
@@ -305,7 +310,7 @@ label {
 }
 
 .flipswitch-inner:after {
-    content: "OFF";
+    content: "hide";
     padding-right: 5px;
     background-color: #EBEBEB;
     color: #888888;
@@ -314,7 +319,7 @@ label {
 
 .flipswitch-switch {
     width: 5px;
-    margin: 2px;
+    margin: 5px;
     background: #FFFFFF;
     border: 1px solid #999999;
     border-radius: 4px;
