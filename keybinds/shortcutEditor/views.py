@@ -1,11 +1,39 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
-def index(request):
-    return HttpResponse('Страница приложения конфигуратора')
+menu = [{'title': 'О сайте', 'url_name': 'about'},
+        {'title': 'Добавить программу', 'url_name': 'add_program'},
+        {'title': 'Обратная связь', 'url_name': 'contact'},
+        {'title': 'Войти', 'url_name': 'login'}
+        ]
 
-def categories(request, cat):
-    return HttpResponse(f'<h1>Категории программ</h1><p>{cat}</p>')
+from .models import *
+
+
+def index(request):
+    programs = Program.objects.all()
+    context = {
+        'menu': menu,
+        'title': 'Редактор комбинаций',
+        'program': programs
+    }
+    return render(request, 'shortcutEditor/index.html', context=context)
+
+
+def about(request):
+    return HttpResponse('Немного о сайте')
+
+
+def add_program(request):
+    return HttpResponse('Добавление программы')
+
+
+def contact(request):
+    return HttpResponse('Обратная связь')
+
+
+def login(request):
+    return HttpResponse('Авторизация')
 
 
 def pageNotFound(request, exception):

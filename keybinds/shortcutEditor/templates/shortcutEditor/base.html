@@ -1,40 +1,52 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <title>{{title}}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Редактор комбинаций</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-
     <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
-    <!-- <link rel="stylesheet" type="text/css" href="css/merged-top-837.css"> -->
 
-    <link rel="stylesheet" href="css/top.css">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="./i/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./i/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./i/favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="{% static 'shortcutEditor/css/top.css' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'shortcutEditor/i/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'shortcutEditor/i/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'shortcutEditor/i/favicon/favicon-16x16.png' %}">
     <!-- <link rel="manifest" href="./i/favicon/site.webmanifest">-->
-    <link rel="mask-icon" href="./i/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="./i/favicon/favicon.ico">
+    <link rel="mask-icon" href="{% static 'shortcutEditor/i/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'shortcutEditor/i/favicon/favicon.ico' %}">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="./i/favicon/browserconfig.xml">
+    <meta name="msapplication-config" content="{% static 'shortcutEditor/i/favicon/browserconfig.xml' %}">
     <meta name="theme-color" content="#ffffff">
-
 </head>
 
 <body>
-    <div class="mainPage">
+    {% block mainmenu %}
+    <ul>
+        {% for m in menu %}
+            {% if not forloop.last %}
+                <li> <a href="{% url m.url_name %}">{{m.title}}</a></li>
+            {% else %}
+                <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endblock mainmenu %}
+
+    {% block content %}
+    {% endblock %}
+
+ <div class="mainPage">
         <header class="header">
 
             <div class="logo">
                 <div class="top-head">
-                    <a href="https://keybinds.ru/">онлайн редактор комбинаций </a>
+                    <a href="{% url 'main'%}">онлайн редактор комбинаций </a>
                 </div>
-                <a href="https://keybinds.ru/">
-                    <img id="logo" class="logo" src="i/logo.png" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" />
+                <a href="{% url 'main'%}">
+                    <img id="logo" class="logo" src="{% static 'shortcutEditor/i/logo.png' %}" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" />
                 </a>
             </div>
             <div class="guide">
@@ -115,7 +127,7 @@
             </div>
 
             <div class="comandIcons droppable">
-                <img class="icons" id="ball" src="i/ball.svg" id="ball">
+                <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
             </div>
         </div>
 
@@ -123,7 +135,7 @@
         <div id="keybordGrid" class="keybordGrid"></div>
     </div>
 
-    <script src="./js/grid.js"></script>
+    <script src="{% static 'shortcutEditor/js/grid.js' %}"></script>
 
 </body>
 
