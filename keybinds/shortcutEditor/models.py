@@ -1,6 +1,7 @@
 from django.db import models
+from django.urls import reverse
 
-# Create your models here.
+
 class Program(models.Model):
     title= models.CharField(max_length=50)
     version= models.CharField(max_length=50)
@@ -9,6 +10,9 @@ class Program(models.Model):
 
     def __str__(self):
         return  self.title
+
+    def get_absolute_url(self):
+        return reverse('program', kwargs={'program_id':self.pk})
 
 class ProgramCommand(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)

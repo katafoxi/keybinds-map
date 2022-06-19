@@ -92,7 +92,7 @@ label {
     grid-template-rows: min-content;
     gap: 0px 5px;
     grid-auto-flow: row;
-    grid-template-areas: "scheme comandIcons ";
+    grid-template-areas: "scheme commandIcons ";
 }
 
 .scheme {
@@ -115,8 +115,8 @@ label {
     text-align: right;
 }
 
-.comandIcons {
-    grid-area: comandIcons;
+.commandIcons {
+    grid-area: commandIcons;
     border: 5px double rgba(136, 93, 241, 0.3);
     border-radius: 9px;
 }

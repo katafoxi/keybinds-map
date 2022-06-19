@@ -38,3 +38,6 @@ def login(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Такой страницы пока нет</h1>')
+
+def show_program_commands(request, program_id):
+    return HttpResponse(f'Стандартные комбинации {Program.objects.get(pk = 1)} ')
