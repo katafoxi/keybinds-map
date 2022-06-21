@@ -64,8 +64,9 @@
             <p>Выберите программу</p>
             <div>
                  {% for prog in programs %}
-                    {% if prog.pk == cat_selected %}
-                        <li class="selected">{{prog.title}}</li>
+                    {% if prog.pk == prog_selected %}
+<!--                        <li class="selected">{{prog.title}}</li>-->
+                         <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
                     {% else %}
                         <a href="{{ prog.get_absolute_url }}">
                             <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
@@ -76,7 +77,7 @@
 <!--                <img class='progIcon' src="{{pr.icon.url}}" title="{{pr.title}}" alt="{{pr.title}}"/>-->
 <!--                {% endfor %}-->
             </div>
-            {% block content %} {% endblock %}
+
 
         </div>
 
@@ -147,10 +148,11 @@
             ';
         </div>
 
-        <div class="commandIcons droppable">
-
-
-            <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
+        <div class="commandIcons">
+            <div class="droppable">
+                 <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
+            </div>
+               {% block content %} {% endblock %}
         </div>
     </div>
 

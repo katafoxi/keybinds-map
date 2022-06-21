@@ -92,6 +92,9 @@ label {
 .guide {
     box-sizing: border-box;
 }
+.selected{
+ background: green;
+}
 
 .instructionAccumulator {
     grid-area: instructionAccumulator;
@@ -127,9 +130,32 @@ label {
     grid-area: commandIcons;
     border: 5px double rgba(136, 93, 241, 0.3);
     border-radius: 9px;
+    display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 0px 0px;
+      grid-auto-flow: column;
+      grid-template-areas:
+        ". . . . . ."
+        ". . . . . ."
+        ". . . . . ."
+        ". . . . . ."
+        ". . . . . ."
+        ". . . . . .";
 }
 
+}
+.blockIcon{
+display:inline;
+ min-width: 20px;
+ min-height: 20px;
+}
+.td_to_icons{
+    width: 15px;
+    height: 15px;
+}
 .icons {
+    left;
     padding: 0%;
     margin: 0%;
     width: 15px;

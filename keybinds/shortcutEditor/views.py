@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render
 from .models import *
 from confKeybinds.settings import BASE_DIR
@@ -16,8 +16,8 @@ def index(request):
         'menu': menu,
         'title': 'Редактор комбинаций',
         'programs': programs,
-        'program_commands': program_commands,
-        'cat_selected':0
+        # 'program_commands': program_commands,
+        'prog_selected':0
     }
     return render(request, 'shortcutEditor/index.html', context=context)
 
@@ -42,9 +42,18 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Такой страницы пока нет</h1>')
 
 def show_program_commands(request, program_id):
-    program = Program.objects.get(pk = program_id)
-    result = f'<a href="{program.program_site}">{program}</a>'
-    return HttpResponse(f'Стандартные комбинации программы {result} ')
+    programs = Program.objects.all()
+    program_commands = ProgramCommand.objects.filter(program_id=program_id)
+    if len(program_commands) == 0:
+        raise Http404()
+    context = {
+        'menu': menu,
+        'title': 'Редактор комбинаций',
+        'programs': programs,
+        'program_commands': program_commands,
+        'prog_selected':program_id
+    }
+    return render(request, 'shortcutEditor/index.html', context=context)
 
 def show_command(request, command_id):
     return HttpResponse('Команда какая-то')

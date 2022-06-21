@@ -1,10 +1,18 @@
-
 {% extends 'shortcutEditor/base.html' %}
 {% block content %}
-{% load static %}
 
-
-
+    {% for command in program_commands %}
+    <div class="droppable">
+        <table>
+            <tr>
+                <td class="td_to_icons" >
+                    <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}"/>
+                </td>
+                <td><p>{{command.command_name}}</p></td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
 
 {% endblock %}
 

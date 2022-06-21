@@ -109,6 +109,7 @@ let lastCurentDroppable = null;
 let saveTextContent = '';
 
 ball.onmousedown = function(event) {
+    ball.style.cursor= 'grabbing'
 
 
     let shiftX = event.clientX - ball.getBoundingClientRect().left;
@@ -156,6 +157,7 @@ ball.onmousedown = function(event) {
 
         document.removeEventListener('mousemove', onMouseMove);
         ball.onmouseup = null;
+        ball.style.cursor= 'grab'
         if (currentDroppable) {
 
             if (lastCurentDroppable) {
