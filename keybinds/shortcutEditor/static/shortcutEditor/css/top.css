@@ -50,12 +50,20 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, .25)
 }
 
+.progIcon {
+    height: 25px;
+
+}
+
+.progIcon:hover{
+background: red;
+}
+
 .header-inner {
     grid-area: header-inner;
     display: inline;
     overflow: hidden;
     background-color: #fff;
-    background-image: url(../i/top-bg-1.png);
     border-bottom: 2px solid #FFC080;
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .25), inset 0 -1px 0 rgba(0, 0, 0, .1);

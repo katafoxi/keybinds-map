@@ -1,4 +1,4 @@
-"""configurationPackageKeybinds URL Configuration
+"""confKeybinds URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from configurationPackageKeybinds import settings
+from confKeybinds import settings
 from shortcutEditor.views import *
 
 urlpatterns = [
@@ -26,6 +26,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_URL)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 handler404 = pageNotFound

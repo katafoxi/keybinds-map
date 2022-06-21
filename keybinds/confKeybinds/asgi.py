@@ -1,5 +1,5 @@
 """
-ASGI config for configurationPackageKeybinds project.
+ASGI config for confKeybinds project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configurationPackageKeybinds.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'confKeybinds.settings')
 
 application = get_asgi_application()

@@ -3,10 +3,10 @@ from django.urls import reverse
 
 
 class Program(models.Model):
-    title= models.CharField(max_length=50)
-    version= models.CharField(max_length=50)
+    title= models.CharField(max_length=50, verbose_name='Название программы')
+    version= models.CharField(max_length=50, verbose_name='Версия')
     icon = models.ImageField(upload_to='icon')
-    program_site = models.URLField(max_length=250)
+    program_site = models.URLField(max_length=250, verbose_name='Оф.сайт')
 
     def __str__(self):
         return  self.title
@@ -14,15 +14,34 @@ class Program(models.Model):
     def get_absolute_url(self):
         return reverse('program', kwargs={'program_id':self.pk})
 
+    class Meta:
+        verbose_name = 'Поддерживаемые программы'
+        verbose_name_plural = 'Поддерживаемые программы'
+
+
+# def user_directory_path(instance, filename):
+#     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+#     return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 class ProgramCommand(models.Model):
-    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    program = models.ForeignKey('Program', on_delete=models.CASCADE)
     command_name = models.CharField(max_length=250)
     command_description = models.CharField(max_length=250)
     command_help = models.URLField(max_length=250)
-    icon = models.ImageField(upload_to='icon')
+
+    icon = models.ImageField(upload_to='program_icons', blank=True)
 
     def __str__(self):
         return  self.command_name
+
+    def get_absolute_url(self):
+        return reverse('command', kwargs={'command_id':self.pk})
+
+    class Meta:
+        verbose_name = "Команды "
+        verbose_name_plural = 'Команды программ'
+        ordering = ['id']
+
 
 
 
