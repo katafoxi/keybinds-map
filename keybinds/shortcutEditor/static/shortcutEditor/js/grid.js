@@ -108,6 +108,15 @@ let currentDroppable = null;
 let lastCurentDroppable = null;
 let saveTextContent = '';
 
+getHandlerIcon = function(){
+    let collectionIcon = document.getElementsByClassName('icons');
+        for (let i = 1; i < collectionIcon.length; i++) {
+            let elem = collectionIcon[i];
+            elem.style.display = '';
+    }
+
+}
+
 ball.onmousedown = function(event) {
     ball.style.cursor= 'grabbing'
 

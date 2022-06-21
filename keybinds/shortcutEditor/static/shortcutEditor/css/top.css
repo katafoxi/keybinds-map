@@ -92,8 +92,10 @@ label {
 .guide {
     box-sizing: border-box;
 }
+
 .selected{
- background: green;
+ border: 3px solid #14A421;
+border-radius: 3px;
 }
 
 .instructionAccumulator {
@@ -146,16 +148,16 @@ label {
 
 }
 .blockIcon{
-display:inline;
  min-width: 20px;
  min-height: 20px;
 }
-.td_to_icons{
-    width: 15px;
-    height: 15px;
+.command_description{
+    display: grid;
+    grid-template-columns: 18px auto;
+    gid-template-rows: 20px;
 }
 .icons {
-    left;
+    top;
     padding: 0%;
     margin: 0%;
     width: 15px;
