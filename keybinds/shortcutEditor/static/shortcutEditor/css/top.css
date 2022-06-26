@@ -8,13 +8,15 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 10px;
     color: #333;
-    background-color: #fff
+    background-color: #fff;
+    height: 100%;
 }
 
 .mainPage {
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content auto 1fr;
+    grid-template-rows: min-content min-content min-content;
     gap: 3px 3px;
     grid-auto-flow: row;
     grid-template-areas: "header" "instructionAccumulator " "keybordGrid";
@@ -52,11 +54,10 @@ body {
 
 .progIcon {
     height: 25px;
-
 }
 
-.progIcon:hover{
-background: red;
+.progIcon:hover {
+    background: red;
 }
 
 .header-inner {
@@ -93,115 +94,104 @@ label {
     box-sizing: border-box;
 }
 
-.selected{
- border: 3px solid #14A421;
-border-radius: 3px;
+.selected {
+    border: 3px solid #14A421;
+    border-radius: 3px;
 }
 
 .instructionAccumulator {
+    height: 100%;
     grid-area: instructionAccumulator;
     display: grid;
     grid-template-columns: min-content auto;
-    grid-template-rows: min-content;
+    grid-template-rows: 1fr;
     gap: 0px 5px;
     grid-auto-flow: row;
-    grid-template-areas: "scheme commandIcons ";
+    grid-template-areas: "subtableSheme commandIcons ";
 }
 
-.scheme {
-    grid-area: scheme;
-    /* height: min-content; */
-    background: rgb(238, 174, 202);
-    background: radial-gradient(circle, rgba(238, 174, 202, 0.19511554621848737) 0%, rgba(148, 187, 233, 0.19511554621848737) 100%);
+.subtableSheme {
+    font-size: 10px;
+    display: grid;
+    grid-template-columns: 70px auto;
+    grid-template-rows: repeat(8, 1fr);
+    grid-auto-flow: row;
+    grid-template-areas: "Symbol  Simple-title" "Alt  Alt-title" "Ctrl  Ctrl-title" "Shift  Shift-title" "CtrlAlt  CtrlAlt-title" "AltShift  AltShift-title" "CtrlShift CtrlShift-title" "CtrlAltShift  CtrlAltShift-title";
+    /* width: 100%; */
+    /* height: 100%; */
+    border-radius: 5px;
+    /* box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.288); */
 }
 
-.schemeSwitchCell {
-    width: 30px;
-}
-
-.schemeTitleCell {
-    width: 100px;
-    text-align: right;
-}
-
-.Simple-title {
-    text-align: right;
+.Cell {
+    border: 0.1px solid #5073ff2c;
 }
 
 .commandIcons {
-    grid-area: commandIcons;
+    height: 100%;
+    box-sizing: border-box;
     border: 5px double rgba(136, 93, 241, 0.3);
     border-radius: 9px;
+    /* grid-area: commandIcons;
     display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(6, 1fr);
-      gap: 0px 0px;
-      grid-auto-flow: column;
-      grid-template-areas:
-        ". . . . . ."
-        ". . . . . ."
-        ". . . . . ."
-        ". . . . . ."
-        ". . . . . ."
-        ". . . . . .";
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0px 0px;
+    grid-auto-flow: column;
+    grid-template-areas: ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ."; */
 }
 
+.blockIcon {
+    min-width: 20px;
+    min-height: 20px;
 }
-.blockIcon{
- min-width: 20px;
- min-height: 20px;
+
+.command_description {
+    cursor: grab;
+    vertical-align: super;
+    font-size: 10px;
 }
-.command_description{
-    display: grid;
-    grid-template-columns: 18px auto;
-    gid-template-rows: 20px;
-}
+
 .icons {
-    top;
     padding: 0%;
     margin: 0%;
-    width: 15px;
-    height: 15px;
-    cursor: grab;
-    position: absolute;
-    z-index: 1000;
+    width: 12px;
+    height: 12px;
+    /* cursor: grab; */
+    /* position: absolute; */
+    /* z-index: 1000; */
+}
+
+.icons:hover {
+    transform: scale(1.5);
+    /* Увеличиваем масштаб */
 }
 
 .keybordGrid {
     display: grid;
     grid-area: keybordGrid;
     grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(5, auto);
-    gap: 1px 6px;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 3px;
     grid-auto-flow: row;
     grid-template-areas: ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . .";
 }
 
 .subtable {
-    padding: 0%;
-    margin: 0%;
-    background: rgb(238, 174, 202);
-    background: radial-gradient(circle, rgba(238, 174, 202, 0.19511554621848737) 0%, rgba(148, 187, 233, 0.19511554621848737) 100%);
     font-size: 12px;
     display: grid;
-    /* border: 2px solid rgba(136, 93, 241, 0.5); */
-    border-top: 1px solid #5072ff;
-    border-right: 1px solid #5072ff;
-    border-bottom: 1px solid #5072ff;
-    border-radius: 5px;
-    grid-template-columns: 20px 15px auto;
+    grid-template-columns: 20px 1fr;
     grid-template-rows: repeat(8, auto);
-    /* gap: 2px 2px; */
     grid-auto-flow: row;
-    grid-template-areas: "Symbol Simple Simple-title" "Alt Alt-title Alt-title" "Ctrl Ctrl-title Ctrl-title" "Shift Shift-title Shift-title" "CtrlAlt CtrlAlt-title CtrlAlt-title" "CtrlShift CtrlShift-title CtrlShift-title" "AltShift AltShift-title AltShift-title" "CtrlAltShift CtrlAltShift-title CtrlAltShift-title";
-    width: 100%;
+    grid-template-areas: "Symbol  Simple-title" "Alt  Alt-title" "Ctrl  Ctrl-title" "Shift  Shift-title" "CtrlAlt  CtrlAlt-title" "AltShift  AltShift-title" "CtrlShift CtrlShift-title" "CtrlAltShift  CtrlAltShift-title";
+    /* width: 100%;*/
     height: 100%;
+    /* border-radius: 5px; */
+    /* box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.288); */
 }
 
-.subtable div {
-    border-top: 1px solid #5073ff2c;
-    border-right: 1px solid #5073ff2c;
-    border-bottom: 1px solid #5073ff2c;
+.brdr {
+    border: 0.1px solid #5073ff2c;
 }
 
 .abbr {
@@ -210,24 +200,17 @@ border-radius: 3px;
 }
 
 .droppable {
-    background: rgb(218, 218, 218);
-    background: radial-gradient(circle, rgba(218, 218, 218, 0.6124824929971988) 0%, rgba(29, 253, 40, 0.055) 50%, rgba(255, 255, 255, 0.5256477591036415) 100%);
-}
-
-.charmod {
-    text-align: center;
-    background: rgb(131, 58, 180);
-    background: linear-gradient(90deg, rgba(131, 58, 180, 0.6124824929971988) 0%, rgba(253, 29, 29, 0.5368522408963585) 50%, rgba(252, 176, 69, 0.5256477591036415) 100%);
+    padding-left: 2px;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6124824929971988) 0%, rgba(175, 255, 179, 0.16710434173669464) 50%, rgba(255, 255, 255, 0.5256477591036415) 100%);
 }
 
 .Symbol {
     grid-area: Symbol;
     text-align: center;
     background-color: bisque;
-    border-radius: 5px 5px 5px 0px;
-    -webkit-border-radius: 6px 4px 4px 0px;
-    -moz-border-radius: 6px 4px 4px 0px;
-    border-left: 1px solid #5072ff;
+    border-top-left-radius: 5px;
+    border-left: 2px solid #5072ff;
 }
 
 .Alt {
@@ -263,6 +246,7 @@ border-radius: 3px;
 .CtrlAltShift {
     border-left: 2px solid rgb(0, 0, 0);
     grid-area: CtrlAltShift;
+    border-bottom-left-radius: 5px;
 }
 
 .Simple {
@@ -295,13 +279,16 @@ border-radius: 3px;
 
 .CtrlAltShift-title {
     grid-area: CtrlAltShift-title;
+    border-bottom-right-radius: 5px;
 }
 
 .Simple-title {
     grid-area: Simple-title;
+    border-top-right-radius: 5px;
 }
 
 .flipswitch {
+    margin: 0px;
     position: relative;
     width: 30px;
 }

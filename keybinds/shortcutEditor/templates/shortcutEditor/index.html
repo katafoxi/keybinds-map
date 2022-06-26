@@ -1,17 +1,6 @@
-{% extends 'shortcutEditor/base.html' %}
-{% block content %}
-
-    {% for command in program_commands %}
-    <div class="droppable command_description">
-        <div>
-            <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}"/>
-        </div>
-        <div>
-            {{command.command_name}}
-        </div>
-
-    </div>
-    {% endfor %}
-
-{% endblock %}
-
+{% extends 'shortcutEditor/base.html' %} {% block content %} {% for command in program_commands %}
+<div class="command_description">
+    <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
+    <span class="descr">{{command.command_name}}</span>
+</div>
+{% endfor %} {% endblock %}

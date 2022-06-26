@@ -1,5 +1,4 @@
-{% load static %}
-{% load command_tags %}
+{% load static %} {% load command_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +11,7 @@
     <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
 
     <link rel="stylesheet" href="{% static 'shortcutEditor/css/top.css' %}">
+
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'shortcutEditor/i/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'shortcutEditor/i/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'shortcutEditor/i/favicon/favicon-16x16.png' %}">
@@ -25,76 +25,69 @@
 
 <body>
 
-<div class="mainPage">
-    <header class="header">
+    <div class="mainPage">
+        <header class="header">
 
-        <div class="logo">
-            <div class="top-head">
-                <a href="{% url 'main'%}">онлайн редактор комбинаций </a>
+            <div class="logo">
+                <div class="top-head">
+                    <a href="{% url 'main'%}">онлайн редактор комбинаций </a>
+                </div>
+                <a href="{% url 'main'%}">
+                    <img id="logo" class="logo" src="{% static 'shortcutEditor/i/logo.png' %}" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" />
+                </a>
             </div>
-            <a href="{% url 'main'%}">
-                <img id="logo" class="logo" src="{% static 'shortcutEditor/i/logo.png' %}" title="Редактор комбинаций"
-                     alt="Онлайн-редактор комбинаций"/>
-            </a>
-        </div>
-        <div class="guide">
-            <!-- <h1>Редактор комбинаций</h1> -->
-            <p class="redLine">
-                Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
-                в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
-                комбинаций в выбранной программе.
-            </p>
+            <div class="guide">
+                <!-- <h1>Редактор комбинаций</h1> -->
+                <p class="redLine">
+                    Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных комбинаций в выбранной программе.
+                </p>
 
-            <p class="redLine">
-                Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
-                находящиеся на сетке клавиатуры в удобное/логичное положение.
-            </p>
-        </div>
-        <div>
-            {% block mainmenu %}
-            <ul>
-                {% for m in menu %} {% if not forloop.last %}
-                <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                {% else %}
-                <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                {% endif %} {% endfor %}
-            </ul>
-            {% endblock mainmenu %}
-
-            <p>Выберите программу</p>
+                <p class="redLine">
+                    Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение.
+                </p>
+            </div>
             <div>
-                 {% for prog in programs %}
-                    {% if prog.pk == prog_selected %}
-<!--                        <li class="selected">{{prog.title}}</li>-->
-                         <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
+                {% block mainmenu %}
+                <ul>
+                    {% for m in menu %} {% if not forloop.last %}
+                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
                     {% else %}
-                        <a href="{{ prog.get_absolute_url }}">
-                            <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
-                        </a>
-                    {% endif %}
-                {% endfor %}
-<!--                {% for pr in programs %}-->
-<!--                <img class='progIcon' src="{{pr.icon.url}}" title="{{pr.title}}" alt="{{pr.title}}"/>-->
-<!--                {% endfor %}-->
+                    <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                    {% endif %} {% endfor %}
+                </ul>
+                {% endblock mainmenu %}
+
+                <p>Выберите программу</p>
+                <div>
+                    {% for prog in programs %} {% if prog.pk == prog_selected %}
+                    <!--                        <li class="selected">{{prog.title}}</li>-->
+                    <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" /> {% else %}
+                    <a href="{{ prog.get_absolute_url }}">
+                        <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" />
+                    </a>
+                    {% endif %} {% endfor %}
+                    <!--                {% for pr in programs %}-->
+                    <!--                <img class='progIcon' src="{{pr.icon.url}}" title="{{pr.title}}" alt="{{pr.title}}"/>-->
+                    <!--                {% endfor %}-->
+                </div>
+
+
             </div>
 
 
-        </div>
+            <div class="header-inner">
 
+                <div class="signin-form">
 
-        <div class="header-inner">
+                    <form class="form-inline" action="https://chess-samara.ru/" method="post">
+                        <input type="hidden" name="function" value="enter">
+                        <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />
+                        <input type="password" name="pswd" class="input-small" placeholder="Пароль" />
+                        <label class="checkbox"> <input name="remember" type="checkbox"/>Запомнить</label>
+                        <button type="submit" class="btn">Войти</button>
+                    </form>
 
-            <div class="signin-form">
-
-                <form class="form-inline" action="https://chess-samara.ru/" method="post">
-                    <input type="hidden" name="function" value="enter">
-                    <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин"/>
-                    <input type="password" name="pswd" class="input-small" placeholder="Пароль"/>
-                    <label class="checkbox"> <input name="remember" type="checkbox"/>Запомнить</label>
-                    <button type="submit" class="btn">Войти</button>
-                </form>
-
-                <!-- <div class="main-page-social-buttons">
+                    <!-- <div class="main-page-social-buttons">
                     <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">
                         <span class="social-likes__button social-likes__button_facebook">
                             <span class="social-likes__icon social-likes__icon_facebook"></span>
@@ -112,56 +105,57 @@
                     </div>
                 </div> -->
 
-            </div>
-
-            <div class="hmargin signin-ad-links-simple">
-                <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |
-                <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>
-            </div>
-        </div>
-
-    </header>
-
-    <div class="instructionAccumulator">
-        <div class="scheme">
-            <div class="subtable scheme">
-                <div class="Cell Symbol abbr">key</div>
-                <div class="Cell Alt abbr">icon</div>
-                <div class="Cell Ctrl "></div>
-                <div class="Cell Shift "></div>
-                <div class="Cell CtrlAlt schemeSwitchCell"></div>
-                <div class="Cell CtrlShift schemeSwitchCell"></div>
-                <div class="Cell AltShift schemeSwitchCell"></div>
-                <div class="Cell CtrlAltShift schemeSwitchCell">
-
                 </div>
-                <div class="Cell Simple schemeSwitchCell"></div>
-                <div class="Cell Alt-title schemeTitleCell"> +Alt</div>
-                <div class="Cell Ctrl-title schemeTitleCell">+Ctrl</div>
-                <div class="Cell Shift-title schemeTitleCell">+Shift</div>
-                <div class="Cell CtrlAlt-title schemeTitleCell">+Ctrl+Alt</div>
-                <div class="Cell CtrlShift-title schemeTitleCell">+Ctrl+Shift</div>
-                <div class="Cell AltShift-title schemeTitleCell">+Alt+Shift</div>
-                <div class="Cell CtrlAltShift-title schemeTitleCell">+Ctrl+Alt+Shift</div>
-                <div class="Cell Simple-title ">modifers</div>
+
+                <div class="hmargin signin-ad-links-simple">
+                    <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |
+                    <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>
+                </div>
             </div>
-            ';
+
+        </header>
+
+        <div class="instructionAccumulator">
+            <div class="scheme">
+                <div class="subtableSheme">
+                    <div class="Cell Symbol ">key</div>
+                    <div class="Cell Alt ">+Alt</div>
+                    <div class="Cell Ctrl ">+Ctrl</div>
+                    <div class="Cell Shift ">+Shift</div>
+                    <div class="Cell CtrlAlt ">+Ctrl+Alt</div>
+                    <div class="Cell AltShift ">+Alt+Shift</div>
+                    <div class="Cell CtrlShift ">+Ctrl+Shift</div>
+                    <div class="Cell CtrlAltShift ">+Ctrl+Alt+Shift</div>
+                    <div class="Cell Simple "></div>
+                    <div class="Cell Alt-title "> </div>
+                    <div class="Cell Ctrl-title "></div>
+                    <div class="Cell Shift-title "></div>
+                    <div class="Cell CtrlAlt-title schemeSwitchCell"></div>
+                    <div class="Cell AltShift-title schemeSwitchCell"></div>
+                    <div class="Cell CtrlShift-title schemeSwitchCell"></div>
+                    <div class="Cell CtrlAltShift-title schemeSwitchCell"></div>
+                    <div class="Cell Simple-title schemeSwitchCell ">modifers</div>
+                </div>
+
+            </div>
+
+            <div class="commandIcons droppable">
+                <div class="">
+                    <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
+                </div>
+
+                {% block content %} {% endblock %}
+            </div>
         </div>
 
-        <div class="commandIcons">
-            <div class="droppable">
-                 <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
-            </div>
-               {% block content %} {% endblock %}
-        </div>
+
+        <div id="keybordGrid" class="keybordGrid"></div>
     </div>
 
 
-    <div id="keybordGrid" class="keybordGrid"></div>
-</div>
-
-<script src="{% static 'shortcutEditor/js/grid.js' %}"></script>
-
+    <link href="{% static 'shortcutEditor/css/dragula.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'shortcutEditor/js/dragula.js' %}"></script>
+    <script src="{% static 'shortcutEditor/js/grid.js' %}"></script>
 </body>
 
 </html>
