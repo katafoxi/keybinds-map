@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render
 from .models import *
-from confKeybinds.settings import BASE_DIR
+
 
 menu = [{'title': 'О сайте', 'url_name': 'about'},
         {'title': 'Добавить программу', 'url_name': 'add_program'},
@@ -19,7 +19,8 @@ def index(request):
         # 'program_commands': program_commands,
         'prog_selected':0
     }
-    return render(request, 'shortcutEditor/index.html', context=context)
+    res = render(request, 'shortcutEditor/index.html', context=context)
+    return res
 
 
 def about(request):

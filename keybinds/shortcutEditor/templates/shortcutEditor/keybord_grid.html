@@ -1,5 +1,5 @@
 {% extends 'shortcutEditor/base.html' %}
-{% block program_command_icons %}
+{% block keyboard_grid %}
 {% for command in program_commands %}
 <div class="command_description">
     <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
@@ -7,5 +7,3 @@
 </div>
 {% endfor %}
 {% endblock %}
-
-
