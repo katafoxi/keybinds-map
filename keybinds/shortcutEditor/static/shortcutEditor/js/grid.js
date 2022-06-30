@@ -11,6 +11,9 @@ const modifiers = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', '
 generateKeyboardGrid();
 showFlipswiths();
 showModifiersList();
+onDragMaster();
+window.onresize = showHide;
+
 
 
 function showFlipswiths() {
@@ -108,17 +111,23 @@ function generateKeyboardGrid() {
 
 
 // dragula([document.querySelector('#left'), document.querySelector('#right')], {});
+function onDragMaster() {
+    const boxNodes = document.querySelectorAll('.droppable'); // returns NodeList
 
-const boxNodes = document.querySelectorAll('.droppable'); // returns NodeList
-
-const draggableBoxes = Array.prototype.slice.call(boxNodes);
+    const draggableBoxes = Array.prototype.slice.call(boxNodes);
 
 
-dragula(draggableBoxes, )
-    .on('drop', (el, targret) => {
-        showHide();
+    dragula(draggableBoxes, )
+        .on('drag', (el) => {
+            el.style.width = '14px';
+        })
+        .on('drop', (el, targret) => {
+            el.style.width = (targret.offsetWidth - 5) + 'px';
+        })
+}
 
-    })
+
+
 
 // function showHideDescriptionCommand(el, targret) {
 //     // alert(el.childNodes[1].offsetWidth)
@@ -130,22 +139,17 @@ dragula(draggableBoxes, )
 //     }
 // }
 
+
+
 function showHide() {
     let collectionCommandDescr = document.getElementsByClassName('command_description');
     // console.log(collectionCommandDescr)
 
+
     for (let i = 1; i < collectionCommandDescr.length; i++) {
         let elem = collectionCommandDescr[i];
-
-        let elemWidth = elem.childNodes[1].offsetWidth + elem.childNodes[3].offsetWidth;
-        // alert(elem.parentNode.offsetWidth)
-
-        if (+elem.parentNode.offsetWidth < 50) {
-            elem.childNodes[3].style.display = 'none';
-        } else {
-            elem.childNodes[3].style.display = '';
+        if (elem.parentNode.getAttribute('class').split(' ')[0] == 'brdr') {
+            elem.style.width = (elem.parentNode.offsetWidth - 5) + 'px';
         }
     }
 }
-
-window.onresize = showHide;
