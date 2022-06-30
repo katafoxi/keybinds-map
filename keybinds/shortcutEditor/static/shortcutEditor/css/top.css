@@ -183,9 +183,9 @@ label {
     overflow: hidden;
 }
 
-.command_description:hover,
-.descr:hover {
-    width: 120px;
+.command_description:hover {
+    transform: scale(1.5);
+    width: 150px;
     z-index: 200;
     position: relative;
     overflow: visible;
@@ -196,13 +196,14 @@ label {
 .icons {
     padding: 0%;
     margin: 0%;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
 }
 
-.icons:hover {
+
+/* .icons:hover {
     transform: scale(3);
-}
+} */
 
 
 /* || Icons and description styles */
@@ -376,4 +377,16 @@ label {
 
 .flipswitch-cb:checked+.flipswitch-label .flipswitch-switch {
     right: 0;
+}
+
+.mouse-lft {
+    display: none;
+}
+
+.mouse-mid {
+    display: none;
+}
+
+.mouse-rght {
+    display: none;
 }
