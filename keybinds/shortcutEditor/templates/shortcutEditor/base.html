@@ -59,13 +59,16 @@
 
                 <p>Выберите программу</p>
                 <div>
-                    {% for prog in programs %} {% if prog.pk == prog_selected %}
+                    {% for prog in programs %}
+                    {% if prog.pk == prog_selected %}
                     <!--                        <li class="selected">{{prog.title}}</li>-->
-                    <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" /> {% else %}
+                    <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" />
+                    {% else %}
                     <a href="{{ prog.get_absolute_url }}">
                         <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" />
                     </a>
-                    {% endif %} {% endfor %}
+                    {% endif %}
+                    {% endfor %}
                     <!--                {% for pr in programs %}-->
                     <!--                <img class='progIcon' src="{{pr.icon.url}}" title="{{pr.title}}" alt="{{pr.title}}"/>-->
                     <!--                {% endfor %}-->
@@ -141,7 +144,7 @@
 
             <div class="commandIcons droppable">
                 <div class="">
-                    <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" id="ball">
+                    <img class="icons" id="ball" src="{% static 'shortcutEditor/i/ball.svg' %}" >
                 </div>
 
                 {% block program_command_icons %} {% endblock %}
@@ -149,8 +152,40 @@
         </div>
 
 
-        <div id="keybordGrid" class="keybordGrid"></div>
-<!--        <div id="keybordGrid" class="keybordGrid">{% block keyboard_grid %} {% endblock %}</div>-->
+<!--        <div id="keybordGrid" class="keybordGrid"></div>-->
+        <div id="keybordGrid" class="keybordGrid">
+            {% block keyboard_grid %}
+                {% for row in keyboard_keys.values %}
+                    {% for key in row %}
+                                <div class="char {{ key }}">
+                                        {% if key != '' %}
+                                            <div  class="subtable">
+                                                <div class="brdr Symbol"> {{ key }} </div>
+                                                <div class="brdr Alt abbr" title = "alt">a</div>
+                                                <div class="brdr Ctrl abbr">c</div>
+                                                <div class="brdr Shift abbr">s</div>
+                                                <div class="brdr CtrlAlt abbr">ca</div>
+                                                <div class="brdr AltShift abbr">as</div>
+                                                <div class="brdr CtrlShift abbr">cs</div>
+                                                <div class="brdr CtrlAltShift abbr">cas</div>
+                                                <div class="brdr Simple "></div>
+                                                <div class="brdr Alt-title droppable"></div>
+                                                <div class="brdr Ctrl-title droppable"></div>
+                                                <div class="brdr Shift-title droppable"></div>
+                                                <div class="brdr CtrlAlt-title droppable"></div>
+                                                <div class="brdr AltShift-title droppable"></div>
+                                                <div class="brdr CtrlShift-title droppable"></div>
+                                                <div class="brdr CtrlAltShift-title droppable"></div>
+                                                <div class="brdr Simple-title {{ key }}  droppable"></div>
+                                            </div>
+                                        {{ else }}
+                                            <div class="char {{ key }} "></div>
+                                        {% endif %}
+                                </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endblock keyboard_grid %}
+        </div>
     </div>
 
 

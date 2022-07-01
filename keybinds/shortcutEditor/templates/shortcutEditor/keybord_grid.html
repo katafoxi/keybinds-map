@@ -1,9 +1,0 @@
-{% extends 'shortcutEditor/base.html' %}
-{% block keyboard_grid %}
-{% for command in program_commands %}
-<div class="command_description">
-    <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
-    <span class="descr">{{command.command_name_repr}}</span>
-</div>
-{% endfor %}
-{% endblock %}

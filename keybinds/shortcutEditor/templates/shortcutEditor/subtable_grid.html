@@ -1,0 +1,23 @@
+{% block subtable_grid %}
+    {% if key  %}:
+            <div  class="subtable">
+                <div class="brdr Symbol"> {{ key }} </div>
+                <div class="brdr Alt abbr" title = "alt">a</div>
+                <div class="brdr Ctrl abbr">c</div>
+                <div class="brdr Shift abbr">s</div>
+                <div class="brdr CtrlAlt abbr">ca</div>
+                <div class="brdr AltShift abbr">as</div>
+                <div class="brdr CtrlShift abbr">cs</div>
+                <div class="brdr CtrlAltShift abbr">cas</div>
+                <div class="brdr Simple "></div>
+                <div class="brdr Alt-title droppable"></div>
+                <div class="brdr Ctrl-title droppable"></div>
+                <div class="brdr Shift-title droppable"></div>
+                <div class="brdr CtrlAlt-title droppable"></div>
+                <div class="brdr AltShift-title droppable"></div>
+                <div class="brdr CtrlShift-title droppable"></div>
+                <div class="brdr CtrlAltShift-title droppable"></div>
+                <div class="brdr Simple-title {{ key }}  droppable"></div>
+            </div>
+    {% endif %}
+{% endblock %}

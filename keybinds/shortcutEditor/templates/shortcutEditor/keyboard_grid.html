@@ -1,0 +1,9 @@
+{% extends 'shortcutEditor/base.html' %}
+{% block keyboard_grid %}
+    {% for row in keyboard_keys %}
+        {% for key in keyboard_keys[row] %}
+                    <div class="char' + {{ key }} + '">{% include subtable_grid.html with key={{ key }}  %}</div>
+
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

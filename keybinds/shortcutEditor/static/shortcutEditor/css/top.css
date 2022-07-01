@@ -66,7 +66,6 @@ body {
     grid-template-rows: repeat(5, 1fr);
     gap: 3px;
     /* grid-auto-flow: row; */
-    grid-template-areas: ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . ." ". . . . . . . . . . . . . . . . .";
 }
 
 .subtable {
@@ -177,15 +176,15 @@ label {
 
 .command_description {
     cursor: grab;
-    vertical-align: super;
+    vertical-align: middle;
     font-size: 9px;
     white-space: nowrap;
     overflow: hidden;
 }
 
 .command_description:hover {
-    transform: scale(1.5);
     width: 150px;
+    transform: scale(1.5);
     z-index: 200;
     position: relative;
     overflow: visible;
@@ -379,14 +378,9 @@ label {
     right: 0;
 }
 
-.mouse-lft {
-    display: none;
-}
 
-.mouse-mid {
+/* .mouse_left,
+.mouse_middle,
+.mouse_right {
     display: none;
-}
-
-.mouse-rght {
-    display: none;
-}
+} */
