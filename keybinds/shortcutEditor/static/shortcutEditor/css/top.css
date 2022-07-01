@@ -68,7 +68,7 @@ body {
     /* grid-auto-flow: row; */
 }
 
-.subtable {
+.char {
     font-size: 12px;
     display: grid;
     grid-template-columns: 20px 1fr;

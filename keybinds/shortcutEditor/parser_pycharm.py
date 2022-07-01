@@ -8,6 +8,7 @@ i= 1
 for action in root:
     print(i,'|', action.attrib['id'], end='|')
 
+
     i+=1
     for shortcut in action:
         print(shortcut.tag,  end='|')
