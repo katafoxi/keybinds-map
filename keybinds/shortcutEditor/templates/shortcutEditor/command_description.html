@@ -1,0 +1,9 @@
+
+
+
+{% for comm in command %}
+<div class="command_description">
+    <img class='icons' src="{{comm.icon.url}}" title="{{comm.title}}" alt="{{comm.title}}" />
+    <span class="descr">{{comm.command_name_repr}}</span>
+</div>
+{% endfor %}

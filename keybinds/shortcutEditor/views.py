@@ -2,6 +2,8 @@ from pprint import pprint
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render
+from django.template import loader
+
 from .models import *
 from .parser_pycharm import parse_settings_file
 
@@ -63,9 +65,16 @@ for command_name, command_type_shortcuts in commands_dict.items():
                     modifiers = ''.join(modifiers)
                     # print(modifiers, key, command_name)
             if keyboard_keys_dict.get(key):
-                keyboard_keys_dict[key].update({modifiers:command_name})
+                command = ProgramCommand.objects.filter(program_id= 1, command_name=command_name)
+                template = loader.get_template('shortcutEditor/command_description.html')
+                context = {
+                    'command': command,
+                }
+                command_description = template.render(context)
+                keyboard_keys_dict[key].update({modifiers:command_description})
 
-print(keyboard_keys_dict['z'])
+# print(keyboard_keys_dict['z'])
+print(ProgramCommand.objects.filter(program_id= 1, command_name='ExpressionTypeInfo'))
 
 def index(request):
     programs = Program.objects.all()
