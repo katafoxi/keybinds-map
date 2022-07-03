@@ -1,3 +1,4 @@
+window.onload = changeCommandDescriptionWidth
 onDragMaster();
 window.onresize = changeCommandDescriptionWidth;
 showFlipswiths();

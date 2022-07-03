@@ -11,7 +11,7 @@ keyboard_keys_front = {
     'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Esc', 'PSc', 'SLk', 'Pause'],
     'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Bck', 'Ins', 'home', 'PUp'],
     'rowQW': ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[{', ']}', '\\|', 'Del', 'End', 'PD'],
-    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', '', 'Enter', '', 'Up', ''],
+    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', '', 'Enter', 'Space', 'Up', ''],
     'rowZX': ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',<', '.>', '/?', 'mouse_left', 'mouse_middle', 'mouse_right', 'Left',
               'Down', 'Right']
 }
@@ -23,7 +23,7 @@ keyboard_keys_backend = {
               'page up'],
     'rowQW': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'open_bracket', 'close_bracket', 'back_quote', 'delete',
               'end', 'page down'],
-    'rowAS': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'semicolon', 'apostrophe', 'None1', 'enter', 'None2', 'up',
+    'rowAS': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'semicolon', 'apostrophe', 'None1', 'enter', 'space', 'up',
               'None3'],
     'rowZX': ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'slash', 'button1', 'button2', 'button3', 'left',
               'down', 'right']
@@ -52,7 +52,7 @@ for key, value in keyboard_keys_dict.items():
 
 
 
-commands_dict = parse_settings_file()  # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},
+commands_dict = parse_settings_file(r'D:/Windows.xml')  # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},
 for command_name, command_type_shortcuts in commands_dict.items():
     # print(command_name, command_type_shortcuts)
     for shortcut_list in command_type_shortcuts.values():
@@ -63,7 +63,9 @@ for command_name, command_type_shortcuts in commands_dict.items():
                 if len(modifiers_key)!=0:
                     modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
                     modifiers = ''.join(modifiers)
-                    # print(modifiers, key, command_name)
+                    print(modifiers, key, command_name)
+                else:
+                    modifiers = 'simple'
             if keyboard_keys_dict.get(key):
                 command = ProgramCommand.objects.filter(program_id= 1, command_name=command_name)
                 template = loader.get_template('shortcutEditor/command_description.html')
@@ -71,6 +73,7 @@ for command_name, command_type_shortcuts in commands_dict.items():
                     'command': command,
                 }
                 command_description = template.render(context)
+
                 keyboard_keys_dict[key].update({modifiers:command_description})
 
 # print(keyboard_keys_dict['z'])

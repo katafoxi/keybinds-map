@@ -8,13 +8,14 @@ def parse_settings_file(path_to_file = r'D:/BFR.xml'):
     root = tree.getroot()
     commands_dict = {}
     for action in root:
+        print(action.attrib['id'])
         mouse_shortcut_list = []
         keyboard_shortcut_list = []
         for shortcut in action:
             if (shortcut.tag == 'mouse-shortcut'):
-                mouse_shortcut_list.append(shortcut.get('keystroke'))
+                mouse_shortcut_list.append(shortcut.get('keystroke').lower())
             elif (shortcut.tag == 'keyboard-shortcut'):
-                keyboard_shortcut_list.append(shortcut.get('first-keystroke'))
+                keyboard_shortcut_list.append(shortcut.get('first-keystroke').lower())
 
         # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},
         commands_dict[action.attrib['id']]= {'keyboard-shortcut':keyboard_shortcut_list,
@@ -26,4 +27,4 @@ def parse_settings_file(path_to_file = r'D:/BFR.xml'):
 
 
 if __name__ == '__main__':
-    pprint(parse_settings_file())
+   parse_settings_file(r'D:/Windows.xml')

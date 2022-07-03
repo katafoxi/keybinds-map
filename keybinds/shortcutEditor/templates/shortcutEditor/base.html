@@ -23,7 +23,7 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body>
+<body  >
 
     <div class="mainPage">
         <header class="header">
@@ -132,7 +132,7 @@
                     <div class="Cell Simple "></div>
                     <div class="Cell Alt-title "> </div>
                     <div class="Cell Ctrl-title "></div>
-                    <div class="Cell Shift-title "></div>
+                    <div class="Cell Shift-title schemeSwitchCell"></div>
                     <div class="Cell CtrlAlt-title schemeSwitchCell"></div>
                     <div class="Cell AltShift-title schemeSwitchCell"></div>
                     <div class="Cell CtrlShift-title schemeSwitchCell"></div>
@@ -170,11 +170,11 @@
                         <div class="brdr Alt-title droppable">{{ key.a }} </div>
                         <div class="brdr Ctrl-title droppable">{{ key.c }}</div>
                         <div class="brdr Shift-title droppable">{{ key.s }}</div>
-                        <div class="brdr CtrlAlt-title droppable"></div>
-                        <div class="brdr AltShift-title droppable"></div>
-                        <div class="brdr CtrlShift-title droppable"></div>
-                        <div class="brdr CtrlAltShift-title droppable"></div>
-                        <div class="brdr Simple-title {{ key }}  droppable"></div>
+                        <div class="brdr CtrlAlt-title droppable">{{ key.ac }}</div>
+                        <div class="brdr AltShift-title droppable">{{ key.as }}</div>
+                        <div class="brdr CtrlShift-title droppable">{{ key.cs }}</div>
+                        <div class="brdr CtrlAltShift-title droppable">{{ key.acs }}</div>
+                        <div class="brdr Simple-title {{ key }}  droppable">{{ key.simple }}</div>
                     </div>
                     {% else %}
                          <div class="char {{ key }}"></div>
