@@ -8,7 +8,7 @@ def parse_settings_file(path_to_file = r'D:/BFR.xml'):
     root = tree.getroot()
     commands_dict = {}
     for action in root:
-        print(action.attrib['id'])
+        # print(action.attrib['id'])
         mouse_shortcut_list = []
         keyboard_shortcut_list = []
         for shortcut in action:

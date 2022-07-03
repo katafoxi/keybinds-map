@@ -62,7 +62,7 @@ body {
 .keybordGrid {
     display: grid;
     grid-area: keybordGrid;
-    grid-template-columns: repeat(16, 1fr);
+    grid-template-columns: repeat(17, 1fr);
     grid-template-rows: repeat(5, 1fr);
     gap: 3px;
     /* grid-auto-flow: row; */
