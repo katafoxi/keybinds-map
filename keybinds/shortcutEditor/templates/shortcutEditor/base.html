@@ -155,11 +155,11 @@
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
         <div id="keybordGrid" class="keybordGrid">
             {% block keyboard_grid %}
-                {% for key, value in keyboard_keys_dict.items %}
-                    {% if value != '' %}
+                {% for key in keyboard_keys_dict.values %}
+                    {% if key.front_name != '' %}
                     <div class="char {{ key }}">
-                        <div class="brdr Symbol"> {{ key }} </div>
-                        <div class="brdr Alt abbr" title = "alt">a</div>
+                        <div class="brdr Symbol"> {{ key.front_name }} </div>
+                        <div class="brdr Alt abbr">a</div>
                         <div class="brdr Ctrl abbr">c</div>
                         <div class="brdr Shift abbr">s</div>
                         <div class="brdr CtrlAlt abbr">ca</div>
@@ -167,9 +167,9 @@
                         <div class="brdr CtrlShift abbr">cs</div>
                         <div class="brdr CtrlAltShift abbr">cas</div>
                         <div class="brdr Simple "></div>
-                        <div class="brdr Alt-title droppable"></div>
-                        <div class="brdr Ctrl-title droppable"></div>
-                        <div class="brdr Shift-title droppable"></div>
+                        <div class="brdr Alt-title droppable">{{ key.a }}</div>
+                        <div class="brdr Ctrl-title droppable">{{ key.c }}</div>
+                        <div class="brdr Shift-title droppable">{{ key.s }}</div>
                         <div class="brdr CtrlAlt-title droppable"></div>
                         <div class="brdr AltShift-title droppable"></div>
                         <div class="brdr CtrlShift-title droppable"></div>

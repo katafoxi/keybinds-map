@@ -9,5 +9,5 @@ urlpatterns = [
     path('contact/', contact, name = 'contact'),
     path('login/', login, name = 'login'),
     path('program/<int:program_id>/', show_program_commands, name ='program'),
-    # path('command/<int:command_id>/', show_command, name = 'command')
+    # path_to_file('command/<int:command_id>/', show_command, name = 'command')
 ]

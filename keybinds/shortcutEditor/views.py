@@ -1,21 +1,30 @@
+from pprint import pprint
+
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render
 from .models import *
+from .parser_pycharm import parse_settings_file
 
 keyboard_keys_front = {
     'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Esc', 'PSc', 'SLk', 'Pause'],
     'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Bck', 'Ins', 'home', 'PUp'],
     'rowQW': ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[{', ']}', '\\|', 'Del', 'End', 'PD'],
-    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', 'None1', 'Enter', 'None2', 'Up', 'None3'],
-    'rowZX': ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',<', '.>', '/?', 'mouse_left', 'mouse_middle', 'mouse_right', 'Left', 'Down', 'Right']
+    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', '', 'Enter', '', 'Up', ''],
+    'rowZX': ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',<', '.>', '/?', 'mouse_left', 'mouse_middle', 'mouse_right', 'Left',
+              'Down', 'Right']
 }
 
 keyboard_keys_backend = {
-    'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'escape', 'print screen', 'scroll lock', 'pause'],
-    'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'minus', 'equals', 'backspace', 'Ins', 'home', 'page up'],
-    'rowQW': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'left square bracket', 'left square bracket', 'reverse solidus', 'delete', 'end', 'page down'],
-    'rowAS': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'semicolon', 'apostrophe', '', 'enter', '', 'up', ''],
-    'rowZX': ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'solidus', 'button1', 'button2', 'button3', 'Left', 'down', 'right']
+    'rowF1': ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'escape', 'print screen',
+              'scroll lock', 'pause'],
+    'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'minus', 'equals', 'back_space', 'insert', 'home',
+              'page up'],
+    'rowQW': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'open_bracket', 'close_bracket', 'back_quote', 'delete',
+              'end', 'page down'],
+    'rowAS': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'semicolon', 'apostrophe', 'None1', 'enter', 'None2', 'up',
+              'None3'],
+    'rowZX': ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'slash', 'button1', 'button2', 'button3', 'left',
+              'down', 'right']
 }
 modifiers = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', 'CtrlAltShift']
 
@@ -33,11 +42,30 @@ def to_list(dictionary):
             value_list.append(key)
     return value_list
 
-keyboard_keys_dict = dict(zip(to_list(keyboard_keys_front), to_list(keyboard_keys_backend)))
+
+keyboard_keys_dict = dict(zip(to_list(keyboard_keys_backend), to_list(keyboard_keys_front)))
+
+for key, value in keyboard_keys_dict.items():
+    keyboard_keys_dict[key] = {'front_name': value} # example 'f8': {'front_name': 'F8'},
 
 
 
+commands_dict = parse_settings_file()  # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},
+for command_name, command_type_shortcuts in commands_dict.items():
+    # print(command_name, command_type_shortcuts)
+    for shortcut_list in command_type_shortcuts.values():
+        if len(shortcut_list)!=0:
+            for shortcut in shortcut_list:
+                modifiers_key = shortcut.split()
+                key = modifiers_key.pop()
+                if len(modifiers_key)!=0:
+                    modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
+                    modifiers = ''.join(modifiers)
+                    # print(modifiers, key, command_name)
+            if keyboard_keys_dict.get(key):
+                keyboard_keys_dict[key].update({modifiers:command_name})
 
+print(keyboard_keys_dict['z'])
 
 def index(request):
     programs = Program.objects.all()
@@ -47,14 +75,15 @@ def index(request):
         'title': 'Редактор комбинаций',
         'programs': programs,
         # 'program_commands': program_commands,
-        'prog_selected':0,
-        'keyboard_keys_dict':keyboard_keys_dict
+        'prog_selected': 0,
+        'keyboard_keys_dict': keyboard_keys_dict
     }
     res = render(request, 'shortcutEditor/index.html', context=context)
     return res
 
+
 def about(request):
-    return render(request, 'shortcutEditor/about.html', {'title':'О сайте'})
+    return render(request, 'shortcutEditor/about.html', {'title': 'О сайте'})
 
 
 def add_program(request):
@@ -72,6 +101,7 @@ def login(request):
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Такой страницы пока нет</h1>')
 
+
 def show_program_commands(request, program_id):
     programs = Program.objects.all()
     program_commands = ProgramCommand.objects.filter(program_id=program_id)
@@ -82,10 +112,11 @@ def show_program_commands(request, program_id):
         'title': 'Редактор комбинаций',
         'programs': programs,
         'program_commands': program_commands,
-        'prog_selected':program_id,
+        'prog_selected': program_id,
         'keyboard_keys_dict': keyboard_keys_dict
     }
     return render(request, 'shortcutEditor/index.html', context=context)
+
 
 def show_command(request, command_id):
     return HttpResponse('Команда какая-то')
