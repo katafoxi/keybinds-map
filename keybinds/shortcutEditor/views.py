@@ -37,6 +37,10 @@ def to_print(*arg, **kwargs):
 
 
 def get_keyboard_keys_dict():
+    """
+
+    @return: dict {'f1': {'front_name': 'F1'},...}
+    """
     def to_list(dictionary):
         value_list = []
         for row in dictionary.values():
@@ -59,10 +63,20 @@ def get_all_prog_commands_db_dict(program_id=1):
     return all_prog_commands_db_dict
 
 
-def modificate_keyboard_keys_dict(program_id=1):
-    keyboard_keys_dict=get_keyboard_keys_dict()
+def modify_keyboard_keys_dict(program_id=1):
+    """
+
+    @param program_id: id program from db
+    @return: dict {'f1': {
+                        'front_name': 'F1',
+                        'simple': 'help',
+                        'a': 'command'
+                        'c': 'command',
+                        's': '',
+                        },...
+    """
+    keyboard_keys_dict = get_keyboard_keys_dict()
     assigned_command_dict = parse_settings_file(r'D:/Windows.xml')
-    # # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []}
 
     for command_name, command_type_shortcuts in assigned_command_dict.items():
         # print(command_name, command_type_shortcuts)
@@ -74,9 +88,10 @@ def modificate_keyboard_keys_dict(program_id=1):
                     if len(modifiers_key) != 0:
                         modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
                         modifiers = ''.join(modifiers)
-                        # print(modifiers, key, command_name)
+                        # to_print(modifiers, key, command_name) #
                     else:
                         modifiers = 'simple'
+                    # (modifiers='cs', key='9', command_name='ToggleBookmark9')
 
                     if keyboard_keys_dict.get(key):
                         command = ProgramCommand.objects.filter(program_id=1, command_name=command_name)
@@ -87,6 +102,7 @@ def modificate_keyboard_keys_dict(program_id=1):
                         command_description = template.render(context)
 
                         keyboard_keys_dict[key].update({modifiers: command_description})
+    to_print(keyboard_keys_dict)
     return keyboard_keys_dict
 
 
@@ -96,8 +112,8 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
 
 
 def show_program_commands(request, program_id):
-    keyboard_keys_dict = modificate_keyboard_keys_dict()
-    modificate_keyboard_keys_dict()
+    keyboard_keys_dict = modify_keyboard_keys_dict()
+    modify_keyboard_keys_dict()
     programs = Program.objects.all()
     program_commands = ProgramCommand.objects.filter(program_id=program_id)
     if len(program_commands) == 0:
