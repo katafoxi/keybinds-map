@@ -55,6 +55,11 @@ def get_keyboard_keys_dict():
 
 
 def get_all_prog_commands_db_dict(program_id=1):
+    """
+
+    @param program_id:
+    @return: dict {'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,...}
+    """
     all_prog_commands_db_dict = {}
     program_commands_db = ProgramCommand.objects.filter(program_id=program_id)
     for command in program_commands_db:
@@ -63,20 +68,22 @@ def get_all_prog_commands_db_dict(program_id=1):
     return all_prog_commands_db_dict
 
 
-def modify_keyboard_keys_dict(program_id=1):
+def modify_keyboard_keys_dict(path, program_id):
     """
 
+    @param path: path to setting file
     @param program_id: id program from db
     @return: dict {'f1': {
                         'front_name': 'F1',
                         'simple': 'help',
+                        '[mod_code]':[command],
                         'a': 'command'
                         'c': 'command',
                         's': '',
                         },...
     """
     keyboard_keys_dict = get_keyboard_keys_dict()
-    assigned_command_dict = parse_settings_file(r'D:/Windows.xml')
+    assigned_command_dict = parse_settings_file(path)
 
     for command_name, command_type_shortcuts in assigned_command_dict.items():
         # print(command_name, command_type_shortcuts)
@@ -94,7 +101,7 @@ def modify_keyboard_keys_dict(program_id=1):
                     # (modifiers='cs', key='9', command_name='ToggleBookmark9')
 
                     if keyboard_keys_dict.get(key):
-                        command = ProgramCommand.objects.filter(program_id=1, command_name=command_name)
+                        command = ProgramCommand.objects.filter(program_id=program_id, command_name=command_name)
                         template = loader.get_template('shortcutEditor/command_description.html')
                         context = {
                             'command': command,
@@ -102,7 +109,6 @@ def modify_keyboard_keys_dict(program_id=1):
                         command_description = template.render(context)
 
                         keyboard_keys_dict[key].update({modifiers: command_description})
-    to_print(keyboard_keys_dict)
     return keyboard_keys_dict
 
 
@@ -112,10 +118,9 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
 
 
 def show_program_commands(request, program_id):
-    keyboard_keys_dict = modify_keyboard_keys_dict()
-    modify_keyboard_keys_dict()
+    keyboard_keys_dict = modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
     programs = Program.objects.all()
-    program_commands = ProgramCommand.objects.filter(program_id=program_id)
+    program_commands = ProgramCommand.objects.filter(program_id=program_id, )
     if len(program_commands) == 0:
         raise Http404()
     context = {

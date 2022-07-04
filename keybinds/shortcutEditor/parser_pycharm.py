@@ -18,6 +18,7 @@ def parse_settings_file(path_to_file = r'D:/BFR.xml'):
         keyboard_shortcut_list = []
         for shortcut in action:
             if (shortcut.tag == 'mouse-shortcut'):
+
                 mouse_shortcut_list.append(shortcut.get('keystroke').lower())
             elif (shortcut.tag == 'keyboard-shortcut'):
                 keyboard_shortcut_list.append(shortcut.get('first-keystroke').lower())
@@ -47,5 +48,5 @@ def  get_commands_with_modifiers():
 
 
 if __name__ == '__main__':
-    print(get_commands_with_modifiers())
-    # print(parse_settings_file(r'D:/Windows.xml'))
+    # print(get_commands_with_modifiers())
+    pprint(parse_settings_file(r'D:/Windows.xml'))
