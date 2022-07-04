@@ -41,6 +41,7 @@ def get_keyboard_keys_dict():
 
     @return: dict {'f1': {'front_name': 'F1'},...}
     """
+
     def to_list(dictionary):
         value_list = []
         for row in dictionary.values():
