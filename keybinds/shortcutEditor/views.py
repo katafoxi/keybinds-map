@@ -1,7 +1,7 @@
 from pprint import pprint
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template import loader
 
 from .models import *
@@ -24,13 +24,6 @@ keyboard_keys_backend = {
     'rowZX': ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'slash', 'button1', 'button2', 'button3', 'left', 'down', 'right', '']
 }
 # modifiers = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', 'CtrlAltShift']
-
-menu = [{'title': 'О сайте', 'url_name': 'about'},
-        {'title': 'Добавить программу', 'url_name': 'add_program'},
-        {'title': 'Обратная связь', 'url_name': 'contact'},
-        {'title': 'Войти', 'url_name': 'login'}
-        ]
-
 
 def to_print(*arg, **kwargs):
     print(arg, kwargs, file=open('C:\OpenServer\domains\keybinds.ru\keybinds\shortcutEditor\print.txt', 'a'))
@@ -55,7 +48,8 @@ def get_keyboard_keys_dict():
     return keyboard_keys_dict
 
 
-def get_all_prog_commands_db_dict(program_id=1):
+
+def get_all_prog_commands_db_dict(program_id):
     """
 
     @param program_id:
@@ -67,6 +61,25 @@ def get_all_prog_commands_db_dict(program_id=1):
         all_prog_commands_db_dict.update(
             {command.command_name: command})  # 'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,
     return all_prog_commands_db_dict
+
+def get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=1):
+    """
+
+    @param path: path to settings file
+    @param program_id: id program from db
+    @return: [<ProgramCommand: ActivateFavoritesToolWindow>, <ProgramCommand: ActivatePullRequestsToolWindow>, ...]
+
+    """
+    assigned_command_dict = parse_settings_file(path)
+    all_prog_commands = get_all_prog_commands_db_dict(program_id=program_id)
+    for command_name, command_type_shortcuts in assigned_command_dict.items():
+        all_prog_commands.pop(command_name, '')
+    unassigned_commands_queryset = []
+    for command in all_prog_commands.values():
+        unassigned_commands_queryset.append(command)
+    return unassigned_commands_queryset
+
+print(get_unassigned_commands_queryset())
 
 
 def modify_keyboard_keys_dict(path, program_id):
@@ -118,19 +131,17 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
     pass
 
 
-def show_program_commands(request, program_id):
-    keyboard_keys_dict = modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
-    programs = Program.objects.all()
-    program_commands = ProgramCommand.objects.filter(program_id=program_id, )
-    if len(program_commands) == 0:
-        raise Http404()
+def show_program_commands(request, slug):
+    program = get_object_or_404(Program, slug= slug)
+    program_id = program.pk
+    program_commands = get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program_id)
+    # if len(program_commands) == 0:
+    #     raise Http404()
     context = {
-        'menu': menu,
         'title': 'Редактор комбинаций',
-        'programs': programs,
         'program_commands': program_commands,
         'prog_selected': program_id,
-        'keyboard_keys_dict': keyboard_keys_dict
+        'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
     }
     return render(request, 'shortcutEditor/index.html', context=context)
 
@@ -139,15 +150,14 @@ def index(request):
     programs = Program.objects.all()
     program_commands = ProgramCommand.objects.all()
     context = {
-        'menu': menu,
+
         'title': 'Редактор комбинаций',
-        'programs': programs,
-        # 'program_commands': program_commands,
         'prog_selected': 0,
         'keyboard_keys_dict': get_keyboard_keys_dict()
     }
     res = render(request, 'shortcutEditor/index.html', context=context)
     return res
+
 
 
 def about(request):

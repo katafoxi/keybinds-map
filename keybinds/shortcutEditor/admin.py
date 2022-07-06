@@ -9,9 +9,11 @@ class ProgramAdmin(admin.ModelAdmin):
     search_fields = ('version',)
     list_editable = ('version',)
     list_filter = ('version', )
+    prepopulated_fields = {"slug":("title",)}
 
 class ProgramCommandsAdmin(admin.ModelAdmin):
-    list_display = ('program', 'command_name', 'command_description' )
+    list_display = ('program', 'command_name', 'command_name_repr' )
+
 
 
 

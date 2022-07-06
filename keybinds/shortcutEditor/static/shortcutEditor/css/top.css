@@ -155,7 +155,9 @@ label {
 }
 
 .progIcon:hover {
-    background: red;
+
+    transform: scale(1.5);
+
 }
 
 .commandIcons {
@@ -167,8 +169,8 @@ label {
     column-rule: 1px dotted red;
     /* grid-area: commandIcons;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     gap: 0px 0px;
     grid-auto-flow: column;
     grid-template-areas: ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ."; */
@@ -176,33 +178,31 @@ label {
 
 .command_description {
     cursor: grab;
-    vertical-align: middle;
+    /* vertical-align: baseline; */
     font-size: 9px;
+    height: 14px;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.command_description:hover {
-    width: 150px;
-    transform: scale(1.5);
-    z-index: 200;
-    position: relative;
+.command_description:hover,
+.descr:hover{
+    transform: scale(1.2);
     overflow: visible;
+    position: relative;
+    width: 150px;
+    z-index: 200;
     background-color: #e7e3e3;
-    opacity: 1;
 }
 
 .icons {
+    vertical-align: sub;
     padding: 0%;
     margin: 0%;
     width: 14px;
     height: 14px;
 }
-
-
-/* .icons:hover {
-    transform: scale(3);
-} */
 
 
 /* || Icons and description styles */

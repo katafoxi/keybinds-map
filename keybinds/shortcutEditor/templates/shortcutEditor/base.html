@@ -1,4 +1,5 @@
-{% load static %} {% load command_tags %}
+{% load static %}
+{% load shortcut_editor_tags %}
 
 <!DOCTYPE html>
 <html>
@@ -47,6 +48,7 @@
                 </p>
             </div>
             <div>
+                {% get_menu as menu %}
                 {% block mainmenu %}
                 <ul>
                     {% for m in menu %} {% if not forloop.last %}
@@ -59,6 +61,7 @@
 
                 <p>Выберите программу</p>
                 <div>
+                    {% get_program_list as programs %}
                     {% for prog in programs %}
                     {% if prog.pk == prog_selected %}
                     <!--                        <li class="selected">{{prog.title}}</li>-->

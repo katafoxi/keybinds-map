@@ -1,9 +1,12 @@
 
 
 
-{% for comm in command %}
-<div class="command_description" style="width: 50px;" >
-    <img class='icons' src="{{comm.icon.url}}" title="{{comm.title}}" alt="{{comm.title}}" />
-    <span class="descr">{{comm.command_name_repr}}</span>
+{% for command in command %}
+<div class="command_description" style="width: 15px;" >
+    <div class="descr">
+        <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
+        {{command.command_name_repr}}
+    </div>
 </div>
+
 {% endfor %}

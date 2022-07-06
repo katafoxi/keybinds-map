@@ -4,6 +4,7 @@ from django.urls import reverse
 
 class Program(models.Model):
     title= models.CharField(max_length=50, verbose_name='Название программы')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     version= models.CharField(max_length=50, verbose_name='Версия')
     icon = models.ImageField(upload_to='icon')
     program_site = models.URLField(max_length=250, verbose_name='Оф.сайт')
@@ -12,7 +13,7 @@ class Program(models.Model):
         return  self.title
 
     def get_absolute_url(self):
-        return reverse('program', kwargs={'program_id':self.pk})
+        return reverse('program', kwargs={'slug':self.slug})
 
     class Meta:
         verbose_name = 'Поддерживаемые программы'
@@ -26,10 +27,7 @@ class Program(models.Model):
 class ProgramCommand(models.Model):
     program = models.ForeignKey('Program', on_delete=models.CASCADE)
     command_name = models.CharField(max_length=250)
-    command_name_repr = models.CharField(max_length=100, blank=True)
-    command_description = models.TextField(max_length=250, blank=True)
-    command_help = models.URLField(max_length=250, blank=True)
-
+    command_name_repr = models.CharField(max_length=100)
     icon = models.ImageField(upload_to='program_icons', blank=True)
 
     def __str__(self):
@@ -42,6 +40,10 @@ class ProgramCommand(models.Model):
         verbose_name = "Команды "
         verbose_name_plural = 'Команды программ'
         ordering = ['id']
+
+# class ProgramSettingsFile(models.Model):
+#     program = models.ForeignKey('Program', on_delete=models.CASCADE)
+
 
 
 

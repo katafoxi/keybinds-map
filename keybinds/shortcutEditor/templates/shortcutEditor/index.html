@@ -1,11 +1,13 @@
 {% extends 'shortcutEditor/base.html' %}
 {% block program_command_icons %}
-{% for command in program_commands %}
-<div class="command_description">
-    <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
-    <span class="descr">{{command.command_name_repr}}</span>
-</div>
-{% endfor %}
+    {% for command in program_commands %}
+        <div class="command_description"  >
+            <div class="descr">
+                {% if command.icon %}
+                <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
+                {% endif %}
+                {{command.command_name_repr}}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
-
-
