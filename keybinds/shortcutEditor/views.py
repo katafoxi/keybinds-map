@@ -8,11 +8,11 @@ from .models import *
 from .parser_pycharm import parse_settings_file
 
 keyboard_keys_front = {
-    'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Esc', 'PSc', 'SLk', 'Pause', 'N\\'],
-    'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'Bck', 'Ins', 'home', 'PUp', 'N*'],
-    'rowQW': ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[{', ']}', '\\|', 'Del', 'End', 'PD', 'N-'],
-    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', 'Tab', 'Enter', 'Space', 'Up', '', 'N+'],
-    'rowZX': ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',<', '.>', '/?', 'mouse_left', 'mouse_middle', 'mouse_right', 'Left', 'Down', 'Right', 'NEnter']
+    'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '␛', '⎙', 'SLk', '⏸', 'N÷'],
+    'row12': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-_', '+=', '⌫', 'Ins', '🏠', 'P▲', 'N×'],
+    'rowQW': ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[{', ']}', '\\|', '⌦', 'End', 'P▼', 'N-'],
+    'rowAS': ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';:', '„ “', '⭾', '⏎', '⏘', '🡅', '', 'N+'],
+    'rowZX': ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',<', '.>', '/?', '🖰 L', '🖰M', '🖰R', '🡄', '🡇', '🡆', 'N⏎']
 }
 
 keyboard_keys_backend = {
@@ -47,7 +47,9 @@ def get_keyboard_keys_dict():
         keyboard_keys_dict[key] = {'front_name': value}  # example 'f8': {'front_name': 'F8'},
     return keyboard_keys_dict
 
-
+prog = Program.objects.get(pk=1)
+# print('blkz',prog.programcommand_set.all())
+print('blkz',ProgramCommand.objects.filter(program__slug = 'pycharm'))
 
 def get_all_prog_commands_db_dict(program_id):
     """
@@ -56,6 +58,7 @@ def get_all_prog_commands_db_dict(program_id):
     @return: dict {'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,...}
     """
     all_prog_commands_db_dict = {}
+
     program_commands_db = ProgramCommand.objects.filter(program_id=program_id)
     for command in program_commands_db:
         all_prog_commands_db_dict.update(
@@ -79,7 +82,7 @@ def get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=1):
         unassigned_commands_queryset.append(command)
     return unassigned_commands_queryset
 
-print(get_unassigned_commands_queryset())
+# print(get_unassigned_commands_queryset())
 
 
 def modify_keyboard_keys_dict(path, program_id):
@@ -134,14 +137,14 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
 def show_program_commands(request, slug):
     program = get_object_or_404(Program, slug= slug)
     program_id = program.pk
-    program_commands = get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program_id)
+    program_commands = get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk)
     # if len(program_commands) == 0:
     #     raise Http404()
     context = {
         'title': 'Редактор комбинаций',
         'program_commands': program_commands,
-        'prog_selected': program_id,
-        'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
+        'prog_selected': program.pk,
+        'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program.pk)
     }
     return render(request, 'shortcutEditor/index.html', context=context)
 
