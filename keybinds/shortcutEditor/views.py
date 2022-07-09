@@ -49,7 +49,7 @@ def get_keyboard_keys_dict():
 
 prog = Program.objects.get(pk=1)
 # print('blkz',prog.programcommand_set.all())
-print('blkz',ProgramCommand.objects.filter(program__slug = 'pycharm'))
+# print('blkz',ProgramCommand.objects.filter(program__slug = 'pycharm'))
 
 def get_all_prog_commands_db_dict(program_id):
     """
@@ -134,12 +134,15 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
     pass
 
 
+
+
 def show_program_commands(request, slug):
     program = get_object_or_404(Program, slug= slug)
     program_id = program.pk
     program_commands = get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk)
     # if len(program_commands) == 0:
     #     raise Http404()
+
     context = {
         'title': 'Редактор комбинаций',
         'program_commands': program_commands,
@@ -152,11 +155,32 @@ def show_program_commands(request, slug):
 def index(request):
     programs = Program.objects.all()
     program_commands = ProgramCommand.objects.all()
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NameForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            print('bla')
+            # return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+
+
+
     context = {
 
         'title': 'Редактор комбинаций',
         'prog_selected': 0,
-        'keyboard_keys_dict': get_keyboard_keys_dict()
+        'keyboard_keys_dict': get_keyboard_keys_dict(),
+        'current_name':'vasiliy larson',
+        'form': form
+
+
     }
     res = render(request, 'shortcutEditor/index.html', context=context)
     return res
@@ -185,3 +209,10 @@ def pageNotFound(request, exception):
 
 def show_command(request, command_id):
     return HttpResponse('Команда какая-то')
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+
+from .forms import NameForm
+
+

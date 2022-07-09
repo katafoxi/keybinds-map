@@ -3,17 +3,17 @@ from django.urls import reverse
 
 
 class Program(models.Model):
-    title= models.CharField(max_length=50, verbose_name='Название программы')
+    title = models.CharField(max_length=50, verbose_name='Название программы')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    version= models.CharField(max_length=50, verbose_name='Версия')
+    version = models.CharField(max_length=50, verbose_name='Версия')
     icon = models.ImageField(upload_to='icon')
     program_site = models.URLField(max_length=250, verbose_name='Оф.сайт')
 
     def __str__(self):
-        return  self.title
+        return self.title
 
     def get_absolute_url(self):
-        return reverse('program', kwargs={'slug':self.slug})
+        return reverse('program', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Поддерживаемые программы'
@@ -31,24 +31,27 @@ class ProgramCommand(models.Model):
     icon = models.ImageField(upload_to='program_icons', blank=True)
 
     def __str__(self):
-        return  self.command_name
+        return self.command_name
 
     def get_absolute_url(self):
-        return reverse('command', kwargs={'command_id':self.pk})
+        return reverse('command', kwargs={'command_id': self.pk})
 
     class Meta:
         verbose_name = "Команды "
         verbose_name_plural = 'Команды программ'
         ordering = ['id']
 
-# class ProgramSettingsFile(models.Model):
-#     program = models.ForeignKey('Program', on_delete=models.CASCADE)
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}_setting_files/{1}'.format(instance.program.title, filename)
 
 
-
-
-
-
-
-
-
+class ProgramSettingsFile(models.Model):
+    program = models.ForeignKey('Program', on_delete=models.CASCADE)
+    settings_file_name = models.CharField(max_length=100,
+                                          unique=True,
+                                          verbose_name='Название файла настроек',
+                                          help_text="Please use the following format: [program_name]_[setting_filename]")
+    # settings_file_owner= models.
+    file = models.FileField(upload_to=user_directory_path)

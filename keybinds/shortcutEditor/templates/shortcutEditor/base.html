@@ -80,69 +80,76 @@
 
             </div>
 
-
-            <div class="header-inner">
-
-                <div class="signin-form">
-
-                    <form class="form-inline" action="https://chess-samara.ru/" method="post">
-                        <input type="hidden" name="function" value="enter">
-                        <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />
-                        <input type="password" name="pswd" class="input-small" placeholder="Пароль" />
-                        <label class="checkbox"> <input name="remember" type="checkbox"/>Запомнить</label>
-                        <button type="submit" class="btn">Войти</button>
-                    </form>
-
-                    <!-- <div class="main-page-social-buttons">
-                    <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">
-                        <span class="social-likes__button social-likes__button_facebook">
-                            <span class="social-likes__icon social-likes__icon_facebook"></span>
-                        </span>
-                    </div>
-                    <div class="tooltip-under social-likes__widget social-likes__widget_vkontakte " data-url="https://chess-samara.ru/social_login.html?action=login&provider=vkontakte" title="Войти через ВКонтакте">
-                        <span class="social-likes__button social-likes__button_vkontakte">
-                            <span class="social-likes__icon social-likes__icon_vkontakte"></span>
-                        </span>
-                    </div>
-                    <div class="tooltip-under social-likes__widget social-likes__widget_odnoklassniki " data-url="https://chess-samara.ru/social_login.html?action=login&provider=odnoklassniki" title="Войти через Одноклассники">
-                        <span class="social-likes__button social-likes__button_odnoklassniki">
-                            <span class="social-likes__icon social-likes__icon_odnoklassniki"></span>
-                        </span>
-                    </div>
-                </div> -->
-
-                </div>
-
-                <div class="hmargin signin-ad-links-simple">
-                    <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |
-                    <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>
-                </div>
+            <div>
+                <form action="/" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Submit">
+                </form>
             </div>
+<!--            <div class="header-inner">-->
+
+<!--                <div class="signin-form">-->
+
+
+<!--                    <form class="form-inline" action="https://chess-samara.ru/" method="post">-->
+<!--                        <input type="hidden" name="function" value="enter">-->
+<!--                        <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />-->
+<!--                        <input type="password" name="pswd" class="input-small" placeholder="Пароль" />-->
+<!--                        <label class="checkbox"> <input name="remember" type="checkbox"/>Запомнить</label>-->
+<!--                        <button type="submit" class="btn">Войти</button>-->
+<!--                    </form>-->
+
+<!--                    &lt;!&ndash; <div class="main-page-social-buttons">-->
+<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">-->
+<!--                        <span class="social-likes__button social-likes__button_facebook">-->
+<!--                            <span class="social-likes__icon social-likes__icon_facebook"></span>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_vkontakte " data-url="https://chess-samara.ru/social_login.html?action=login&provider=vkontakte" title="Войти через ВКонтакте">-->
+<!--                        <span class="social-likes__button social-likes__button_vkontakte">-->
+<!--                            <span class="social-likes__icon social-likes__icon_vkontakte"></span>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_odnoklassniki " data-url="https://chess-samara.ru/social_login.html?action=login&provider=odnoklassniki" title="Войти через Одноклассники">-->
+<!--                        <span class="social-likes__button social-likes__button_odnoklassniki">-->
+<!--                            <span class="social-likes__icon social-likes__icon_odnoklassniki"></span>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </div> &ndash;&gt;-->
+
+<!--                </div>-->
+
+<!--                <div class="hmargin signin-ad-links-simple">-->
+<!--                    <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |-->
+<!--                    <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </header>
+       <div class="PoolSettingsFile">
+            Файлы настроек
+       </div>
 
         <div class="instructionAccumulator">
-            <div class="scheme">
-                <div class="subtableSheme">
-                    <div class="Cell Symbol ">key</div>
-                    <div class="Cell Alt ">+Alt</div>
-                    <div class="Cell Ctrl ">+Ctrl</div>
-                    <div class="Cell Shift ">+Shift</div>
-                    <div class="Cell CtrlAlt ">+Ctrl+Alt</div>
-                    <div class="Cell AltShift ">+Alt+Shift</div>
-                    <div class="Cell CtrlShift ">+Ctrl+Shift</div>
-                    <div class="Cell CtrlAltShift ">+Ctrl+Alt+Shift</div>
-                    <div class="Cell Simple "></div>
-                    <div class="Cell Alt-title "> </div>
-                    <div class="Cell Ctrl-title "></div>
-                    <div class="Cell Shift-title schemeSwitchCell"></div>
-                    <div class="Cell CtrlAlt-title schemeSwitchCell"></div>
-                    <div class="Cell AltShift-title schemeSwitchCell"></div>
-                    <div class="Cell CtrlShift-title schemeSwitchCell"></div>
-                    <div class="Cell CtrlAltShift-title schemeSwitchCell"></div>
-                    <div class="Cell Simple-title schemeSwitchCell ">modifers</div>
-                </div>
-
+            <div class="subtableSheme">
+                <div class="Cell Symbol ">key</div>
+                <div class="Cell Alt ">+Alt</div>
+                <div class="Cell Ctrl ">+Ctrl</div>
+                <div class="Cell Shift ">+Shift</div>
+                <div class="Cell CtrlAlt ">+Ctrl+Alt</div>
+                <div class="Cell AltShift ">+Alt+Shift</div>
+                <div class="Cell CtrlShift ">+Ctrl+Shift</div>
+                <div class="Cell CtrlAltShift ">+Ctrl+Alt+Shift</div>
+                <div class="Cell Simple "></div>
+                <div class="Cell Alt-title "> </div>
+                <div class="Cell Ctrl-title "></div>
+                <div class="Cell Shift-title schemeSwitchCell"></div>
+                <div class="Cell CtrlAlt-title schemeSwitchCell"></div>
+                <div class="Cell AltShift-title schemeSwitchCell"></div>
+                <div class="Cell CtrlShift-title schemeSwitchCell"></div>
+                <div class="Cell CtrlAltShift-title schemeSwitchCell"></div>
+                <div class="Cell Simple-title schemeSwitchCell ">modifers</div>
             </div>
 
             <div class="commandIcons droppable">
@@ -153,6 +160,7 @@
                 {% block program_command_icons %} {% endblock %}
             </div>
         </div>
+
 
 
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
