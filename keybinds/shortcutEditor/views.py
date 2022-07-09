@@ -3,6 +3,7 @@ from pprint import pprint
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
+from django.views.generic import ListView
 
 from .models import *
 from .parser_pycharm import parse_settings_file
@@ -51,7 +52,7 @@ prog = Program.objects.get(pk=1)
 # print('blkz',prog.programcommand_set.all())
 # print('blkz',ProgramCommand.objects.filter(program__slug = 'pycharm'))
 
-def get_all_prog_commands_db_dict(program_id):
+def get_all_prog_commands_db_dict(program_id, slug):
     """
 
     @param program_id:
@@ -60,6 +61,8 @@ def get_all_prog_commands_db_dict(program_id):
     all_prog_commands_db_dict = {}
 
     program_commands_db = ProgramCommand.objects.filter(program_id=program_id)
+    pro = Program.objects.get(slug=slug)
+    print(pro.programcommand_set.all())
     for command in program_commands_db:
         all_prog_commands_db_dict.update(
             {command.command_name: command})  # 'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,
@@ -134,18 +137,30 @@ def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
     pass
 
 
+class ShowProgramCommands(ListView):
+    model = ProgramCommand
+    template_name = 'shortcutEditor/index.html'
+    context_object_name ='program_commands'
+    allow_empty = False
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        program_id = context['object_list'][0].program_id
+        context['title'] = 'Редактор комбинаций'
+        context['prog_selected'] = program_id
+        context['program_commands']= get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program_id)
+        context['keyboard_keys_dict']= modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
+        return context
 
 
 def show_program_commands(request, slug):
     program = get_object_or_404(Program, slug= slug)
-    program_id = program.pk
-    program_commands = get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk)
-    # if len(program_commands) == 0:
-    #     raise Http404()
 
     context = {
         'title': 'Редактор комбинаций',
-        'program_commands': program_commands,
+        'program_commands': get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk),
         'prog_selected': program.pk,
         'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program.pk)
     }
