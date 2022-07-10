@@ -1,12 +1,12 @@
-{% extends 'shortcutEditor/base.html' %}
+{% extends 'keymap/base.html' %}
 {% block program_command_icons %}
     {% for command in program_commands %}
         <div class="command_description"  >
             <div class="descr">
                 {% if command.icon %}
-                <img class='icons' src="{{command.icon.url}}" title="{{command.title}}" alt="{{command.title}}" />
+                <img class='icons' src="{{command.icon.url}}" title="{{command.name}}" alt="{{command.name}}" />
                 {% endif %}
-                {{command.command_name_repr}}
+                {{command.short_name}}
             </div>
         </div>
     {% endfor %}

@@ -24,10 +24,12 @@ keyboard_keys_backend = {
     'rowAS': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'semicolon', 'apostrophe', 'tab', 'enter', 'space', 'up', 'None3', 'add'],
     'rowZX': ['z', 'x', 'c', 'v', 'b', 'n', 'm', 'comma', 'period', 'slash', 'button1', 'button2', 'button3', 'left', 'down', 'right', '']
 }
+
+
 # modifiers = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', 'CtrlAltShift']
 
 def to_print(*arg, **kwargs):
-    print(arg, kwargs, file=open('C:\OpenServer\domains\keybinds.ru\keybinds\shortcutEditor\print.txt', 'a'))
+    print(arg, kwargs, file=open('/\print.txt', 'a'))
 
 
 def get_keyboard_keys_dict():
@@ -48,36 +50,33 @@ def get_keyboard_keys_dict():
         keyboard_keys_dict[key] = {'front_name': value}  # example 'f8': {'front_name': 'F8'},
     return keyboard_keys_dict
 
-prog = Program.objects.get(pk=1)
-# print('blkz',prog.programcommand_set.all())
-# print('blkz',ProgramCommand.objects.filter(program__slug = 'pycharm'))
 
-def get_all_prog_commands_db_dict(program_id, slug):
+def get_all_prog_commands_db_dict(slug):
     """
 
-    @param program_id:
-    @return: dict {'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,...}
+    @param slug: program slug
+    @return: dict {'XDebugger.JumpToTypeSource': <Command: XDebugger.JumpToTypeSource>,...}
     """
     all_prog_commands_db_dict = {}
 
-    program_commands_db = ProgramCommand.objects.filter(program_id=program_id)
-    pro = Program.objects.get(slug=slug)
-    print(pro.programcommand_set.all())
+    program_commands_db = Command.objects.filter(program=slug)
     for command in program_commands_db:
         all_prog_commands_db_dict.update(
-            {command.command_name: command})  # 'XDebugger.JumpToTypeSource': <ProgramCommand: XDebugger.JumpToTypeSource>,
+            {command.name: command})  # 'XDebugger.JumpToTypeSource': <Command: XDebugger.JumpToTypeSource>,
     return all_prog_commands_db_dict
 
-def get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=1):
+
+def get_unassigned_commands_queryset(slug, path=r'D:/Windows.xml'):
     """
 
+    @param slug: program slug
     @param path: path to settings file
-    @param program_id: id program from db
-    @return: [<ProgramCommand: ActivateFavoritesToolWindow>, <ProgramCommand: ActivatePullRequestsToolWindow>, ...]
+    @return: [  <Command: ActivateFavoritesToolWindow>,
+                <Command: ActivatePullRequestsToolWindow>, ...]
 
     """
     assigned_command_dict = parse_settings_file(path)
-    all_prog_commands = get_all_prog_commands_db_dict(program_id=program_id)
+    all_prog_commands = get_all_prog_commands_db_dict(slug=slug)
     for command_name, command_type_shortcuts in assigned_command_dict.items():
         all_prog_commands.pop(command_name, '')
     unassigned_commands_queryset = []
@@ -85,14 +84,14 @@ def get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=1):
         unassigned_commands_queryset.append(command)
     return unassigned_commands_queryset
 
+
 # print(get_unassigned_commands_queryset())
 
 
-def modify_keyboard_keys_dict(path, program_id):
+def modify_keyboard_keys_dict(path, slug):
     """
 
     @param path: path to setting file
-    @param program_id: id program from db
     @return: dict {'f1': {
                         'front_name': 'F1',
                         'simple': 'help',
@@ -106,7 +105,7 @@ def modify_keyboard_keys_dict(path, program_id):
     assigned_command_dict = parse_settings_file(path)
 
     for command_name, command_type_shortcuts in assigned_command_dict.items():
-        # print(command_name, command_type_shortcuts)
+        # print(name, command_type_shortcuts)
         for shortcut_list in command_type_shortcuts.values():
             if len(shortcut_list) != 0:
                 for shortcut in shortcut_list:
@@ -115,14 +114,14 @@ def modify_keyboard_keys_dict(path, program_id):
                     if len(modifiers_key) != 0:
                         modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
                         modifiers = ''.join(modifiers)
-                        # to_print(modifiers, key, command_name) #
+                        # to_print(modifiers, key, name) #
                     else:
                         modifiers = 'simple'
-                    # (modifiers='cs', key='9', command_name='ToggleBookmark9')
+                    # (modifiers='cs', key='9', name='ToggleBookmark9')
 
                     if keyboard_keys_dict.get(key):
-                        command = ProgramCommand.objects.filter(program_id=program_id, command_name=command_name)
-                        template = loader.get_template('shortcutEditor/command_description.html')
+                        command = Command.objects.filter(program=slug, name=command_name)
+                        template = loader.get_template('keymap/command_description.html')
                         context = {
                             'command': command,
                         }
@@ -133,43 +132,41 @@ def modify_keyboard_keys_dict(path, program_id):
 
 
 def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
-    # to_print(key, command_name, modifiers, program_id=1 )
+    # to_print(key, name, modifiers, program_id=1 )
     pass
 
 
 class ShowProgramCommands(ListView):
-    model = ProgramCommand
-    template_name = 'shortcutEditor/index.html'
-    context_object_name ='program_commands'
+    model = Command
+    template_name = 'keymap/index.html'
+    context_object_name = 'program_commands'
     allow_empty = False
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
-        program_id = context['object_list'][0].program_id
+        slug = self.kwargs['slug']
         context['title'] = 'Редактор комбинаций'
-        context['prog_selected'] = program_id
-        context['program_commands']= get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program_id)
-        context['keyboard_keys_dict']= modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program_id)
+        context['prog_selected'] = slug
+        context['program_commands'] = get_unassigned_commands_queryset(path=r'D:/Windows.xml', slug=slug)
+        context['keyboard_keys_dict'] = modify_keyboard_keys_dict(path=r'D:/Windows.xml', slug=slug)
         return context
 
 
-def show_program_commands(request, slug):
-    program = get_object_or_404(Program, slug= slug)
-
-    context = {
-        'title': 'Редактор комбинаций',
-        'program_commands': get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk),
-        'prog_selected': program.pk,
-        'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program.pk)
-    }
-    return render(request, 'shortcutEditor/index.html', context=context)
+# def show_program_commands(request, slug):
+#     program = get_object_or_404(Program, slug=slug)
+#
+#     context = {
+#         'title': 'Редактор комбинаций',
+#         'program_commands': get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk),
+#         'prog_selected': program.pk,
+#         'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program.pk)
+#     }
+#     return render(request, 'keymap/index.html', context=context)
 
 
 def index(request):
     programs = Program.objects.all()
-    program_commands = ProgramCommand.objects.all()
+    program_commands = Command.objects.all()
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
@@ -185,25 +182,21 @@ def index(request):
     else:
         form = NameForm()
 
-
-
     context = {
 
         'title': 'Редактор комбинаций',
         'prog_selected': 0,
         'keyboard_keys_dict': get_keyboard_keys_dict(),
-        'current_name':'vasiliy larson',
+        'current_name': 'vasiliy larson',
         'form': form
 
-
     }
-    res = render(request, 'shortcutEditor/index.html', context=context)
+    res = render(request, 'keymap/index.html', context=context)
     return res
 
 
-
 def about(request):
-    return render(request, 'shortcutEditor/about.html', {'title': 'О сайте'})
+    return render(request, 'keymap/about.html', {'title': 'О сайте'})
 
 
 def add_program(request):
@@ -225,9 +218,8 @@ def pageNotFound(request, exception):
 def show_command(request, command_id):
     return HttpResponse('Команда какая-то')
 
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from .forms import NameForm
-
-

@@ -1,0 +1,11 @@
+
+
+{% for command in command %}
+<div class="command_description" style="width: 15px;" >
+    <div class="descr">
+        <img class='icons' src="{{command.icon.url}}" title="{{command.name}}" alt="{{command.name}}" />
+        {{command.short_name}}
+    </div>
+</div>
+
+{% endfor %}

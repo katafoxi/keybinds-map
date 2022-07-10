@@ -1,5 +1,5 @@
 from django import template
-from shortcutEditor.models import *
+from keymap.models import *
 
 register = template.Library()
 

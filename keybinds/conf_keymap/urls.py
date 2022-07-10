@@ -1,4 +1,4 @@
-"""confKeybinds URL Configuration
+"""conf_keymap URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -17,12 +17,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from confKeybinds import settings
-from shortcutEditor.views import *
+from conf_keymap import settings
+from keymap.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('shortcutEditor.urls')),
+    path('', include('keymap.urls')),
 ]
 
 if settings.DEBUG:
