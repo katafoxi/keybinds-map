@@ -133,23 +133,24 @@
 
         <div class="instructionAccumulator">
             <div class="subtableSheme">
-                <div class="Cell Symbol ">key</div>
-                <div class="Cell Alt ">+Alt</div>
-                <div class="Cell Ctrl ">+Ctrl</div>
-                <div class="Cell Shift ">+Shift</div>
-                <div class="Cell CtrlAlt ">+Ctrl+Alt</div>
-                <div class="Cell AltShift ">+Alt+Shift</div>
-                <div class="Cell CtrlShift ">+Ctrl+Shift</div>
-                <div class="Cell CtrlAltShift ">+Ctrl+Alt+Shift</div>
-                <div class="Cell Simple "></div>
-                <div class="Cell Alt-title "> </div>
-                <div class="Cell Ctrl-title "></div>
-                <div class="Cell Shift-title schemeSwitchCell"></div>
-                <div class="Cell CtrlAlt-title schemeSwitchCell"></div>
-                <div class="Cell AltShift-title schemeSwitchCell"></div>
-                <div class="Cell CtrlShift-title schemeSwitchCell"></div>
-                <div class="Cell CtrlAltShift-title schemeSwitchCell"></div>
-                <div class="Cell Simple-title schemeSwitchCell ">modifers</div>
+                <div class="key     Cell">key</div>
+                <div class="a_mod   Cell">+Alt</div>
+                <div class="c_mod   Cell">+Ctrl</div>
+                <div class="s_mod   Cell">+Shift</div>
+                <div class="ac_mod  Cell">+Ctrl+Alt</div>
+                <div class="as_mod  Cell">+Alt+Shift</div>
+                <div class="cs_mod  Cell">+Ctrl+Shift</div>
+                <div class="acs_mod Cell">+Ctrl+Alt+Shift</div>
+
+                <div class="Simple-push Cell schemeSwitchCell "></div>
+                <div class="a   Cell"> </div>
+                <div class="c   Cell"></div>
+                <div class="s   Cell schemeSwitchCell"></div>
+                <div class="ac  Cell schemeSwitchCell"></div>
+                <div class="as  Cell schemeSwitchCell"></div>
+                <div class="cs  Cell schemeSwitchCell"></div>
+                <div class="acs Cell schemeSwitchCell"></div>
+
             </div>
 
             <div class="commandIcons droppable">
@@ -166,29 +167,30 @@
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
         <div id="keybordGrid" class="keybordGrid">
             {% block keyboard_grid %}
-                {% for key in keyboard_keys_dict.values %}
-                    {% if key.front_name != '' %}
-                    <div class="char {{ key }}">
-                        <div class="brdr Symbol"> {{ key.front_name }} </div>
-                        <div class="brdr Alt abbr">a</div>
-                        <div class="brdr Ctrl abbr">c</div>
-                        <div class="brdr Shift abbr">s</div>
-                        <div class="brdr CtrlAlt abbr">ca</div>
-                        <div class="brdr AltShift abbr">as</div>
-                        <div class="brdr CtrlShift abbr">cs</div>
-                        <div class="brdr CtrlAltShift abbr">cas</div>
-                        <div class="brdr Simple "></div>
-                        <div class="brdr Alt-title droppable">{{ key.a }} </div>
-                        <div class="brdr Ctrl-title droppable">{{ key.c }}</div>
-                        <div class="brdr Shift-title droppable">{{ key.s }}</div>
-                        <div class="brdr CtrlAlt-title droppable">{{ key.ac }}</div>
-                        <div class="brdr AltShift-title droppable">{{ key.as }}</div>
-                        <div class="brdr CtrlShift-title droppable">{{ key.cs }}</div>
-                        <div class="brdr CtrlAltShift-title droppable">{{ key.acs }}</div>
-                        <div class="brdr Simple-title {{ key.front_name }}  droppable">{{ key.simple }}</div>
+                {% for key, key_front in keyboard_keys_dict.items %}
+                    {% if key_front.front_name != '' %}
+                    <div class="key_{{ key }} char">
+                        <div class="key brdr"> {{ key_front.front_name }} </div>
+                        <div class="a_mod brdr abbr">a</div>
+                        <div class="c_mod brdr abbr">c</div>
+                        <div class="s_mod brdr abbr">s</div>
+                        <div class="ac_mod brdr abbr">ca</div>
+                        <div class="as_mod brdr abbr">as</div>
+                        <div class="cs_mod brdr abbr">cs</div>
+                        <div class="acs_mod brdr abbr">cas</div>
+
+                        <div class="Simple-push brdr droppable">{{ key_front.simple }}</div>
+                        <div class="a brdr droppable">{{ key_front.a }} </div>
+                        <div class="c brdr droppable">{{ key_front.c }}</div>
+                        <div class="s brdr droppable">{{ key_front.s }}</div>
+                        <div class="ac brdr droppable">{{ key_front.ac }}</div>
+                        <div class="as brdr droppable">{{ key_front.as }}</div>
+                        <div class="cs brdr droppable">{{ key_front.cs }}</div>
+                        <div class="acs brdr droppable">{{ key_front.acs }}</div>
+
                     </div>
                     {% else %}
-                         <div class="char {{ key }}"></div>
+                         <div class="key_{{ key }} char"></div>
                     {% endif %}
                 {% endfor %}
             {% endblock keyboard_grid %}

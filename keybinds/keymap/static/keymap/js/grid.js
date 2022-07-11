@@ -35,11 +35,13 @@ function changeCommandDescriptionWidth() {
     for (let i = 1; i < collectionCommandDescr.length; i++) {
         let elem = collectionCommandDescr[i];
 
-        if (elem.parentNode.getAttribute('class').split(' ')[0] == 'brdr') {
+        if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
             elem.style.width = '14px'
+
+
         }
-        if (elem.parentNode.getAttribute('class').split(' ')[0] == 'brdr') {
-            elem.style.width = (elem.parentNode.offsetWidth - 5) + 'px';
+        if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
+            elem.style.width = (elem.parentNode.offsetWidth - 4) + 'px';
         }
     }
 }
@@ -67,14 +69,14 @@ function showOrHideModifiersRows() {
         let elem = collectionFlipswitchKeys[i];
 
         elem.addEventListener("click", function() {
-            let modifierFromClassCell = elem.closest('.Cell').getAttribute('class').split(' ')[1];
+            let modifierFromClassCell = elem.closest('.Cell').getAttribute('class').split(' ')[0];
             if (elem.checked) {
                 showModifiersRows(modifierFromClassCell);
-                modifierFromClassCell = modifierFromClassCell.split('-')[0]
+                modifierFromClassCell = modifierFromClassCell + '_mod'
                 showModifiersRows(modifierFromClassCell);
             } else {
                 hideModifiersRows(modifierFromClassCell);
-                modifierFromClassCell = modifierFromClassCell.split('-')[0]
+                modifierFromClassCell = modifierFromClassCell + '_mod'
                 hideModifiersRows(modifierFromClassCell)
             }
         });

@@ -51,40 +51,16 @@ body {
     grid-template-areas: "subtableSheme commandIcons ";
 }
 
-.subtableSheme {
-    font-size: 10px;
-    display: grid;
-    grid-template-columns: 70px auto;
-    grid-template-rows: repeat(8, 1fr);
-    grid-auto-flow: row;
-    grid-template-areas: "Symbol  Simple-title" "Alt  Alt-title" "Ctrl  Ctrl-title" "Shift  Shift-title" "CtrlAlt  CtrlAlt-title" "AltShift  AltShift-title" "CtrlShift CtrlShift-title" "CtrlAltShift  CtrlAltShift-title";
-    /* width: 100%; */
-    /* height: 100%; */
-    border-radius: 5px;
-    /* box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.288); */
-}
-
 .keybordGrid {
     display: grid;
     grid-area: keybordGrid;
     grid-template-columns: repeat(17, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 3px;
+    gap: 1px;
     /* grid-auto-flow: row; */
 }
 
-.char {
-    font-size: 12px;
-    display: grid;
-    grid-template-columns: 20px 1fr;
-    grid-template-rows: repeat(8, auto);
-    grid-auto-flow: row;
-    grid-template-areas: "Symbol  Simple-title" "Alt  Alt-title" "Ctrl  Ctrl-title" "Shift  Shift-title" "CtrlAlt  CtrlAlt-title" "AltShift  AltShift-title" "CtrlShift CtrlShift-title" "CtrlAltShift  CtrlAltShift-title";
-    /* width: 100%;*/
-    height: 100%;
-    /* border-radius: 5px; */
-    /* box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.288); */
-}
+
 
 
 /* || Grid styles */
@@ -179,14 +155,15 @@ label {
     grid-template-areas: ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ." ". . . . . ."; */
 }
 
-.command_description {
+.command_description,
+.descr{
     cursor: grab;
     /* vertical-align: baseline; */
-    font-size: 9px;
-    height: 14px;
+    font-size: 8px;
+    height: 11px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+
 }
 
 .command_description:hover,
@@ -203,109 +180,146 @@ label {
     vertical-align: sub;
     padding: 0%;
     margin: 0%;
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
 }
 
 
 /* || Icons and description styles */
 
 .brdr {
-    border: 0.1px solid #5073ff2c;
+    border-bottom: 0.1px solid #5073ff2c;
+
 }
 
 .abbr {
-    font-size: 9px;
+    font-size: 8px;
     text-align: center;
+    border-right: 0.1px solid #5073ff2c;
 }
 
 .droppable {
-    padding-left: 2px;
+    padding-left: 1px;
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 0.6124824929971988) 0%, rgba(175, 255, 179, 0.16710434173669464) 50%, rgba(255, 255, 255, 0.5256477591036415) 100%);
 }
+.subtableSheme {
+    font-size: 10px;
+    display: grid;
+    grid-template-columns: 70px auto;
+    grid-template-rows: repeat(8, 1fr);
+    grid-auto-flow: row;
+    grid-template-areas:
+    "key  Simple-push"
+    "a_mod      a"
+    "c_mod      c"
+    "s_mod      s"
+    "ac_mod     ac"
+    "as_mod     as"
+    "cs_mod     cs"
+    "acs_mod    acs";
+    border-radius: 5px;
+}
 
-.Symbol {
-    grid-area: Symbol;
+.char {
+    font-size: 9px;
+    display: grid;
+    grid-template-columns: 15px 1fr;
+    grid-template-rows: repeat(8, auto);
+    grid-auto-flow: row;
+    grid-template-areas:
+    "key  Simple-push"
+    "a_mod      a"
+    "c_mod      c"
+    "s_mod      s"
+    "ac_mod     ac"
+    "as_mod     as"
+    "cs_mod     cs"
+    "acs_mod    acs";
+    /* width: 100%;*/
+    height: 100%;
+    border-top: 1px solid #1C6EA4;
+    border-right: 1px solid #1C6EA4;
+    border-bottom: 1px solid #1C6EA4;
+
+    border-radius: 5px;
+    /* border-radius: 5px; */
+    /* box-shadow: 2px 2px 2px 0px rgba(128, 128, 128, 0.288); */
+}
+.key {
+    grid-area: key;
     text-align: center;
     background-color: bisque;
     border-top-left-radius: 5px;
     border-left: 2px solid #5072ff;
 }
 
-.Alt {
-    border-left: 2px solid rgb(59, 153, 51);
-    grid-area: Alt;
+.Simple-push {
+    grid-area: Simple-push;
+    border-top-right-radius: 5px;
 }
 
-.Ctrl {
-    grid-area: Ctrl;
+.a_mod {
+    border-left: 2px solid rgb(59, 153, 51);
+    grid-area: a_mod;
+}
+.a {
+    grid-area: a;
+}
+.c_mod {
+    grid-area: c_mod;
     border-left: 2px solid rgb(250, 0, 0);
 }
 
-.Shift {
+.c {
+    grid-area: c;
+}
+
+.s_mod {
     border-left: 2px solid rgb(25, 0, 255);
-    grid-area: Shift;
+    grid-area: s_mod;
 }
 
-.CtrlAlt {
+.s {
+    grid-area: s;
+}
+
+.ac_mod {
     border-left: 2px solid rgb(255, 153, 0);
-    grid-area: CtrlAlt;
+    grid-area: ac_mod;
 }
+.ac {grid-area: ac;}
 
-.CtrlShift {
+.cs_mod {
     border-left: 2px solid rgb(255, 0, 242);
-    grid-area: CtrlShift;
+    grid-area: cs_mod;
 }
 
-.AltShift {
+.cs {
+    grid-area: cs;
+}
+
+.as_mod {
     border-left: 2px solid rgb(255, 102, 0);
-    grid-area: AltShift;
+    grid-area: as_mod;
 }
 
-.CtrlAltShift {
+.as {
+    grid-area: as;
+}
+
+.acs_mod {
     border-left: 2px solid rgb(0, 0, 0);
-    grid-area: CtrlAltShift;
+    grid-area: acs_mod;
     border-bottom-left-radius: 5px;
 }
 
-.Simple {
-    grid-area: Simple;
-}
-
-.Alt-title {
-    grid-area: Alt-title;
-}
-
-.Ctrl-title {
-    grid-area: Ctrl-title;
-}
-
-.Shift-title {
-    grid-area: Shift-title;
-}
-
-.CtrlAlt-title {
-    grid-area: CtrlAlt-title;
-}
-
-.CtrlShift-title {
-    grid-area: CtrlShift-title;
-}
-
-.AltShift-title {
-    grid-area: AltShift-title;
-}
-
-.CtrlAltShift-title {
-    grid-area: CtrlAltShift-title;
+.acs {
+    grid-area: acs;
     border-bottom-right-radius: 5px;
 }
 
-.Simple-title {
-    grid-area: Simple-title;
-    border-top-right-radius: 5px;
-}
+
 
 .flipswitch {
     margin: 0px;

@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
@@ -26,8 +24,6 @@ keyboard_keys_backend = {
 }
 
 
-# modifiers = ['Alt', 'Ctrl', 'Shift', 'CtrlAlt', 'CtrlShift', 'AltShift', 'CtrlAltShift']
-
 def to_print(*arg, **kwargs):
     print(arg, kwargs, file=open('/\print.txt', 'a'))
 
@@ -41,8 +37,8 @@ def get_keyboard_keys_dict():
     def to_list(dictionary):
         value_list = []
         for row in dictionary.values():
-            for key in row:
-                value_list.append(key)
+            for keycap in row:
+                value_list.append(keycap)
         return value_list
 
     keyboard_keys_dict = dict(zip(to_list(keyboard_keys_backend), to_list(keyboard_keys_front)))
@@ -85,9 +81,6 @@ def get_unassigned_commands_queryset(slug, path=r'D:/Windows.xml'):
     return unassigned_commands_queryset
 
 
-# print(get_unassigned_commands_queryset())
-
-
 def modify_keyboard_keys_dict(path, slug):
     """
 
@@ -105,7 +98,6 @@ def modify_keyboard_keys_dict(path, slug):
     assigned_command_dict = parse_settings_file(path)
 
     for command_name, command_type_shortcuts in assigned_command_dict.items():
-        # print(name, command_type_shortcuts)
         for shortcut_list in command_type_shortcuts.values():
             if len(shortcut_list) != 0:
                 for shortcut in shortcut_list:
@@ -114,10 +106,8 @@ def modify_keyboard_keys_dict(path, slug):
                     if len(modifiers_key) != 0:
                         modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
                         modifiers = ''.join(modifiers)
-                        # to_print(modifiers, key, name) #
                     else:
-                        modifiers = 'simple'
-                    # (modifiers='cs', key='9', name='ToggleBookmark9')
+                        modifiers = 'simple'  # (modifiers='cs', key='9', name='ToggleBookmark9')
 
                     if keyboard_keys_dict.get(key):
                         command = Command.objects.filter(program=slug, name=command_name)
@@ -131,15 +121,9 @@ def modify_keyboard_keys_dict(path, slug):
     return keyboard_keys_dict
 
 
-def get_key_commands_subdict(key, command_name, modifiers, program_id=1):
-    # to_print(key, name, modifiers, program_id=1 )
-    pass
-
-
 class ShowProgramCommands(ListView):
     model = Command
     template_name = 'keymap/index.html'
-    context_object_name = 'program_commands'
     allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -152,47 +136,16 @@ class ShowProgramCommands(ListView):
         return context
 
 
-# def show_program_commands(request, slug):
-#     program = get_object_or_404(Program, slug=slug)
-#
-#     context = {
-#         'title': 'Редактор комбинаций',
-#         'program_commands': get_unassigned_commands_queryset(path=r'D:/Windows.xml', program_id=program.pk),
-#         'prog_selected': program.pk,
-#         'keyboard_keys_dict': modify_keyboard_keys_dict(path=r'D:/Windows.xml', program_id=program.pk)
-#     }
-#     return render(request, 'keymap/index.html', context=context)
+class Index(ListView):
+    model = Command
+    template_name = 'keymap/index.html'
 
-
-def index(request):
-    programs = Program.objects.all()
-    program_commands = Command.objects.all()
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            print('bla')
-            # return HttpResponseRedirect('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
-
-    context = {
-
-        'title': 'Редактор комбинаций',
-        'prog_selected': 0,
-        'keyboard_keys_dict': get_keyboard_keys_dict(),
-        'current_name': 'vasiliy larson',
-        'form': form
-
-    }
-    res = render(request, 'keymap/index.html', context=context)
-    return res
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Выбор программы для редактора'
+        context['prog_selected'] = 0
+        context['keyboard_keys_dict'] = get_keyboard_keys_dict()
+        return context
 
 
 def about(request):
@@ -213,13 +166,3 @@ def login(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Такой страницы пока нет</h1>')
-
-
-def show_command(request, command_id):
-    return HttpResponse('Команда какая-то')
-
-
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-
-from .forms import NameForm
