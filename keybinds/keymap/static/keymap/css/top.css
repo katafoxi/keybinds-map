@@ -158,11 +158,15 @@ label {
 .command_description,
 .descr{
     cursor: grab;
-    /* vertical-align: baseline; */
+    /* vertical-align: baseline;
+     white-space: nowrap;
+    */
     font-size: 8px;
     height: 11px;
     white-space: nowrap;
     overflow: hidden;
+    color: #b7b6bb;
+
 
 }
 
@@ -174,6 +178,7 @@ label {
     width: 150px;
     z-index: 200;
     background-color: #e7e3e3;
+    color: #000000;
 }
 
 .icons {
