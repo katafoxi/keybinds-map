@@ -25,6 +25,7 @@ keyboard_keys_backend = {
 }
 
 
+
 def to_print(*arg, **kwargs):
     print(arg, kwargs, file=open('/\print.txt', 'a'))
 
@@ -48,45 +49,35 @@ def get_keyboard_keys() -> dict:
     return keyboard_keys
 
 
-def get_all_prog_commands_db(slug: str) -> dict:
+
+def get_commands_without_modifiers(commands_with_modifiers:dict, slug: str):
     """
 
     @param slug: program slug
-    @return: dict {'XDebugger.JumpToTypeSource': <Command: XDebugger.JumpToTypeSource>,...}
-    """
-    all_prog_commands_db_dict = {}
-
-    program_commands_db = Command.objects.filter(program=slug)
-    for command in program_commands_db:
-        all_prog_commands_db_dict.update({command.name: command})
-        # 'XDebugger.JumpToTypeSource': <Command: XDebugger.JumpToTypeSource>,
-    return all_prog_commands_db_dict
-
-
-def get_unassigned_commands(slug, path=r'D:/Windows.xml'):
-    """
-
-    @param slug: program slug
-    @param path: path to settings file
+    @param commands_with_modifiers: assigned commands from setting file
     @return: [  <Command: ActivateFavoritesToolWindow>,
                 <Command: ActivatePullRequestsToolWindow>, ...]
 
     """
-    assigned_commands = parse_settings_file(path)
-    all_prog_commands = get_all_prog_commands_db(slug=slug)
-    for command_name, command_type_shortcuts in assigned_commands.items():
-        all_prog_commands.pop(command_name, '')
+    all_prog_commands_db = {}
+
+    program_commands_db = Command.objects.filter(program=slug)
+    for command in program_commands_db:
+        all_prog_commands_db.update({command.name: command})
+
+    for command_name, command_type_shortcuts in commands_with_modifiers.items():
+        all_prog_commands_db.pop(command_name, '')
     unassigned_commands_queryset = []
-    for command in all_prog_commands.values():
+    for command in all_prog_commands_db.values():
         unassigned_commands_queryset.append(command)
     return unassigned_commands_queryset
 
 
-def modify_keyboard_keys(path: str, slug: str) -> dict:
+def modify_keyboard_keys(commands_with_modifiers:dict, slug: str) -> dict:
     """
 
+    @param commands_with_modifiers: assigned commands after parse settings file
     @param slug: program slug
-    @param path: path to setting file
     @return: dict {'f1': {
                         'front_name': 'F1',
                         'simple': 'help',
@@ -96,26 +87,14 @@ def modify_keyboard_keys(path: str, slug: str) -> dict:
                         },...
     """
     keyboard_keys = get_keyboard_keys()
-    assigned_commands = parse_settings_file(path)
 
-    for command_name, command_type_shortcuts in assigned_commands.items():
-        for shortcut_list in command_type_shortcuts.values():
-            if len(shortcut_list) != 0:
-                for shortcut in shortcut_list:
-                    modifiers_k_key = shortcut.split()
-                    k_key = modifiers_k_key.pop()
-                    modifiers = modifiers_k_key
-                    if len(modifiers) != 0:
-                        modifiers = map((lambda first_letter: first_letter[0]), sorted(modifiers))
-                        modifiers = ''.join(modifiers)
-                    else:
-                        modifiers = 'simple'  # (modifiers='cs', key='9', name='ToggleBookmark9')
-
-                    if keyboard_keys.get(k_key):
-                        command = Command.objects.filter(program=slug, name=command_name)
-                        template = loader.get_template('keymap/command_description.html')
-                        command_description = template.render({'command': command})
-                        keyboard_keys[k_key].update({modifiers: command_description})
+    for command_name, shortcuts_dict in commands_with_modifiers.items():
+        for k_key, shortcut in shortcuts_dict.items():
+            if keyboard_keys.get(k_key):
+                command = Command.objects.filter(program=slug, name=command_name)
+                template = loader.get_template('keymap/command_description.html')
+                command_description = template.render({'command': command})
+                keyboard_keys[k_key].update({shortcut: command_description})
     return keyboard_keys
 
 
@@ -127,12 +106,16 @@ class ShowProgramCommands(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
+        path_to_file=r'D:/BFR.xml'
+        commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
         c_def = self.get_user_context(title='Редактор комбинаций '+ slug,
                                       prog_selected=slug)
         context.update(c_def)
-        context['program_commands'] = get_unassigned_commands(path=r'D:/Windows.xml', slug=slug)
-        context['keyboard_keys_dict'] = modify_keyboard_keys(path=r'D:/Windows.xml', slug=slug)
+        context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
+        context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
         return context
+
+
 
 
 class Index(DataMixin, ListView):

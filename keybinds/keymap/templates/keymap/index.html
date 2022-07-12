@@ -1,6 +1,6 @@
 {% extends 'keymap/base.html' %}
 {% block program_command_icons %}
-    {% for command in program_commands %}
+    {% for command in commands_without_modifiers %}
         <div class="command_description"  >
             <div class="descr">
                 {% if command.icon %}

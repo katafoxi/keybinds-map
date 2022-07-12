@@ -7,7 +7,9 @@ def parse_settings_file(path_to_file=r'D:/BFR.xml'):
     """
 
     @param path_to_file: exapmle (r'D:/BFR.xml')
-    @return: dict{'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},...}
+    @return: dict{'ExternalJavaDoc': {   '$Copy': ['c c', 'c insert'],
+                                         '$Cut': ['c x', 's delete'],
+                                         '$Delete': ['simple delete'],
     """
     keymap = pathlib.Path(path_to_file)
     tree = ET.parse(keymap)
@@ -15,37 +17,29 @@ def parse_settings_file(path_to_file=r'D:/BFR.xml'):
     commands_dict = {}
     for action in root:
         # print(action.attrib['id'])
-        mouse_shortcut_list = []
-        keyboard_shortcut_list = []
+        shortcut_dict = {}
         for shortcut in action:
             if shortcut.tag == 'mouse-shortcut':
-
-                mouse_shortcut_list.append(shortcut.get('keystroke').lower())
+                modifiers_with_key =shortcut.get('keystroke').lower()
+                shortcut_dict.update(get_modifiers_code_with_key(modifiers_with_key))
             elif shortcut.tag == 'keyboard-shortcut':
-                keyboard_shortcut_list.append(shortcut.get('first-keystroke').lower())
-
-        # example 'ExternalJavaDoc': {'keyboard-shortcut': ['ctrl alt x'], 'mouse-shortcut': []},
-        commands_dict[action.attrib['id']] = {'keyboard-shortcut': keyboard_shortcut_list,
-                                              'mouse-shortcut': mouse_shortcut_list}
+                if not shortcut.get('second-keystroke'):
+                    modifiers_with_key = shortcut.get('first-keystroke').lower()
+                    shortcut_dict.update(get_modifiers_code_with_key(modifiers_with_key))
+        commands_dict[action.attrib['id']] = shortcut_dict
 
     return commands_dict
 
-
-def get_commands_with_modifiers():
-    commands_dict = parse_settings_file()
-    for command_name, command_type_shortcuts in commands_dict.items():
-        # print(name, command_type_shortcuts)
-        for shortcut_list in command_type_shortcuts.values():
-            if len(shortcut_list) != 0:
-                for shortcut in shortcut_list:
-                    modifiers_key = shortcut.split()
-                    key = modifiers_key.pop()
-                    if len(modifiers_key) != 0:
-                        modifiers = map((lambda mod: mod[0]), sorted(modifiers_key))
-                        modifiers = ''.join(modifiers)
-                    else:
-                        modifiers = 'simple'
-                    return (command_name, key, modifiers)
+def get_modifiers_code_with_key(modifiers_with_key):
+            modifiers_with_key = modifiers_with_key.split()
+            k_key = modifiers_with_key.pop()
+            modifiers = modifiers_with_key
+            if len(modifiers) != 0:
+                modifiers = map((lambda first_letter: first_letter[0]), sorted(modifiers))
+                modifiers = ''.join(modifiers)
+            else:
+                modifiers = 'push'  # (modifiers='cs', key='9', name='ToggleBookmark9')
+            return  {k_key:modifiers}
 
 
 if __name__ == '__main__':

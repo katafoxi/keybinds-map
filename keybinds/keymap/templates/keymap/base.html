@@ -167,10 +167,10 @@
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
         <div id="keybordGrid" class="keybordGrid">
             {% block keyboard_grid %}
-                {% for key, key_front in keyboard_keys_dict.items %}
-                    {% if key_front.front_name != '' %}
+                {% for key, modifiers in keyboard_keys_dict.items %}
+                    {% if modifiers.front_name != '' %}
                     <div class="key_{{ key }} char">
-                        <div class="key brdr"> {{ key_front.front_name }} </div>
+                        <div class="key brdr"> {{ modifiers.front_name }} </div>
                         <div class="a_mod brdr abbr">a</div>
                         <div class="c_mod brdr abbr">c</div>
                         <div class="s_mod brdr abbr">s</div>
@@ -179,14 +179,14 @@
                         <div class="cs_mod brdr abbr">cs</div>
                         <div class="acs_mod brdr abbr">cas</div>
 
-                        <div class="Simple-push brdr droppable">{{ key_front.simple }}</div>
-                        <div class="a brdr droppable">{{ key_front.a }} </div>
-                        <div class="c brdr droppable">{{ key_front.c }}</div>
-                        <div class="s brdr droppable">{{ key_front.s }}</div>
-                        <div class="ac brdr droppable">{{ key_front.ac }}</div>
-                        <div class="as brdr droppable">{{ key_front.as }}</div>
-                        <div class="cs brdr droppable">{{ key_front.cs }}</div>
-                        <div class="acs brdr droppable">{{ key_front.acs }}</div>
+                        <div class="Simple-push brdr droppable">{{ modifiers.push }}</div>
+                        <div class="a brdr droppable">{{ modifiers.a }} </div>
+                        <div class="c brdr droppable">{{ modifiers.c }}</div>
+                        <div class="s brdr droppable">{{ modifiers.s }}</div>
+                        <div class="ac brdr droppable">{{ modifiers.ac }}</div>
+                        <div class="as brdr droppable">{{ modifiers.as }}</div>
+                        <div class="cs brdr droppable">{{ modifiers.cs }}</div>
+                        <div class="acs brdr droppable">{{ modifiers.acs }}</div>
 
                     </div>
                     {% else %}
