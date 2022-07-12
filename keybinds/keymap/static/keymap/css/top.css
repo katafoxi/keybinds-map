@@ -28,12 +28,20 @@ body {
 .header {
     display: grid;
     grid-area: header;
-    grid-template-columns: min-content 400px auto;
+    grid-template-columns: min-content  min-content 400px;
     grid-template-rows: 1fr;
     gap: 15px;
     grid-auto-flow: row;
-    grid-template-areas: " logo guide . header-inner";
+    grid-template-areas: "logo  menu guide . ";
+    border-bottom: 3px double #fdc073;
 }
+/*
+#login_reg{
+    grid-area:login_reg;
+
+}
+#login_reg p{
+display:inline;}*/
 
 .PoolSettingsFile {
     grid-area: PoolSettingsFile;
@@ -64,6 +72,24 @@ body {
 
 
 /* || Grid styles */
+ul.mainmenu {
+    grid-area: menu;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	color: #fdc073;
+	font-size: 12px;
+
+}
+
+
+ul.mainmenu li a {
+	color: #fdc073;
+	text-decoration: none;
+}
+ul.mainmenu li a:hover {
+	color: #FDA83D;
+}
 
 .logo * {
     grid-area: logo;

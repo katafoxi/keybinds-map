@@ -8,5 +8,7 @@ urlpatterns = [
     path('addprogram/', add_program, name='add_program'),
     path('contact/', contact, name = 'contact'),
     path('login/', login, name = 'login'),
+    path('register/', RegisterUser.as_view(), name='register'),
+
     path('program/<slug:slug>/', ShowProgramCommands.as_view(), name ='program'),
 ]

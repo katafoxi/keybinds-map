@@ -1,8 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 
+from .forms import RegisterUserForm
 from .models import *
 from .parser_pycharm import parse_settings_file
 from .utils import DataMixin
@@ -110,12 +112,10 @@ class ShowProgramCommands(DataMixin, ListView):
         commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
         c_def = self.get_user_context(title='Редактор комбинаций '+ slug,
                                       prog_selected=slug)
-        context.update(c_def)
+        context=dict(list(context.items()) + list(c_def.items()))
         context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
         context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
         return context
-
-
 
 
 class Index(DataMixin, ListView):
@@ -126,9 +126,19 @@ class Index(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="'Выбор программы для редактора")
         context['keyboard_keys_dict'] = get_keyboard_keys()
-        context.update(c_def)
-        return context
 
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'keymap/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Регистрация")
+        return dict(list(context.items()) + list(c_def.items()))
 
 def about(request):
     return render(request, 'keymap/about.html', {'title': 'О сайте'})

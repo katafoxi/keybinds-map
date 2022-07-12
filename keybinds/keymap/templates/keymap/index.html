@@ -1,7 +1,38 @@
 {% extends 'keymap/base.html' %}
-{% block program_command_icons %}
-    {% for command in commands_without_modifiers %}
-        <div class="command_description"  >
+{% load static %}
+{% load keymap_tags %}
+
+{% block content %}
+
+{% if prog_selected == 0 %}
+<p>
+    Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
+    в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
+    комбинаций в выбранной программе.
+</p>
+
+<p>
+    Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
+    находящиеся на сетке клавиатуры в удобное/логичное положение.
+</p>
+{% endif %}
+
+<div class="PoolSettingsFile">
+    Файлы настроек
+</div>
+
+<div class="instructionAccumulator">
+    {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
+
+    <div class="commandIcons droppable">
+        {% if prog_selected == 0 %}
+        <div class="">
+            <img class="icons" id="ball" src="{% static 'keymap/i/ball.svg' %}">
+        </div>
+        {% endif %}
+
+        {% for command in commands_without_modifiers %}
+        <div class="command_description">
             <div class="descr">
                 {% if command.icon %}
                 <img class='icons' src="{{command.icon.url}}"/>
@@ -9,5 +40,40 @@
                 {{command.short_name}}
             </div>
         </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<!--        <div id="keybordGrid" class="keybordGrid"></div>-->
+<div id="keybordGrid" class="keybordGrid">
+
+    {% for key, modifiers in keyboard_keys_dict.items %}
+    {% if modifiers.front_name != '' %}
+    <div class="key_{{ key }} char">
+        <div class="key brdr"> {{ modifiers.front_name }}</div>
+        <div class="a_mod brdr abbr">a</div>
+        <div class="c_mod brdr abbr">c</div>
+        <div class="s_mod brdr abbr">s</div>
+        <div class="ac_mod brdr abbr">ca</div>
+        <div class="as_mod brdr abbr">as</div>
+        <div class="cs_mod brdr abbr">cs</div>
+        <div class="acs_mod brdr abbr">cas</div>
+
+        <div class="Simple-push brdr droppable">{{ modifiers.push }}</div>
+        <div class="a brdr droppable">{{ modifiers.a }}</div>
+        <div class="c brdr droppable">{{ modifiers.c }}</div>
+        <div class="s brdr droppable">{{ modifiers.s }}</div>
+        <div class="ac brdr droppable">{{ modifiers.ac }}</div>
+        <div class="as brdr droppable">{{ modifiers.as }}</div>
+        <div class="cs brdr droppable">{{ modifiers.cs }}</div>
+        <div class="acs brdr droppable">{{ modifiers.acs }}</div>
+
+    </div>
+    {% else %}
+    <div class="key_{{ key }} char"></div>
+    {% endif %}
     {% endfor %}
-{% endblock %}
+</div>
+{% endblock content %}
+

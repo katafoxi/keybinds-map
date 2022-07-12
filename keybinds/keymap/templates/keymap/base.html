@@ -24,183 +24,62 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body  >
+<body>
 
-    <div class="mainPage">
-        <header class="header">
+<div class="mainPage">
+    <header class="header">
+        <div class="logo">
+            <div class="top-head">
+                <a href="{% url 'main'%}">онлайн редактор комбинаций </a>
+            </div>
+            <a href="{% url 'main'%}">
+                <img id="logo" class="logo" src="{% static 'keymap/i/logo.png' %}" title="Редактор комбинаций"
+                     alt="Онлайн-редактор комбинаций"/>
+            </a>
+        </div>
+        {% block mainmenu %}
 
-            <div class="logo">
-                <div class="top-head">
-                    <a href="{% url 'main'%}">онлайн редактор комбинаций </a>
-                </div>
-                <a href="{% url 'main'%}">
-                    <img id="logo" class="logo" src="{% static 'keymap/i/logo.png' %}" title="Редактор комбинаций" alt="Онлайн-редактор комбинаций" />
+        <ul id="mainmenu" class="mainmenu">
+            {% for m in menu %}
+            <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+            {% endfor %}
+            <li class="last">
+                <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+            </li>
+        </ul>
+        {% endblock mainmenu %}
+
+
+        <div class="guide">
+            <!-- <h1>Редактор комбинаций</h1> -->
+
+
+        </div>
+
+        <div>
+            <p>Выберите программу</p>
+            <div>
+                {% get_program_list as programs %}
+                {% for prog in programs %}
+                {% if prog.slug == prog_selected %}
+                <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
+                {% else %}
+                <a href="{{ prog.get_absolute_url }}">
+                    <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}"/>
                 </a>
-            </div>
-            <div class="guide">
-                <!-- <h1>Редактор комбинаций</h1> -->
-                <p class="redLine">
-                    Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных комбинаций в выбранной программе.
-                </p>
-
-                <p class="redLine">
-                    Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение.
-                </p>
-            </div>
-            <div>
-
-                {% block mainmenu %}
-                <ul>
-                    {% for m in menu %} {% if not forloop.last %}
-                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                    {% else %}
-                    <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                    {% endif %} {% endfor %}
-                </ul>
-                {% endblock mainmenu %}
-
-                <p>Выберите программу</p>
-                <div>
-                    {% get_program_list as programs %}
-                    {% for prog in programs %}
-                    {% if prog.slug == prog_selected %}
-                    <!--                        <li class="selected">{{prog.title}}</li>-->
-                    <img class='progIcon selected' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" />
-                    {% else %}
-                    <a href="{{ prog.get_absolute_url }}">
-                        <img class='progIcon' src="{{prog.icon.url}}" title="{{prog.title}}" alt="{{prog.title}}" />
-                    </a>
-                    {% endif %}
-                    {% endfor %}
-                    <!--                {% for pr in programs %}-->
-                    <!--                <img class='progIcon' src="{{pr.icon.url}}" title="{{pr.title}}" alt="{{pr.title}}"/>-->
-                    <!--                {% endfor %}-->
-                </div>
-
-
-            </div>
-
-            <div>
-                <form action="/" method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-<!--            <div class="header-inner">-->
-
-<!--                <div class="signin-form">-->
-
-
-<!--                    <form class="form-inline" action="https://chess-samara.ru/" method="post">-->
-<!--                        <input type="hidden" name="function" value="enter">-->
-<!--                        <input id="auth_login" type="text" name="login" class="input-small" placeholder="Логин" />-->
-<!--                        <input type="password" name="pswd" class="input-small" placeholder="Пароль" />-->
-<!--                        <label class="checkbox"> <input name="remember" type="checkbox"/>Запомнить</label>-->
-<!--                        <button type="submit" class="btn">Войти</button>-->
-<!--                    </form>-->
-
-<!--                    &lt;!&ndash; <div class="main-page-social-buttons">-->
-<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_facebook " data-url="https://chess-samara.ru/social_login.html?action=login&provider=facebook" title="Войти через Facebook">-->
-<!--                        <span class="social-likes__button social-likes__button_facebook">-->
-<!--                            <span class="social-likes__icon social-likes__icon_facebook"></span>-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_vkontakte " data-url="https://chess-samara.ru/social_login.html?action=login&provider=vkontakte" title="Войти через ВКонтакте">-->
-<!--                        <span class="social-likes__button social-likes__button_vkontakte">-->
-<!--                            <span class="social-likes__icon social-likes__icon_vkontakte"></span>-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                    <div class="tooltip-under social-likes__widget social-likes__widget_odnoklassniki " data-url="https://chess-samara.ru/social_login.html?action=login&provider=odnoklassniki" title="Войти через Одноклассники">-->
-<!--                        <span class="social-likes__button social-likes__button_odnoklassniki">-->
-<!--                            <span class="social-likes__icon social-likes__icon_odnoklassniki"></span>-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                </div> &ndash;&gt;-->
-
-<!--                </div>-->
-
-<!--                <div class="hmargin signin-ad-links-simple">-->
-<!--                    <a href="https://chess-samara.ru/user/forgot_pswd.html">Забыли пароль?</a> |-->
-<!--                    <a href="https://chess-samara.ru/user/reg.html">Зарегистрироваться</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-        </header>
-       <div class="PoolSettingsFile">
-            Файлы настроек
-       </div>
-
-        <div class="instructionAccumulator">
-            <div class="subtableSheme">
-                <div class="key     Cell">key</div>
-                <div class="a_mod   Cell">+Alt</div>
-                <div class="c_mod   Cell">+Ctrl</div>
-                <div class="s_mod   Cell">+Shift</div>
-                <div class="ac_mod  Cell">+Ctrl+Alt</div>
-                <div class="as_mod  Cell">+Alt+Shift</div>
-                <div class="cs_mod  Cell">+Ctrl+Shift</div>
-                <div class="acs_mod Cell">+Ctrl+Alt+Shift</div>
-
-                <div class="Simple-push Cell schemeSwitchCell "></div>
-                <div class="a   Cell"> </div>
-                <div class="c   Cell"></div>
-                <div class="s   Cell schemeSwitchCell"></div>
-                <div class="ac  Cell schemeSwitchCell"></div>
-                <div class="as  Cell schemeSwitchCell"></div>
-                <div class="cs  Cell schemeSwitchCell"></div>
-                <div class="acs Cell schemeSwitchCell"></div>
-
-            </div>
-
-            <div class="commandIcons droppable">
-                <div class="">
-                    <img class="icons" id="ball" src="{% static 'keymap/i/ball.svg' %}" >
-                </div>
-
-                {% block program_command_icons %} {% endblock %}
-            </div>
-        </div>
-
-
-
-<!--        <div id="keybordGrid" class="keybordGrid"></div>-->
-        <div id="keybordGrid" class="keybordGrid">
-            {% block keyboard_grid %}
-                {% for key, modifiers in keyboard_keys_dict.items %}
-                    {% if modifiers.front_name != '' %}
-                    <div class="key_{{ key }} char">
-                        <div class="key brdr"> {{ modifiers.front_name }} </div>
-                        <div class="a_mod brdr abbr">a</div>
-                        <div class="c_mod brdr abbr">c</div>
-                        <div class="s_mod brdr abbr">s</div>
-                        <div class="ac_mod brdr abbr">ca</div>
-                        <div class="as_mod brdr abbr">as</div>
-                        <div class="cs_mod brdr abbr">cs</div>
-                        <div class="acs_mod brdr abbr">cas</div>
-
-                        <div class="Simple-push brdr droppable">{{ modifiers.push }}</div>
-                        <div class="a brdr droppable">{{ modifiers.a }} </div>
-                        <div class="c brdr droppable">{{ modifiers.c }}</div>
-                        <div class="s brdr droppable">{{ modifiers.s }}</div>
-                        <div class="ac brdr droppable">{{ modifiers.ac }}</div>
-                        <div class="as brdr droppable">{{ modifiers.as }}</div>
-                        <div class="cs brdr droppable">{{ modifiers.cs }}</div>
-                        <div class="acs brdr droppable">{{ modifiers.acs }}</div>
-
-                    </div>
-                    {% else %}
-                         <div class="key_{{ key }} char"></div>
-                    {% endif %}
+                {% endif %}
                 {% endfor %}
-            {% endblock keyboard_grid %}
+            </div>
         </div>
-    </div>
+
+    </header>
+    {% block content %}{% endblock content %}
+</div>
 
 
-    <link href="{% static 'keymap/css/dragula.min.css' %}" rel="stylesheet" />
-    <script src="{% static 'keymap/js/dragula.js' %}"></script>
-    <script src="{% static 'keymap/js/grid.js' %}"></script>
+<link href="{% static 'keymap/css/dragula.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'keymap/js/dragula.js' %}"></script>
+<script src="{% static 'keymap/js/grid.js' %}"></script>
 
 </body>
 
