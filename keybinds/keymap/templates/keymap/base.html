@@ -44,21 +44,14 @@
             <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
             {% endfor %}
             <li class="last">
-                <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>  <a href="{% url 'login' %}">Войти</a>
             </li>
         </ul>
         {% endblock mainmenu %}
 
-
-        <div class="guide">
-            <!-- <h1>Редактор комбинаций</h1> -->
-
-
-        </div>
-
         <div>
             <p>Выберите программу</p>
-            <div>
+            <div class="software_pool">
                 {% get_program_list as programs %}
                 {% for prog in programs %}
                 {% if prog.slug == prog_selected %}
@@ -69,11 +62,18 @@
                 </a>
                 {% endif %}
                 {% endfor %}
+                <a href="{% url 'add_program'%}">
+                <img  class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
+                     alt="Добавить программу"/>
+            </a>
             </div>
         </div>
 
     </header>
-    {% block content %}{% endblock content %}
+
+    <div class="content">
+        {% block content %}{% endblock content %}
+    </div>
 </div>
 
 

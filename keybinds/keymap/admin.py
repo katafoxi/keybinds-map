@@ -11,8 +11,12 @@ class ProgramAdmin(admin.ModelAdmin):
 class CommandAdmin(admin.ModelAdmin):
     list_display = ('program', 'name', 'short_name' )
 
+class SettingsFileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'program', 'name', 'rating', 'owner')
+
 
 
 
 admin.site.register(Program, ProgramAdmin)
 admin.site.register(Command, CommandAdmin)
+admin.site.register(SettingsFile, SettingsFileAdmin)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Program(models.Model):
@@ -50,7 +51,7 @@ class Command(models.Model):
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return '{0}_setting_files/{1}'.format(instance.program.slug, filename)
+    return '{0}_setting_files/{1}/{2}'.format(instance.program.slug, instance.owner.id, filename)
 
 
 class SettingsFile(models.Model):
@@ -63,6 +64,9 @@ class SettingsFile(models.Model):
     file = models.FileField(upload_to=user_directory_path)
     rating=models.DecimalField(max_digits=5,
                                decimal_places=0,
-
                                )
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('settings_file', kwargs={'slug':str(self.program).lower(),'id': self.pk})
 

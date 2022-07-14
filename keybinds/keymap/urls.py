@@ -11,4 +11,6 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
 
     path('program/<slug:slug>/', ShowProgramCommands.as_view(), name ='program'),
+    path('program/<slug:slug>/<int:id>', ShowProgramCommands.as_view(), name ='settings_file'),
+
 ]

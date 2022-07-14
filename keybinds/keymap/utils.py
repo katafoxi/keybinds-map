@@ -1,7 +1,6 @@
 from .models import *
 
-menu = [{'title': 'О сайте', 'url_name': 'about'},
-        {'title': 'Добавить программу', 'url_name': 'add_program'},
+menu = [{'title': 'Главная', 'url_name': 'main'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
         ]
 

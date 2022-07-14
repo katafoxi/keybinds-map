@@ -5,23 +5,64 @@
 {% block content %}
 
 {% if prog_selected == 0 %}
-<p>
-    Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
-    в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
-    комбинаций в выбранной программе.
-</p>
+<div class="guide">
+    <div><p>
+        Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
+        в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
+        комбинаций в выбранной программе.
+    </p>
 
-<p>
-    Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
-    находящиеся на сетке клавиатуры в удобное/логичное положение.
-</p>
+        <p>
+            Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
+            находящиеся на сетке клавиатуры в удобное/логичное положение.
+        </p>
+        <h2>Как обычно выглядит настройка keybinds map</h2>
+
+        <img src="https://user-images.githubusercontent.com/83884504/178107126-2b3efba1-7838-4998-9c79-ecc5332d4f55.png"
+             style="width:100% ">
+
+        <p>Умножаем скриншот еще на 10, и получается огромных размеров список в котором очень просто утонуть, и очень
+            сложно разобраться.
+            Как следствие, отсутствие системности/удобства/логичности назначенных комбинаций. </p></div>
+    <div><h2>Предлагаемая модель взаимодействия:</h2>
+        <ul>
+            <li>Выбираем программу</li>
+            <li>Загружаешь свой keymap-файл для программы.</li>
+            <li>keymap-файл анализируется и команды программы распределяются по сетке клавиатуры в соответствии
+                с назначенными на них комбинациями.
+            </li>
+            <img src="https://user-images.githubusercontent.com/83884504/178106341-3d7b71cf-f338-422d-a358-b421f37097ab.png"
+                 style="max-width:100%; max-height:130px">
+
+            <li>Команды без комбинаций накапливаются в пуле команд.</li>
+
+
+            <li>Перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в
+                удобное/логичное положение.
+            </li>
+
+            <li>После настройки генерируется keymap-файл с нужными/удобными комбинациями.</li>
+
+            <li>Чтобы запоминание не было долгим и мучительным, распечатываем keymap и определяем его на видное место
+                рядом с монитором.
+            </li>
+        </ul>
+    </div>
+</div>
 {% endif %}
 
 <div class="PoolSettingsFile">
     Файлы настроек
+    {% for file in settings_files %}
+        {% if file.id == current_settings_file %}
+            <a class="button_1657807886646" style="background-color: #b3ffdc;">{{ file.name }}</a>
+        {% else %}
+            <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
+        {% endif %}
+    {% endfor %}
 </div>
 
-<div class="instructionAccumulator">
+<div id="instructionAccumulator" class="instructionAccumulator">
     {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
 
     <div class="commandIcons droppable">
@@ -46,7 +87,7 @@
 
 
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
-<div id="keybordGrid" class="keybordGrid">
+<div id="keyboardGrid" class="keyboardGrid">
 
     {% for key, modifiers in keyboard_keys_dict.items %}
     {% if modifiers.front_name != '' %}
@@ -75,5 +116,6 @@
     {% endif %}
     {% endfor %}
 </div>
+
 {% endblock content %}
 

@@ -11,29 +11,23 @@ body {
     background-color: #fff;
     height: 100%;
 }
-
-
-/* || Grid styles */
-
 .mainPage {
     height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content 20px min-content min-content;
-    gap: 3px 3px;
-    grid-auto-flow: row;
-    grid-template-areas: "header" "PoolSettingsFile" "instructionAccumulator " "keybordGrid";
 }
+/* || Grid styles */
 
-.header {
+header {
     display: grid;
     grid-area: header;
-    grid-template-columns: min-content  min-content 400px;
+    grid-template-columns: min-content  min-content auto;
     grid-template-rows: 1fr;
     gap: 15px;
     grid-auto-flow: row;
-    grid-template-areas: "logo  menu guide . ";
+    grid-template-areas: "logo  menu ";
     border-bottom: 3px double #fdc073;
+}
+.software_pool a:visited{
+    color: #FFFFFF;
 }
 /*
 #login_reg{
@@ -42,6 +36,9 @@ body {
 }
 #login_reg p{
 display:inline;}*/
+.content{
+    grid-area:content
+}
 
 .PoolSettingsFile {
     grid-area: PoolSettingsFile;
@@ -59,16 +56,13 @@ display:inline;}*/
     grid-template-areas: "subtableSheme commandIcons ";
 }
 
-.keybordGrid {
+.keyboardGrid {
     display: grid;
-    grid-area: keybordGrid;
     grid-template-columns: repeat(17, 1fr);
     grid-template-rows: repeat(5, 1fr);
     gap: 1px;
     /* grid-auto-flow: row; */
 }
-
-
 
 
 /* || Grid styles */
@@ -143,8 +137,29 @@ label {
 
 .guide {
     box-sizing: border-box;
-}
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px 5px;
+    grid-auto-flow: row;
 
+}
+.button_1657807886646 {
+    display: inline-block !important;
+    text-decoration: none !important;
+    background-color: #eaeaea ;
+    color: #000000 ;
+    border: 1px solid #fdc073 !important;
+    border-radius: 5px !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+    transition: all 0.8s ease !important;
+}
+.button_1657807886646:hover{
+    text-decoration: none !important;
+    background-color: #b3ffdc !important;
+    color: #228f34 !important;
+    border-color: #fda83d !important;
+}
 .Cell {
     border: 0.1px solid #5073ff2c;
 }
@@ -168,7 +183,7 @@ label {
 .commandIcons {
     height: 100%;
     box-sizing: border-box;
-    border: 5px double rgba(136, 93, 241, 0.3);
+    border: 3px double #fdc073;;
     border-radius: 9px;
     column-width: 85px;
     column-rule: 1px dotted red;

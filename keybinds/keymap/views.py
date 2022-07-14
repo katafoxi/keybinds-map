@@ -108,11 +108,14 @@ class ShowProgramCommands(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        path_to_file=r'D:/BFR.xml'
+        settings_file = self.kwargs.get('id', 1)
+        context['current_settings_file']=settings_file
+        path_to_file='./'+SettingsFile.objects.get(program = slug, id =settings_file).file.url
         commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
         c_def = self.get_user_context(title='Редактор комбинаций '+ slug,
                                       prog_selected=slug)
         context=dict(list(context.items()) + list(c_def.items()))
+        context['settings_files'] = SettingsFile.objects.filter(program = slug)
         context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
         context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
         return context
