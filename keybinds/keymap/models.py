@@ -17,7 +17,7 @@ class Program(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('program', kwargs={'slug': self.slug})
+        return reverse('settings_file', kwargs={'slug':str(self.slug).lower(),'id': 2})
 
     class Meta:
         verbose_name = 'Поддерживаемые программы'

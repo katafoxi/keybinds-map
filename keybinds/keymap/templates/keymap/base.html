@@ -39,18 +39,25 @@
         </div>
         {% block mainmenu %}
 
-        <ul id="mainmenu" class="mainmenu">
-            {% for m in menu %}
-            <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-            {% endfor %}
-            <li class="last">
-                <a href="{% url 'register' %}">Регистрация</a>  <a href="{% url 'login' %}">Войти</a>
-            </li>
-        </ul>
+        <div class="header_block">
+            <ul id="mainmenu" class="mainmenu ">
+                {% for m in menu %}
+                <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                {% endfor %}
+
+                {% if request.user.is_authenticated %}
+                <li class="last"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+                {% else %}
+                <li class="last"><a href="{% url 'register' %}">Регистрация</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
+            </ul>
+        </div>
         {% endblock mainmenu %}
 
-        <div>
-            <p>Выберите программу</p>
+
+        <div class="header_block">
+            <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
             <div class="software_pool">
                 {% get_program_list as programs %}
                 {% for prog in programs %}
@@ -63,11 +70,29 @@
                 {% endif %}
                 {% endfor %}
                 <a href="{% url 'add_program'%}">
-                <img  class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
-                     alt="Добавить программу"/>
-            </a>
+                    <img class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
+                         alt="Добавить программу"/>
+                </a>
             </div>
         </div>
+
+        <div class="header_block">
+            <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл настроек:</p>
+            <div class="PoolSettingsFile">
+
+                {% for file in settings_files %}
+                {% if file.id == current_settings_file %}
+                <a class="button_1657807886646" style="background-color: #b3ffdc;user-select: none;">{{ file.name }}</a>
+                {% else %}
+                <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+        {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
+
 
     </header>
 

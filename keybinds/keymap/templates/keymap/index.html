@@ -16,7 +16,7 @@
             Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
             находящиеся на сетке клавиатуры в удобное/логичное положение.
         </p>
-        <h2>Как обычно выглядит настройка keybinds map</h2>
+        <h2>Как обычно выглядит настройка keybindings map</h2>
 
         <img src="https://user-images.githubusercontent.com/83884504/178107126-2b3efba1-7838-4998-9c79-ecc5332d4f55.png"
              style="width:100% ">
@@ -51,20 +51,7 @@
 </div>
 {% endif %}
 
-<div class="PoolSettingsFile">
-    Файлы настроек
-    {% for file in settings_files %}
-        {% if file.id == current_settings_file %}
-            <a class="button_1657807886646" style="background-color: #b3ffdc;">{{ file.name }}</a>
-        {% else %}
-            <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
-        {% endif %}
-    {% endfor %}
-</div>
-
-<div id="instructionAccumulator" class="instructionAccumulator">
-    {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
-
+<!--    <p style=" text-align:center;">пул команд</p>-->
     <div class="commandIcons droppable">
         {% if prog_selected == 0 %}
         <div class="">
@@ -83,38 +70,39 @@
         </div>
         {% endfor %}
     </div>
-</div>
 
 
-<!--        <div id="keybordGrid" class="keybordGrid"></div>-->
-<div id="keyboardGrid" class="keyboardGrid">
+<!--    <p style=" text-align:center;">карта сочетаний клавиш (keybindings map)</p>-->
+    <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
+    <div id="keyboardGrid" class="keyboardGrid">
 
-    {% for key, modifiers in keyboard_keys_dict.items %}
-    {% if modifiers.front_name != '' %}
-    <div class="key_{{ key }} char">
-        <div class="key brdr"> {{ modifiers.front_name }}</div>
-        <div class="a_mod brdr abbr">a</div>
-        <div class="c_mod brdr abbr">c</div>
-        <div class="s_mod brdr abbr">s</div>
-        <div class="ac_mod brdr abbr">ca</div>
-        <div class="as_mod brdr abbr">as</div>
-        <div class="cs_mod brdr abbr">cs</div>
-        <div class="acs_mod brdr abbr">cas</div>
+        {% for key, modifiers in keyboard_keys_dict.items %}
+        {% if modifiers.front_name != '' %}
+        <div class="key_{{ key }} char">
+            <div class="key brdr"> {{ modifiers.front_name }}</div>
+            <div class="a_mod brdr abbr">a</div>
+            <div class="c_mod brdr abbr">c</div>
+            <div class="s_mod brdr abbr">s</div>
+            <div class="ac_mod brdr abbr">ca</div>
+            <div class="as_mod brdr abbr">as</div>
+            <div class="cs_mod brdr abbr">cs</div>
+            <div class="acs_mod brdr abbr">cas</div>
 
-        <div class="Simple-push brdr droppable">{{ modifiers.push }}</div>
-        <div class="a brdr droppable">{{ modifiers.a }}</div>
-        <div class="c brdr droppable">{{ modifiers.c }}</div>
-        <div class="s brdr droppable">{{ modifiers.s }}</div>
-        <div class="ac brdr droppable">{{ modifiers.ac }}</div>
-        <div class="as brdr droppable">{{ modifiers.as }}</div>
-        <div class="cs brdr droppable">{{ modifiers.cs }}</div>
-        <div class="acs brdr droppable">{{ modifiers.acs }}</div>
+            <div class="Simple-push brdr droppable">{{ modifiers.push }}</div>
+            <div class="a brdr droppable">{{ modifiers.a }}</div>
+            <div class="c brdr droppable">{{ modifiers.c }}</div>
+            <div class="s brdr droppable">{{ modifiers.s }}</div>
+            <div class="ac brdr droppable">{{ modifiers.ac }}</div>
+            <div class="as brdr droppable">{{ modifiers.as }}</div>
+            <div class="cs brdr droppable">{{ modifiers.cs }}</div>
+            <div class="acs brdr droppable">{{ modifiers.acs }}</div>
 
-    </div>
-    {% else %}
-    <div class="key_{{ key }} char"></div>
-    {% endif %}
-    {% endfor %}
+        </div>
+        {% else %}
+        <div class="key_{{ key }} char"></div>
+        {% endif %}
+        {% endfor %}
+
 </div>
 
 {% endblock content %}

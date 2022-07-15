@@ -1,10 +1,13 @@
+from django.contrib.auth import logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginUserForm
 from .models import *
 from .parser_pycharm import parse_settings_file
 from .utils import DataMixin
@@ -108,14 +111,16 @@ class ShowProgramCommands(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        settings_file = self.kwargs.get('id', 1)
+
+        settings_file = self.kwargs.get('id', 0)
         context['current_settings_file']=settings_file
         path_to_file='./'+SettingsFile.objects.get(program = slug, id =settings_file).file.url
+        context['settings_files'] = SettingsFile.objects.filter(program=slug)
+
         commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
         c_def = self.get_user_context(title='Редактор комбинаций '+ slug,
                                       prog_selected=slug)
         context=dict(list(context.items()) + list(c_def.items()))
-        context['settings_files'] = SettingsFile.objects.filter(program = slug)
         context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
         context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
         return context
@@ -142,6 +147,28 @@ class RegisterUser(DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Регистрация")
         return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'keymap/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('main')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 def about(request):
     return render(request, 'keymap/about.html', {'title': 'О сайте'})
