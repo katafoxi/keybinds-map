@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -7,10 +7,10 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-from .forms import RegisterUserForm, LoginUserForm
+from .forms import RegisterUserForm, LoginUserForm, AddProgramForm, AddSettingsFileForm
 from .models import *
 from .parser_pycharm import parse_settings_file
-from .utils import DataMixin
+from .utils import DataMixin, menu
 
 keyboard_keys_front = {
     'rowF1': ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', '␛', '⎙', 'SLk', '⏸', 'N÷'],
@@ -111,19 +111,29 @@ class ShowProgramCommands(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
+        program = Program.objects.get(slug = slug)
+        settings_files = SettingsFile.objects.filter(program=slug)
+        if len(settings_files)!=0:
 
-        settings_file = self.kwargs.get('id', 0)
-        context['current_settings_file']=settings_file
-        path_to_file='./'+SettingsFile.objects.get(program = slug, id =settings_file).file.url
-        context['settings_files'] = SettingsFile.objects.filter(program=slug)
+            settings_file = self.kwargs.get('id', 0)
 
-        commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
+            context['settings_files'] = settings_files
+            context['current_settings_file']=settings_file
+            path_to_file='./'+SettingsFile.objects.get(program = slug, id =settings_file).file.url
+
+
+            commands_with_modifiers = parse_settings_file(path_to_file=path_to_file)
+
+            context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
+            context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
+        else:
+            context['error_message']=f'Поддержка программы {program.title}'
+            context['keyboard_keys_dict'] = get_keyboard_keys()
         c_def = self.get_user_context(title='Редактор комбинаций '+ slug,
                                       prog_selected=slug)
         context=dict(list(context.items()) + list(c_def.items()))
-        context['commands_without_modifiers'] = get_commands_without_modifiers(commands_with_modifiers, slug=slug)
-        context['keyboard_keys_dict'] = modify_keyboard_keys(commands_with_modifiers, slug=slug)
         return context
+
 
 
 class Index(DataMixin, ListView):
@@ -151,7 +161,7 @@ class RegisterUser(DataMixin, CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('main')
 
 
 class LoginUser(DataMixin, LoginView):
@@ -168,23 +178,59 @@ class LoginUser(DataMixin, LoginView):
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('main')
 
 def about(request):
     return render(request, 'keymap/about.html', {'title': 'О сайте'})
 
+def add_settings_file(request):
 
-def add_program(request):
-    return HttpResponse('Добавление программы')
+    if request.method == 'POST':
+        form = AddSettingsFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # print(request.FILES)
+            pass
+    else:
+        form = AddSettingsFileForm()
+    return render(request, 'keymap/add_settings_file.html', {'menu':menu, 'title':'Анализ keymap', 'form':form})
+
+# def add_program(request):
+#     if request.method == 'POST':
+#         form = AddProgramForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             form.save()
+#             return redirect('main')
+#     else:
+#         form = AddProgramForm()
+#     return render(request, 'keymap/add_program.html', {'menu': menu, 'title': 'Добавление программы', 'form': form})
+
+class AddProgram(DataMixin,CreateView):
+    form_class = AddProgramForm
+    template_name = 'keymap/add_program.html'
+    success_url = reverse_lazy('main')
+
+    def get_context_data(self, *, objects_list = None, **kwargs):
+        if self.request.method == 'POST':
+            form = AddProgramForm(self.request.POST, self.request.FILES)
+        else:
+            form = AddProgramForm()
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Добавление программы")
+        context['form']=form
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('main')
+
+    def form_invalid(self, form):
+        form = AddProgramForm()
+
 
 
 def contact(request):
     return HttpResponse('Обратная связь')
-
-
-def login(request):
-    return HttpResponse('Авторизация')
-
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Такой страницы пока нет</h1>')

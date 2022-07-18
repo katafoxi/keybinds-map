@@ -1,0 +1,10 @@
+{% extends 'keymap/base.html' %}
+
+{% block content %}
+<form action="{% url 'settings_file_analise' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+
+{% endblock %}

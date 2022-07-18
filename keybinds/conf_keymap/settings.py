@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'keymap.apps.ConfiguratorConfig',
+    'keymap.apps.KeymapConfig',
     'debug_toolbar',
 ]
 

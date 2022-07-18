@@ -50,7 +50,9 @@
     </div>
 </div>
 {% endif %}
-
+{% if error_message %}
+    <h1>{{ error_message }} пока отсутствует.</h1>
+{% endif %}
 <!--    <p style=" text-align:center;">пул команд</p>-->
     <div class="commandIcons droppable">
         {% if prog_selected == 0 %}

@@ -59,7 +59,8 @@ class SettingsFile(models.Model):
     name = models.CharField(max_length=100,
                                           unique=True,
                                           verbose_name='Название роли',
-                                          help_text="Please use the following format: [program_name]_[setting_filename]")
+                                          # help_text="Please use the following format: [program_name]_[setting_filename]"
+                            )
     # settings_file_owner= models.
     file = models.FileField(upload_to=user_directory_path)
     rating=models.DecimalField(max_digits=5,

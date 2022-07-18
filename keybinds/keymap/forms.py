@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from .models import *
 
@@ -21,13 +22,45 @@ class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email','password1', 'password2')
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-input'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-input'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-input'}),
 
-        }
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
+class AddProgramForm(forms.ModelForm):
+    class Meta:
+        model = Program
+        fields = ['title',  'icon', 'site', 'slug']
+        widgets = {
+            'title':forms.TextInput(attrs={'class':'form-input'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title) > 100:
+            raise ValidationError('Длина превышает 100 символов')
+
+        return title
+
+class AddSettingsFileForm(forms.ModelForm):
+    class Meta:
+        model = SettingsFile
+        fields =  ['program', 'name', 'file']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean_file(self):
+        file = self.cleaned_data['file']
+        print(type(file))
+        if 'xml' not in file.name:
+            raise ValidationError('Неверное расширение ')
+        elif file.size > 10484576:
+            raise ValidationError('Слишком большой файл')
+        return file
+
+
+

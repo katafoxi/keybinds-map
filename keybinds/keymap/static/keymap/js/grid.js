@@ -98,3 +98,12 @@ function showModifiersRows(modifier) {
         elem.style.display = '';
     }
 }
+
+
+var slug = document.getElementById("id_slug").value;
+
+document.getElementById("id_title").onkeyup = function() {
+    if (slug == '') {
+        document.getElementById("id_slug").value = URLify(document.getElementById("id_title").value, 50);
+    }
+}

@@ -305,9 +305,7 @@ label {
     "acs_mod    acs";
     /* width: 100%;*/
     height: 100%;
-    border-top: 1px solid #1C6EA4;
-    border-right: 1px solid #1C6EA4;
-    border-bottom: 1px solid #1C6EA4;
+    border: 1px solid #1C6EA4;
 
     border-radius: 5px;
     /* border-radius: 5px; */
@@ -318,7 +316,6 @@ label {
     text-align: center;
     background-color: bisque;
     border-top-left-radius: 5px;
-    border-left: 2px solid #5072ff;
 }
 
 .Simple-push {
@@ -327,16 +324,13 @@ label {
 }
 
 .a_mod {
-    border-left: 2px solid rgb(59, 153, 51);
     grid-area: a_mod;
 }
 .a {
-    border-top: 0.1px solid #5073ff2c;
     grid-area: a;
 }
 .c_mod {
     grid-area: c_mod;
-    border-left: 2px solid rgb(250, 0, 0);
 }
 
 .c {
@@ -344,7 +338,6 @@ label {
 }
 
 .s_mod {
-    border-left: 2px solid rgb(25, 0, 255);
     grid-area: s_mod;
 }
 
@@ -353,13 +346,11 @@ label {
 }
 
 .ac_mod {
-    border-left: 2px solid rgb(255, 153, 0);
     grid-area: ac_mod;
 }
 .ac {grid-area: ac;}
 
 .cs_mod {
-    border-left: 2px solid rgb(255, 0, 242);
     grid-area: cs_mod;
 }
 
@@ -368,7 +359,6 @@ label {
 }
 
 .as_mod {
-    border-left: 2px solid rgb(255, 102, 0);
     grid-area: as_mod;
 }
 
@@ -377,7 +367,6 @@ label {
 }
 
 .acs_mod {
-    border-left: 2px solid rgb(0, 0, 0);
     grid-area: acs_mod;
     border-bottom-left-radius: 5px;
 }
@@ -469,3 +458,11 @@ label {
 .mouse_right {
     display: none;
 } */
+form{
+    width:300px;
+}
+form button,
+form input{
+    width:100%;
+    box-sizing: border-box;
+}
