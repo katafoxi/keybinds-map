@@ -53,9 +53,7 @@ display:inline;}*/
 }
 
 .PoolSettingsFile {
-    min-height: 20px;
-    margin:2px;
-    padding:2px;
+    border-right: 1px solid #e7c8a8;
 
 }
 
@@ -466,3 +464,43 @@ form input{
     width:100%;
     box-sizing: border-box;
 }
+.settings_files {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    }
+
+.settings_files *{
+    font-size:9px;
+    }
+
+fieldset{
+    border: 1px solid #efffed;
+}
+
+#filedrag{
+    border-radius: 7px 7px 7px 7px;
+    border: 2px dashed #3DA8BA;
+    color: #555555;
+    display:none;
+    cursor: default;
+    height:100%;
+    /*margin: 1px;
+    padding: 1em 0pt;*/
+    text-align: center;
+    background:#f9f9f9;
+}
+#filedrag.hover {
+    border-style: solid;
+    box-shadow: 0pt 3px 4px #dbdbdb inset;
+}
+#messages{
+    margin-top:1px;
+    padding:1px;
+    font-size:9px;
+}
+#messages p{
+    border-bottom:1px solid #efefef;
+    margin-bottom:2px;
+}
+#submitbutton{
+display:none;}

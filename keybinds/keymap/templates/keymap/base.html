@@ -57,8 +57,9 @@
 
 
         <div class="header_block">
-            <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
             <div class="software_pool">
+                <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
+
                 {% get_program_list as programs %}
                 {% for prog in programs %}
                 {% if prog.slug == prog_selected %}
@@ -86,19 +87,47 @@
         </div>
 
         <div class="header_block">
-            <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл настроек:</p>
-            <div class="PoolSettingsFile">
+            <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл keymap или загрузи свой для
+                отображения</p>
+            <div class="settings_files">
+                <div class="PoolSettingsFile">
+                    {% for file in settings_files %}
+                    {% if file.id == current_settings_file %}
+                    <a class="button_1657807886646"
+                       style="background-color: #b3ffdc;user-select: none;">{{ file.name}}</a>
+                    {% else %}
+                    <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
 
-                {% for file in settings_files %}
-                {% if file.id == current_settings_file %}
-                <a class="button_1657807886646" style="background-color: #b3ffdc;user-select: none;">{{ file.name }}</a>
-                {% else %}
-                <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
+                {% if prog_selected %}
+                <!--            <a href="{% url 'settings_file_analise' slug=prog_selected %}">-->
+                <!--                <img class="progIcon" src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"-->
+                <!--                     alt="Анализ keymap"/>-->
+                <!--            </a>-->
+                <form id="upload" action="{% url 'settings_file_analise' slug=prog_selected%}" method="POST"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset>
+                        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000"/>
+                        <div>
+                            <input type="file" id="fileselect" name="fileselect[]"/>
+                            <div id="filedrag">
+                                <img  src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"
+                                     alt="Анализ keymap" style="height:25px; vertical-align: middle;"/>
+                                Или перетащите сюда
+                            </div>
+                        </div>
+                        <div id="messages"></div>
+                        <div id="submitbutton">
+                            <button type="submit">Отобразить keymap</button>
+                        </div>
+                    </fieldset>
+                </form>
                 {% endif %}
-                {% endfor %}
             </div>
         </div>
-
 
         {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
 
