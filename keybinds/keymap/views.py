@@ -65,8 +65,7 @@ class ShowProgramCommands(DataMixin, ListView):
         else:
             context['error_message'] = f'Поддержка программы {program.title}'
             context['keyboard_keys_dict'] = Keyboard.get_clean_buttons()
-        c_def = self.get_user_context(title='Редактор комбинаций ' + slug,
-                                      prog_selected=slug)
+        c_def = self.get_user_context(title='Редактор комбинаций ' + slug, prog_selected=slug)
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
