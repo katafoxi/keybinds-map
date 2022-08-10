@@ -1,10 +1,9 @@
 from django import forms
-from django.contrib.auth import get_user
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from .models import *
+
 
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
@@ -14,6 +13,7 @@ class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
     file = forms.FileField()
 
+
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
@@ -22,20 +22,22 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email','password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
 
 
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
+
 class AddProgramForm(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ['title',  'icon', 'site', 'slug']
+        fields = ['title', 'icon', 'site', 'slug']
         widgets = {
-            'title':forms.TextInput(attrs={'class':'form-input'}),
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -46,12 +48,11 @@ class AddProgramForm(forms.ModelForm):
 
         return title
 
+
 class AddSettingsFileForm(forms.ModelForm):
     class Meta:
         model = SettingsFile
-        fields =  [ 'name', 'file']
-
-
+        fields = ['name', 'file']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,6 +65,3 @@ class AddSettingsFileForm(forms.ModelForm):
         elif file.size > 10484576:
             raise ValidationError('Слишком большой файл')
         return file
-
-
-

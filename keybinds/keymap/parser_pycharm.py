@@ -3,15 +3,19 @@ import pathlib
 from pprint import pprint
 
 
-def parse_settings_file(path_to_file=r'D:/BFR.xml'):
+def parse_settings_file(settings_file=r'D:/BFR.xml'):
     """
 
-    @param path_to_file: exapmle (r'D:/BFR.xml')
-    @return: dict{'ExternalJavaDoc': {   {'$Redo': {'back_space': 'as', 'z': 'cs'},
-                                        'Back': {'button4': 'push', 'left': 'ac'},
+    @param settings_file: exapmle (r'D:/BFR.xml')
+    @return: dict { '$Redo': {'back_space': 'as', 'z': 'cs'},
+                    'Back': {'button4': 'push', 'left': 'ac'},
     """
-    keymap = pathlib.Path(path_to_file)
-    tree = ET.parse(keymap)
+    if settings_file is str:
+        keymap = pathlib.Path(settings_file)
+        tree = ET.parse(keymap)
+    else:
+        tree = ET.parse(settings_file)
+
     root = tree.getroot()
     commands_dict = {}
     for action in root:

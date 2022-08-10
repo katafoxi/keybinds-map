@@ -9,16 +9,13 @@ showOrHideModifiersRows();
 // dragula([document.querySelector('#left'), document.querySelector('#right')], {});
 function onDragMaster() {
     const boxNodes = document.querySelectorAll('.droppable'); // returns NodeList
-
     const draggableBoxes = Array.prototype.slice.call(boxNodes);
-
-
     dragula(draggableBoxes, )
         .on('drag', (el) => {
             el.style.width = '14px';
         })
-        .on('drop', (el, targret) => {
-            el.style.width = (targret.offsetWidth - 5) + 'px';
+        .on('drop', (el, target) => {
+            el.style.width = (target.offsetWidth - 5) + 'px';
         })
 }
 
@@ -30,15 +27,10 @@ function onDragMaster() {
 function changeCommandDescriptionWidth() {
     let collectionCommandDescr = document.getElementsByClassName('command_description');
     // console.log(collectionCommandDescr)
-
-
     for (let i = 1; i < collectionCommandDescr.length; i++) {
         let elem = collectionCommandDescr[i];
-
         if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
             elem.style.width = '14px'
-
-
         }
         if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
             elem.style.width = (elem.parentNode.offsetWidth - 4) + 'px';
@@ -143,8 +135,8 @@ function Init() {
         filedrag.addEventListener("drop", FileSelectHandler, false);
         filedrag.style.display = "block";
 
-        /* удаление кнопки сабмитта
-        submitbutton.style.display = "none";*/
+        /* удаление кнопки сабмитта*/
+//        submitbutton.style.display = "none";
     }
 }
 
@@ -152,6 +144,7 @@ function Init() {
 function FileDragHover(e) {
     e.stopPropagation();
     e.preventDefault();
+    alert(e.type);
     e.target.className = (e.type == "dragover" ? "hover" : "");
 }
 
@@ -165,10 +158,11 @@ function FileSelectHandler(e) {
     // парсим все объекты типа File
     for (var i = 0, f; f = files[i]; i++) {
         if (f.name.endsWith("xml")) {
+//            $id('fileselect').innerHTML = f;
             $id("messages").innerHTML = '';
-            submitbutton.style.display = "block";
-            fileselect.style.display = 'none';
-            filedrag.style.display = 'none';
+//            submitbutton.style.display = "block";
+//            fileselect.style.display = 'none';
+//            filedrag.style.display = 'none';
         } else {
             Output("<p style = 'color:red'>Should be an xml file</p>")
         }
