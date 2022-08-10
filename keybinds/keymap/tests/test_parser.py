@@ -5,8 +5,9 @@ from keymap.parser_pycharm import pycharm_parser_settings_file, get_modifiers_co
 class ParserTest(TestCase):
 
     def test_parse_settings_file(self):
-        test_file = open(r'tests/test.xml')
-        parse = pycharm_parser_settings_file(test_file)
+        with open(r'tests/test.xml') as xml_file:
+            test_file = xml_file
+            parse = pycharm_parser_settings_file(test_file)
         self.assertEqual(parse, {'$Redo': {'z': 'cs', 'back_space': 'as'}})
 
     def test_get_modifiers_code_with_key(self):

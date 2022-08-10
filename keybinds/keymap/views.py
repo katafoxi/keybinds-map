@@ -30,9 +30,9 @@ def get_unassigned_commands_db(commands_with_modifiers: dict, slug: str):
     program_commands_db = Command.objects.filter(program=slug)
     for command_obj in program_commands_db:
         all_prog_commands_db.update({command_obj.name: command_obj})
-
-    for command_name, command_type_shortcuts in commands_with_modifiers.items():
-        all_prog_commands_db.pop(command_name, '')
+    if commands_with_modifiers:
+        for command_name, command_type_shortcuts in commands_with_modifiers.items():
+            all_prog_commands_db.pop(command_name, '')
 
     unassigned_commands_queryset = []
     for command_obj in all_prog_commands_db.values():
