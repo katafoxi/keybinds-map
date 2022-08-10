@@ -8,13 +8,12 @@ from django.views.generic import ListView, CreateView
 from keymap.keyboard import Keyboard
 from .forms import RegisterUserForm, LoginUserForm, AddProgramForm, AddSettingsFileForm
 from .models import *
-from .parser_pycharm import parse_settings_file
+from .parser_pycharm import pycharm_parser_settings_file
 from .utils import DataMixin, menu
 
 
 def to_print(*arg, **kwargs):
     print(arg, kwargs, file=open('/\print.txt', 'a'))
-
 
 
 def get_unassigned_commands_db(commands_with_modifiers: dict, slug: str):
@@ -55,12 +54,12 @@ class ShowProgramCommands(DataMixin, ListView):
         if len(settings_files) != 0:
             context['settings_files'] = settings_files
             if self.request.method == 'POST':
-                commands_with_modifiers = parse_settings_file(self.request.FILES['file'])
+                commands_with_modifiers = pycharm_parser_settings_file(self.request.FILES['file'])
             else:
                 settings_file = self.kwargs.get('id', 0)
                 context['current_settings_file'] = settings_file
                 path_to_file = './' + SettingsFile.objects.get(program=slug, id=settings_file).file.url
-                commands_with_modifiers = parse_settings_file(settings_file=path_to_file)
+                commands_with_modifiers = pycharm_parser_settings_file(settings_file=path_to_file)
             context['commands_without_modifiers'] = get_unassigned_commands_db(commands_with_modifiers, slug=slug)
             context['keyboard_keys_dict'] = Keyboard.get_buttons_with_commands(commands_with_modifiers, slug=slug)
         else:
