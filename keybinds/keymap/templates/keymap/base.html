@@ -5,141 +5,141 @@
 <html>
 
 <head>
-    <title>{{ title }}</title>
+  <title>{{ title }}</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <META name="description" CONTENT="Удобный анализ клавиатурных комбинаций и редактор клавиатурных комбинаций.">
 
-    <link rel="stylesheet" href="{% static 'keymap/css/top.css' %}">
+  <link rel="stylesheet" href="{% static 'keymap/css/top.css' %}">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'keymap/i/favicon/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'keymap/i/favicon/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'keymap/i/favicon/favicon-16x16.png' %}">
-    <!-- <link rel="manifest" href="./i/favicon/site.webmanifest">-->
-    <link rel="mask-icon" href="{% static 'keymap/i/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
-    <link rel="shortcut icon" href="{% static 'keymap/i/favicon/favicon.ico' %}">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="{% static 'keymap/i/favicon/browserconfig.xml' %}">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'keymap/i/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'keymap/i/favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'keymap/i/favicon/favicon-16x16.png' %}">
+  <!-- <link rel="manifest" href="./i/favicon/site.webmanifest">-->
+  <link rel="mask-icon" href="{% static 'keymap/i/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <link rel="shortcut icon" href="{% static 'keymap/i/favicon/favicon.ico' %}">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="{% static 'keymap/i/favicon/browserconfig.xml' %}">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
 
 <div class="mainPage">
-    <header class="header">
-        <div class="logo">
-            <div class="top-head">
-                <a href="{% url 'main' %}">онлайн редактор комбинаций </a>
-            </div>
-            <a href="{% url 'main' %}">
-                <img id="logo" class="logo" src="{% static 'keymap/i/logo.png' %}" title="Редактор комбинаций"
-                     alt="Онлайн-редактор комбинаций"/>
-            </a>
-        </div>
-        {% block mainmenu %}
-
-            <div class="header_block">
-                <ul id="mainmenu" class="mainmenu ">
-                    {% for m in menu %}
-                        <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
-                    {% endfor %}
-
-                    {% if request.user.is_authenticated %}
-                        <li class="last"> {{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></li>
-                    {% else %}
-                        <li class="last"><a href="{% url 'register' %}">Регистрация</a></li>
-                        <li><a href="{% url 'login' %}">Войти</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        {% endblock mainmenu %}
-
-
-        <div class="header_block">
-            <div class="software_pool">
-                <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
-
-                {% get_program_list as programs %}
-                {% for prog in programs %}
-                    {% if prog.slug == prog_selected %}
-                        <img class='progIcon selected' src="{{ prog.icon.url }}" title="{{ prog.title }}"
-                             alt="{{ prog.title }}"/>
-                    {% else %}
-                        <a href="{{ prog.get_absolute_url }}">
-                            <img class='progIcon' src="{{ prog.icon.url }}" title="{{ prog.title }}"
-                                 alt="{{ prog.title }}"/>
-                        </a>
-                    {% endif %}
-                {% endfor %}
-
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'add_program' %}">
-                        <img class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
-                             alt="Добавить программу"/>
-                    </a>
-                {% else %}
-                    <a href="{% url 'register' %}">
-                        <img class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
-                             alt="Добавить программу"/>
-                    </a>
-                {% endif %}
-
-            </div>
-        </div>
-
-        <div class="header_block">
-            <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл keymap или загрузи свой для
-                отображения</p>
-            <div class="settings_files">
-                <div class="PoolSettingsFile">
-                    {% for file in settings_files %}
-                        {% if file.id == current_settings_file %}
-                            <a class="button_1657807886646"
-                               style="background-color: #b3ffdc;user-select: none;">{{ file.name }}</a>
-                        {% else %}
-                            <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-
-                {% if prog_selected %}
-                    <!--            <a href="{% url 'settings_file_analise' slug=prog_selected %}">-->
-                    <!--                <img class="progIcon" src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"-->
-                    <!--                     alt="Анализ keymap"/>-->
-                    <!--            </a>-->
-                    <form id="upload" action="{% url 'settings_file_analise' slug=prog_selected %}" method="post"
-                          enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <fieldset>
-                            <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000"/>
-                            <div>
-                                <label for="fileselect">Загрузить keymap-файл</label>
-                                <input type="file" id="fileselect" name="file"/>
-                                <div id="filedrag">
-                                    <img src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"
-                                         alt="Анализ keymap" style="height:25px; vertical-align: middle;"/>
-                                    Или перетащите сюда
-                                </div>
-                            </div>
-                            <div id="messages"></div>
-                            <div id="submitbutton">
-                                <button type="submit">Отобразить keymap</button>
-                            </div>
-                        </fieldset>
-                    </form>
-                {% endif %}
-            </div>
-        </div>
-
-        {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell" %}
-
-
-    </header>
-
-    <div class="content">
-        {% block content %}{% endblock content %}
+  <header class="header">
+    <div class="logo">
+      <div class="top-head">
+        <a href="{% url 'main' %}">онлайн редактор комбинаций </a>
+      </div>
+      <a href="{% url 'main' %}">
+        <img id="logo" class="logo" src="{% static 'keymap/i/logo.png' %}" title="Редактор комбинаций"
+             alt="Онлайн-редактор комбинаций"/>
+      </a>
     </div>
+    {% block mainmenu %}
+
+      <div class="header_block">
+        <ul id="mainmenu" class="mainmenu ">
+          {% for m in menu %}
+            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+          {% endfor %}
+
+          {% if request.user.is_authenticated %}
+            <li class="last"> {{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></li>
+          {% else %}
+            <li class="last"><a href="{% url 'register' %}">Регистрация</a></li>
+            <li><a href="{% url 'login' %}">Войти</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    {% endblock mainmenu %}
+
+
+    <div class="header_block">
+      <div class="software_pool">
+        <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
+
+        {% get_program_list as programs %}
+        {% for prog in programs %}
+          {% if prog.slug == prog_selected %}
+            <img class='progIcon selected' src="{{ prog.icon.url }}" title="{{ prog.title }}"
+                 alt="{{ prog.title }}"/>
+          {% else %}
+            <a href="{{ prog.get_absolute_url }}">
+              <img class='progIcon' src="{{ prog.icon.url }}" title="{{ prog.title }}"
+                   alt="{{ prog.title }}"/>
+            </a>
+          {% endif %}
+        {% endfor %}
+
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'add_program' %}">
+            <img class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
+                 alt="Добавить программу"/>
+          </a>
+        {% else %}
+          <a href="{% url 'register' %}">
+            <img class="progIcon" src="{% static 'keymap/i/add.png' %}" title="Добавить программу"
+                 alt="Добавить программу"/>
+          </a>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <div class="header_block">
+      <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл keymap или загрузи свой для
+        отображения</p>
+      <div class="settings_files">
+        <div class="PoolSettingsFile">
+          {% for file in settings_files %}
+            {% if file.id == current_settings_file %}
+              <a class="button_1657807886646"
+                 style="background-color: #b3ffdc;user-select: none;">{{ file.name }}</a>
+            {% else %}
+              <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if prog_selected %}
+          <!--            <a href="{% url 'settings_file_analise' slug=prog_selected %}">-->
+          <!--                <img class="progIcon" src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"-->
+          <!--                     alt="Анализ keymap"/>-->
+          <!--            </a>-->
+          <form id="upload" action="{% url 'settings_file_analise' slug=prog_selected %}" method="post"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+              <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000"/>
+              <div>
+                <label for="fileselect">Загрузить keymap-файл</label>
+                <input type="file" id="fileselect" name="file"/>
+                <div id="filedrag">
+                  <img src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"
+                       alt="Анализ keymap" style="height:25px; vertical-align: middle;"/>
+                  Или перетащите сюда
+                </div>
+              </div>
+              <div id="messages"></div>
+              <div id="submitbutton">
+                <button type="submit">Отобразить keymap</button>
+              </div>
+            </fieldset>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+
+    {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell" %}
+
+
+  </header>
+
+  <div class="content">
+    {% block content %}{% endblock content %}
+  </div>
 </div>
 
 

@@ -3,40 +3,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-    <div id="instructionAccumulator" class="instructionAccumulator">
-    {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell"%}
+<div id="instructionAccumulator" class="instructionAccumulator">
+  {% include "keymap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell" %}
 
-    <div class="commandIcons droppable">
-        {% if prog_selected == 0 %}
-        <div class="">
-            <img class="icons" id="ball" src="{% static 'keymap/i/ball.svg' %}">
-        </div>
-        {% endif %}
+  <div class="commandIcons droppable">
+    {% if prog_selected == 0 %}
+      <div class="">
+        <img class="icons" id="ball" src="{% static 'keymap/i/ball.svg' %}">
+      </div>
+    {% endif %}
 
-        {% for command in commands_without_modifiers %}
-        <div class="command_description">
-            <div class="descr">
-                {% if command.icon %}
-                <img class='icons' src="{{command.icon.url}}"/>
-                {% endif %}
-                {{command.short_name}}
-            </div>
+    {% for command in commands_without_modifiers %}
+      <div class="command_description">
+        <div class="descr">
+          {% if command.icon %}
+            <img class='icons' src="{{ command.icon.url }}"/>
+          {% endif %}
+          {{ command.short_name }}
         </div>
-        {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
 
 <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
 <div id="keyboardGrid" class="keyboardGrid">
 
-    {% for key, modifiers in keyboard_keys_dict.items %}
+  {% for key, modifiers in keyboard_keys_dict.items %}
     {% if modifiers.front_name != '' %}
-    <div class="key_{{ key }} char">
+      <div class="key_{{ key }} char">
         <div class="key brdr"> {{ modifiers.front_name }}</div>
         <div class="a_mod brdr abbr">a</div>
         <div class="c_mod brdr abbr">c</div>
@@ -55,11 +55,11 @@
         <div class="cs brdr droppable">{{ modifiers.cs }}</div>
         <div class="acs brdr droppable">{{ modifiers.acs }}</div>
 
-    </div>
+      </div>
     {% else %}
-    <div class="key_{{ key }} char"></div>
+      <div class="key_{{ key }} char"></div>
     {% endif %}
-    {% endfor %}
+  {% endfor %}
 </div>
 </body>
 <link href="{% static 'keymap/css/dragula.min.css' %}" rel="stylesheet"/>

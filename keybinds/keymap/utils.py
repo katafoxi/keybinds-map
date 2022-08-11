@@ -6,6 +6,7 @@ menu = [{'title': 'Главная', 'url_name': 'main'},
 
 
 class DataMixin:
+
     def get_user_context(self, **kwargs):
         context = kwargs
         programs = Program.objects.all()
@@ -14,4 +15,3 @@ class DataMixin:
         if 'prog_selected' not in context:
             context['prog_selected'] = 0
         return context
-

@@ -33,7 +33,7 @@ class LoginUserForm(AuthenticationForm):
 class AddProgramForm(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ['title', 'icon', 'site', 'slug']
+        fields = ['title', 'icon', 'site', 'slug','settings_file_info']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
         }

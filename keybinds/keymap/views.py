@@ -88,7 +88,7 @@ class Index(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="'Выбор программы для редактора")
+        c_def = self.get_user_context(title="Выбор программы для редактора")
         context['keyboard_keys_dict'] = Keyboard.get_clean_buttons()
 
         return dict(list(context.items()) + list(c_def.items()))

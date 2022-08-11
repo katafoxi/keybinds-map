@@ -1,9 +1,13 @@
+from pprint import pprint
+
+from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
 
+from keyboard import Keyboard
 from keymap.models import Program, Command, SettingsFile
 
 
@@ -11,6 +15,8 @@ class PagesTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        Keyboard.buttons_front = {'rowZX': ['Z', ]}
+        Keyboard.buttons_back = {'rowZX': ['z', ]}
         small_gif = (
             b'\x47\x49\x46\x38\x39\x61\x02\x00'
             b'\x01\x00\x80\x00\x00\x00\x00\x00'
@@ -56,3 +62,31 @@ class PagesTest(TestCase):
             with self.subTest(reverse_name=reverse_name):
                 response = self.authorized_client.get(reverse_name)
                 self.assertTemplateUsed(response, template)
+
+    # Проверка словаря контекста главной страницы (в нём передаётся форма)
+    def test_main_page_show_correct_context(self):
+        """Шаблон main сформирован с правильным контекстом."""
+        response = self.authorized_client.get(reverse('main'))
+        self.assertEquals(response.context['title'], 'Выбор программы для редактора')
+        self.assertEquals(response.context['prog_selected'], 0)
+        self.assertEquals(response.context['programs'][0].title, 'PyCharm')
+        self.assertEquals(response.context['menu'], [{'title': 'Главная', 'url_name': 'main'},
+                                                     {'title': 'Обратная связь', 'url_name': 'contact'}])
+
+    def test_add_program_page_show_correct_context(self):
+        """Шаблон add_program сформирован с правильным контекстом."""
+        response = self.authorized_client.get(reverse('add_program'))
+        form_fields = {
+            'title': forms.fields.CharField,
+            'slug': forms.fields.SlugField,
+            'icon': forms.fields.ImageField,
+            'settings_file_info': forms.fields.CharField,
+            'site': forms.fields.URLField,
+        }
+        for value, expected in form_fields.items():
+            with self.subTest(value=value):
+                form_field = response.context.get('form').fields.get(value)
+                self.assertIsInstance(form_field, expected)
+
+
+
