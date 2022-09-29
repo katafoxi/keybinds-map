@@ -1,5 +1,6 @@
 import shutil
 import tempfile
+from pprint import pprint
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -12,21 +13,6 @@ from keymap.utils import get_image_file
 # на момент теста медиа папка будет переопределена
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
-
-small_gif = (
-    b'\x47\x49\x46\x38\x39\x61\x02\x00'
-    b'\x01\x00\x80\x00\x00\x00\x00\x00'
-    b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
-    b'\x00\x00\x00\x2C\x00\x00\x00\x00'
-    b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-    b'\x0A\x00\x3B'
-)
-# small_gif = open(r'D:\_\keybinds_map\keybinds\keymap\tests\UGNX.png', mode='rb').read()
-
-uploaded = SimpleUploadedFile(
-    name='small.gif',
-    content=small_gif,
-)
 
 
 # Для сохранения media-файлов в тестах будет использоваться
@@ -74,5 +60,41 @@ class AddProgramFormTest(TestCase):
         self.form = self.get_add_program_form(title='prog2' * 100)
         self.assertFalse(self.form.is_valid())
 
-# class AddSettingsFileFormTest(TestCase):
 
+class AddSettingsFileFormTest(TestCase):
+    fixtures = ['fixture_small.json', 'users.json']
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # program = Program.objects.create(
+        #     title='testprog0',
+        #     slug='testprog0',
+        #     icon=get_image_file(),
+        #     site='test0.com'
+        # )
+        print(Program.objects.all())
+        cls.form = AddSettingsFileForm()
+
+    @staticmethod
+    def get_add_settings_file_form(name='setting_file'):
+        # "Валидная форма создает запись в Program"
+        prog = Program.objects.get(pk=2)
+        form_data = {
+            'icon': SimpleUploadedFile(
+                name='test.jpg',
+                content=get_image_file().read,
+                content_type="image/jpeg"
+            ),
+            'site': 'testsite.com',
+            'slug': 'test_add',
+            'title': 'test_title',
+            'name': name,
+        }
+        file_data = {'file': SimpleUploadedFile(name='temp_keymap.xml', content=b'content')}
+        return AddProgramForm(form_data, file_data)
+
+    def test_add_settings_file_form(self):
+        self.form = self.get_add_settings_file_form()
+        pprint(self.form.errors)
+        self.assertTrue(self.form.is_valid())

@@ -185,7 +185,7 @@ def add_settings_file(request):
 
 
 def contact(request):
-    return HttpResponse('Обратная связь')
+    return HttpResponse('<html><title>Обратная связь</title></html>')
 
 
 def pageNotFound(request, exception):

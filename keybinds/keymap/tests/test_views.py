@@ -1,12 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.http import HttpRequest
 from django.test import Client, TestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 from keyboard import Keyboard
 from keymap.models import Program, Command
-from views import AddProgram
+from views import AddProgram, Index, contact, LoginUser
 
 
 class PagesTest(TestCase):
@@ -23,6 +24,7 @@ class PagesTest(TestCase):
         content=small_gif,
         content_type='image/gif'
     )
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -45,6 +47,20 @@ class PagesTest(TestCase):
         self.user = User.objects.create_user(username='admin')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+
+    def test_contact_url_resolve_to_contact_view(self):
+        """ тест: корневой url преобразуется в представление домашней страницы"""
+        found = resolve('/contact/')
+        self.assertEqual(found.func.__name__, contact.__name__)
+
+    def test_contact_page_return_correct_html(self):
+        """ тест: страница контактов возвращает правильный html """
+        request = HttpRequest()
+        response = contact(request)
+        html = response.content.decode('utf-8')
+        self.assertTrue(html.startswith('<html>'))
+        self.assertIn('<title>Обратная связь</title>', html)
+        self.assertTrue(html.endswith('</html>'))
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""

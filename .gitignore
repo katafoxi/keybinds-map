@@ -1,2 +1,3 @@
 /keybinds_venv/
-/keybinds/conf_keymap/secretkey.py
+/keybinds/conf/secretkey.py
+*.pic
