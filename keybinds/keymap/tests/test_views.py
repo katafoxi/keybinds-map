@@ -55,12 +55,8 @@ class PagesTest(TestCase):
 
     def test_contact_page_return_correct_html(self):
         """ тест: страница контактов возвращает правильный html """
-        request = HttpRequest()
-        response = contact(request)
-        html = response.content.decode('utf-8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>Обратная связь</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+        response = self.client.get('/login/')
+        self.assertTemplateUsed(response, 'keymap/login.html')
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""

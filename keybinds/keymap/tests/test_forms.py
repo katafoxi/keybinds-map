@@ -57,44 +57,38 @@ class AddProgramFormTest(TestCase):
         self.assertTrue(self.form.is_valid())
 
     def test_add_program_form_clean_title(self):
-        self.form = self.get_add_program_form(title='prog2' * 100)
+        self.form = self.get_add_program_form(title='prog2' * 1000)
         self.assertFalse(self.form.is_valid())
 
 
 class AddSettingsFileFormTest(TestCase):
-    fixtures = ['fixture_small.json', 'users.json']
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # program = Program.objects.create(
-        #     title='testprog0',
-        #     slug='testprog0',
-        #     icon=get_image_file(),
-        #     site='test0.com'
-        # )
-        print(Program.objects.all())
         cls.form = AddSettingsFileForm()
 
     @staticmethod
-    def get_add_settings_file_form(name='setting_file'):
-        # "Валидная форма создает запись в Program"
-        prog = Program.objects.get(pk=2)
+    def get_add_settings_file_form(name='setting_file', extend='xml', size=1):
+        # "Валидная форма создает запись в setting_file"
         form_data = {
-            'icon': SimpleUploadedFile(
-                name='test.jpg',
-                content=get_image_file().read,
-                content_type="image/jpeg"
-            ),
-            'site': 'testsite.com',
-            'slug': 'test_add',
-            'title': 'test_title',
             'name': name,
         }
-        file_data = {'file': SimpleUploadedFile(name='temp_keymap.xml', content=b'content')}
-        return AddProgramForm(form_data, file_data)
+        simple_file = SimpleUploadedFile(name=f'temp_keymap.{extend}', content=b'content')
+        simple_file.size = size
+        file_data = {'file': simple_file, }
+        return AddSettingsFileForm(form_data, file_data)
 
-    def test_add_settings_file_form(self):
+    def test_add_settings_file_form_is_valid(self):
         self.form = self.get_add_settings_file_form()
-        pprint(self.form.errors)
-        self.assertTrue(self.form.is_valid())
+        # pprint(self.form.errors)
+        self.assertTrue(self.form.is_valid(), f'Чего то не хватает {self.form.errors}')
+
+    def test_add_settings_file_form_is_not_valid_extend(self):
+        self.form = self.get_add_settings_file_form(extend='pdf')
+        # pprint(self.form.errors)
+        self.assertFalse(self.form.is_valid(), f'{self.form.errors}')
+
+    def test_add_settings_file_form_big_size(self):
+        self.form = self.get_add_settings_file_form(size=10484577)
+        self.assertFalse(self.form.is_valid(), 'To Big file')
