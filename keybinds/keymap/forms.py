@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
+from django.shortcuts import redirect
 
-from .models import *
+from keymap.models import *
 
 
 class NameForm(forms.Form):
@@ -33,7 +34,7 @@ class LoginUserForm(AuthenticationForm):
 class AddProgramForm(forms.ModelForm):
     class Meta:
         model = Program
-        fields = ['title', 'icon', 'site', 'slug','settings_file_info']
+        fields = ['title', 'icon', 'site', 'slug', 'settings_file_info']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
         }
@@ -45,7 +46,6 @@ class AddProgramForm(forms.ModelForm):
         title = self.cleaned_data['title']
         if len(title) > 100:
             raise ValidationError('Длина превышает 100 символов')
-
         return title
 
 

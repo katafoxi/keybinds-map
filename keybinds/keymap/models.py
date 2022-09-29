@@ -4,16 +4,27 @@ from django.contrib.auth.models import User
 
 
 class Program(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Название программы')
-    slug = models.SlugField(max_length=100,
-                            unique=True,
-                            db_index=True,
-                            verbose_name='URL')
+    title = models.CharField(
+        max_length=100,
+        verbose_name='Название программы',
+        help_text='Введите название программы'
+    )
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        db_index=True,
+        verbose_name='URL'
+    )
     # version = models.CharField(max_length=50, verbose_name='Версия')
-    icon = models.ImageField(upload_to='program_icons')
-    settings_file_info = models.TextField(blank=True, verbose_name='Обычное расположение файла с настройками биндов')
+    icon = models.ImageField(
+        upload_to='program_icons'
+    )
+    settings_file_info = models.TextField(
+        blank=True,
+        verbose_name='Обычное расположение файла с настройками биндов',
+        help_text="Опишите где находится стандартное расположение файлов настройки"
+    )
     site = models.URLField(max_length=250, verbose_name='Оф.сайт')
-
 
     def __str__(self):
         return self.title
@@ -27,10 +38,12 @@ class Program(models.Model):
 
 
 class Command(models.Model):
-    program = models.ForeignKey('Program',
-                                to_field='slug',
-                                on_delete=models.CASCADE,
-                                db_column='program')
+    program = models.ForeignKey(
+        'Program',
+        to_field='slug',
+        on_delete=models.CASCADE,
+        db_column='program'
+    )
     name = models.CharField(max_length=250)
     short_name = models.CharField(max_length=100)
 
@@ -71,5 +84,3 @@ class SettingsFile(models.Model):
 
     def get_absolute_url(self):
         return reverse('settings_file', kwargs={'slug': str(self.program).lower(), 'id': self.pk})
-
-

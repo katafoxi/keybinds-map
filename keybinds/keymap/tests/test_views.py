@@ -1,39 +1,38 @@
-from pprint import pprint
-
 from django import forms
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
 
 from keyboard import Keyboard
-from keymap.models import Program, Command, SettingsFile
+from keymap.models import Program, Command
+from views import AddProgram
 
 
 class PagesTest(TestCase):
+    small_gif = (
+        b'\x47\x49\x46\x38\x39\x61\x02\x00'
+        b'\x01\x00\x80\x00\x00\x00\x00\x00'
+        b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+        b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+        b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+        b'\x0A\x00\x3B'
+    )
+    uploaded = SimpleUploadedFile(
+        name='small.gif',
+        content=small_gif,
+        content_type='image/gif'
+    )
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         Keyboard.buttons_front = {'rowZX': ['Z', ]}
         Keyboard.buttons_back = {'rowZX': ['z', ]}
-        small_gif = (
-            b'\x47\x49\x46\x38\x39\x61\x02\x00'
-            b'\x01\x00\x80\x00\x00\x00\x00\x00'
-            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
-            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
-            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-            b'\x0A\x00\x3B'
-        )
-        uploaded = SimpleUploadedFile(
-            name='small.gif',
-            content=small_gif,
-            content_type='image/gif'
-        )
+
         prog = Program.objects.create(
             title='PyCharm',
             slug='pycharm',
-            icon=uploaded
+            icon=PagesTest.uploaded
         )
         command = Command.objects.create(
             program=prog,
@@ -88,5 +87,18 @@ class PagesTest(TestCase):
                 form_field = response.context.get('form').fields.get(value)
                 self.assertIsInstance(form_field, expected)
 
-
-
+    # def test_add_program_correct_save(self):
+    #     """ Представление корректно сохраняет данные валидной формы"""
+    #     response = self.authorized_client.post(
+    #         path=reverse('add_program'),
+    #         data=self.form.fields,
+    #         content_type='multipart/form-data',
+    #         follow=True
+    #     )
+    #
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.resolver_match.func.__name__, AddProgram.as_view().__name__)
+    #     self.assertTemplateUsed(template_name='add_program.html')
+    #     self.assertEqual(Program.objects.count(), program_count + 1)
+    #     self.assertTrue(Program.objects.filter(pk=2).exists())
+    #     self.assertEqual(Program.objects.get(pk=2).title, 'prog2')

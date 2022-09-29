@@ -6,10 +6,10 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
 from keymap.keyboard import Keyboard
-from .forms import RegisterUserForm, LoginUserForm, AddProgramForm, AddSettingsFileForm
-from .models import *
-from .parser_pycharm import pycharm_parser_settings_file
-from .utils import DataMixin, menu
+from keymap.forms import RegisterUserForm, LoginUserForm, AddProgramForm, AddSettingsFileForm
+from keymap.models import *
+from keymap.parser_pycharm import pycharm_parser_settings_file
+from keymap.utils import DataMixin, menu
 
 
 def to_print(*arg, **kwargs):
