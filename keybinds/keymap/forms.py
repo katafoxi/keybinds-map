@@ -59,7 +59,7 @@ class AddSettingsFileForm(forms.ModelForm):
 
     def clean_file(self):
         file = self.cleaned_data['file']
-        print(type(file))
+        # print(type(file))
         if 'xml' not in file.name:
             raise ValidationError('Неверное расширение ')
         elif file.size > 10484576:

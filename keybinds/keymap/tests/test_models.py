@@ -34,6 +34,10 @@ class ProgramModelTest(TestCase):
         prog = Program.objects.get(id=1)
         self.assertEquals(prog.get_absolute_url(), '/program/pycharm/2')
 
+    def test_str(self):
+        prog = Program.objects.get(pk=1)
+        self.assertEquals(prog.__str__(), "PyCharm")
+
 
 class CommandModelTest(TestCase):
     @classmethod
@@ -73,6 +77,10 @@ class CommandModelTest(TestCase):
         command = Command.objects.get(id=1)
         path = command._meta.get_field("icon").upload_to(command, filename='Cut.png')
         self.assertEquals(path, 'pycharm_command_icons/Cut.png')
+
+    def test_str(self):
+        prog = Command.objects.get(pk=1)
+        self.assertEquals(prog.__str__(), "Cut")
 
 
 class SettingsFileTest(TestCase):

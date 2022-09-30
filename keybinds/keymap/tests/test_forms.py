@@ -57,8 +57,9 @@ class AddProgramFormTest(TestCase):
         self.assertTrue(self.form.is_valid())
 
     def test_add_program_form_clean_title(self):
-        self.form = self.get_add_program_form(title='prog2' * 1000)
+        self.form = self.get_add_program_form(title='prog2' * 100)
         self.assertFalse(self.form.is_valid())
+        self.assertRaisesMessage(ValidationError, ValidationError)
 
 
 class AddSettingsFileFormTest(TestCase):
