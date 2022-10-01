@@ -15,11 +15,12 @@ def pycharm_parser_settings_file(settings_file=r'D:/BFR.xml'):
         tree = ElementTree.parse(keymap)
     else:
         tree = ElementTree.parse(settings_file)
-
+    ###############
     # example tree
     # <action id="EditorPreviousWord">
     #     <keyboard-shortcut first-keystroke="ctrl LEFT"/>
     # </action>
+    ################
 
     root = tree.getroot()
     commands = {}
@@ -31,14 +32,14 @@ def pycharm_parser_settings_file(settings_file=r'D:/BFR.xml'):
                 for key in shortcut.attrib.keys():
                     modifiers_with_key = shortcut.attrib.get(key).lower()  # "shift ctrl Z"
                     # print(action.attrib['id'], get_modifiers_code_with_key(shortcut.attrib.get(key)))
-                    shortcuts.update(get_modifiers_code_with_key(modifiers_with_key))
+                    shortcuts.update(get_modifiers_abbr_with_button(modifiers_with_key))
 
         commands[action.attrib['id']] = shortcuts
 
     return commands
 
 
-def get_modifiers_code_with_key(modifiers_with_key):
+def get_modifiers_abbr_with_button(modifiers_with_key):
     """
 
     @param modifiers_with_key: str "shift ctrl Z"
