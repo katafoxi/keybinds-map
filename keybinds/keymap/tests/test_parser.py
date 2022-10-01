@@ -1,5 +1,5 @@
 from django.test import TestCase
-from keymap.parser_pycharm import pycharm_parser_settings_file, get_modifiers_code_with_key
+from keymap.parser_pycharm import pycharm_parser_settings_file, get_modifiers_abbr_with_button
 
 
 class ParserTest(TestCase):
@@ -11,5 +11,5 @@ class ParserTest(TestCase):
         self.assertEqual(parse, {'$Redo': {'z': 'cs', 'back_space': 'as'}})
 
     def test_get_modifiers_code_with_key(self):
-        self.assertEqual(get_modifiers_code_with_key("shift ctrl z"), {"z": "cs"})
-        self.assertEqual(get_modifiers_code_with_key("z"), {'z': 'push'})
+        self.assertEqual(get_modifiers_abbr_with_button("shift ctrl z"), {"z": "cs"})
+        self.assertEqual(get_modifiers_abbr_with_button("z"), {'z': 'push'})

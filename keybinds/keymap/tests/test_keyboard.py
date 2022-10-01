@@ -24,9 +24,9 @@ class KeyboardTest(TestCase):
         self.assertEqual(button, result)
 
     def test_get_buttons_with_commands(self):
-        command_with_modifiers = {'Redo': {'z': 'cs'}, }  # 'cs'- Ctrl+Shift
+        command_with_shortcuts = {'Redo': {'z': 'cs'}, }  # 'cs'- Ctrl+Shift
         buttons_with_commands = Keyboard.get_buttons_with_commands(
-            commands_with_modifiers=command_with_modifiers,
+            commands_with_shortcuts=command_with_shortcuts,
             slug='pycharm'
         )
         self.assertEqual(

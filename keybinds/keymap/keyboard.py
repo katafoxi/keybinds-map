@@ -46,10 +46,10 @@ class Keyboard:
         return keyboard_keys
 
     @staticmethod
-    def get_buttons_with_commands(commands_with_modifiers: dict, slug: str) -> dict:
+    def get_buttons_with_commands(commands_with_shortcuts: dict, slug: str) -> dict:
         """
 
-        @param commands_with_modifiers: assigned commands after parse settings file
+        @param commands_with_shortcuts: assigned commands after parse settings file
         @param slug: program slug
         @return: dict {'f1': {
                             'front_name': 'F1',
@@ -61,11 +61,11 @@ class Keyboard:
         """
         keyboard_buttons = Keyboard.get_clean_buttons()
 
-        for command_name, shortcuts_dict in commands_with_modifiers.items():
+        for command_name, shortcuts_dict in commands_with_shortcuts.items():
             for button, modifiers in shortcuts_dict.items():
                 if keyboard_buttons.get(button):
                     command = Command.objects.filter(program=slug, name=command_name)
-                    template = loader.get_template('keymap/command_description.html')
+                    template = loader.get_template('keymap/command_repr.html')
                     command_description = template.render({'command': command})
                     keyboard_buttons[button].update({modifiers: command_description})
         return keyboard_buttons
