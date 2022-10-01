@@ -40,6 +40,18 @@ def get_unassigned_commands_db(commands_with_modifiers: dict, slug: str):
     return unassigned_commands_queryset
 
 
+class Index(DataMixin, ListView):
+    model = Command
+    template_name = 'keymap/index.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Выбор программы для редактора")
+        context['keyboard_buttons'] = Keyboard.get_clean_buttons()
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+
 class ShowProgramCommands(DataMixin, ListView):
     model = Command
     template_name = 'keymap/index.html'
@@ -60,11 +72,11 @@ class ShowProgramCommands(DataMixin, ListView):
                 context['current_settings_file'] = settings_file
                 path_to_file = './' + SettingsFile.objects.get(program=slug, id=settings_file).file.url
                 commands_with_modifiers = pycharm_parser_settings_file(settings_file=path_to_file)
-            context['commands_without_modifiers'] = get_unassigned_commands_db(commands_with_modifiers, slug=slug)
-            context['keyboard_keys_dict'] = Keyboard.get_buttons_with_commands(commands_with_modifiers, slug=slug)
+            context['commands_without_shortcuts'] = get_unassigned_commands_db(commands_with_modifiers, slug=slug)
+            context['keyboard_buttons'] = Keyboard.get_buttons_with_commands(commands_with_modifiers, slug=slug)
         else:
             context['error_message'] = f'Поддержка программы {program.title}'
-            context['keyboard_keys_dict'] = Keyboard.get_clean_buttons()
+            context['keyboard_buttons'] = Keyboard.get_clean_buttons()
         c_def = self.get_user_context(title='Редактор комбинаций ' + slug, prog_selected=slug)
         context = dict(list(context.items()) + list(c_def.items()))
         return context
@@ -80,18 +92,6 @@ def analise_settings_file(request, slug):
     print(file)
     print(slug)
     return HttpResponse('lf')
-
-
-class Index(DataMixin, ListView):
-    model = Command
-    template_name = 'keymap/index.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Выбор программы для редактора")
-        context['keyboard_keys_dict'] = Keyboard.get_clean_buttons()
-
-        return dict(list(context.items()) + list(c_def.items()))
 
 
 class RegisterUser(DataMixin, CreateView):

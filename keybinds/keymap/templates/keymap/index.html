@@ -6,11 +6,12 @@
 
   {% if prog_selected == 0 %}
     <div class="guide">
-      <div><p>
-        Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
-        в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
-        комбинаций в выбранной программе.
-      </p>
+      <div>
+        <p>
+          Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
+          в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
+          комбинаций в выбранной программе.
+        </p>
 
         <p>
           Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
@@ -23,8 +24,11 @@
 
         <p>Умножаем скриншот еще на 10, и получается огромных размеров список в котором очень просто утонуть, и очень
           сложно разобраться.
-          Как следствие, отсутствие системности/удобства/логичности назначенных комбинаций. </p></div>
-      <div><h2>Предлагаемая модель взаимодействия:</h2>
+          Как следствие, отсутствие системности/удобства/логичности назначенных комбинаций.
+        </p>
+      </div>
+      <div>
+        <h2>Предлагаемая модель взаимодействия:</h2>
         <ul>
           <li>Выбираем программу</li>
           <li>Загружаешь свой keymap-файл для программы.</li>
@@ -35,7 +39,6 @@
                style="max-width:100%; max-height:130px">
 
           <li>Команды без комбинаций накапливаются в пуле команд.</li>
-
 
           <li>Перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в
             удобное/логичное положение.
@@ -50,10 +53,12 @@
       </div>
     </div>
   {% endif %}
+
   {% if error_message %}
     <h1>{{ error_message }} пока отсутствует.</h1>
   {% endif %}
-  <!--    <p style=" text-align:center;">пул команд</p>-->
+
+  <!--region Пул команд, на которые не назначены комбинации-->
   <div class="commandIcons droppable">
     {% if prog_selected == 0 %}
       <div class="">
@@ -61,7 +66,7 @@
       </div>
     {% endif %}
 
-    {% for command in commands_without_modifiers %}
+    {% for command in commands_without_shortcuts %}
       <div class="command_description">
         <div class="descr">
           {% if command.icon %}
@@ -72,15 +77,13 @@
       </div>
     {% endfor %}
   </div>
+  <!--endregion-->
 
-
-  <!--    <p style=" text-align:center;">карта сочетаний клавиш (keybindings map)</p>-->
-  <!--        <div id="keybordGrid" class="keybordGrid"></div>-->
+  <!--region Клавиатурная сетка, где каждая клавиша разделена на поля с модификаторами-->
   <div id="keyboardGrid" class="keyboardGrid">
-
-    {% for key, modifiers in keyboard_keys_dict.items %}
+    {% for button, modifiers in keyboard_buttons.items %}
       {% if modifiers.front_name != '' %}
-        <div class="key_{{ key }} char">
+        <div class="key_{{ button }} char">
           <div class="key brdr"> {{ modifiers.front_name }}</div>
           <div class="a_mod brdr abbr">a</div>
           <div class="c_mod brdr abbr">c</div>
@@ -98,14 +101,13 @@
           <div class="as brdr droppable">{{ modifiers.as }}</div>
           <div class="cs brdr droppable">{{ modifiers.cs }}</div>
           <div class="acs brdr droppable">{{ modifiers.acs }}</div>
-
         </div>
       {% else %}
-        <div class="key_{{ key }} char"></div>
+        <div class="key_{{ button }} char"></div>
       {% endif %}
     {% endfor %}
-
   </div>
+  <!--endregion-->
 
 {% endblock content %}
 

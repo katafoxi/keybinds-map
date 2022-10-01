@@ -103,8 +103,9 @@
           {% endfor %}
         </div>
 
+        <!--region Форма для загрузки файлов настройки для выбранной программы-->
         {% if prog_selected %}
-          <!--            <a href="{% url 'settings_file_analise' slug=prog_selected %}">-->
+          <!--            <a href="{% url 'settings_file_analise' slug=prog_selected %}"> -->
           <!--                <img class="progIcon" src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"-->
           <!--                     alt="Анализ keymap"/>-->
           <!--            </a>-->
@@ -129,6 +130,8 @@
             </fieldset>
           </form>
         {% endif %}
+        <!--endregion-->
+
       </div>
     </div>
 

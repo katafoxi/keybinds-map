@@ -29,6 +29,7 @@ class Keyboard:
     @staticmethod
     def get_clean_buttons() -> dict:
         """
+        Метод возвращает чистый массив кнопок, без распределенных команд+комбинаций
 
         @return: dict {'f1': {'front_name': 'F1'},...}
         """
@@ -48,24 +49,29 @@ class Keyboard:
     @staticmethod
     def get_buttons_with_commands(commands_with_shortcuts: dict, slug: str) -> dict:
         """
+        Функция возвращает результат заполнения 'кнопок клавиатуры' командами, в соответствии с комбинациями
 
         @param commands_with_shortcuts: assigned commands after parse settings file
         @param slug: program slug
         @return: dict {'f1': {
                             'front_name': 'F1',
                             'simple': 'help',
-                            'a': 'command'
-                            'c': 'command',
+                            'a': render('command_repr.html') для команды1,
+                            'c': render('command_repr.html') для команды2,
                             's': '',
                             },...
         """
         keyboard_buttons = Keyboard.get_clean_buttons()
 
-        for command_name, shortcuts_dict in commands_with_shortcuts.items():
-            for button, modifiers in shortcuts_dict.items():
+        for command_name, shortcuts in commands_with_shortcuts.items():
+            for button, modifiers in shortcuts.items():
                 if keyboard_buttons.get(button):
                     command = Command.objects.filter(program=slug, name=command_name)
-                    template = loader.get_template('keymap/command_repr.html')
-                    command_description = template.render({'command': command})
-                    keyboard_buttons[button].update({modifiers: command_description})
+                    # рендер шаблона command_repr.html находится здесь, чтобы не вводить массовые проверки на наличие
+                    # команды в шаблоне index.html
+                    template = loader.get_template(template_name='keymap/command_repr.html')
+                    command_repr = template.render({'command': command})
+                    keyboard_buttons[button].update({modifiers: command_repr})
+                else:
+                    print(button)
         return keyboard_buttons
