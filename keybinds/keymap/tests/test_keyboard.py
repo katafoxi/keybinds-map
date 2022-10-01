@@ -19,9 +19,9 @@ class KeyboardTest(TestCase):
         )
 
     def test_get_clean_buttons(self):
-        buttons = Keyboard.get_clean_buttons()
+        button = Keyboard.get_clean_buttons()
         result = {'z': {'front_name': 'Z'}}
-        self.assertEqual(buttons, result)
+        self.assertEqual(button, result)
 
     def test_get_buttons_with_commands(self):
         command_with_modifiers = {'Redo': {'z': 'cs'}, }  # 'cs'- Ctrl+Shift
