@@ -2,3 +2,4 @@
 /keybinds/conf/secretkey.py
 *.pic
 /.venv/
+/keybinds/media/
