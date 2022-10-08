@@ -1,3 +1,4 @@
 /keybinds_venv/
 /keybinds/conf/secretkey.py
 *.pic
+/.venv/

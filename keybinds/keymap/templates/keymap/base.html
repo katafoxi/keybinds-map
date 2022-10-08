@@ -150,6 +150,15 @@
 <script src="{% static 'keymap/js/dragula.js' %}"></script>
 <script src="{% static 'keymap/js/grid.js' %}"></script>
 <script src="{% static 'keymap/js/urlify.js' %}"></script>
+<script>
+  var initialised = false;
+  window.addEventListener("load", function() {
+    var newElement = document.createElement("p");
+    newElement.textContent = "Hello from JavaScript!";
+    document.body.appendChild(newElement);
+    initialised = true;
+  });
+</script>
 </body>
 
 </html>

@@ -2,12 +2,12 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http import HttpRequest
-from django.test import Client, TestCase
+from django.test import Client, TestCase, RequestFactory
 from django.urls import reverse, resolve
 
-from keyboard import Keyboard
+from keymap.keyboard import Keyboard
 from keymap.models import Program, Command
-from views import AddProgram, Index, contact, LoginUser
+from keymap.views import AddProgram, Index, contact, LoginUser
 
 
 class PagesTest(TestCase):
@@ -41,6 +41,7 @@ class PagesTest(TestCase):
             name="Cut",
             short_name="Cut",
         )
+        print('Hello vim')
 
     def setUp(self):
         # Создаем авторизованный клиент
@@ -53,10 +54,32 @@ class PagesTest(TestCase):
         found = resolve('/contact/')
         self.assertEqual(found.func.__name__, contact.__name__)
 
-    def test_contact_page_return_correct_html(self):
+    def test_login_page_return_correct_html(self):
         """ тест: страница контактов возвращает правильный html """
         response = self.client.get('/login/')
         self.assertTemplateUsed(response, 'keymap/login.html')
+
+    # def test_login_page_redirect_after_success(self):
+    #     self.client = Client()
+    #     self.user = User.objects.create_user(
+    #         username='ivan', email='ivan@gmail.com', password='top_secret'
+    #     )
+    #     self.user.save()
+    #     # login = self.client.login(username=self.user, password = self.user.password)
+    #     response = self.client.post(
+    #         path=reverse('login'),
+    #         data={
+    #             'username': self.user.username,
+    #             'password': self.user.password
+    #         },
+    #         follow=True
+    #     )
+    #     # request.user = self.user
+    #     # response = LoginUser.as_view()
+    #     # response = self.client.post(reverse('login'), follow=True)
+    #     # self.assertEquals(response.status_code, 200)
+    #     self.assertRedirects(response, expected_url=reverse('main'))
+    #     print(response.context)
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
