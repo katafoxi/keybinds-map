@@ -120,7 +120,7 @@ class LoginUser(DataMixin, LoginView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):
-        return reverse_lazy('main')
+        return reverse('main')
 
 
 def logout_user(request):

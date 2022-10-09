@@ -59,27 +59,31 @@ class PagesTest(TestCase):
         response = self.client.get('/login/')
         self.assertTemplateUsed(response, 'keymap/login.html')
 
-    # def test_login_page_redirect_after_success(self):
-    #     self.client = Client()
-    #     self.user = User.objects.create_user(
-    #         username='ivan', email='ivan@gmail.com', password='top_secret'
-    #     )
-    #     self.user.save()
-    #     # login = self.client.login(username=self.user, password = self.user.password)
-    #     response = self.client.post(
-    #         path=reverse('login'),
-    #         data={
-    #             'username': self.user.username,
-    #             'password': self.user.password
-    #         },
-    #         follow=True
-    #     )
-    #     # request.user = self.user
-    #     # response = LoginUser.as_view()
-    #     # response = self.client.post(reverse('login'), follow=True)
-    #     # self.assertEquals(response.status_code, 200)
-    #     self.assertRedirects(response, expected_url=reverse('main'))
-    #     print(response.context)
+    def test_login_page_redirect_after_success(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='ivan', email='ivan@gmail.com', password='top_secret'
+        )
+        self.user.save()
+        # login = self.client.login(username=self.user, password = self.user.password)
+        print( self.user.password)
+        response = self.client.post(
+            path='/login/',
+            data={
+                'username': self.user.username,
+                'password': 'top_secret'
+            },
+            secure=True
+        )
+        new_client = User.objects.last()
+        self.assertEqual(new_client.username, 'ivan')
+        # self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            expected_url=reverse('main'),
+            fetch_redirect_response=False,
+        )
+        print(response.context)
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
