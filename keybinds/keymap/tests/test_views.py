@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.http import HttpRequest
-from django.test import Client, TestCase, RequestFactory
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse, resolve
 
 from keymap.keyboard import Keyboard
 from keymap.models import Program, Command
-from keymap.views import AddProgram, Index, contact, LoginUser
+from keymap.utils import get_image_file
+from keymap.views import contact, AddProgram
+import tempfile
 
 
 class PagesTest(TestCase):
@@ -36,7 +37,7 @@ class PagesTest(TestCase):
             slug='pycharm',
             icon=PagesTest.uploaded
         )
-        command = Command.objects.create(
+        Command.objects.create(
             program=prog,
             name="Cut",
             short_name="Cut",
@@ -50,40 +51,9 @@ class PagesTest(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_contact_url_resolve_to_contact_view(self):
-        """ тест: корневой url преобразуется в представление домашней страницы"""
+        """ Тест: корневой url преобразуется в представление домашней страницы"""
         found = resolve('/contact/')
         self.assertEqual(found.func.__name__, contact.__name__)
-
-    def test_login_page_return_correct_html(self):
-        """ тест: страница контактов возвращает правильный html """
-        response = self.client.get('/login/')
-        self.assertTemplateUsed(response, 'keymap/login.html')
-
-    def test_login_page_redirect_after_success(self):
-        self.client = Client()
-        self.user = User.objects.create_user(
-            username='ivan', email='ivan@gmail.com', password='top_secret'
-        )
-        self.user.save()
-        # login = self.client.login(username=self.user, password = self.user.password)
-        print( self.user.password)
-        response = self.client.post(
-            path='/login/',
-            data={
-                'username': self.user.username,
-                'password': 'top_secret'
-            },
-            secure=True
-        )
-        new_client = User.objects.last()
-        self.assertEqual(new_client.username, 'ivan')
-        # self.assertEqual(response.status_code, 302)
-        self.assertRedirects(
-            response,
-            expected_url=reverse('main'),
-            fetch_redirect_response=False,
-        )
-        print(response.context)
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
@@ -126,18 +96,33 @@ class PagesTest(TestCase):
                 form_field = response.context.get('form').fields.get(value)
                 self.assertIsInstance(form_field, expected)
 
-    # def test_add_program_correct_save(self):
-    #     """ Представление корректно сохраняет данные валидной формы"""
-    #     response = self.authorized_client.post(
-    #         path=reverse('add_program'),
-    #         data=self.form.fields,
-    #         content_type='multipart/form-data',
-    #         follow=True
-    #     )
-    #
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.resolver_match.func.__name__, AddProgram.as_view().__name__)
-    #     self.assertTemplateUsed(template_name='add_program.html')
-    #     self.assertEqual(Program.objects.count(), program_count + 1)
-    #     self.assertTrue(Program.objects.filter(pk=2).exists())
-    #     self.assertEqual(Program.objects.get(pk=2).title, 'prog2')
+
+class LoginPageTest(TestCase):
+    def test_login_page_return_correct_html(self):
+        """ Тест: страница контактов возвращает правильный html """
+        response = self.client.get('/login/')
+        self.assertTemplateUsed(response, 'keymap/login.html')
+
+    def test_login_page_redirect_after_success(self):
+        """ Тест: возможность залогиниться """
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='ivan', email='ivan@gmail.com', password='top_secret'
+        )
+        self.user.save()
+        response = self.client.post(
+            path='/login/',
+            data={
+                'username': self.user.username,
+                'password': 'top_secret'
+            },
+            secure=True
+        )
+        new_client = User.objects.last()
+        self.assertEqual(new_client.username, 'ivan')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response,
+            expected_url=reverse('main'),
+            fetch_redirect_response=False,
+        )
