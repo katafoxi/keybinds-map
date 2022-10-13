@@ -1,0 +1,29 @@
+<keymap version="1" name="Empty">
+    <action id="EditorPreviousWord">
+        <keyboard-shortcut first-keystroke="ctrl LEFT"/>
+    </action>
+    <action id="$Redo">
+        <keyboard-shortcut first-keystroke="shift ctrl Z"/>
+        <keyboard-shortcut first-keystroke="shift alt BACK_SPACE"/>
+    </action>
+    <action id="ExpandToLevel2">
+        <keyboard-shortcut first-keystroke="ctrl MULTIPLY" second-keystroke="2"/>
+        <keyboard-shortcut first-keystroke="ctrl MULTIPLY" second-keystroke="NUMPAD2"/>
+    </action>
+    <action id="EditorShowGutterIconTooltip">
+        <keyboard-shortcut first-keystroke="shift alt 6" second-keystroke="T"/>
+    </action>
+    <action id="EditorPasteFromX11">
+        <mouse-shortcut keystroke="button2"/>
+    </action>
+    <action id="GotoDeclaration">
+        <keyboard-shortcut first-keystroke="ctrl B"/>
+        <mouse-shortcut keystroke="ctrl button1"/>
+        <mouse-shortcut keystroke="button2"/>
+    </action>
+      <action id="Back">
+    <keyboard-shortcut first-keystroke="ctrl alt LEFT"  />
+    <mouse-shortcut keystroke="button4" />
+  </action>
+
+</keymap>
