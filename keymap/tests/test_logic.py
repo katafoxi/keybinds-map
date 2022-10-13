@@ -23,7 +23,7 @@ class ViewLogicTest(TestCase):
         )
 
     def test_get_unassigned_commands_db(self):
-        commands_with_modifiers = {'Redo': {'z': 'c'}}
+        commands_with_modifiers = {"Redo": {"z": "c"}}
         slug = Program.objects.get(id=1).slug
         commands = get_unassigned_commands_db(commands_with_modifiers, slug)[0].name
-        self.assertEqual(commands, 'Undo')
+        self.assertEqual(commands, "Undo")
