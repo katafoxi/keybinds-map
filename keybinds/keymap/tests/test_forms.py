@@ -1,6 +1,5 @@
 import shutil
 import tempfile
-from pprint import pprint
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -8,7 +7,6 @@ from django.test import Client, TestCase, override_settings
 
 from keymap.forms import *
 from keymap.utils import get_image_file
-
 from keymap.views import AddProgram
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)

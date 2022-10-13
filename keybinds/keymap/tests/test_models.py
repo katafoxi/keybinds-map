@@ -133,6 +133,5 @@ class SettingsFileTest(TestCase):
         self.assertEquals(owner, 'anonymous')
 
     def test_get_absolute_url(self):
-        file= SettingsFile.objects.get(id=1)
+        file = SettingsFile.objects.get(id=1)
         self.assertEquals(file.get_absolute_url(), '/program/pycharm/1')
-

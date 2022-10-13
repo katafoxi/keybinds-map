@@ -12,10 +12,6 @@ from keymap.parser_pycharm import pycharm_parser_settings_file
 from keymap.utils import DataMixin, menu
 
 
-def to_print(*arg, **kwargs):
-    print(arg, kwargs, file=open('/\print.txt', 'a'))
-
-
 def get_unassigned_commands_db(commands_with_modifiers: dict, slug: str):
     """
 

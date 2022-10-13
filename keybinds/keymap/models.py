@@ -17,7 +17,8 @@ class Program(models.Model):
     )
     # version = models.CharField(max_length=50, verbose_name='Версия')
     icon = models.ImageField(
-        upload_to='program_icons'
+        upload_to='program_icons',
+        default='default_program_icon.png'
     )
     settings_file_info = models.TextField(
         blank=True,

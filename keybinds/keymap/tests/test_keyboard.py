@@ -1,9 +1,13 @@
 from django.test import TestCase
 from keymap.views import *
 from keymap.keyboard import Keyboard
+import copy
 
 
 class KeyboardTest(TestCase):
+    buttons_front_save = copy.deepcopy(Keyboard.buttons_front)
+    buttons_back_save = copy.deepcopy(Keyboard.buttons_back.copy())
+
     @classmethod
     def setUpTestData(cls):
         Keyboard.buttons_front = {'rowZX': ['Z', ]}
@@ -17,6 +21,12 @@ class KeyboardTest(TestCase):
             name="Redo",
             short_name="Redo",
         )
+
+    @classmethod
+    def tearDownClass(cls):
+        Keyboard.buttons_front = cls.buttons_front_save
+        Keyboard.buttons_back = cls.buttons_back_save
+        super().tearDownClass()
 
     def test_get_clean_buttons(self):
         button = Keyboard.get_clean_buttons()

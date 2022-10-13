@@ -74,4 +74,7 @@ class Keyboard:
                     keyboard_buttons[button].update({modifiers: command_repr})
                 else:
                     print(button)
+                    if button=='b':
+                        print('Странная хуйня')
+                        print(Keyboard.buttons_front)
         return keyboard_buttons

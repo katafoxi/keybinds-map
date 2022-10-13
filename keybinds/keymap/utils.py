@@ -1,5 +1,4 @@
 from io import BytesIO
-
 from PIL import Image
 from django.core.files import File
 
@@ -27,4 +26,4 @@ def get_image_file(name='test.png', ext='png', size=(50, 50), color=(256, 0, 0))
     image = Image.new("RGB", size=size, color=color)
     image.save(file_obj, ext)
     file_obj.seek(0)
-    return File(file_obj, name=name)
+    return File(file=file_obj, name=name)

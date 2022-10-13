@@ -1,0 +1,778 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2022-07-10T11:19:59.213Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "1",
+      "object_repr": "PyCharm",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2022-07-10T11:24:01.038Z",
+      "user": 1,
+      "content_type": 8,
+      "object_id": "1",
+      "object_repr": "Act.CommitTW",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2022-07-10T15:24:13.969Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "2",
+      "object_repr": "Siemens NX",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2022-07-14T09:32:39.442Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "1",
+      "object_repr": "SettingsFile object (1)",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2022-07-14T09:37:20.677Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "2",
+      "object_repr": "SettingsFile object (2)",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2022-07-14T09:37:58.177Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "3",
+      "object_repr": "SettingsFile object (3)",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2022-07-15T11:50:57.327Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "4",
+      "object_repr": "SettingsFile object (4)",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2022-08-09T20:45:58.113Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "1",
+      "object_repr": "PyCharm",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"\\u041e\\u0431\\u044b\\u0447\\u043d\\u043e\\u0435 \\u0440\\u0430\\u0441\\u043f\\u043e\\u043b\\u043e\\u0436\\u0435\\u043d\\u0438\\u0435 \\u0444\\u0430\\u0439\\u043b\\u0430 \\u0441 \\u043d\\u0430\\u0441\\u0442\\u0440\\u043e\\u0439\\u043a\\u0430\\u043c\\u0438 \\u0431\\u0438\\u043d\\u0434\\u043e\\u0432\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2022-09-10T11:08:58.316Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "3",
+      "object_repr": "Chrome",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 4,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 4,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 4,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 4,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 5,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 5,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 5,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 5,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 6,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 6,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 6,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 6,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add �������������� ���������",
+      "content_type": 7,
+      "codename": "add_program"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change �������������� ���������",
+      "content_type": 7,
+      "codename": "change_program"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete �������������� ���������",
+      "content_type": 7,
+      "codename": "delete_program"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view �������������� ���������",
+      "content_type": 7,
+      "codename": "view_program"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add ������� ",
+      "content_type": 8,
+      "codename": "add_command"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change ������� ",
+      "content_type": 8,
+      "codename": "change_command"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete ������� ",
+      "content_type": 8,
+      "codename": "delete_command"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view ������� ",
+      "content_type": 8,
+      "codename": "view_command"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add settings file",
+      "content_type": 9,
+      "codename": "add_settingsfile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change settings file",
+      "content_type": 9,
+      "codename": "change_settingsfile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete settings file",
+      "content_type": 9,
+      "codename": "delete_settingsfile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view settings file",
+      "content_type": 9,
+      "codename": "view_settingsfile"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$390000$NQYErQfbTVnOi80zHkoiVe$umFsF+iF+hmPYTY23bal6xZkhYy9UHD7ESJKugZipZc=",
+      "last_login": "2022-09-28T15:25:44.049Z",
+      "is_superuser": true,
+      "username": "mks",
+      "first_name": "",
+      "last_name": "",
+      "email": "katafoxi@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2022-07-10T11:18:51.571Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$6riDEklziaaFqTIkT4Yc35$0grCNGBmWb/VAV+4FPzobWrDz7WYNONq26vtbTV2yNI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user1",
+      "first_name": "",
+      "last_name": "",
+      "email": "user@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-07-12T15:22:11.681Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$bApcUCYQKi13X2YTCVGefr$YIy4z/Td+8hbSMf2+AECNzGEJVcCvR00oayecUgaZa4=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user2",
+      "first_name": "",
+      "last_name": "",
+      "email": "user2@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-07-15T18:46:52.035Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$uoxUdXtXKYCcONaACV6Ozn$fXZZA8cIfv9CEvq2t9ex678ndxwZVM3VCY2lJc8L81U=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user4",
+      "first_name": "",
+      "last_name": "",
+      "email": "user4@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-07-15T18:54:56.262Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$G7hHLuWPLRWMpmeAxVsHhO$OI4Q28mWPHECFSi9oE2sbYCT5QjpIlQ3fbnoOoPEor8=",
+      "last_login": "2022-07-15T19:03:26.056Z",
+      "is_superuser": false,
+      "username": "user5",
+      "first_name": "",
+      "last_name": "",
+      "email": "user5@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-07-15T19:03:25.789Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+      "app_label": "admin",
+      "model": "logentry"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+      "app_label": "auth",
+      "model": "permission"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+      "app_label": "auth",
+      "model": "group"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+      "app_label": "auth",
+      "model": "user"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+      "app_label": "contenttypes",
+      "model": "contenttype"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+      "app_label": "sessions",
+      "model": "session"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+      "app_label": "keymap",
+      "model": "program"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+      "app_label": "keymap",
+      "model": "command"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+      "app_label": "keymap",
+      "model": "settingsfile"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "3on20efiqphtkw4f2sjedv36vxt0y8rr",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGlnxb2Mo6XMGa9de4wCypTipEHeHSCmgfTPzXiLgtpawdV7CnMRFKHH63Qjjg-sO0h3rrcnY6rrMJHdFHrTLqSV-Xg_376BgL9-acPRoNWpvvOGUbY6OUCkbwdGZ0AH4zGnQZEbImgcfPeusOIG2gCTeH_pQOI0:1odYwS:jR-ZYdjnV94zJ7rtvvEaQ9IiwUeONtDZY1U56CULCuk",
+      "expire_date": "2022-10-12T15:25:44.156Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "9bze7kwxx2h6fft1uztal3tjzt47dhkq",
+    "fields": {
+      "session_data": "e30:1oL8EJ:9VM1a9s9h1WpVururQjZv5OSZkW57oFsg3yn6vPfQW4",
+      "expire_date": "2022-08-22T19:15:59.229Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "aa05jn6dvcakpqd7ok537ookgfehh32q",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGlnxb2Mo6XMGa9de4wCypTipEHeHSCmgfTPzXiLgtpawdV7CnMRFKHH63Qjjg-sO0h3rrcnY6rrMJHdFHrTLqSV-Xg_376BgL9-acPRoNWpvvOGUbY6OUCkbwdGZ0AH4zGnQZEbImgcfPeusOIG2gCTeH_pQOI0:1oWyLu:LuyeC35fX600jb7fgolhJyTRtQyvtb_6VvLw1bUAGto",
+      "expire_date": "2022-09-24T11:08:46.583Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "hmqjdahn9llrschki129d6mlh0trpbyj",
+    "fields": {
+      "session_data": "e30:1odZyx:mYCWFnPKtN-kPwat5Uhoe2OxpUVi7PV395l21ASzpPE",
+      "expire_date": "2022-10-12T16:32:23.211Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "hum5wnoewdrhdw2y1ngwypy3o8reff07",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGlnxb2Mo6XMGa9de4wCypTipEHeHSCmgfTPzXiLgtpawdV7CnMRFKHH63Qjjg-sO0h3rrcnY6rrMJHdFHrTLqSV-Xg_376BgL9-acPRoNWpvvOGUbY6OUCkbwdGZ0AH4zGnQZEbImgcfPeusOIG2gCTeH_pQOI0:1oM2EM:jXbNzeMaFQmThEOdhn8HnepvigOy5WYLVcokdUh71VM",
+      "expire_date": "2022-08-25T07:03:46.155Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "neuvuickdionp3qgv6q3booegi3fg3l1",
+    "fields": {
+      "session_data": "e30:1oL8Li:QCognGIWA7OlHnuWU0BJfsLN-e3LYvRo7f3trXSIhdI",
+      "expire_date": "2022-08-22T19:23:38.645Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "y4xmhalmhbocbqtuuwnzrx573rcvwg02",
+    "fields": {
+      "session_data": ".eJxVjE0OwiAYBe_C2hBKiwWX7nsG8v0hVQNJaVfGu2uTLnT7Zua9VIRtzXFrssSZ1UV16vS7IdBDyg74DuVWNdWyLjPqXdEHbXqqLM_r4f4dZGj5W2PqnTg3EgO5Xs7emEQBwmgN9iEgW2sACQcn3pAP7MLAAui5M8KY1PsD_Ds48Q:1oDP0V:-XteWVXBI4YuHfUetGy7UjDR1eaS7oYHa3-6Rm0YlIo",
+      "expire_date": "2022-08-01T11:33:47.893Z"
+    }
+  },
+  {
+    "model": "keymap.program",
+    "pk": 1,
+    "fields": {
+      "title": "PyCharm",
+      "slug": "pycharm",
+      "icon": "program_icons/PyCharm.ico",
+      "settings_file_info": "����� ������� ������� ��������������� �������� ��� PyCharm  (������� ������ keymap � .xml https://plugins.jetbrains.com/plugin/18927-keymap-xml-exporter)",
+      "site": "https://www.jetbrains.com/pycharm/"
+    }
+  },
+  {
+    "model": "keymap.program",
+    "pk": 2,
+    "fields": {
+      "title": "Siemens NX",
+      "slug": "siemens-nx",
+      "icon": "program_icons/UGNX.png",
+      "settings_file_info": "",
+      "site": "https://www.plm.automation.siemens.com/global/en/products/nx/"
+    }
+  },
+  {
+    "model": "keymap.program",
+    "pk": 4,
+    "fields": {
+      "title": "testprog",
+      "slug": "testprog",
+      "icon": "program_icons/test.png",
+      "settings_file_info": "",
+      "site": ""
+    }
+  },
+  {
+    "model": "keymap.program",
+    "pk": 5,
+    "fields": {
+      "title": "testprog0",
+      "slug": "testprog0",
+      "icon": "program_icons/test_inqbbrG.png",
+      "settings_file_info": "",
+      "site": ""
+    }
+  },
+  {
+    "model": "keymap.command",
+    "pk": 1,
+    "fields": {
+      "program": "pycharm",
+      "name": "$Copy",
+      "short_name": "$Copy",
+      "icon": "pycharm_command_icons/$Copy.png"
+    }
+  },
+  {
+    "model": "keymap.command",
+    "pk": 2,
+    "fields": {
+      "program": "pycharm",
+      "name": "$Cut",
+      "short_name": "$Cut",
+      "icon": "pycharm_command_icons/$Cut.png"
+    }
+  },
+  {
+    "model": "keymap.command",
+    "pk": 3,
+    "fields": {
+      "program": "pycharm",
+      "name": "$Delete",
+      "short_name": "$Del.",
+      "icon": "pycharm_command_icons/$Delete.svg"
+    }
+  },
+  {
+    "model": "keymap.command",
+    "pk": 4,
+    "fields": {
+      "program": "pycharm",
+      "name": "$EditorTranslateAction",
+      "short_name": "$EditorTranslateAction",
+      "icon": "pycharm_command_icons/$EditorTranslateAction.png"
+    }
+  },
+  {
+    "model": "keymap.settingsfile",
+    "pk": 1,
+    "fields": {
+      "program": "pycharm",
+      "name": "empty",
+      "file": "pycharm_setting_files/1/Empty.xml",
+      "rating": "0",
+      "owner": 1
+    }
+  },
+  {
+    "model": "keymap.settingsfile",
+    "pk": 2,
+    "fields": {
+      "program": "pycharm",
+      "name": "windows-standart",
+      "file": "pycharm_setting_files/1/Windows.xml",
+      "rating": "1",
+      "owner": 1
+    }
+  },
+  {
+    "model": "keymap.settingsfile",
+    "pk": 3,
+    "fields": {
+      "program": "pycharm",
+      "name": "bfr",
+      "file": "pycharm_setting_files/1/BFR.xml",
+      "rating": "2",
+      "owner": 1
+    }
+  }
+]

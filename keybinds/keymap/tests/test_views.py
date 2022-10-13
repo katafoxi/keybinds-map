@@ -1,16 +1,22 @@
+import shutil
+
 from django import forms
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse, resolve
 
+from conf import settings
 from keymap.keyboard import Keyboard
-from keymap.models import Program, Command
+from keymap.models import Program, Command, SettingsFile
 from keymap.utils import get_image_file
 from keymap.views import contact, AddProgram
 import tempfile
 
+TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
+
+@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PagesTest(TestCase):
     small_gif = (
         b'\x47\x49\x46\x38\x39\x61\x02\x00'
@@ -29,9 +35,6 @@ class PagesTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        Keyboard.buttons_front = {'rowZX': ['Z', ]}
-        Keyboard.buttons_back = {'rowZX': ['z', ]}
-
         prog = Program.objects.create(
             title='PyCharm',
             slug='pycharm',
@@ -42,13 +45,18 @@ class PagesTest(TestCase):
             name="Cut",
             short_name="Cut",
         )
-        print('Hello vim')
 
     def setUp(self):
         # Создаем авторизованный клиент
         self.user = User.objects.create_user(username='admin')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        # Метод shutil.rmtree удаляет директорию и всё её содержимое
+        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def test_contact_url_resolve_to_contact_view(self):
         """ Тест: корневой url преобразуется в представление домашней страницы"""
@@ -71,7 +79,7 @@ class PagesTest(TestCase):
                 response = self.authorized_client.get(reverse_name)
                 self.assertTemplateUsed(response, template)
 
-    # Проверка словаря контекста главной страницы (в нём передаётся форма)
+    # Проверка словаря контекста главной страницы
     def test_main_page_show_correct_context(self):
         """Шаблон main сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse('main'))
@@ -97,7 +105,7 @@ class PagesTest(TestCase):
                 self.assertIsInstance(form_field, expected)
 
 
-class LoginPageTest(TestCase):
+class LoginLogoutPageTest(TestCase):
     def test_login_page_return_correct_html(self):
         """ Тест: страница контактов возвращает правильный html """
         response = self.client.get('/login/')
@@ -126,3 +134,26 @@ class LoginPageTest(TestCase):
             expected_url=reverse('main'),
             fetch_redirect_response=False,
         )
+
+    def test_logout(self):
+        response = self.client.get(
+            path=reverse('logout'),
+        )
+        self.assertRedirects(response, reverse('main'))
+
+
+class ShowProgramCommandsTest(TestCase):
+    fixtures = ['fixture_small', 'users']
+
+    def test_run(self):
+        print(Keyboard.buttons_back)
+        slug = Program.objects.first().slug
+        settings_file_id = SettingsFile.objects.first().id
+        response = self.client.get(
+            path=reverse('settings_file', kwargs={'slug': slug, 'id': settings_file_id}),
+        )
+        self.assertEquals(response.context.get('current_settings_file'), 1)
+        self.assertEquals(len(response.context.get('commands_without_shortcuts')), 2)
+
+        print((response.context.get('keyboard_buttons')))
+
