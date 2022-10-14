@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -12,9 +11,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         """ установка"""
         self.driver = webdriver.Firefox()
-        self.username = 'test'
-        self.email = 'testuser@gmail.com'
-        self.password = '123456789@'
+        self.username: str = 'test'
+        self.email: str = 'testuser@gmail.com'
+        self.password: str = '123456789@'
 
     def tearDown(self):
         """ демонтаж """
@@ -30,7 +29,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.driver.find_element(by='id', value='keyboardGrid')
 
     def test_can_register(self):
-        """ тест: возможность регистрации"""
+        """ Тест: возможность регистрации"""
 
         self.driver.get('%s%s' % (self.live_server_url, '/register/'))
         self.driver.find_element(by='id', value='id_username').send_keys(self.username)
@@ -52,9 +51,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.driver.get('%s%s' % (self.live_server_url, '/login/'))
         self.assertIn('Регистрация', self.driver.find_element(by=By.CLASS_NAME, value='last').text)
         self.driver.find_element(by='id', value='id_username').send_keys(self.username)
-        password = self.driver.find_element(by='id', value='id_password')
-        password.send_keys(self.password)
-        password.send_keys(Keys.ENTER)
+        self.driver.find_element(by='id', value='id_password').send_keys(self.password)
         self.driver.find_element(By.XPATH, '//button[text()="Войти"]').click()
         self.finisher()
 
@@ -63,10 +60,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
             driver=self.driver,
             timeout=10,
         ).until(
-            EC.url_to_be(self.live_server_url + '/')
+            expected_conditions.url_to_be(self.live_server_url + '/')
         )
         self.assertIn(self.username, self.driver.find_element(by=By.CLASS_NAME, value='last').text)
-        u = User.objects.get(username=self.username)
-        u.delete()
-
+        User.objects.get(username=self.username).delete()
 
