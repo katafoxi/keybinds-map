@@ -4,9 +4,10 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
+from mypy.types import NoneType
 
 from keymap.forms import (
-    RegisterUserForm,
+    RegisterForm,
     LoginUserForm,
     AddProgramForm,
     AddSettingsFileForm,
@@ -15,42 +16,18 @@ from keymap.keyboard import Keyboard
 from keymap.models import *
 from keymap.parser_pycharm import pycharm_parser_settings_file
 from keymap.utils import DataMixin, menu
-
-
-def get_unassigned_commands_db(commands_with_modifiers: dict, slug: str):
-    """
-
-    @param slug: program slug
-    @param commands_with_modifiers: assigned commands from setting file
-    @return: [  <Command: ActivateFavoritesToolWindow>,
-                <Command: ActivatePullRequestsToolWindow>, ...]
-
-    """
-    all_prog_commands_db = {}
-
-    program_commands_db = Command.objects.filter(program=slug)
-    for command_obj in program_commands_db:
-        all_prog_commands_db.update({command_obj.name: command_obj})
-    if commands_with_modifiers:
-        for command_name, command_type_shortcuts in commands_with_modifiers.items():
-            all_prog_commands_db.pop(command_name, "")
-
-    unassigned_commands_queryset = []
-    for command_obj in all_prog_commands_db.values():
-        unassigned_commands_queryset.append(command_obj)
-    return unassigned_commands_queryset
+from typing import Dict, List
 
 
 class Index(DataMixin, ListView):
     model = Command
     template_name = "keymap/index.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, NoneType]:
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Выбор программы для редактора")
         context["keyboard_buttons"] = Keyboard.get_clean_buttons()
-
-        return dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Выбор программы для редактора"))
+        return context
 
 
 class ShowProgramCommands(DataMixin, ListView):
@@ -58,7 +35,12 @@ class ShowProgramCommands(DataMixin, ListView):
     template_name = "keymap/index.html"
     allow_empty = False
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def post(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, NoneType]:
         context = super().get_context_data(**kwargs)
         slug = self.kwargs["slug"]
         program = Program.objects.get(slug=slug)
@@ -67,60 +49,58 @@ class ShowProgramCommands(DataMixin, ListView):
         if len(settings_files) != 0:
             context["settings_files"] = settings_files
             if self.request.method == "POST":
-                commands_with_modifiers = pycharm_parser_settings_file(
-                    self.request.FILES["file"]
-                )
+                commands_with_shortcuts = pycharm_parser_settings_file(self.request.FILES["file"])
             else:
                 settings_file = self.kwargs.get("id", 0)
                 context["current_settings_file"] = settings_file
-                path_to_file = (
-                    "./"
-                    + SettingsFile.objects.get(program=slug, id=settings_file).file.url
-                )
-                commands_with_modifiers = pycharm_parser_settings_file(
-                    settings_file=path_to_file
-                )
-            context["commands_without_shortcuts"] = get_unassigned_commands_db(
-                commands_with_modifiers, slug=slug
-            )
-            context["keyboard_buttons"] = Keyboard.get_buttons_with_commands(
-                commands_with_modifiers, slug=slug
-            )
+                path_to_file = ("./" + SettingsFile.objects.get(program=slug, id=settings_file).file.url)
+                commands_with_shortcuts = pycharm_parser_settings_file(settings_file=path_to_file)
+            context["commands_without_shortcuts"] = self.get_unassigned_commands_db(commands_with_shortcuts, slug=slug)
+            context["keyboard_buttons"] = Keyboard.get_buttons_with_commands(commands_with_shortcuts, slug=slug)
         else:
             context["error_message"] = f"Поддержка программы {program.title}"
             context["keyboard_buttons"] = Keyboard.get_clean_buttons()
-        c_def = self.get_user_context(
-            title="Редактор комбинаций " + slug, prog_selected=slug
-        )
-        context = dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Редактор комбинаций " + slug, prog_selected=slug))
         return context
 
-    def post(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        return self.render_to_response(context)
+    @staticmethod
+    def get_unassigned_commands_db(commands_with_shortcuts: dict, slug: str) -> List[Command]:
+        """
 
+        @param slug: program slug
+        @param commands_with_shortcuts: assigned commands from setting file
+        @return: [  <Command: ActivateFavoritesToolWindow>,
+                    <Command: ActivatePullRequestsToolWindow>, ...]
 
-def analise_settings_file(request, slug):
-    file = request.FILES
-    print(file)
-    print(slug)
-    return HttpResponse("lf")
+        """
+        all_prog_commands_db = {}
+
+        program_commands_db = Command.objects.filter(program=slug)
+        for command in program_commands_db:
+            all_prog_commands_db.update({command.name: command})
+        if commands_with_shortcuts:
+            for command_name, command_type_shortcuts in commands_with_shortcuts.items():
+                all_prog_commands_db.pop(command_name, "")
+
+        unassigned_commands_queryset = []
+        for command in all_prog_commands_db.values():
+            unassigned_commands_queryset.append(command)
+        return unassigned_commands_queryset
 
 
 class RegisterUser(DataMixin, CreateView):
-    form_class = RegisterUserForm
+    form_class = RegisterForm
     template_name = "keymap/register.html"
     success_url = reverse_lazy("login")
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Регистрация")
-        return dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Регистрация"))
+        return context
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        login(self.request, user=user)
         return redirect("main")
 
 
@@ -128,10 +108,10 @@ class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = "keymap/login.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Авторизация")
-        return dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Авторизация"))
+        return context
 
     def get_success_url(self):
         return reverse("main")
@@ -153,9 +133,9 @@ class AddProgram(DataMixin, CreateView):
         else:
             form = AddProgramForm()
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Добавление программы")
         context["form"] = form
-        return dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Добавление программы"))
+        return context
 
     def form_valid(self, form):
         form.save()
@@ -174,9 +154,9 @@ class AddSettingsFile(DataMixin, CreateView):
         else:
             form = AddSettingsFileForm()
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Добавление программы")
         context["form"] = form
-        return dict(list(context.items()) + list(c_def.items()))
+        context.update(self.get_user_context(title="Добавление программы"))
+        return context
 
     def form_valid(self, form):
         settings_file = form.save(commit=False)
@@ -191,7 +171,6 @@ def add_settings_file(request):
         form = AddSettingsFileForm(request.POST, request.FILES)
         if form.is_valid():
             # print(request.FILES)
-
             pass
     else:
         form = AddSettingsFileForm()

@@ -7,7 +7,7 @@ from django.test import Client, TestCase, override_settings
 
 from keymap.forms import *
 from keymap.utils import get_image_file
-from keymap.views import AddProgram
+from keymap.views import AddProgram, RegisterUser
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
@@ -34,42 +34,29 @@ class AddProgramFormTest(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(user=self.user)
 
-    @staticmethod
-    def get_add_program_form(title="prog2"):
-        # "Валидная форма создает запись в Program"
+    def test_add_program_form_is_valid(self):
         form_data = {
-            "title": title,
-            "site": f"{title}.com",
-            "slug": title,
+            "title": 'test',
+            "site": "testprog.com",
+            "slug": 'test',
             "settings_file_info": "blabla",
         }
         file_data = {"icon": get_image_file(name="tempimg.png")}
-        return AddProgramForm(form_data, file_data)
-
-    def test_add_program_form_is_valid(self):
-        self.form = self.get_add_program_form(title="prog2")
+        self.form = AddProgramForm(form_data, file_data)
         self.assertTrue(self.form.is_valid())
 
     def test_add_program_form_clean_title(self):
-        self.form = self.get_add_program_form(title="prog2" * 100)
+        form_data = {
+            "title": 'test' * 100,
+            "site": "testprog.com",
+            "slug": 'test',
+            "settings_file_info": "blabla",
+        }
+        file_data = {"icon": get_image_file(name="tempimg.png")}
+        self.form = AddProgramForm(form_data, file_data)
         self.assertFalse(self.form.is_valid())
-        with self.assertRaisesMessage(
-            expected_exception=KeyError, expected_message="title"
-        ):
+        with self.assertRaisesMessage(expected_exception=KeyError, expected_message="title"):
             self.form.clean_title()
-
-    def test_add_program_save(self):
-        """Тест: сохранение новой программы в БД"""
-        count = Program.objects.count()
-        self.form = self.get_add_program_form(title="prog3")
-        self.assertTrue(self.form.is_valid())
-        response = self.authorized_client.post(
-            path=reverse("add_program"), data=self.form.fields, follow=True
-        )
-        response.resolver_match.func.view_class.form_valid(
-            self=AddProgram, form=self.form
-        )
-        self.assertEqual(Program.objects.count(), count + 1)
 
 
 class AddSettingsFileFormTest(TestCase):
@@ -104,3 +91,25 @@ class AddSettingsFileFormTest(TestCase):
     def test_add_settings_file_form_big_size(self):
         self.form = self.get_add_settings_file_form(size=10484577)
         self.assertFalse(self.form.is_valid(), "To Big file")
+
+
+class RegisterFormTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.form = RegisterForm()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+
+    def test_register_user_form_is_valid(self):
+        form_data = {
+            "username": 'test',
+            "email": 'testest@mail.com',
+            "password1": '123456789@123',
+            "password2": '123456789@123',
+        }
+        self.form = RegisterForm(form_data)
+        self.assertTrue(self.form.is_valid())
+

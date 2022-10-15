@@ -15,7 +15,7 @@ class UploadFileForm(forms.Form):
     file = forms.FileField()
 
 
-class RegisterUserForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
     username = forms.CharField(
         label="Логин", widget=forms.TextInput(attrs={"class": "form-input"})
     )

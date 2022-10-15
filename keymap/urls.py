@@ -10,6 +10,6 @@ urlpatterns = [
     path("logout/", logout_user, name="logout"),
     path("program/<slug:slug>/", ShowProgramCommands.as_view(), name="program"),
     path("program/<slug:slug>/<int:id>", ShowProgramCommands.as_view(), name="settings_file", ),
-    path("program/<slug:slug>/analise", analise_settings_file, name="settings_file_analise", ),
+    path("program/<slug:slug>/analise", AddSettingsFile.as_view(), name="settings_file_analise", ),
     path("addprogram/", AddProgram.as_view(), name="add_program"),
 ]

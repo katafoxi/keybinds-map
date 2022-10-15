@@ -144,7 +144,7 @@ function Init() {
 function FileDragHover(e) {
     e.stopPropagation();
     e.preventDefault();
-    alert(e.type);
+    // alert(e.type);
     e.target.className = (e.type == "dragover" ? "hover" : "");
 }
 
