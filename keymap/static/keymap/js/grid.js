@@ -101,3 +101,69 @@ if (document.getElementById("id_slug")) {
 }
 
 // https://prog-time.ru/gotovoe-forma-s-otpravkoj-fajla-drag-drop-pole-dlya-peredachi-fajla-s-pomoshhyu-peretaskivaniya-ego-v-oblast/
+/* getElementById */
+function $id(id) {
+    return document.getElementById(id);
+}
+
+/* вывод сообщений */
+function Output(msg) {
+    var m = $id("messages");
+    m.innerHTML = msg;
+}
+
+/* проверка поддержки API */
+if (window.File && window.FileList && window.FileReader) {
+    Init();
+}
+
+/* инициализация */
+function Init() {
+    var fileselect = $id("fileselect"),
+        submitbutton = $id("submitbutton");
+    keymapfilebutton = $id('keymapfilebutton')
+
+    /* выбор файла */
+    fileselect.addEventListener("change", FileSelectHandler, false);
+    submitbutton.style.display = "none";
+
+
+}
+
+// выбор файла
+function FileSelectHandler(e) {
+
+    // проходимся по объекту FileList
+    var files = e.target.files || e.dataTransfer.files;
+    if (files.length > 1) {
+        Output("<p style = 'color:red'>Нужен только один файл</p>")
+    } else {
+        // парсим все объекты типа File
+        for (f of files) {
+            if (f.name.endsWith("xml")) {
+                $id('fileselect').files[0] = f;
+                ParseFile(f);
+                submitbutton.style.display = "block";
+                keymapfilebutton.innerText = ("Отобразить keymap для " + f.name);
+                // fileselect.style.display = 'none';
+                // filedrag.style.display = 'none';
+            } else {
+                submitbutton.style.display = "none";
+                Output("<p style = 'color:red'>Should be an xml file</p>")
+
+
+            }
+        }
+    }
+}
+
+
+function ParseFile(file) {
+    Output(
+        "<p>File information: <strong>" + file.name +
+        "</strong> type: <strong>" + file.type +
+        "</strong> size: <strong>" + file.size +
+        "</strong> bytes</p>"
+    );
+
+}
