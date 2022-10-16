@@ -141,15 +141,21 @@ function FileSelectHandler(e) {
         // парсим все объекты типа File
         for (f of files) {
             if (f.name.endsWith("xml")) {
-                $id('fileselect').files[0] = f;
-                ParseFile(f);
-                submitbutton.style.display = "block";
-                keymapfilebutton.innerText = ("Отобразить keymap для " + f.name);
+                if (f.name.length < 15) {
+                    $id('fileselect').files[0] = f;
+                    ParseFile(f);
+                    submitbutton.style.display = "block";
+                    keymapfilebutton.innerText = ("Отобразить keymap для " + f.name);
+                }
+                else{
+                    Output("<p style = 'color:red'>Слишком длинное имя файла (max=15 символов)</p>")
+                }
+
                 // fileselect.style.display = 'none';
                 // filedrag.style.display = 'none';
             } else {
                 submitbutton.style.display = "none";
-                Output("<p style = 'color:red'>Should be an xml file</p>")
+                Output("<p style = 'color:red'>Ожидается .xml-файл </p>")
 
 
             }

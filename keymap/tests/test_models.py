@@ -110,7 +110,7 @@ class SettingsFileTest(TestCase):
     def test_settings_file_name_max_length(self):
         setting_file = SettingsFile.objects.get(id=1)
         max_length = setting_file._meta.get_field('name').max_length
-        self.assertEquals(max_length, 100)
+        self.assertEquals(max_length, 15)
 
     def test_settings_file_name_label(self):
         setting_file = SettingsFile.objects.get(id=1)

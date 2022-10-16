@@ -64,7 +64,7 @@ class Command(models.Model):
 class SettingsFile(models.Model):
     program = models.ForeignKey("Program", to_field="slug", on_delete=models.CASCADE)
     name = models.CharField(
-        max_length=100,
+        max_length=15,
         unique=True,
         verbose_name="Название роли",
     )
