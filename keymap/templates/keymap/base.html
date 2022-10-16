@@ -101,6 +101,10 @@
               <a href="{{ file.get_absolute_url }}" class="button_1657807886646">{{ file.name }}</a>
             {% endif %}
           {% endfor %}
+          {% if analyzed_settings_file %}
+            <a class="button_1657807886646"
+               style="background-color: #b3ffdc;user-select: none;">{{ analyzed_settings_file }}</a>
+          {% endif %}
         </div>
 
         <!--region Форма для загрузки файлов настройки для выбранной программы-->
@@ -117,11 +121,11 @@
               <div>
                 <label for="fileselect">Загрузить keymap-файл</label>
                 <input type="file" id="fileselect" name="file"/>
-{#                <div id="filedrag">#}
-{#                  <img src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"#}
-{#                       alt="Анализ keymap" style="height:25px; vertical-align: middle;"/>#}
-{#                  Или перетащите сюда#}
-{#                </div>#}
+                {#                <div id="filedrag">#}
+                {#                  <img src="{% static 'keymap/i/xml-file.png' %}" title="Анализ keymap"#}
+                {#                       alt="Анализ keymap" style="height:25px; vertical-align: middle;"/>#}
+                {#                  Или перетащите сюда#}
+                {#                </div>#}
               </div>
               <div id="messages"></div>
               <div id="submitbutton">

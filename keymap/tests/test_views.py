@@ -69,7 +69,7 @@ class PagesTest(TestCase):
             reverse("add_program"): "keymap/add_program.html",
             reverse("program", kwargs={"slug": "pycharm"}): "keymap/index.html",
             reverse("settings_file", args=["pycharm", "1"]): "keymap/index.html",
-            # TODO reverse("settings_file_analise", args=["pycharm"]): "keymap/index.html",
+            reverse("settings_file_analise", args=["pycharm"]): "keymap/index.html",
         }
         for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
@@ -175,7 +175,7 @@ class PagesTest(TestCase):
 class ShowProgramCommandsTest(TestCase):
     fixtures = ["fixture_small", "users"]
 
-    def test_run(self):
+    def test_get_request(self):
         slug = Program.objects.first().slug
         settings_file_id = SettingsFile.objects.first().id
         response = self.client.get(
@@ -185,6 +185,25 @@ class ShowProgramCommandsTest(TestCase):
         )
         self.assertEquals(response.context.get("current_settings_file"), 1)
         self.assertEquals(len(response.context.get("commands_without_shortcuts")), 2)
+
+    def test_post_request_to_analise_settings_file(self):
+        with open(r'keymap/tests/test_pycharm_settings_file_one.xml', 'rb') as xml_file:
+            test_file = xml_file.read()
+
+            request_data = {
+                'file': SimpleUploadedFile(
+                    name='test.xml',
+                    content=test_file,
+                    content_type='text/xml'
+                )
+            }
+        resp = self.client.post(
+            path=reverse('settings_file_analise', kwargs={'slug': 'pycharm'}),
+            data=request_data,
+            follow=True
+        )
+        self.assertEquals(resp.status_code, 200)
+        self.assertEqual(resp.context['analyzed_settings_file'], 'test')
 
     def test_get_unassigned_commands_db(self):
         commands_with_modifiers = {"Redo": {"z": "c"}}

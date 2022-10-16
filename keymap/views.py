@@ -14,7 +14,7 @@ from keymap.forms import (
 )
 from keymap.keyboard import Keyboard
 from keymap.models import *
-from keymap.parser_pycharm import pycharm_parser_settings_file
+from keymap.parser_pycharm import pycharm_parse_settings_file
 from keymap.utils import DataMixin, menu
 from typing import Dict, List
 
@@ -49,18 +49,19 @@ class ShowProgramCommands(DataMixin, ListView):
         if len(settings_files) != 0:
             context["settings_files"] = settings_files
             if self.request.method == "POST":
-                commands_with_shortcuts = pycharm_parser_settings_file(self.request.FILES["file"])
+                commands_with_shortcuts = pycharm_parse_settings_file(self.request.FILES["file"])
+                context['analyzed_settings_file'] = self.request.FILES['file'].name.split('.')[0]
             else:
                 settings_file = self.kwargs.get("id", 0)
                 context["current_settings_file"] = settings_file
                 path_to_file = ("./" + SettingsFile.objects.get(program=slug, id=settings_file).file.url)
-                commands_with_shortcuts = pycharm_parser_settings_file(settings_file=path_to_file)
+                commands_with_shortcuts = pycharm_parse_settings_file(settings_file=path_to_file)
             context["commands_without_shortcuts"] = self.get_unassigned_commands_db(commands_with_shortcuts, slug=slug)
             context["keyboard_buttons"] = Keyboard.get_buttons_with_commands(commands_with_shortcuts, slug=slug)
         else:
             context["error_message"] = f"Поддержка программы {program.title}"
             context["keyboard_buttons"] = Keyboard.get_clean_buttons()
-        context.update(self.get_user_context(title="Редактор комбинаций " + slug, prog_selected=slug))
+        context.update(self.get_user_context(title=program.title, prog_selected=slug))
         return context
 
     @staticmethod
@@ -140,45 +141,6 @@ class AddProgram(DataMixin, CreateView):
     def form_valid(self, form):
         form.save()
         return redirect("main")
-
-
-class AddSettingsFile(DataMixin, CreateView):
-    form_class = AddSettingsFileForm
-    template_name = "keymap/add_settings_file.html"
-    success_url = reverse_lazy("main")
-
-    def get_context_data(self, *, objects_list=None, **kwargs):
-        slug = self.kwargs["slug"]
-        if self.request.method == "POST":
-            form = AddSettingsFileForm(self.request.POST, self.request.FILES)
-        else:
-            form = AddSettingsFileForm()
-        context = super().get_context_data(**kwargs)
-        context["form"] = form
-        context.update(self.get_user_context(title="Добавление программы"))
-        return context
-
-    def form_valid(self, form):
-        settings_file = form.save(commit=False)
-        if self.request.user != "AnonymousUser":
-            settings_file.owner = self.request.user
-            print(settings_file.owner)
-        return redirect("main")
-
-
-def add_settings_file(request):
-    if request.method == "POST":
-        form = AddSettingsFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            # print(request.FILES)
-            pass
-    else:
-        form = AddSettingsFileForm()
-    return render(
-        request,
-        "keymap/add_settings_file.html",
-        {"menu": menu, "title": "Анализ keymap", "form": form},
-    )
 
 
 def contact(request):
