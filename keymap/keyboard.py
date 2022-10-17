@@ -61,7 +61,7 @@ class Keyboard:
                 if keyboard_buttons.get(button):
                     command = Command.objects.filter(program=slug, name=command_name)
                     # рендер шаблона command_repr.html находится здесь, чтобы не вводить массовые проверки на наличие
-                    # команды в шаблоне index.html
+                    # команды в шаблоне main.html
                     template = loader.get_template(template_name='keymap/command_repr.html')
                     command_repr = template.render({'command': command})
                     keyboard_buttons[button].update({modifiers: command_repr})

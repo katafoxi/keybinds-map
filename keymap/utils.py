@@ -2,7 +2,7 @@ from io import BytesIO
 from PIL import Image  # type: ignore
 from django.core.files import File
 
-from .models import *
+from keymap.models import *
 
 menu = [
     {"title": "Главная", "url_name": "main"},
@@ -20,7 +20,8 @@ class DataMixin:
         return context
 
 
-def get_image_file(name="test.png", ext="png", size=(50, 50), color=(256, 0, 0)):
+def get_image_file(name="test.png", ext="png", size=(50, 50),
+                   color=(256, 0, 0)):
     file_obj = BytesIO()
     image = Image.new("RGB", size=size, color=color)
     image.save(file_obj, ext)

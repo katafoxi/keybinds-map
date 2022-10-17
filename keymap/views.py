@@ -21,7 +21,7 @@ from typing import Dict, List
 
 class Index(DataMixin, ListView):
     model = Command
-    template_name = "keymap/index.html"
+    template_name = "keymap/main.html"
 
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict[str, NoneType]:
         context = super().get_context_data(**kwargs)
@@ -32,8 +32,14 @@ class Index(DataMixin, ListView):
 
 class ShowProgramCommands(DataMixin, ListView):
     model = Command
-    template_name = "keymap/index.html"
+    template_name = "keymap/main.html"
     allow_empty = False
+
+    def SetUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

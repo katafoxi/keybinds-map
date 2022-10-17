@@ -19,7 +19,7 @@ class Program(models.Model):
     settings_file_info = models.TextField(
         blank=True,
         verbose_name="Обычное расположение файла с настройками биндов",
-        help_text="Опишите где находится стандартное расположение файлов настройки",
+        help_text="Опишите, где  стандартное расположение файлов настройки",
     )
     site = models.URLField(max_length=250, verbose_name="Оф.сайт")
 
@@ -38,13 +38,14 @@ class Program(models.Model):
 
 class Command(models.Model):
     program = models.ForeignKey(
-        "Program", to_field="slug", on_delete=models.CASCADE, db_column="program"
+        "Program", to_field="slug", on_delete=models.CASCADE,
+        db_column="program"
     )
     name = models.CharField(max_length=250)
     short_name = models.CharField(max_length=100)
 
     def command_icons_directory_path(self, filename):
-        # file will be uploaded to MEDIA_ROOT/<program>_command_icons/<command_name>
+        # uploaded to MEDIA_ROOT/<program>_command_icons/<command_name>
         return "{0}_command_icons/{1}".format(self.program.slug, filename)
 
     icon = models.ImageField(upload_to=command_icons_directory_path, blank=True)
@@ -62,7 +63,8 @@ class Command(models.Model):
 
 
 class SettingsFile(models.Model):
-    program = models.ForeignKey("Program", to_field="slug", on_delete=models.CASCADE)
+    program = models.ForeignKey("Program", to_field="slug",
+                                on_delete=models.CASCADE)
     name = models.CharField(
         max_length=15,
         unique=True,
@@ -84,5 +86,6 @@ class SettingsFile(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            "settings_file", kwargs={"slug": str(self.program).lower(), "id": self.pk}
+            "settings_file",
+            kwargs={"slug": str(self.program).lower(), "id": self.pk}
         )

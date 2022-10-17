@@ -1,17 +1,16 @@
 import shutil
+import tempfile
 
 from django import forms
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
-from django.urls import reverse, resolve
+from django.urls import resolve, reverse
 
 from conf import settings
-from keymap.keyboard import Keyboard
-from keymap.models import Program, Command, SettingsFile
+from keymap.models import Command, Program, SettingsFile
 from keymap.utils import get_image_file
-from keymap.views import contact, AddProgram, ShowProgramCommands
-import tempfile
+from keymap.views import contact
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
@@ -63,33 +62,19 @@ class PagesTest(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         # Собираем в словарь пары "имя_html_шаблона: reverse(name)"
         templates_pages_names = {
-            reverse("main"): "keymap/index.html",
+            reverse("main"): "keymap/main.html",
             reverse("login"): "keymap/login.html",
             reverse("register"): "keymap/register.html",
             reverse("add_program"): "keymap/add_program.html",
-            reverse("program", kwargs={"slug": "pycharm"}): "keymap/index.html",
-            reverse("settings_file", args=["pycharm", "1"]): "keymap/index.html",
-            reverse("settings_file_analise", args=["pycharm"]): "keymap/index.html",
+            reverse("program", kwargs={"slug": "pycharm"}): "keymap/main.html",
+            reverse("settings_file", args=["pycharm", "1"]): "keymap/main.html",
+            reverse("settings_file_analise",
+                    args=["pycharm"]): "keymap/main.html",
         }
         for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
                 response = self.authorized_client.get(reverse_name)
                 self.assertTemplateUsed(response, template)
-
-    # Проверка словаря контекста главной страницы
-    def test_index_page_show_correct_context(self):
-        """Шаблон index сформирован с правильным контекстом."""
-        response = self.authorized_client.get(reverse("main"))
-        self.assertEquals(response.context["title"], "Выбор программы для редактора")
-        self.assertEquals(response.context["prog_selected"], 0)
-        self.assertEquals(response.context["programs"][0].title, "PyCharm")
-        self.assertEquals(
-            response.context["menu"],
-            [
-                {"title": "Главная", "url_name": "main"},
-                {"title": "Обратная связь", "url_name": "contact"},
-            ],
-        )
 
     def test_add_program_page_show_correct_context(self):
         """Шаблон add_program сформирован с правильным контекстом."""
@@ -184,10 +169,12 @@ class ShowProgramCommandsTest(TestCase):
             ),
         )
         self.assertEquals(response.context.get("current_settings_file"), 1)
-        self.assertEquals(len(response.context.get("commands_without_shortcuts")), 2)
+        self.assertEquals(
+            len(response.context.get("commands_without_shortcuts")), 2)
 
     def test_post_request_to_analise_settings_file(self):
-        with open(r'keymap/tests/test_pycharm_settings_file_one.xml', 'rb') as xml_file:
+        with open(r'keymap/tests/test_pycharm_settings_file_one.xml',
+                  'rb') as xml_file:
             test_file = xml_file.read()
 
             request_data = {
@@ -205,4 +192,26 @@ class ShowProgramCommandsTest(TestCase):
         self.assertEquals(resp.status_code, 200)
         self.assertEqual(resp.context['analyzed_settings_file'], 'test')
 
+    # Проверка словаря контекста главной страницы
+    def test_main_page_show_correct_context_without_current_program(self):
+        """Шаблон main.html сформирован с правильным контекстом."""
+        response = self.client.get(reverse("main"))
+        self.assertEquals(response.context["title"],
+                          "Выбор программы для редактора")
+        self.assertEquals(response.context["prog_selected"], 0)
+        self.assertEquals(response.context["programs"][0].title, "PyCharm")
+        self.assertEquals(
+            response.context["menu"],
+            [
+                {"title": "Главная", "url_name": "main"},
+                {"title": "Обратная связь", "url_name": "contact"},
+            ],
+        )
 
+    def test_main_page_correct_context_with_current_program(self):
+        slug = Program.objects.filter(title="Siemens NX")[0].slug
+        resp = self.client.get(
+            reverse("settings_file", kwargs={"slug": slug, "id": 2}))
+        self.assertEqual(resp.context.get("error_message"),
+                         'Поддержка программы Siemens NX пока отсутствует.')
+        self.assertEqual(resp.context.get("prog_selected"), 'siemens-nx')
