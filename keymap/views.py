@@ -56,37 +56,14 @@ class ShowProgramCommands(DataMixin, ListView):
                 context["current_settings_file"] = settings_file
                 path_to_file = ("./" + SettingsFile.objects.get(program=slug, id=settings_file).file.url)
                 commands_with_shortcuts = pycharm_parse_settings_file(settings_file=path_to_file)
-            context["commands_without_shortcuts"] = self.get_unassigned_commands_db(commands_with_shortcuts, slug=slug)
+            context["commands_without_shortcuts"] = [command for command in Command.objects.filter(program=slug) if
+                                                     command.name not in commands_with_shortcuts.keys()]
             context["keyboard_buttons"] = Keyboard.get_buttons_with_commands(commands_with_shortcuts, slug=slug)
         else:
-            context["error_message"] = f"Поддержка программы {program.title}"
+            context["error_message"] = f"Поддержка программы {program.title} пока отсутствует."
             context["keyboard_buttons"] = Keyboard.get_clean_buttons()
         context.update(self.get_user_context(title=program.title, prog_selected=slug))
         return context
-
-    @staticmethod
-    def get_unassigned_commands_db(commands_with_shortcuts: dict, slug: str) -> List[Command]:
-        """
-
-        @param slug: program slug
-        @param commands_with_shortcuts: assigned commands from setting file
-        @return: [  <Command: ActivateFavoritesToolWindow>,
-                    <Command: ActivatePullRequestsToolWindow>, ...]
-
-        """
-        all_prog_commands_db = {}
-
-        program_commands_db = Command.objects.filter(program=slug)
-        for command in program_commands_db:
-            all_prog_commands_db.update({command.name: command})
-        if commands_with_shortcuts:
-            for command_name, command_type_shortcuts in commands_with_shortcuts.items():
-                all_prog_commands_db.pop(command_name, "")
-
-        unassigned_commands_queryset = []
-        for command in all_prog_commands_db.values():
-            unassigned_commands_queryset.append(command)
-        return unassigned_commands_queryset
 
 
 class RegisterUser(DataMixin, CreateView):
