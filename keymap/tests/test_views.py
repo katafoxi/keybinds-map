@@ -77,8 +77,8 @@ class PagesTest(TestCase):
                 self.assertTemplateUsed(response, template)
 
     # Проверка словаря контекста главной страницы
-    def test_main_page_show_correct_context(self):
-        """Шаблон main сформирован с правильным контекстом."""
+    def test_index_page_show_correct_context(self):
+        """Шаблон index сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse("main"))
         self.assertEquals(response.context["title"], "Выбор программы для редактора")
         self.assertEquals(response.context["prog_selected"], 0)
@@ -205,8 +205,4 @@ class ShowProgramCommandsTest(TestCase):
         self.assertEquals(resp.status_code, 200)
         self.assertEqual(resp.context['analyzed_settings_file'], 'test')
 
-    def test_get_unassigned_commands_db(self):
-        commands_with_modifiers = {"Redo": {"z": "c"}}
-        slug = Program.objects.get(id=1).slug
-        commands = ShowProgramCommands.get_unassigned_commands_db(commands_with_modifiers, slug)[0].name
-        self.assertEqual(commands, "$Copy")
+
