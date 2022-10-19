@@ -17,7 +17,7 @@ from .secretkey import KEY
 from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# FIXTURE_DIRS = (os.path.join(BASE_DIR, 'keymap', 'fixtures'),)
+# FIXTURE_DIRS = (os.path.join(BASE_DIR, 'kmap', 'fixtures'),)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'keymap.apps.KeymapConfig',
+    'kmap.apps.KeymapConfig',
     # 'debug_toolbar',
 ]
 
@@ -77,10 +77,28 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kmap',
+        'USER': 'kmapad',
+        'PASSWORD': '123456789@^{',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+        'TEST': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'testkmap',
+            'USER': 'kmapad',
+            'PASSWORD': '123456789@^{',
+
+        }
     }
 }
 
@@ -89,16 +107,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.NumericPasswordValidator',
     },
 ]
 

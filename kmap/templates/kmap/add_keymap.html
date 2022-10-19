@@ -1,0 +1,9 @@
+{% extends 'kmap/base.html' %}
+
+{% block content %}
+  <form action="{% url 'settings_file_analise' slug=prog_selected %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+  </form>
+{% endblock %}

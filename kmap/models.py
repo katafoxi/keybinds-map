@@ -46,6 +46,9 @@ class Action(models.Model):
     short_name = models.CharField(
         max_length=100,
         verbose_name="Короткое название действия")
+    descr = models.TextField(
+        blank=True,
+        verbose_name="Описание действия", )
 
     def get_icons_dir_path(self, filename):
         # uploaded to MEDIA_ROOT/<prog>_icons/<action_name>
@@ -69,8 +72,11 @@ class Keymap(models.Model):
     name = models.CharField(
         max_length=15,
         unique=True,
-        verbose_name="Название keymap-файла",
-    )
+        verbose_name="Название keymap-файла", )
+    descr = models.TextField(
+        blank=True,
+        verbose_name="Описание keymap-файлa",
+        help_text="Опишите, особенности keymap", )
 
     def get_user_keymaps_path(self, filename):
         # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -78,17 +84,15 @@ class Keymap(models.Model):
             self.prog.slug, self.owner.id, filename)
 
     file = models.FileField(upload_to=get_user_keymaps_path)
-    rating = models.DecimalField(
-        max_digits=5,
-        decimal_places=0, )
+    rating = models.DecimalField(max_digits=5, decimal_places=0, )
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE,
         verbose_name='Владелец keymap-файла')
 
     def get_absolute_url(self):
         return reverse(
-            urlconf="keymap",
+            "keymap",
             kwargs={"slug": str(self.prog).lower(), "id": self.pk})
 
     class Meta:
-        unique_together = ['prog', 'user', 'name']
+        unique_together = ['prog', 'owner', 'name']
