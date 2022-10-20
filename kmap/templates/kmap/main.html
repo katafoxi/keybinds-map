@@ -7,17 +7,15 @@
   {% if prog_selected == 0 %}
     <div class="guide">
       <div>
+        <h2 style="text-align: center"> Про что этот сайт?</h2>
+
         <p>
-          Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
+          Сервис предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
           в выбранную программу. Также можно применять редактор, как способ визуализации существующих штатных
           комбинаций в выбранной программе.
         </p>
 
-        <p>
-          Пользоваться редактором очень просто. Просто перетаскивайте мышкой (drag&drop) команды/значки команд,
-          находящиеся на сетке клавиатуры в удобное/логичное положение.
-        </p>
-        <h2>Как обычно выглядит настройка keybindings map</h2>
+        <h3 style="text-align: center">Как обычно выглядит настройка keybindings map?</h3>
 
         <img src="https://user-images.githubusercontent.com/83884504/178107126-2b3efba1-7838-4998-9c79-ecc5332d4f55.png"
              style="width:100% ">
@@ -28,7 +26,7 @@
         </p>
       </div>
       <div>
-        <h2>Предлагаемая модель взаимодействия:</h2>
+        <h2 style="text-align: center"> Предлагаемая модель взаимодействия:</h2>
         <ul>
           <li>Выбираем программу</li>
           <li>Загружаешь свой keymap-файл для программы.</li>
@@ -81,9 +79,9 @@
 
   <!--region Клавиатурная сетка, где каждая клавиша разделена на поля с модификаторами-->
   <div id="keyboardGrid" class="keyboardGrid">
-    {% for press_button, mod_keys in k_buttons.items %}
+    {% for button_backname, mod_keys in k_buttons.items %}
       {% if mod_keys.front_name != '' %}
-        <div class="key_{{ press_button }} char">
+        <div class="key_{{ button_backname }} char">
           <div class="key brdr"> {{ mod_keys.front_name }}</div>
           <div class="a_mod brdr abbr">a</div>
           <div class="c_mod brdr abbr">c</div>
@@ -92,22 +90,48 @@
           <div class="as_mod brdr abbr">as</div>
           <div class="cs_mod brdr abbr">cs</div>
           <div class="acs_mod brdr abbr">cas</div>
-
-          <div class="Simple-push brdr droppable">{{ mod_keys.push }}</div>
-          <div class="a brdr droppable">{{ mod_keys.a }}</div>
-          <div class="c brdr droppable">{{ mod_keys.c }}</div>
-          <div class="s brdr droppable">{{ mod_keys.s }}</div>
-          <div class="ac brdr droppable">{{ mod_keys.ac }}</div>
-          <div class="as brdr droppable">{{ mod_keys.as }}</div>
-          <div class="cs brdr droppable">{{ mod_keys.cs }}</div>
-          <div class="acs brdr droppable">{{ mod_keys.acs }}</div>
+          <!--При изменении положения класса brdr, менять в JS-методе changeActionDescrBlockWidth -->
+          <div class="key_{{ button_backname }} push brdr droppable">{{ mod_keys.push }}</div>
+          <div class="key_{{ button_backname }} a brdr droppable">{{ mod_keys.a }}</div>
+          <div class="key_{{ button_backname }} c brdr droppable">{{ mod_keys.c }}</div>
+          <div class="key_{{ button_backname }} s brdr droppable">{{ mod_keys.s }}</div>
+          <div class="key_{{ button_backname }} ac brdr droppable">{{ mod_keys.ac }}</div>
+          <div class="key_{{ button_backname }} as brdr droppable">{{ mod_keys.as }}</div>
+          <div class="key_{{ button_backname }} cs brdr droppable">{{ mod_keys.cs }}</div>
+          <div class="key_{{ button_backname }} acs brdr droppable">{{ mod_keys.acs }}</div>
         </div>
       {% else %}
-        <div class="key_{{ press_button }} char"></div>
+        <div class="key_{{ button_backname }} char"></div>
       {% endif %}
     {% endfor %}
   </div>
   <!--endregion-->
+
+  <style>
+      .button_save_keymap {
+          display: inline-block !important;
+          text-decoration: none !important;
+          background-color: #eaeaea !important;
+          color: #006089 !important;
+          border: 3px solid #006089 !important;
+          border-radius: 5px !important;
+          font-size: 12px !important;
+          padding: 15px 50px !important;
+          transition: all 0.8s ease !important;
+          user-select: none !important;
+      }
+
+      .button_save_keymap:hover {
+          text-decoration: none !important;
+          background-color: #006089 !important;
+          color: #ffeded !important;
+          border-color: #006089 !important;
+          user-select: none !important;
+      }
+  </style>
+  <input type="button" class="button_save_keymap" id="button_save_keymap" value="Сохранить keymap">
+
+  </input>
 
 {% endblock content %}
 

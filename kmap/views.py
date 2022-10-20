@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 from mypy.types import NoneType
 
+from conf.settings import MEDIA_ROOT
 from kmap.forms import (AddProgForm, LoginUserForm, RegisterForm)
 from kmap.keyboard import Keyboard
 from kmap.models import *
@@ -54,7 +55,7 @@ class ShowProgActions(DataMixin, ListView):
             else:
                 keymap_id = self.kwargs.get("id", 0)
                 context["current_keymap"] = keymap_id
-                path = Keymap.objects.get(prog=slug, id=keymap_id).file.url
+                path = Keymap.objects.get(prog=slug, id=keymap_id).file.path
                 acts_with_combs = parse_keymap(keymap=path)
 
             without = [act for act in Action.objects.filter(prog=slug) if

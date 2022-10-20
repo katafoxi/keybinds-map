@@ -22,7 +22,7 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
                                 'left': 'ac'
                               },
     """
-    if keymap is str:
+    if type(keymap) is str:
         tree = ElementTree.parse(pathlib.Path(keymap))
     else:
         tree = ElementTree.parse(keymap)
@@ -54,7 +54,8 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
                     else:
                         mod_abbr = "push"
                     shortcuts.update({k_key: mod_abbr})
-        actions[action_name] = shortcuts
+                    actions[action_name] = shortcuts
+    print(actions)
     return actions
 
 

@@ -95,24 +95,20 @@
         <div class="PoolSettingsFile">
           {% for keymap in keymaps %}
             {% if keymap.id == current_keymap %}
-              <a class="button_1657807886646"
+              <a class="button_analise_keymap"
                  style="background-color: #b3ffdc;user-select: none;">{{ keymap.name }}</a>
             {% else %}
-              <a href="{{ keymap.get_absolute_url }}" class="button_1657807886646">{{ keymap.name }}</a>
+              <a href="{{ keymap.get_absolute_url }}" class="button_analise_keymap">{{ keymap.name }}</a>
             {% endif %}
           {% endfor %}
           {% if analyzed_keymap %}
-            <a class="button_1657807886646"
+            <a class="button_analise_keymap"
                style="background-color: #b3ffdc;user-select: none;">{{ analyzed_keymap }}</a>
           {% endif %}
         </div>
 
         <!--region Форма для загрузки keymap для выбранной программы-->
         {% if prog_selected %}
-          <!--            <a href="{% url 'keymap_analise' slug=prog_selected %}"> -->
-          <!--                <img class="progIcon" src="{% static 'kmap/i/xml-file.png' %}" name="Анализ kmap"-->
-          <!--                     alt="Анализ kmap"/>-->
-          <!--            </a>-->
           <form id="upload" action="{% url 'keymap_analise' slug=prog_selected %}" method="post"
                 enctype="multipart/form-data">
             {% csrf_token %}
@@ -152,17 +148,8 @@
 
 <link href="{% static 'kmap/css/dragula.min.css' %}" rel="stylesheet"/>
 <script src="{% static 'kmap/js/dragula.js' %}"></script>
-<script src="{% static 'kmap/js/grid.js' %}"></script>
+<script src="{% static 'kmap/js/main.js' %}"></script>
 <script src="{% static 'kmap/js/urlify.js' %}"></script>
-<script>
-    var initialised = false;
-    window.addEventListener("load", function () {
-        var newElement = document.createElement("p");
-        newElement.textContent = "Hello from JavaScript!";
-        document.body.appendChild(newElement);
-        initialised = true;
-    });
-</script>
 </body>
 
 </html>

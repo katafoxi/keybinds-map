@@ -1,6 +1,6 @@
-window.onload = changeCommandDescriptionWidth
+window.onload = changeActionDescrBlockWidth
 onDragMaster();
-window.onresize = changeCommandDescriptionWidth;
+window.onresize = changeActionDescrBlockWidth;
 showFlipswiths();
 showOrHideModifiersRows();
 
@@ -15,6 +15,8 @@ function onDragMaster() {
         })
         .on('drop', (el, target) => {
             el.style.width = (target.offsetWidth - 5) + 'px';
+            // console.log(target.parentElement.className)
+            console.log(target.firstChild)
         })
 }
 
@@ -23,15 +25,32 @@ function onDragMaster() {
 // };
 
 
-function changeCommandDescriptionWidth() {
-    let collectionCommandDescr = document.getElementsByClassName('action_repr');
-    // console.log(collectionCommandDescr)
-    for (let i = 1; i < collectionCommandDescr.length; i++) {
-        let elem = collectionCommandDescr[i];
-        if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
+var sendButton = document.getElementById("button_save_keymap");
+sendButton.addEventListener("click", keymap_to_json);
+
+
+function keymap_to_json() {
+    let kButtons
+    kButtons = document.querySelectorAll('.char').forEach(
+        function (currentElement, currentIndex, listObj) {
+            let key_front = currentElement.className.split(' ')[0]
+            // console.log(`${currentElement}, ${currentIndex}, ${key_sign}`);
+            console.log(`${key_front}`);
+        },
+        'myThisArg'
+    );
+}
+
+
+function changeActionDescrBlockWidth() {
+    let collectActionDescr = document.getElementsByClassName('action_repr');
+    // console.log(collectActionDescr)
+    for (let i = 0; i < collectActionDescr.length; i++) {
+        let elem = collectActionDescr[i];
+        if (elem.parentNode.getAttribute('class').includes('brdr')) {
             elem.style.width = '14px'
         }
-        if (elem.parentNode.getAttribute('class').split(' ')[1] == 'brdr') {
+        if (elem.parentNode.getAttribute('class').includes('brdr')) {
             elem.style.width = (elem.parentNode.offsetWidth - 4) + 'px';
         }
     }
@@ -124,9 +143,10 @@ function Init() {
     keymapfilebutton = $id('keymapfilebutton')
 
     /* выбор файла */
-    fileselect.addEventListener("change", FileSelectHandler, false);
-    submitbutton.style.display = "none";
-
+    if (fileselect) {
+        fileselect.addEventListener("change", FileSelectHandler, false);
+        submitbutton.style.display = "none";
+    }
 
 }
 
@@ -146,8 +166,7 @@ function FileSelectHandler(e) {
                     ParseFile(f);
                     submitbutton.style.display = "block";
                     keymapfilebutton.innerText = ("Отобразить keymap для " + f.name);
-                }
-                else{
+                } else {
                     Output("<p style = 'color:red'>Слишком длинное имя файла (max=15 символов)</p>")
                 }
 
@@ -156,8 +175,6 @@ function FileSelectHandler(e) {
             } else {
                 submitbutton.style.display = "none";
                 Output("<p style = 'color:red'>Ожидается .xml-файл </p>")
-
-
             }
         }
     }

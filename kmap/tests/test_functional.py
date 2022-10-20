@@ -28,6 +28,7 @@
 #         self.assertIn('Выбор программы для редактора', self.driver.name)
 #         self.driver.find_element(by='id', value='keyboardGrid')
 #
+#
 #     def test_can_register(self):
 #         """ Тест: возможность регистрации"""
 #

@@ -167,7 +167,6 @@ class ShowProgActionsTest(TestCase):
             name='testprog',
             slug='testprog',
         )
-        prog.save()
         Action.objects.create(
             pk=1,
             prog=prog,
@@ -187,7 +186,6 @@ class ShowProgActionsTest(TestCase):
             owner=owner,
             file=cls.get_test_keymap_simple_uploaded_file()
         )
-        keymap.save()
 
     @classmethod
     def tearDownClass(cls):
@@ -195,7 +193,7 @@ class ShowProgActionsTest(TestCase):
         super().tearDownClass()
 
     @staticmethod
-    def get_test_keymap_simple_uploaded_file(name='test'):
+    def get_keymap_simple_uploaded_file(name='test'):
         with open(r'kmap/tests/test_pycharm_keymap_one.xml', 'rb') as xml_file:
             test_file = xml_file.read()
             test_keymap = SimpleUploadedFile(
@@ -222,6 +220,7 @@ class ShowProgActionsTest(TestCase):
             data={'file': self.get_test_keymap_simple_uploaded_file('test')},
             follow=True
         )
+
         self.assertEquals(resp.status_code, 200)
         self.assertEqual(resp.context['analyzed_keymap'], 'test')
 
@@ -229,6 +228,7 @@ class ShowProgActionsTest(TestCase):
     def test_main_page_show_correct_context_without_current_prog(self):
         """Шаблон main.html сформирован с правильным контекстом."""
         response = self.client.get(reverse("main"))
+
         self.assertEquals(
             response.context["title"], "Выбор программы для редактора")
         self.assertEquals(response.context["prog_selected"], 0)
@@ -248,8 +248,10 @@ class ShowProgActionsTest(TestCase):
             slug='prog_wo_keymap',
         )
         slug = Prog.objects.filter(name="prog_wo_keymap")[0].slug
+
         resp = self.client.get(
             reverse("keymap", kwargs={"slug": slug, "id": 1}))
+
         self.assertEqual(
             resp.context.get("error_message"),
             'Поддержка программы prog_wo_keymap пока отсутствует.')

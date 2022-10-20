@@ -45,6 +45,9 @@ header {
     -moz-box-shadow: 11px 10px 11px -4px rgba(0, 0, 0, 0.18);
     box-shadow: 11px 10px 11px -4px rgba(0, 0, 0, 0.18);
 }
+p{
+    text-indent: 5px;
+}
 
 /*
 #login_reg{
@@ -162,10 +165,11 @@ label {
     grid-template-columns: 1fr 1fr;
     gap: 0px 5px;
     grid-auto-flow: row;
+    text-align: justify;
 
 }
 
-.button_1657807886646 {
+.button_analise_keymap {
     display: inline-block !important;
     text-decoration: none !important;
     background-color: #eaeaea;
@@ -177,7 +181,7 @@ label {
     transition: all 0.8s ease !important;
 }
 
-.button_1657807886646:hover {
+.button_analise_keymap:hover {
     text-decoration: none !important;
     background-color: #b3ffdc !important;
     color: #228f34 !important;
@@ -235,9 +239,8 @@ label {
     white-space: nowrap;
     overflow: hidden;
     color: #323232;
-
-
 }
+
 
 .action_repr:hover,
 .descr:hover {
@@ -262,8 +265,7 @@ label {
 /* || Icons and description styles */
 
 .brdr {
-    border-bottom: 0.1px solid #5073ff2c;
-
+    border-bottom: 0.01px solid #5073ff2c;
 }
 
 .abbr {

@@ -28,7 +28,7 @@ class Prog(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            "keymap", kwargs={"slug": str(self.slug).lower(), "id": 2}
+            "keymap", kwargs={"slug": str(self.slug).lower(), "id": 1}
         )
 
     class Meta:
@@ -79,7 +79,7 @@ class Keymap(models.Model):
         help_text="Опишите, особенности keymap", )
 
     def get_user_keymaps_path(self, filename):
-        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        # file will be uploaded to MEDIA_ROOT/prog/user_<id>/<filename>
         return "{0}_keymaps/{1}/{2}".format(
             self.prog.slug, self.owner.id, filename)
 
