@@ -35,7 +35,7 @@ class ProgModelTest(TestCase):
 
     def test_get_absolute_url(self):
         prog = Prog.objects.get(id=1)
-        self.assertEquals(prog.get_absolute_url(), '/prog/testprog/2')
+        self.assertEquals(prog.get_absolute_url(), '/prog/testprog/1')
 
     def test_str(self):
         prog = Prog.objects.get(pk=1)

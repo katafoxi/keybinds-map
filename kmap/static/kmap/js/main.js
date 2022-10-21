@@ -30,15 +30,16 @@ sendButton.addEventListener("click", keymap_to_json);
 
 
 function keymap_to_json() {
-    let kButtons
-    kButtons = document.querySelectorAll('.char').forEach(
-        function (currentElement, currentIndex, listObj) {
-            let key_front = currentElement.className.split(' ')[0]
-            // console.log(`${currentElement}, ${currentIndex}, ${key_sign}`);
-            console.log(`${key_front}`);
-        },
-        'myThisArg'
-    );
+
+    let actions = document.getElementsByClassName('action_repr')
+    for (let i = 0; i < actions.length; i++) {
+        let action = actions[i];
+        if (action.parentNode.getAttribute('class').includes('key')) {
+            let action_name = action.getAttribute('class').split(' ')[0];
+            let shortcut = action.parentNode.getAttribute('class').split('brdr')[0];
+            console.log(action_name, shortcut);
+        }
+    }
 }
 
 

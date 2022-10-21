@@ -234,12 +234,15 @@ label {
     /* vertical-align: baseline;
      white-space: nowrap;
     */
-    font-size: 12px;
     height: 14px;
     white-space: nowrap;
     overflow: hidden;
     color: #323232;
+    font-size: 8px;
+    text-indent:-2px;
+
 }
+
 
 
 .action_repr:hover,

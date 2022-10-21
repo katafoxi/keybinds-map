@@ -184,7 +184,7 @@ class ShowProgActionsTest(TestCase):
             name='testkeymap',
             rating=5,
             owner=owner,
-            file=cls.get_test_keymap_simple_uploaded_file()
+            file=ShowProgActionsTest.get_keymap_simple_uploaded_file()
         )
 
     @classmethod
@@ -215,9 +215,10 @@ class ShowProgActionsTest(TestCase):
     #     self.assertEquals(len(response.context.get("acts_wo_combs")), 1)
 
     def test_post_request_to_analise_keymap(self):
+        keymap = ShowProgActionsTest.get_keymap_simple_uploaded_file('test')
         resp = self.client.post(
             path=reverse('keymap_analise', kwargs={'slug': 'testprog'}),
-            data={'file': self.get_test_keymap_simple_uploaded_file('test')},
+            data={'file': keymap},
             follow=True
         )
 

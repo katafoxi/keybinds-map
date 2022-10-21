@@ -10,8 +10,8 @@ class KeyboardTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        Keyboard.buttons_front = {'rowZX': ['Z', ]}
-        Keyboard.buttons_back = {'rowZX': ['z', ]}
+        Keyboard.buttons_front = ['Z', ]
+        Keyboard.buttons_back = ['z', ]
         prog = Prog.objects.create(
             pk=1,
             name='testprog',
@@ -43,12 +43,12 @@ class KeyboardTest(TestCase):
         )
         self.assertEqual(
             filled_buttons,
-            {'z': {'front_name': 'Z',
-                   'cs': '  <div class="action_repr" style="width: '
-                         '15px;">\n'
-                         '    <div class="descr">\n'
+            {'z': {'cs': '<div class="Redo action_repr" style="width: 15px;">\n'
+                         '  <div class="descr">\n'
                          '      \n'
                          '      Redo\n'
-                         '    </div>\n'
-                         '  </div>', }}
+                         '  </div>\n'
+                         '</div>',
+                'front_name': 'Z'}
+            }
         )
