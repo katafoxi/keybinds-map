@@ -2,7 +2,7 @@
 {% load keymap_tags %}
 
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
   <title>{{ title }}</title>
@@ -27,129 +27,165 @@
 <body>
 
 <div class="mainPage">
+
   <header class="header">
+
+    <!--region Логотип сайта-->
     <div class="logo">
-      <div class="top-head">
-        <a href="{% url 'main' %}">онлайн редактор комбинаций </a>
+      <div class="logo__item">
+        <a class="logo__item_link" href="{% url 'main' %}">онлайн редактор комбинаций </a>
       </div>
       <a href="{% url 'main' %}">
-        <img id="logo" class="logo" src="{% static 'kmap/i/logo.png' %}" title="Редактор комбинаций"
+        <img id="logo" class="logo__img" src="{% static 'kmap/i/logo.png' %}" title="Редактор комбинаций"
              alt="Онлайн-редактор комбинаций"/>
       </a>
     </div>
-    {% block mainmenu %}
 
-      <div class="header_block">
-        <ul id="mainmenu" class="mainmenu ">
+    <!--endregion -->
+
+    <!--region Меню сайта -->
+    {% block mainmenu %}
+      <div class="header__item">
+        <ul class="mainMenu ">
           {% for m in menu %}
-            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+            <li><a class="mainMenu__link" href="{% url m.url_name %}">{{ m.title }}</a></li>
           {% endfor %}
 
           {% if request.user.is_authenticated %}
-            <li class="last"> {{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></li>
+            <li
+                    class="mainmenu__username"> {{ user.username }} | <a class="mainMenu__link"
+                                                                         href="{% url 'logout' %}">Выйти</a>
+            </li>
           {% else %}
-            <li class="last"><a href="{% url 'register' %}">Регистрация</a></li>
-            <li><a href="{% url 'login' %}">Войти</a></li>
+            <li class="last"><a class="mainMenu__link" href="{% url 'register' %}">Регистрация</a></li>
+            <li><a class="mainMenu__link" href="{% url 'login' %}">Войти</a></li>
           {% endif %}
         </ul>
       </div>
     {% endblock mainmenu %}
+    <!--endregion -->
 
-
-    <div class="header_block">
-      <div class="software_pool">
+    <!--region Список поддерживаемых программ -->
+    <div class="header__item">
+      <div class="progList">
         <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
 
         {% get_program_list as progs %}
         {% for prog in progs %}
           {% if prog.slug == prog_selected %}
-            <img class='progIcon selected' src="{{ prog.icon.url }}" title="{{ prog.name }}"
+            <img class='progList__progIcon_selected' src="{{ prog.icon.url }}" title="{{ prog.name }}"
                  alt="{{ prog.name }}"/>
           {% else %}
-            <a href="{{ prog.get_absolute_url }}">
-              <img class='progIcon' src="{{ prog.icon.url }}" title="{{ prog.name }}"
+            <a class='progList__link' href="{{ prog.get_absolute_url }}">
+              <img class='progList__progIcon' src="{{ prog.icon.url }}" title="{{ prog.name }}"
                    alt="{{ prog.name }}"/>
             </a>
           {% endif %}
         {% endfor %}
 
         {% if request.user.is_authenticated %}
-          <a href="{% url 'add_prog' %}">
-            <img class="progIcon" src="{% static 'kmap/i/add.png' %}" title="Добавить программу"
+          <a class='progList__link' href="{% url 'add_prog' %}">
+            <img class="progList__progIcon" src="{% static 'kmap/i/add.png' %}" title="Добавить программу"
                  alt="Добавить программу"/>
           </a>
         {% else %}
-          <a href="{% url 'register' %}">
-            <img class="progIcon" src="{% static 'kmap/i/add.png' %}" title="Добавить программу"
+          <a class='progList__link' href="{% url 'register' %}">
+            <img class="progList__progIcon" src="{% static 'kmap/i/add.png' %}" title="Добавить программу"
                  alt="Добавить программу"/>
           </a>
         {% endif %}
-
       </div>
     </div>
+    <!--endregion -->
 
-    <div class="header_block">
-      <p><span style="text-decoration: underline;">Шаг 2</span> Выберите файл keymap или загрузи свой для
-        отображения</p>
-      <div class="settings_files">
-        <div class="PoolSettingsFile">
+    <!--region Блок отображения и загрузки keymap-файлов -->
+    <div class="header__item">
+
+      <p>
+        <span style="text-decoration: underline;">Шаг 2</span>
+        Выберите файл keymap или загрузи свой для отображения
+      </p>
+      <div class="keymaps">
+        <!--region Блок вывода keymap-файлов для выбранной программы-->
+
+        <div class="keymaps__list">
           {% for keymap in keymaps %}
             {% if keymap.id == current_keymap %}
-              <a class="button_analise_keymap"
-                 style="background-color: #b3ffdc;user-select: none;">{{ keymap.name }}</a>
+              <a class="keymaps__link_selected">{{ keymap.name }}</a>
             {% else %}
-              <a href="{{ keymap.get_absolute_url }}" class="button_analise_keymap">{{ keymap.name }}</a>
+              <a class="keymaps__link" href="{{ keymap.get_absolute_url }}">{{ keymap.name }}</a>
             {% endif %}
           {% endfor %}
           {% if analyzed_keymap %}
-            <a class="button_analise_keymap"
-               style="background-color: #b3ffdc;user-select: none;">{{ analyzed_keymap }}</a>
+            <a class="keymaps__link_selected">{{ analyzed_keymap }}</a>
           {% endif %}
         </div>
 
+        <!--endregion -->
+
         <!--region Форма для загрузки keymap для выбранной программы-->
         {% if prog_selected %}
-          <form id="upload" action="{% url 'keymap_analise' slug=prog_selected %}" method="post"
-                enctype="multipart/form-data">
+          <form
+                  class="keymaps__uploadForm"
+                  id="upload"
+                  action="{% url 'keymap_analise' slug=prog_selected %}"
+                  method="post"
+                  enctype="multipart/form-data">
+
             {% csrf_token %}
             <fieldset>
               <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000"/>
               <div>
-                <label for="fileselect">Загрузить keymap-файл</label>
-                <input type="file" id="fileselect" name="file"/>
-                {#                <div id="filedrag">#}
-                {#                  <img src="{% static 'kmap/i/xml-file.png' %}" name="Анализ kmap"#}
-                {#                       alt="Анализ kmap" style="height:25px; vertical-align: middle;"/>#}
-                {#                  Или перетащите сюда#}
-                {#                </div>#}
+                <label class="keymaps__uploadForm_label" for="fileSelect">Загрузить keymap-файл</label>
+                <input type="file" id="fileSelect" name="file"/>
               </div>
               <div id="messages"></div>
-              <div id="submitbutton">
+              <div id="submitButton">
                 <button id="keymapfilebutton" type="submit">Отобразить keymap</button>
               </div>
             </fieldset>
           </form>
         {% endif %}
         <!--endregion-->
-
       </div>
+
     </div>
+    <!--endregion -->
 
+    <!--region Блок настройки отображаемых на клавишу модификаторов -->
     {% include "kmap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell" %}
-
+    <!--endregion -->
 
   </header>
 
   <div class="content">
     {% block content %}{% endblock content %}
   </div>
+
 </div>
 
+<!--region Скрипты -->
 
+<!--region Библиотеки, реализующие перетаскивание на странице-->
 <link href="{% static 'kmap/css/dragula.min.css' %}" rel="stylesheet"/>
 <script src="{% static 'kmap/js/dragula.js' %}"></script>
-<script src="{% static 'kmap/js/main.js' %}"></script>
+<!--endregion-->
+
+<!-- Библиотека для динамического создания slug-поля, при добавлении программы -->
 <script src="{% static 'kmap/js/urlify.js' %}"></script>
+
+<!--region Библиотека подсветки синтаксиса xml-->
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!--endregion-->
+
+<script src="{% static 'kmap/js/main.js' %}"></script>
+{#<script src="{% static 'kmap/js/dynamDOM.js' %}"></script>#}
+
+<!--endregion -->
+
 </body>
 
 </html>
