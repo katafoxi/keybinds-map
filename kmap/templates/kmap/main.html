@@ -3,10 +3,21 @@
 {% load keymap_tags %}
 
 {% block content %}
+  <pre><code class="language-xml">
 
+  &lt;keymap version="1" name="Empty"&gt;
+    &lt;action id="$Redo"&gt;
+      &lt;keyboard-shortcut first-keystroke="shift ctrl Z"/&gt;
+      &lt;keyboard-shortcut first-keystroke="shift alt BACK_SPACE"/&gt;
+    &lt;/action&gt;
+  &lt;/keymap&gt;
+  </code></pre>
+
+  <!--region Блок UserGuide при невыбранной программе-->
   {% if prog_selected == 0 %}
-    <div class="guide">
-      <div>
+    <div class="userGuide">
+      <!--region Левая колонка -->
+      <div class="userGuide__Item">
         <h2 style="text-align: center"> Про что этот сайт?</h2>
 
         <p>
@@ -21,17 +32,20 @@
              style="width:100% ">
 
         <p>Умножаем скриншот еще на 10, и получается огромных размеров список в котором очень просто утонуть, и очень
-          сложно разобраться.
-          Как следствие, отсутствие системности/удобства/логичности назначенных комбинаций.
+           сложно разобраться.
+           Как следствие, отсутствие системности/удобства/логичности назначенных комбинаций.
         </p>
       </div>
-      <div>
+      <!--endregion -->
+
+      <!--region Правая колонка-->
+      <div class="userGuide__Item">
         <h2 style="text-align: center"> Предлагаемая модель взаимодействия:</h2>
         <ul>
           <li>Выбираем программу</li>
           <li>Загружаешь свой keymap-файл для программы.</li>
           <li>keymap-файл анализируется и команды программы распределяются по сетке клавиатуры в соответствии
-            с назначенными на них комбинациями.
+              с назначенными на них комбинациями.
           </li>
           <img src="https://user-images.githubusercontent.com/83884504/178106341-3d7b71cf-f338-422d-a358-b421f37097ab.png"
                style="max-width:100%; max-height:130px">
@@ -39,33 +53,37 @@
           <li>Команды без комбинаций накапливаются в пуле команд.</li>
 
           <li>Перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в
-            удобное/логичное положение.
+              удобное/логичное положение.
           </li>
 
           <li>После настройки генерируется keymap-файл с нужными/удобными комбинациями.</li>
 
           <li>Чтобы запоминание не было долгим и мучительным, распечатываем keymap и определяем его на видное место
-            рядом с монитором.
+              рядом с монитором.
           </li>
         </ul>
       </div>
+      <!--endregion -->
     </div>
   {% endif %}
+  <!--endregion -->
 
   {% if error_message %}
     <h1>{{ error_message }}</h1>
   {% endif %}
 
-  <!--region Пул команд, на которые не назначены комбинации-->
+  <!--region Блок со многоколоночным списком действий, на которые не назначены комбинации-->
   <div class="actionIcons droppable">
-    {% if prog_selected == 0 %}
-      <div class="">
-        <img class="icons" id="ball" src="{% static 'kmap/i/ball.svg' %}">
-      </div>
-    {% endif %}
 
+    <!--region Если программа не выбрана, показываем футбольный мячик-->
+    {% if prog_selected == 0 %}
+      <div class=""><img class="icons" id="ball" src="{% static 'kmap/i/ball.svg' %}"></div>
+    {% endif %}
+    <!--endregion -->
+
+    <!--region Если программа выбрана, показываем действия, на которые не назначены комбинации-->
     {% for action in acts_wo_combs %}
-      <div class="action_repr">
+      <div class="action_repr" title="{{ action.descr }}">
         <div class="descr">
           {% if action.icon %}
             <img class='icons' src="{{ action.icon.url }}"/>
@@ -74,34 +92,51 @@
         </div>
       </div>
     {% endfor %}
+    <!--endregion -->
+
   </div>
   <!--endregion-->
 
   <!--region Клавиатурная сетка, где каждая клавиша разделена на поля с модификаторами-->
-  <div id="keyboardGrid" class="keyboardGrid">
+  <div id="keyboardGrid" class="keyboard">
     {% for button_backname, mod_keys in k_buttons.items %}
       {% if mod_keys.front_name != '' %}
-        <div class="key_{{ button_backname }} char">
-          <div class="key brdr"> {{ mod_keys.front_name }}</div>
-          <div class="a_mod brdr abbr">a</div>
-          <div class="c_mod brdr abbr">c</div>
+        <div class="keyboard__button">
+          <div class="keyboard__buttonName brdr"> {{ mod_keys.front_name }}</div>
+          <div class="keyboard__alt brdr abbr">a</div>
+          <div class="keyboard__ctrl brdr abbr">c</div>
           <div class="s_mod brdr abbr">s</div>
           <div class="ac_mod brdr abbr">ca</div>
           <div class="as_mod brdr abbr">as</div>
           <div class="cs_mod brdr abbr">cs</div>
           <div class="acs_mod brdr abbr">cas</div>
-          <!--При изменении положения класса brdr, менять в JS-методе changeActionDescrBlockWidth -->
-          <div class="key_{{ button_backname }} push brdr droppable">{{ mod_keys.push }}</div>
-          <div class="key_{{ button_backname }} a brdr droppable">{{ mod_keys.a }}</div>
-          <div class="key_{{ button_backname }} c brdr droppable">{{ mod_keys.c }}</div>
-          <div class="key_{{ button_backname }} s brdr droppable">{{ mod_keys.s }}</div>
-          <div class="key_{{ button_backname }} ac brdr droppable">{{ mod_keys.ac }}</div>
-          <div class="key_{{ button_backname }} as brdr droppable">{{ mod_keys.as }}</div>
-          <div class="key_{{ button_backname }} cs brdr droppable">{{ mod_keys.cs }}</div>
-          <div class="key_{{ button_backname }} acs brdr droppable">{{ mod_keys.acs }}</div>
+
+          <div class="push brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="push">{{ mod_keys.push }}</div>
+
+          <div class="a brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="a"> {{ mod_keys.a }}</div>
+
+          <div class="c brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="c"> {{ mod_keys.c }}</div>
+
+          <div class="s brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="s">{{ mod_keys.s }}</div>
+
+          <div class="ac brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="ac">{{ mod_keys.ac }}</div>
+
+          <div class="as brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="as">{{ mod_keys.as }}</div>
+
+          <div class="cs brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="cs">{{ mod_keys.cs }}</div>
+
+          <div class="acs brdr droppable" data-button="{{ button_backname }}"
+               data-modkeys="acs">{{ mod_keys.acs }}</div>
         </div>
       {% else %}
-        <div class="key_{{ button_backname }} char"></div>
+        <div class="keyboard__button"></div>
       {% endif %}
     {% endfor %}
   </div>
@@ -131,7 +166,6 @@
   </style>
   <input type="button" class="button_save_keymap" id="button_save_keymap" value="Сохранить keymap">
 
-  </input>
 
 {% endblock content %}
 
