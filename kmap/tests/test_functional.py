@@ -26,7 +26,7 @@
 #
 #         # Видим нужный name
 #         self.assertIn('Выбор программы для редактора', self.driver.name)
-#         self.driver.find_element(by='id', value='keyboardGrid')
+#         self.driver.find_element(by='id', value='keyboard')
 #
 #
 #     def test_can_register(self):

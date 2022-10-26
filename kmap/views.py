@@ -1,19 +1,20 @@
+import io
 from typing import Dict
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import FileResponse, HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 from mypy.types import NoneType
 
-from conf.settings import MEDIA_ROOT
 from kmap.forms import (AddProgForm, LoginUserForm, RegisterForm)
 from kmap.keyboard import Keyboard
 from kmap.models import *
-from kmap.parsers import parse_keymap
+from kmap.keymap_handlers.pycharm import parse_keymap, get_keymap_xml_tree
 from kmap.utils import DataMixin
+from json import loads
 
 
 class Index(DataMixin, ListView):
@@ -47,9 +48,11 @@ class ShowProgActions(DataMixin, ListView):
         if len(keymaps) != 0:
             context["keymaps"] = keymaps
             if self.request.method == "POST":
+                standart_keymap = Keymap.objects.get(prog=slug, id=1).file.path
+                acts_with_combs = parse_keymap(standart_keymap)
                 user_keymap_file = self.request.FILES["file"]
                 user_keymap_name = user_keymap_file.name.split(".")[0]
-                acts_with_combs = parse_keymap(user_keymap_file)
+                acts_with_combs.update(parse_keymap(user_keymap_file))
                 context["analyzed_keymap"] = user_keymap_name
 
             else:
@@ -59,7 +62,7 @@ class ShowProgActions(DataMixin, ListView):
                 acts_with_combs = parse_keymap(keymap=path)
 
             without = [act for act in Action.objects.filter(prog=slug) if
-                       act.name not in acts_with_combs.keys()]
+                act.name not in acts_with_combs.keys()]
             context["acts_wo_combs"] = without
             k_buttons = Keyboard.get_filled_buttons(acts_with_combs, slug=slug)
             context["k_buttons"] = k_buttons
@@ -133,3 +136,14 @@ def contact(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1>Такой страницы пока нет</h1>")
+
+
+def keymap_saver(request, slug):
+    if request.method == 'POST':
+        body = loads(request.body)
+        if body:
+            keymap = get_keymap_xml_tree(keymap_name='vasya', **body)
+            buffer = io.BytesIO()
+            keymap.write(buffer, encoding="utf-8")
+            buffer.seek(0)
+            return FileResponse(buffer, as_attachment=True, filename='test.xml')

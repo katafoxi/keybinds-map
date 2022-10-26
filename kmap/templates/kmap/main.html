@@ -3,15 +3,6 @@
 {% load keymap_tags %}
 
 {% block content %}
-  <pre><code class="language-xml">
-
-  &lt;keymap version="1" name="Empty"&gt;
-    &lt;action id="$Redo"&gt;
-      &lt;keyboard-shortcut first-keystroke="shift ctrl Z"/&gt;
-      &lt;keyboard-shortcut first-keystroke="shift alt BACK_SPACE"/&gt;
-    &lt;/action&gt;
-  &lt;/keymap&gt;
-  </code></pre>
 
   <!--region Блок UserGuide при невыбранной программе-->
   {% if prog_selected == 0 %}
@@ -73,20 +64,20 @@
   {% endif %}
 
   <!--region Блок со многоколоночным списком действий, на которые не назначены комбинации-->
-  <div class="actionIcons droppable">
+  <div class="actionList droppable">
 
     <!--region Если программа не выбрана, показываем футбольный мячик-->
     {% if prog_selected == 0 %}
-      <div class=""><img class="icons" id="ball" src="{% static 'kmap/i/ball.svg' %}"></div>
+      <div class=""><img class="actionList_actionIcon" id="ball" src="{% static 'kmap/i/ball.svg' %}"></div>
     {% endif %}
     <!--endregion -->
 
     <!--region Если программа выбрана, показываем действия, на которые не назначены комбинации-->
     {% for action in acts_wo_combs %}
-      <div class="action_repr" title="{{ action.descr }}">
-        <div class="descr">
+      <div class="actionList__item" title="{{ action.descr }}">
+        <div class="actionList__repr">
           {% if action.icon %}
-            <img class='icons' src="{{ action.icon.url }}"/>
+            <img class='actionList_actionIcon' src="{{ action.icon.url }}"/>
           {% endif %}
           {{ action.short_name }}
         </div>
@@ -102,37 +93,37 @@
     {% for button_backname, mod_keys in k_buttons.items %}
       {% if mod_keys.front_name != '' %}
         <div class="keyboard__button">
-          <div class="keyboard__buttonName brdr"> {{ mod_keys.front_name }}</div>
-          <div class="keyboard__alt brdr abbr">a</div>
-          <div class="keyboard__ctrl brdr abbr">c</div>
-          <div class="s_mod brdr abbr">s</div>
-          <div class="ac_mod brdr abbr">ca</div>
-          <div class="as_mod brdr abbr">as</div>
-          <div class="cs_mod brdr abbr">cs</div>
-          <div class="acs_mod brdr abbr">cas</div>
+          <div class="keyboard__buttonName "> {{ mod_keys.front_name }}</div>
+          <div class="keyboard__a_mod  keyboard__modLabel">a</div>
+          <div class="keyboard__c_mod  keyboard__modLabel">c</div>
+          <div class="keyboard__s_mod  keyboard__modLabel">s</div>
+          <div class="keyboard__ac_mod  keyboard__modLabel">ca</div>
+          <div class="keyboard__as_mod  keyboard__modLabel">as</div>
+          <div class="keyboard__cs_mod  keyboard__modLabel">cs</div>
+          <div class="keyboard__acs_mod  keyboard__modLabel">cas</div>
 
-          <div class="push brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__push  droppable" data-button="{{ button_backname }}"
                data-modkeys="push">{{ mod_keys.push }}</div>
 
-          <div class="a brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__a  droppable" data-button="{{ button_backname }}"
                data-modkeys="a"> {{ mod_keys.a }}</div>
 
-          <div class="c brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__c  droppable" data-button="{{ button_backname }}"
                data-modkeys="c"> {{ mod_keys.c }}</div>
 
-          <div class="s brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__s  droppable" data-button="{{ button_backname }}"
                data-modkeys="s">{{ mod_keys.s }}</div>
 
-          <div class="ac brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__ac  droppable" data-button="{{ button_backname }}"
                data-modkeys="ac">{{ mod_keys.ac }}</div>
 
-          <div class="as brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__as  droppable" data-button="{{ button_backname }}"
                data-modkeys="as">{{ mod_keys.as }}</div>
 
-          <div class="cs brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__cs  droppable" data-button="{{ button_backname }}"
                data-modkeys="cs">{{ mod_keys.cs }}</div>
 
-          <div class="acs brdr droppable" data-button="{{ button_backname }}"
+          <div class="keyboard__acs  droppable" data-button="{{ button_backname }}"
                data-modkeys="acs">{{ mod_keys.acs }}</div>
         </div>
       {% else %}
@@ -142,30 +133,12 @@
   </div>
   <!--endregion-->
 
-  <style>
-      .button_save_keymap {
-          display: inline-block !important;
-          text-decoration: none !important;
-          background-color: #eaeaea !important;
-          color: #006089 !important;
-          border: 3px solid #006089 !important;
-          border-radius: 5px !important;
-          font-size: 12px !important;
-          padding: 15px 50px !important;
-          transition: all 0.8s ease !important;
-          user-select: none !important;
-      }
-
-      .button_save_keymap:hover {
-          text-decoration: none !important;
-          background-color: #006089 !important;
-          color: #ffeded !important;
-          border-color: #006089 !important;
-          user-select: none !important;
-      }
-  </style>
-  <input type="button" class="button_save_keymap" id="button_save_keymap" value="Сохранить keymap">
-
-
+  {% if prog_selected %}
+    <button type="button" class="button_download_keymap" id="button_download_keymap" value="">Скачать keymap</button>
+  {% endif %}
+  <script>
+      var csrftoken = '{{ csrf_token }}';
+      const url = '{% url "keymap_saver" prog_selected %}'
+  </script>
 {% endblock content %}
 

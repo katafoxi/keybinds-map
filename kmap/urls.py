@@ -15,4 +15,5 @@ urlpatterns = [
     path("prog/<slug:slug>/analise",
          ShowProgActions.as_view(), name="keymap_analise", ),
     path("addprog/", AddProgram.as_view(), name="add_prog"),
+    path("prog/<slug:slug>/savekeymap", keymap_saver, name="keymap_saver"),
 ]

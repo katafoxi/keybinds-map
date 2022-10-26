@@ -101,10 +101,16 @@
     <!--region Блок отображения и загрузки keymap-файлов -->
     <div class="header__item">
 
-      <p>
+      <p style="margin-bottom: 5px;">
         <span style="text-decoration: underline;">Шаг 2</span>
         Выберите файл keymap или загрузи свой для отображения
       </p>
+      {% if prog_selected %}
+        {% get_prog_keymap_info prog_selected as keymap_info %}
+        {% for keymap_path in keymap_info %}
+          <p class="keymaps__path">{{ keymap_path }}</p>
+        {% endfor %}
+      {% endif %}
       <div class="keymaps">
         <!--region Блок вывода keymap-файлов для выбранной программы-->
 
@@ -153,7 +159,30 @@
     <!--endregion -->
 
     <!--region Блок настройки отображаемых на клавишу модификаторов -->
-    {% include "kmap/subtable_sheme.html" with par0="subtableSheme" par1="Cell" par2="schemeSwitchCell" %}
+    <div class="header__item">
+      <span style="width:75px; display:inline-block; vertical-align: middle;">Настройте отображаемые модификаторы</span>
+      <span style="display:inline-block;vertical-align: top;">
+        <div class="settingUpModkeys">
+            <div class="keyboard__buttonName ">key</div>
+            <div class="keyboard__a_mod ">+Alt</div>
+            <div class="keyboard__c_mod ">+Ctrl</div>
+            <div class="keyboard__s_mod ">+Shift</div>
+            <div class="keyboard__ac_mod ">+Ctrl+Alt</div>
+            <div class="keyboard__as_mod">+Alt+Shift</div>
+            <div class="keyboard__cs_mod">+Ctrl+Shift</div>
+            <div class="keyboard__acs_mod">+Ctrl+Alt+Shift</div>
+
+            <div class="keyboard__push addSwitch " data-modkeys-class="keyboard__push"></div>
+            <div class="keyboard__a"></div>
+            <div class="keyboard__c"></div>
+            <div class="keyboard__s addSwitch" data-modkeys-class="keyboard__s"></div>
+            <div class="keyboard__ac addSwitch" data-modkeys-class="keyboard__ac"></div>
+            <div class="keyboard__as addSwitch" data-modkeys-class="keyboard__as"></div>
+            <div class="keyboard__cs addSwitch" data-modkeys-class="keyboard__cs"></div>
+            <div class="keyboard__acs addSwitch" data-modkeys-class="keyboard__acs"></div>
+        </div>
+    </span>
+    </div>
     <!--endregion -->
 
   </header>
@@ -175,10 +204,10 @@
 <script src="{% static 'kmap/js/urlify.js' %}"></script>
 
 <!--region Библиотека подсветки синтаксиса xml-->
-<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+{#<link rel="stylesheet"#}
+{#      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">#}
+{#<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>#}
+{#<script>hljs.highlightAll();</script>#}
 <!--endregion-->
 
 <script src="{% static 'kmap/js/main.js' %}"></script>

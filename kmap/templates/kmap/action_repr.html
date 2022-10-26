@@ -1,8 +1,11 @@
-<div class="{{ command.name }} action_repr" style="width: 15px;">
-  <div class="descr">
-      {% if command.icon %}
-        <img class='icons' src="{{ command.icon.url }}"/>
-      {% endif %}
-      {{ command.short_name }}
+<div class="actionList__item"
+     style="width: 15px;"
+     title="{{ action.descr }}"
+     data-name="{{ action.name }}">
+  <div  class="actionList__repr">
+    {% if action.icon %}
+      <img class='actionList_actionIcon' src="{{ action.icon.url }}"/>
+    {% endif %}
+    {{ action.short_name }}
   </div>
 </div>

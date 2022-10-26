@@ -1,7 +1,9 @@
+import io
 import pathlib
-import xml.etree.ElementTree as ElementTree
-from pprint import pprint
+import xml.etree.ElementTree as ET
 from typing import Dict
+
+from kmap.keymap_handlers.xml_utils import indent
 
 
 def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
@@ -15,7 +17,7 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
     @param keymap: example (r'D:/BFR.xml')
     @return: dict { '$Redo': {
                                 'back_space': 'as',
-                                 'z': 'cs'
+                                 'z': 'keyboard__cs'
                               },
                     'Back':   {
                                 'button4': 'push',
@@ -23,9 +25,9 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
                               },
     """
     if type(keymap) is str:
-        tree = ElementTree.parse(pathlib.Path(keymap))
+        tree = ET.parse(pathlib.Path(keymap))
     else:
-        tree = ElementTree.parse(keymap)
+        tree = ET.parse(keymap)
     ###############
     # example tree
     # <action id="EditorPreviousWord">
@@ -55,12 +57,40 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
                         mod_abbr = "push"
                     shortcuts.update({k_key: mod_abbr})
                     actions[action_name] = shortcuts
-    print(actions)
     return actions
 
 
-if __name__ == "__main__":
-    # print(get_commands_with_modifiers())
-    # pprint(parse_settings_file(r'D:/Windows.xml'))
+# SOURCE https://ru.stackoverflow.com/questions/1064514/%d0%9a%d0%b0%d0%ba
+# -%d1%81%d0%be%d0%b7%d0%b4%d0%b0%d1%82%d1%8c-xml-%d0%bd%d0%b0-python-%d0%b8
+# %d1%81%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d1%83%d1%8f-xml-etree-elementtree
+def get_keymap_xml_tree(keymap_name='test', **customized_actions):
+    """Создает и возвращает keymap-файл формата XML для программы PyCharm"""
 
-    pprint(parse_keymap(r"D:Empty.xml"))
+    root = ET.Element('keymap', version='1', name=keymap_name)
+    if customized_actions:
+        for action, combs in customized_actions.items():
+            action = ET.Element('action', id=action)
+            root.append(action)
+            for combo in combs:
+                if 'button' in combo.lower():
+                    ET.SubElement(
+                        action, 'mouse-shortcut', keystroke=combo
+                    )
+                else:
+                    ET.SubElement(
+                        action, 'keyboard-shortcut', first_keystroke=combo
+                    )
+    indent(root)
+
+    etree = ET.ElementTree(root)
+    # f = io.BytesIO()
+    # etree.write(f, encoding="utf-8")
+    # # print(f.getvalue().decode(encoding="utf-8"))
+    # keymap = open(f'{keymap_name}.xml', 'wb')
+    # etree.write(keymap, encoding="utf-8")
+    return etree
+
+
+if __name__ == '__main__':
+
+    get_keymap_xml_tree()

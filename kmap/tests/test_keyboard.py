@@ -43,12 +43,15 @@ class KeyboardTest(TestCase):
         )
         self.assertEqual(
             filled_buttons,
-            {'z': {'cs': '<div class="Redo action_repr" style="width: 15px;">\n'
-                         '  <div class="descr">\n'
-                         '      \n'
-                         '      Redo\n'
-                         '  </div>\n'
-                         '</div>',
-                'front_name': 'Z'}
-            }
+            {'z': {'front_name': 'Z',
+                'cs': '<div class="actionList__item"\n'
+                      '     style="width: 15px;"\n'
+                      '     title=""\n'
+                      '     data-name="Redo">\n'
+                      '  <div  class="actionList__repr">\n'
+                      '    \n'
+                      '    Redo\n'
+                      '  </div>\n'
+                      '</div>'}}
+
         )

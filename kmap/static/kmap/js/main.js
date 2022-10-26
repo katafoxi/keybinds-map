@@ -1,7 +1,7 @@
 window.onload = changeActionDescrBlockWidth
 onDragMaster();
 window.onresize = changeActionDescrBlockWidth;
-showFlipswiths();
+addFlipswitch();
 showOrHideModifiersRows();
 
 
@@ -25,88 +25,163 @@ function onDragMaster() {
 // };
 
 
-var sendButton = document.getElementById("button_save_keymap");
-sendButton.addEventListener("click", keymap_to_json);
+var dowloadKeymapButton = document.getElementById("button_download_keymap");
+dowloadKeymapButton.addEventListener("click", getCustomizeUserKeymap);
 
 
-function keymap_to_json() {
+function keymapToJSON() {
+    // let keymap = new Map()
+    let keymap = new Map()
+    let actions = document.getElementsByClassName('actionList__item')
 
-    let actions = document.getElementsByClassName('action_repr')
     for (let i = 0; i < actions.length; i++) {
         let action = actions[i];
-        if (action.parentNode.getAttribute('class').includes('key')) {
-            let action_name = action.getAttribute('class').split(' ')[0];
-            let shortcut = action.parentNode.getAttribute('class').split('brdr')[0];
-            console.log(action_name, shortcut);
+        if (action.parentNode.getAttribute('class').includes('keyboard')) {
+            let action_name = action.dataset.name;
+            let pressButton = action.parentNode.dataset.button.toUpperCase();
+            let mod_keys = unpackModKeys(action.parentNode.dataset.modkeys);
+
+            if (action_name in keymap) {
+                if (mod_keys) {
+                    keymap[action_name].push([mod_keys, pressButton].join(' '));
+                } else {
+                    keymap[action_name].push(pressButton);
+                }
+            } else {
+                if (mod_keys) {
+                    keymap[action_name] = [[mod_keys, pressButton].join(' ')];
+                } else {
+                    keymap[action_name] = [pressButton];
+                }
+            }
         }
     }
+    let json = JSON.stringify(keymap, null, 2);
+    // console.log(json);
+    return json;
+}
+
+async function request(url, data, csrftoken) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': csrftoken,
+        },
+        body: data,
+    })
+    // const result = await response.text()
+    const resp = await response
+    return resp
+}
+
+async function getCustomizeUserKeymap() {
+    // const url = '{% url "check_name_s" %}'
+    // const csrftoken = '{{ csrf_token }}'
+    const data = keymapToJSON();
+    const resp = await request(url, data, csrftoken)
+    keymapName = resp.headers.get('Content-Disposition').split('filename="')[1].slice(0, -1);
+    // let blob = new Blob(resp, {type: "text/xml"});
+    let link = document.createElement("a");
+    link.setAttribute("href", URL.createObjectURL(await resp.blob()));
+    link.setAttribute("download", name = keymapName);
+    link.click();
+}
+
+
+function unpackModKeys(mod_keys) {
+    switch (mod_keys) {
+        case 'a':
+            mod_keys = 'alt';
+            break;
+        case 'c':
+            mod_keys = 'ctrl';
+            break;
+        case 's':
+            mod_keys = 'shift';
+            break;
+        case 'ac':
+            mod_keys = 'ctrl alt';
+            break;
+        case 'as':
+            mod_keys = 'shift alt';
+            break;
+        case 'cs':
+            mod_keys = 'shift ctrl';
+            break;
+        case 'acs':
+            mod_keys = 'shift ctrl alt';
+            break;
+        case 'push':
+            mod_keys = '';
+            break
+    }
+    return mod_keys;
 }
 
 
 function changeActionDescrBlockWidth() {
-    let collectActionDescr = document.getElementsByClassName('action_repr');
-    // console.log(collectActionDescr)
+    let collectActionDescr = document.getElementsByClassName('actionList__item');
     for (let i = 0; i < collectActionDescr.length; i++) {
         let elem = collectActionDescr[i];
-        if (elem.parentNode.getAttribute('class').includes('brdr')) {
+        if (elem.parentNode.getAttribute('class').includes('keyboard')) {
             elem.style.width = '14px'
         }
-        if (elem.parentNode.getAttribute('class').includes('brdr')) {
+        if (elem.parentNode.getAttribute('class').includes('keyboard')) {
             elem.style.width = (elem.parentNode.offsetWidth - 4) + 'px';
         }
     }
 }
 
-function showFlipswiths() {
-    let collectionShemeSwitchCells = document.getElementsByClassName('schemeSwitchCell');
-    for (let i = 0; i < collectionShemeSwitchCells.length; i++) {
-        let elem = collectionShemeSwitchCells[i];
-
-        let flipswitchKey = '<div class="flipswitch">\
+function addFlipswitch() {
+    let where = document.getElementsByClassName('addSwitch');
+    for (let i = 0; i < where.length; i++) {
+        let flipswitch = '  <div class="flipswitch">\
                                 <input type="checkbox" name="flipswitch" class="flipswitch-cb" id="fs' + i + '" checked>\
                                 <label class="flipswitch-label" for="fs' + i + '">\
                                     <div class="flipswitch-inner"></div>\
                                     <div class="flipswitch-switch"></div>\
                                 </label>\
                             </div>'
-        elem.innerHTML = flipswitchKey;
+        where[i].innerHTML = flipswitch;
     }
 }
 
 
 function showOrHideModifiersRows() {
-    let collectionFlipswitchKeys = document.getElementsByClassName('flipswitch-cb');
-    for (let i = 0; i < collectionFlipswitchKeys.length; i++) {
-        let elem = collectionFlipswitchKeys[i];
+    let flipswitchKeys = document.getElementsByClassName('flipswitch-cb');
+    for (let i = 0; i < flipswitchKeys.length; i++) {
+        let elem = flipswitchKeys[i];
 
         elem.addEventListener("click", function () {
-            let modifierFromClassCell = elem.closest('.Cell').getAttribute('class').split(' ')[0];
+            let elementClassToChange = elem.parentNode.parentNode.dataset.modkeysClass;
             if (elem.checked) {
-                showModifiersRows(modifierFromClassCell);
-                modifierFromClassCell = modifierFromClassCell + '_mod'
-                showModifiersRows(modifierFromClassCell);
+                console.log(elementClassToChange)
+                showModifiersRows(elementClassToChange);
+                elementClassToChange = elementClassToChange + '_mod';
+                showModifiersRows(elementClassToChange);
             } else {
-                hideModifiersRows(modifierFromClassCell);
-                modifierFromClassCell = modifierFromClassCell + '_mod'
-                hideModifiersRows(modifierFromClassCell)
+                console.log('hide')
+                hideModifiersRows(elementClassToChange);
+                elementClassToChange = elementClassToChange + '_mod';
+                hideModifiersRows(elementClassToChange);
             }
         });
     }
 }
 
-function hideModifiersRows(modifier) {
-    let collectionModRow = document.getElementsByClassName(modifier);
-    for (let i = 1; i < collectionModRow.length; i++) {
-        let elem = collectionModRow[i];
-        elem.style.display = 'none';
+function hideModifiersRows(elementClassToChange) {
+    let elements = document.getElementsByClassName(elementClassToChange);
+    for (let i = 1; i < elements.length; i++) {
+        elements[i].style.display = 'none';
     }
 }
 
-function showModifiersRows(modifier) {
-    let collectionModRow = document.getElementsByClassName(modifier);
-    for (let i = 1; i < collectionModRow.length; i++) {
-        let elem = collectionModRow[i];
-        elem.style.display = '';
+function showModifiersRows(elementClassToChange) {
+    let elements = document.getElementsByClassName(elementClassToChange);
+    console.log(elements.length)
+    for (let i = 1; i < elements.length; i++) {
+        elements[i].style.display = 'block';
     }
 }
 
@@ -140,7 +215,7 @@ if (window.File && window.FileList && window.FileReader) {
 /* инициализация */
 function Init() {
     var fileselect = $id("fileselect"),
-        submitbutton = $id("submitbutton");
+        submitbutton = $id("submitButton");
     keymapfilebutton = $id('keymapfilebutton')
 
     /* выбор файла */

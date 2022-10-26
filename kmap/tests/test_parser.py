@@ -1,5 +1,5 @@
 from django.test import TestCase
-from kmap.parsers import parse_keymap
+from kmap.keymap_handlers.pycharm import parse_keymap
 
 
 class ParserTest(TestCase):
