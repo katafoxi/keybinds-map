@@ -44,6 +44,8 @@ class ShowProgActions(DataMixin, ListView):
         slug = self.kwargs["slug"]
         prog = Prog.objects.get(slug=slug)
         keymaps = Keymap.objects.filter(prog=slug)
+        if prog.is_bounded:
+            context['bouded_buttons'] = Keyboard.bounded_buttons
 
         if len(keymaps) != 0:
             context["keymaps"] = keymaps

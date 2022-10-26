@@ -102,17 +102,26 @@
           <div class="keyboard__cs_mod  keyboard__modLabel">cs</div>
           <div class="keyboard__acs_mod  keyboard__modLabel">cas</div>
 
-          <div class="keyboard__push  droppable" data-button="{{ button_backname }}"
-               data-modkeys="push">{{ mod_keys.push }}</div>
+          <!--Для текстовых редакторов ограничение комбинаций на "символ" или "Shift+символ" -->
+          {% if button_backname in bouded_buttons %}
+            <div class="keyboard__push keyboard__bounded_button" data-button="{{ button_backname }}"
+                 data-modkeys="push">{{ mod_keys.push }}</div>
+            <div class="keyboard__s  keyboard__bounded_button" data-button="{{ button_backname }}"
+                 data-modkeys="s">{{ mod_keys.s }}</div>
+
+          {% else %}
+            <div class="keyboard__push  droppable" data-button="{{ button_backname }}"
+                 data-modkeys="push">{{ mod_keys.push }}</div>
+            <div class="keyboard__s  droppable" data-button="{{ button_backname }}"
+                 data-modkeys="s">{{ mod_keys.s }}</div>
+
+          {% endif %}
 
           <div class="keyboard__a  droppable" data-button="{{ button_backname }}"
                data-modkeys="a"> {{ mod_keys.a }}</div>
 
           <div class="keyboard__c  droppable" data-button="{{ button_backname }}"
                data-modkeys="c"> {{ mod_keys.c }}</div>
-
-          <div class="keyboard__s  droppable" data-button="{{ button_backname }}"
-               data-modkeys="s">{{ mod_keys.s }}</div>
 
           <div class="keyboard__ac  droppable" data-button="{{ button_backname }}"
                data-modkeys="ac">{{ mod_keys.ac }}</div>

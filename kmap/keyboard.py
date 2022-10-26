@@ -26,7 +26,7 @@ class Keyboard:
 
         'Z', 'X', 'C', 'V', 'B',
         'N', 'M', ',<', '.>', '/?',
-        '🖰L', '🖰M', '🖰R', '←', '↓',
+        '🖰 L', '🖰M', '🖰R', '←', '↓',
         '→', '`~'
     ]
 
@@ -56,6 +56,31 @@ class Keyboard:
         'button1', 'button2', 'button3', 'left', 'down',
         'right', 'back_quote'
     ]
+
+    bounded_buttons = [
+        'divide',
+
+        '1', '2', '3', '4', '5',
+        '6', '7', '8', '9', '0',
+        'minus', 'equals', 'back_space',
+        'multiply',
+
+        'q', 'w', 'e', 'r', 't',
+        'y', 'u', 'i', 'o', 'p',
+        'open_bracket', 'close_bracket', 'back_slash', 'delete',
+        'subtract',
+
+        'a', 's', 'd', 'f', 'g',
+        'h', 'j', 'k', 'l', 'semicolon',
+        'quote', 'enter', 'tab',
+        'space', 'add',
+
+        'z', 'x', 'c', 'v', 'b',
+        'n', 'm', 'comma', 'period', 'slash',
+        'button1', 'button2', 'button3',
+        'back_quote'
+    ]
+
 
     @classmethod
     def get_empty_buttons(cls) -> dict:

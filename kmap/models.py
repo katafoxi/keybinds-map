@@ -22,6 +22,11 @@ class Prog(models.Model):
         help_text="Опишите, где  стандартное расположение keymap-файла",
     )
     site = models.URLField(max_length=250, verbose_name="Оф.сайт")
+    is_bounded = models.BooleanField(
+        default=False,
+        verbose_name='Ограничения для "символ" и "Shift+символ"',
+        help_text='Задействовать ограничения для текстовых редакторов?'
+    )
 
     def __str__(self):
         return self.name
