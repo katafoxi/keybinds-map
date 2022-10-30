@@ -103,17 +103,23 @@
           <div class="keyboard__acs_mod  keyboard__modLabel">cas</div>
 
           <!--Для текстовых редакторов ограничение комбинаций на "символ" или "Shift+символ" -->
-          {% if button_backname in bouded_buttons %}
+          {% if button_backname in bounded_buttons %}
             <div class="keyboard__push keyboard__bounded_button" data-button="{{ button_backname }}"
                  data-modkeys="push">{{ mod_keys.push }}</div>
             <div class="keyboard__s  keyboard__bounded_button" data-button="{{ button_backname }}"
                  data-modkeys="s">{{ mod_keys.s }}</div>
 
           {% else %}
-            <div class="keyboard__push  droppable" data-button="{{ button_backname }}"
-                 data-modkeys="push">{{ mod_keys.push }}</div>
-            <div class="keyboard__s  droppable" data-button="{{ button_backname }}"
-                 data-modkeys="s">{{ mod_keys.s }}</div>
+            {% if  button_backname != 'f1' %}
+              <div class="keyboard__push  droppable" data-button="{{ button_backname }}"
+                   data-modkeys="push">{{ mod_keys.push }}</div>
+              <div class="keyboard__s  droppable" data-button="{{ button_backname }}"
+                   data-modkeys="s">{{ mod_keys.s }}</div>
+            {% else %}
+              <div class="keyboard__push  keyboard__bounded_button" data-button="{{ button_backname }}"
+                   data-modkeys="push">💻🔒
+              </div>
+            {% endif %}
 
           {% endif %}
 
@@ -123,9 +129,14 @@
           <div class="keyboard__c  droppable" data-button="{{ button_backname }}"
                data-modkeys="c"> {{ mod_keys.c }}</div>
 
-          <div class="keyboard__ac  droppable" data-button="{{ button_backname }}"
-               data-modkeys="ac">{{ mod_keys.ac }}</div>
-
+          {% if button_backname == "delete" %}
+            <div class="keyboard__ac keyboard__bounded_button " data-button="{{ button_backname }}"
+                 data-modkeys="ac">💻🔒
+            </div>
+          {% else %}
+            <div class="keyboard__ac  droppable" data-button="{{ button_backname }}"
+                 data-modkeys="ac">{{ mod_keys.ac }}</div>
+          {% endif %}
           <div class="keyboard__as  droppable" data-button="{{ button_backname }}"
                data-modkeys="as">{{ mod_keys.as }}</div>
 
@@ -142,12 +153,13 @@
   </div>
   <!--endregion-->
 
-  {% if prog_selected %}
+  {% if prog_selected and not error_message %}
     <button type="button" class="button_download_keymap" id="button_download_keymap" value="">Скачать keymap</button>
+    <script>
+        var csrftoken = '{{ csrf_token }}';
+        const url = '{% url "keymap_saver" prog_selected.slug %}'
+    </script>
   {% endif %}
-  <script>
-      var csrftoken = '{{ csrf_token }}';
-      const url = '{% url "keymap_saver" prog_selected %}'
-  </script>
+
 {% endblock content %}
 

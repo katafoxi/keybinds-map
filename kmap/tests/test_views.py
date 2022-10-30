@@ -166,6 +166,7 @@ class ShowProgActionsTest(TestCase):
             pk=1,
             name='testprog',
             slug='testprog',
+            is_bounded=True
         )
         Action.objects.create(
             pk=1,
@@ -243,7 +244,7 @@ class ShowProgActionsTest(TestCase):
         )
 
     def test_main_page_correct_context_with_current_program(self):
-        Prog.objects.create(
+        prog=Prog.objects.create(
             pk=2,
             name='prog_wo_keymap',
             slug='prog_wo_keymap',
@@ -256,4 +257,4 @@ class ShowProgActionsTest(TestCase):
         self.assertEqual(
             resp.context.get("error_message"),
             'Поддержка программы prog_wo_keymap пока отсутствует.')
-        self.assertEqual(resp.context.get("prog_selected"), 'prog_wo_keymap')
+        self.assertEqual(resp.context.get("prog_selected"), prog)

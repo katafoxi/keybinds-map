@@ -21,7 +21,7 @@ class Keyboard:
 
         'A', 'S', 'D', 'F', 'G',
         'H', 'J', 'K', 'L', ';:',
-        '„ “', '☰', '⏎', '↹', '↑',  # ''- дыра в сетке клавиатуры
+        '„ “', '☰', '⏎', '↹', '↑',
         '🚀', 'N+',
 
         'Z', 'X', 'C', 'V', 'B',
@@ -81,7 +81,6 @@ class Keyboard:
         'back_quote'
     ]
 
-
     @classmethod
     def get_empty_buttons(cls) -> dict:
         """
@@ -95,11 +94,12 @@ class Keyboard:
         return keyboard_keys
 
     @staticmethod
-    def get_filled_buttons(acts_with_combs: dict, slug: str) -> dict:
+    def get_filled_buttons(all_acts_db, acts_with_combs: dict, slug: str) -> dict:
         """
         Функция возвращает результат заполнения 'кнопок клавиатуры'
         командами, в соответствии с комбинациями
 
+        @param all_acts_db: queryset of all acts db
         @param acts_with_combs: assigned commands after parse settings file
         @param slug: prog slug
         @return: dict {'f1': {
@@ -112,21 +112,18 @@ class Keyboard:
                             },...
         """
         k_buttons = Keyboard.get_empty_buttons()
-
+        actions = {act.name: act for act in all_acts_db}
         for action_name, combs in acts_with_combs.items():
             for button, mod_keys in combs.items():
                 if button in k_buttons:
-                    actions = Action.objects.filter(
-                        prog=slug, name=action_name)
-                    if len(actions) != 0:
-                        for action in actions:
-                            # рендер шаблона action_repr.html находится здесь,
-                            # чтобы не вводить массовые проверки на наличие
-                            # команды в шаблоне main.html
-                            template = loader.get_template(
-                                template_name='kmap/action_repr.html')
-                            action_repr = template.render({'action': action})
-                            k_buttons[button].update({mod_keys: action_repr})
+                    # рендер шаблона action_repr.html находится здесь,
+                    # чтобы не вводить массовые проверки на наличие
+                    # команды в шаблоне main.html
+                    template = loader.get_template(
+                        template_name='kmap/action_repr.html')
+                    action_repr = template.render(
+                        {'action': actions[action_name]})
+                    k_buttons[button].update({mod_keys: action_repr})
                 else:
-                    print(button)
+                    print(f"Неучтенная клавиша {button}")
         return k_buttons

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'kmap.apps.KeymapConfig',
-    # 'debug_toolbar',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'conf.urls'
@@ -92,6 +92,7 @@ DATABASES = {
         'PASSWORD': '123456789@^{',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        'CONN_MAX_AGE': 60,
         'TEST': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'testkmap',

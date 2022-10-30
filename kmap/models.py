@@ -21,11 +21,12 @@ class Prog(models.Model):
         verbose_name="Обычное расположение keymap-файлa",
         help_text="Опишите, где  стандартное расположение keymap-файла",
     )
-    site = models.URLField(max_length=250, verbose_name="Оф.сайт")
+    site = models.URLField(max_length=250, verbose_name="Официальный сайт")
     is_bounded = models.BooleanField(
         default=False,
         verbose_name='Ограничения для "символ" и "Shift+символ"',
-        help_text='Задействовать ограничения для текстовых редакторов?'
+        help_text='Задействовать ограничения возможных комбинаций '
+                  'для текстовых редакторов?'
     )
 
     def __str__(self):
@@ -35,6 +36,9 @@ class Prog(models.Model):
         return reverse(
             "keymap", kwargs={"slug": str(self.slug).lower(), "id": 1}
         )
+
+    def get_keymap_info(self):
+        return self.keymap_info.split('$separator$')
 
     class Meta:
         verbose_name = "Поддерживаемые программы"
@@ -94,10 +98,11 @@ class Keymap(models.Model):
         User, on_delete=models.CASCADE,
         verbose_name='Владелец keymap-файла')
 
+
     def get_absolute_url(self):
         return reverse(
             "keymap",
-            kwargs={"slug": str(self.prog).lower(), "id": self.pk})
+            kwargs={"slug": self.prog.slug, "id": self.pk})
 
     class Meta:
         unique_together = ['prog', 'owner', 'name']

@@ -9,6 +9,9 @@ class ProgModelTest(TestCase):
             pk=1,
             name='Testprog',
             slug='testprog',
+            keymap_info="keymap расположена по адресу",
+            site='testprog.com',
+            is_bounded=True
         )
 
     def test_name_label(self):
@@ -33,6 +36,27 @@ class ProgModelTest(TestCase):
         max_length = prog._meta.get_field('slug').max_length
         self.assertEquals(max_length, 100)
 
+    def test_site_max_length(self):
+        prog = Prog.objects.get(id=1)
+        max_length = prog._meta.get_field('site').max_length
+        self.assertEquals(max_length, 250)
+
+    def test_site_verbose_name(self):
+        prog = Prog.objects.get(id=1)
+        verbose_name = prog._meta.get_field('site').verbose_name
+        self.assertEquals(verbose_name, 'Официальный сайт')
+
+    def test_is_bounded(self):
+        prog = Prog.objects.get(id=1)
+        field_label = prog._meta.get_field('is_bounded').verbose_name
+        self.assertEquals(
+            field_label, 'Ограничения для "символ" и "Shift+символ"')
+        field_help_text = prog._meta.get_field('is_bounded').help_text
+        self.assertEquals(
+            field_help_text,
+            'Задействовать ограничения возможных комбинаций для текстовых '
+            'редакторов?')
+
     def test_get_absolute_url(self):
         prog = Prog.objects.get(id=1)
         self.assertEquals(prog.get_absolute_url(), '/prog/testprog/1')
@@ -50,7 +74,6 @@ class ActionModelTest(TestCase):
             name='testprog2',
             slug='testprog2',
         )
-        prog.save()
         action = Action.objects.create(
             pk=1,
             prog=prog,

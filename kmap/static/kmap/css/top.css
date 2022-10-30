@@ -353,7 +353,7 @@ header {
 .keyboard__bounded_button {
     background: rgb(255, 255, 255);
     background: linear-gradient(
-            90deg, rgba(255, 255, 255, 0.158) 0%, rgba(243, 180, 180, 0.21) 50%, rgba(255, 255, 255, 0.211) 100%);
+            90deg, rgba(255, 255, 255, 0.158) 0%, rgba(246, 203, 203, 0.21) 50%, rgba(255, 255, 255, 0.211) 100%);
 }
 
 .keyboard__push {

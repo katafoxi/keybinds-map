@@ -36,8 +36,10 @@ class KeyboardTest(TestCase):
         self.assertEqual(button, result)
 
     def test_get_filled_buttons(self):
+        all_acts = list(Action.objects.filter(prog='testprog'))
         acts_with_combs = {'Redo': {'z': 'cs'}, }  # 'cs'- Ctrl+Shift
         filled_buttons = Keyboard.get_filled_buttons(
+            all_acts_db=all_acts,
             acts_with_combs=acts_with_combs,
             slug='testprog'
         )

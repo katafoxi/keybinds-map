@@ -1,4 +1,5 @@
 import io
+from json import loads
 from typing import Dict
 
 from django.contrib.auth import login, logout
@@ -11,10 +12,9 @@ from mypy.types import NoneType
 
 from kmap.forms import (AddProgForm, LoginUserForm, RegisterForm)
 from kmap.keyboard import Keyboard
+from kmap.keymap_handlers.pycharm import get_keymap_xml_tree, parse_keymap
 from kmap.models import *
-from kmap.keymap_handlers.pycharm import parse_keymap, get_keymap_xml_tree
 from kmap.utils import DataMixin
-from json import loads
 
 
 class Index(DataMixin, ListView):
@@ -42,39 +42,45 @@ class ShowProgActions(DataMixin, ListView):
     def get_context_data(self, **kwargs) -> Dict[str, NoneType]:
         context = super().get_context_data(**kwargs)
         slug = self.kwargs["slug"]
-        prog = Prog.objects.get(slug=slug)
-        keymaps = Keymap.objects.filter(prog=slug)
-        if prog.is_bounded:
-            context['bouded_buttons'] = Keyboard.bounded_buttons
+        prog = Prog.objects.get(slug=slug, )
+        keymaps = Keymap.objects.select_related('prog').filter(prog=slug)
 
         if len(keymaps) != 0:
-            context["keymaps"] = keymaps
+            all_acts_db = Action.objects.filter(prog=slug)
+            standard_keymap = keymaps.get(id=1).file.path
+            acts_with_combs = parse_keymap(standard_keymap, all_acts_db)
             if self.request.method == "POST":
-                standart_keymap = Keymap.objects.get(prog=slug, id=1).file.path
-                acts_with_combs = parse_keymap(standart_keymap)
                 user_keymap_file = self.request.FILES["file"]
                 user_keymap_name = user_keymap_file.name.split(".")[0]
-                acts_with_combs.update(parse_keymap(user_keymap_file))
+                acts_from_keymap = parse_keymap(user_keymap_file, all_acts_db)
                 context["analyzed_keymap"] = user_keymap_name
-
             else:
                 keymap_id = self.kwargs.get("id", 0)
-                context["current_keymap"] = keymap_id
-                path = Keymap.objects.get(prog=slug, id=keymap_id).file.path
-                acts_with_combs = parse_keymap(keymap=path)
-
-            without = [act for act in Action.objects.filter(prog=slug) if
+                current_keymap = keymaps.get(id=keymap_id)
+                path = current_keymap.file.path
+                context["current_keymap"] = current_keymap
+                acts_from_keymap = parse_keymap(
+                    keymap=path, all_acts_db=all_acts_db)
+            acts_with_combs.update(acts_from_keymap)
+            context["keymaps"] = keymaps
+            without = [act for act in all_acts_db if
                 act.name not in acts_with_combs.keys()]
             context["acts_wo_combs"] = without
-            k_buttons = Keyboard.get_filled_buttons(acts_with_combs, slug=slug)
+            k_buttons = Keyboard.get_filled_buttons(
+                all_acts_db=all_acts_db, acts_with_combs=acts_with_combs,
+                slug=slug)
             context["k_buttons"] = k_buttons
+            if prog.is_bounded:
+                context['bounded_buttons'] = Keyboard.bounded_buttons
         else:
             err = f"Поддержка программы {prog.name} пока отсутствует."
             context["error_message"] = err
             context["k_buttons"] = Keyboard.get_empty_buttons()
 
         context.update(
-            self.get_user_context(title=prog.name, prog_selected=slug))
+            self.get_user_context(
+                title=prog.name,
+                prog_selected=prog))
         return context
 
 

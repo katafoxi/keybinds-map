@@ -4,9 +4,10 @@ import xml.etree.ElementTree as ET
 from typing import Dict
 
 from kmap.keymap_handlers.xml_utils import indent
+from kmap.models import Action
 
 
-def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
+def parse_keymap(keymap, all_acts_db) -> Dict[str, Dict[str, str]]:
     """
     Функция парсит keymap-файл(файл с настройками комбинаций)
     и возвращает словарь вида:
@@ -14,6 +15,7 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
                  клавиша2: код_модификатор,...
                  клавиша3: код_модификатор},...}
 
+    @param all_acts_db: queryset со всеми action из БД
     @param keymap: example (r'D:/BFR.xml')
     @return: dict { '$Redo': {
                                 'back_space': 'as',
@@ -37,27 +39,37 @@ def parse_keymap(keymap) -> Dict[str, Dict[str, str]]:
 
     root = tree.getroot()
     actions = {}
+    actions_names_db = [act.name for act in all_acts_db]
+    not_found_commands = 0
     for action in root:
         action_name = action.attrib['id']
-        shortcuts = {}
-        for combo in action:
-            # не учитывать комбинации вида
-            # <keyboard-shortcut first-keystroke="ctrl MULTIPLY"
-            # second-keystroke="2"/>
-            if len(combo.attrib.keys()) == 1:
-                for subkey in combo.attrib.keys():
-                    # "shift ctrl Z"
-                    mod_keys_with_key = combo.attrib.get(subkey).lower()
-                    *mod_keys, k_key = mod_keys_with_key.split()
-                    if len(mod_keys) != 0:
-                        mod_abbr = "".join(
-                            [mod_key[0] for mod_key in sorted(mod_keys)])
-                        # [shift, ctrl] => 'cs'
-                    else:
-                        mod_abbr = "push"
-                    shortcuts.update({k_key: mod_abbr})
-                    actions[action_name] = shortcuts
+        if action_name in actions_names_db:
+            shortcuts = {}
+            for combo in action:
+                # не учитывать комбинации вида
+                # <keyboard-shortcut first-keystroke="ctrl MULTIPLY"
+                # second-keystroke="2"/>
+                if len(combo.attrib.keys()) == 1:
+                    for subkey in combo.attrib.keys():
+                        # "shift ctrl Z"
+                        mod_keys_with_key = combo.attrib.get(subkey).lower()
+                        *mod_keys, k_key = mod_keys_with_key.split()
+                        if len(mod_keys) != 0:
+                            mod_abbr = "".join(
+                                [mod_key[0] for mod_key in sorted(mod_keys)])
+                            # [shift, ctrl] => 'cs'
+                        else:
+                            mod_abbr = "push"
+                        shortcuts.update({k_key: mod_abbr})
+                        actions[action_name] = shortcuts
+        else:
+            not_found_commands += 1
+    print(f'{not_found_commands=}')
     return actions
+
+
+def get_existing_actions():
+    return
 
 
 # SOURCE https://ru.stackoverflow.com/questions/1064514/%d0%9a%d0%b0%d0%ba

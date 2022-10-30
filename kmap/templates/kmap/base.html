@@ -70,9 +70,8 @@
       <div class="progList">
         <p><span style="text-decoration: underline;">Шаг 1</span> Выберите программу:</p>
 
-        {% get_program_list as progs %}
         {% for prog in progs %}
-          {% if prog.slug == prog_selected %}
+          {% if prog == prog_selected %}
             <img class='progList__progIcon_selected' src="{{ prog.icon.url }}" title="{{ prog.name }}"
                  alt="{{ prog.name }}"/>
           {% else %}
@@ -106,8 +105,7 @@
         Выберите файл keymap или загрузи свой для отображения
       </p>
       {% if prog_selected %}
-        {% get_prog_keymap_info prog_selected as keymap_info %}
-        {% for keymap_path in keymap_info %}
+        {% for keymap_path in prog_selected.get_keymap_info %}
           <p class="keymaps__path">{{ keymap_path }}</p>
         {% endfor %}
       {% endif %}
@@ -116,7 +114,7 @@
 
         <div class="keymaps__list">
           {% for keymap in keymaps %}
-            {% if keymap.id == current_keymap %}
+            {% if keymap == current_keymap %}
               <a class="keymaps__link_selected">{{ keymap.name }}</a>
             {% else %}
               <a class="keymaps__link" href="{{ keymap.get_absolute_url }}">{{ keymap.name }}</a>
@@ -134,7 +132,7 @@
           <form
                   class="keymaps__uploadForm"
                   id="upload"
-                  action="{% url 'keymap_analise' slug=prog_selected %}"
+                  action="{% url 'keymap_analise' slug=prog_selected.slug %}"
                   method="post"
                   enctype="multipart/form-data">
 
