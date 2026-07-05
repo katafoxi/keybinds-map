@@ -1,34 +1,63 @@
-# keybinds map
+# Keybinds Map (browser-first SPA)
 
-![2022-07-15 22_46_06-Редактор комбинаций pycharm](https://user-images.githubusercontent.com/83884504/179300137-c64d232e-2299-4341-9281-ca6717570bf7.png)
+Визуальный редактор keymap для PyCharm. Файлы обрабатываются **локально в браузере** — на сервер ничего не отправляется.
 
+## Development (SPA)
 
+```bash
+cd web
+npm install
+npm run dev
+```
 
-Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. 
-Также можно применять редактор, как способ визуализации существующих штатных комбинаций в выбранной программе.
-Как обычно выглядит настройка keymap
+Откройте http://127.0.0.1:5173
 
-![image](https://user-images.githubusercontent.com/83884504/178107126-2b3efba1-7838-4998-9c79-ecc5332d4f55.png)
+### Тесты и сборка
 
-Умножаем скриншот еще на 10, и получается огромных размеров список в котором очень просто утонуть, и очень сложно разобраться. 
-Соответственно о какой-либо системности или удобстве или логичности речи не идет. 
+```bash
+cd web
+npm test
+npm run build
+npm run preview
+```
 
-Предполагаемая модель взаимодействия:
-1) Загружаешь свой keymap-файл для программы.
-2) keymap-файл анализируется и команды распределяются по сетке клавиатуры в соответствии со своими назначенными комбинациями.
+### Каталог команд и иконки
 
-![image](https://user-images.githubusercontent.com/83884504/178106341-3d7b71cf-f338-422d-a358-b421f37097ab.png)
+После клонирования или изменения fixtures:
 
-3)Перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение.
-![image](https://user-images.githubusercontent.com/83884504/178107186-2d3eb15e-05fe-4f58-b84b-4920b782c5a3.png) Например на эту команду хочу комбинацию (Shift + 4)
+```bash
+node scripts/export-catalog.mjs
+node scripts/sync-assets.mjs
+```
 
-4)После настройки генерируется keymap-файл с нужными/удобными комбинациями.
+## Legacy Django app
 
-5)Чтобы запоминание не было долгим и мучительным, распечатываем keymap и определяем его на видное место рядом с монитором.
+Старый серверный прототип в [`keymap/`](keymap/) и [`conf/`](conf/) сохранён для справки. Для основного сценария он **больше не нужен**.
 
-Например
+Запуск legacy-версии (опционально):
 
-![image](https://user-images.githubusercontent.com/83884504/178106960-82504b81-afb4-484c-ad4d-002c721423f1.png)
+```bash
+python3.12 -m venv .venv
+.venv/bin/pip install Django Pillow
+.venv/bin/python manage.py runserver
+```
 
+## Workflow
 
-6)profit
+1. Выберите PyCharm
+2. Загрузите `.xml` keymap (drag & drop или выбор файла)
+3. Перетащите команды по клавиатуре
+4. Скачайте обновлённый XML или сохраните профиль в IndexedDB
+5. Распечатайте шпаргалку (кнопка «Печать»)
+
+## Deploy
+
+GitHub Actions (`.github/workflows/web.yml`) запускает тесты и сборку SPA. Static deploy — GitHub Pages из `web/dist`.
+
+## Структура
+
+```
+web/           — новое client-only приложение (Vite + Svelte + TypeScript)
+keymap/        — legacy Django app
+scripts/       — утилиты миграции (export-catalog.mjs)
+```
