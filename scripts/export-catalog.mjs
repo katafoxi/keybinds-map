@@ -6,6 +6,7 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
 const fixturePath = resolve(root, 'fixtures/fixture_all.json');
 const outputPath = resolve(root, 'web/public/programs.json');
+const bundledOutputPath = resolve(root, 'web/src/lib/catalog/programs.json');
 const programIconsDir = resolve(root, 'web/public/i/program-icons');
 const sourceIconsDir = resolve(root, 'media/program_icons');
 const fallbackIcon = 'i/ball.svg';
@@ -52,7 +53,7 @@ for (const entry of fixture) {
       icon: resolveProgramIcon(entry.fields.icon),
       site: entry.fields.site,
       settingsFileInfo: entry.fields.settings_file_info ?? '',
-      supported: slug === 'pycharm',
+      supported: slug === 'pycharm' || slug === 'vscode',
     });
   }
 
@@ -78,11 +79,11 @@ programs.push({
   supported: true,
 });
 
-writeFileSync(
-  outputPath,
-  JSON.stringify({ programs, commands }, null, 2),
-  'utf-8',
-);
+const catalogJson = JSON.stringify({ programs, commands }, null, 2);
+
+writeFileSync(outputPath, catalogJson, 'utf-8');
+writeFileSync(bundledOutputPath, catalogJson, 'utf-8');
 
 console.log(`Wrote ${outputPath}`);
+console.log(`Wrote ${bundledOutputPath}`);
 console.log(`Programs: ${programs.length}, PyCharm commands: ${commands.pycharm?.length ?? 0}`);
