@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run prepare:assets && vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run --config vitest.config.mts",
