@@ -2,4 +2,27 @@
 /keybinds/conf/secretkey.py
 *.pic
 /.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# IDE / logs
+.idea/
+geckodriver.log
+
+# Django runtime data
+db.sqlite3
+
+# Node / frontend build
+web/node_modules/
+web/dist/
+
+# Generated frontend assets (copied from media/ via scripts/sync-assets.mjs)
+web/public/icons/
+web/public/i/program-icons/
+
+# Legacy media uploads stay out of git unless explicitly tracked
 /keybinds/media/
