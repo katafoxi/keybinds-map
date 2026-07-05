@@ -31,8 +31,18 @@ export function modifiersToCode(modifiersWithKey: string): Record<string, string
 }
 
 function normalizeKeyName(key: string): string {
-  return key.replace(/\s+/g, '_').toLowerCase();
+  const normalized = key.replace(/\s+/g, '_').toLowerCase();
+  return PYCHARM_KEY_ALIASES[normalized] ?? normalized;
 }
+
+/** PyCharm XML key tokens → keyboard layout backName (see layout.ts BUTTONS_BACK). */
+const PYCHARM_KEY_ALIASES: Record<string, string> = {
+  page_up: 'page up',
+  page_down: 'page down',
+  print_screen: 'print screen',
+  scroll_lock: 'scroll lock',
+  none3: 'None3',
+};
 
 export function parsePycharmKeymap(xml: string): ParsedCommands {
   return parsePycharmKeymapDetailed(xml).commands;
@@ -66,18 +76,12 @@ export function parsePycharmKeymapDetailed(xml: string): ParsePycharmResult {
     const parsedShortcuts: Record<string, string> = {};
 
     for (const shortcut of shortcuts) {
-      const attrs = Object.keys(shortcut);
-      if (attrs.length !== 1) {
-        if (attrs.includes('second-keystroke')) {
-          skippedChords += 1;
-        }
+      const keystroke = shortcut['first-keystroke'];
+      if (typeof keystroke !== 'string' || !keystroke.trim()) {
         continue;
       }
-
-      const [attrName] = attrs;
-      const keystroke = shortcut[attrName];
-      if (!keystroke || typeof keystroke !== 'string') {
-        continue;
+      if (shortcut['second-keystroke']) {
+        skippedChords += 1;
       }
 
       const mapped = modifiersToCode(keystroke);
@@ -104,7 +108,7 @@ export function parsePycharmKeymapDetailed(xml: string): ParsePycharmResult {
 }
 
 const KNOWN_KEY_PATTERN =
-  /^([a-z0-9_]+|f\d+|page_up|page_down|print_screen|scroll_lock|back_space|open_bracket|close_bracket|back_quote|button[123]|none3)$/;
+  /^([a-z0-9_ ]+|f\d+|page up|page down|print screen|scroll lock|back_space|open_bracket|close_bracket|back_quote|button[123]|None3)$/;
 
 function isKnownKeyName(key: string): boolean {
   return KNOWN_KEY_PATTERN.test(key) || key.length === 1;
