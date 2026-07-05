@@ -48,6 +48,8 @@ node scripts/export-catalog.mjs
 
 ## Deploy
 
+**Production:** https://katafoxi.github.io/keybinds-map/
+
 GitHub Actions ([`.github/workflows/web.yml`](.github/workflows/web.yml)) синхронизирует ассеты, запускает тесты и деплоит `web/dist` на GitHub Pages.
 
 ## Структура
