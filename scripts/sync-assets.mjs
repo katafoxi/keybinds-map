@@ -8,6 +8,10 @@ const root = resolve(scriptDir, '..');
 
 const copies = [
   {
+    from: resolve(root, 'media/pycharm_setting_files/1/Windows.xml'),
+    to: resolve(root, 'test-fixtures/Windows.xml'),
+  },
+  {
     from: resolve(root, 'media/pycharm_command_icons'),
     to: resolve(root, 'web/public/icons/pycharm'),
   },
@@ -26,6 +30,10 @@ const copies = [
   {
     from: resolve(root, 'assets/ui/favicon'),
     to: resolve(root, 'web/public/i/favicon'),
+  },
+  {
+    from: resolve(root, 'test-fixtures/Windows.xml'),
+    to: resolve(root, 'web/public/defaults/pycharm-windows.xml'),
   },
 ];
 
