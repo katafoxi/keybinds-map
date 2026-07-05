@@ -67,6 +67,23 @@ export type SavedProfile = {
   updatedAt: number;
 };
 
+export const PROFILE_SLOT_IDS = ['standard', 'custom1', 'custom2'] as const;
+export type ProfileSlotId = (typeof PROFILE_SLOT_IDS)[number];
+
+export const PROFILE_SLOT_LABELS: Record<ProfileSlotId, string> = {
+  standard: 'Стандартная',
+  custom1: 'Custom1',
+  custom2: 'Custom2',
+};
+
+export type ProfileSlotData = {
+  program: string;
+  xml: string;
+  updatedAt: number;
+};
+
+export type ProfileSlotsStore = Partial<Record<'custom1' | 'custom2', ProfileSlotData>>;
+
 export type KeyboardKey = {
   backName: string;
   frontName: string;
