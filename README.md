@@ -26,8 +26,8 @@ npm run preview
 После клонирования или изменения fixtures:
 
 ```bash
-node scripts/export-catalog.mjs
 node scripts/sync-assets.mjs
+node scripts/export-catalog.mjs
 ```
 
 ## Legacy Django app

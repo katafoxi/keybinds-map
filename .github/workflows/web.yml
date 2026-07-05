@@ -8,14 +8,17 @@ on:
       - master
     paths:
       - 'web/**'
+      - 'scripts/**'
+      - 'keymap/fixtures/**'
+      - 'media/**'
       - '.github/workflows/web.yml'
   pull_request:
     paths:
       - 'web/**'
-
-defaults:
-  run:
-    working-directory: web
+      - 'scripts/**'
+      - 'keymap/fixtures/**'
+      - 'media/**'
+      - '.github/workflows/web.yml'
 
 jobs:
   build:
@@ -29,13 +32,27 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
+      - name: Install Pillow for PyCharm icon conversion
+        run: pip install Pillow
+
+      - name: Sync static assets and command catalog
+        run: |
+          node scripts/sync-assets.mjs
+          node scripts/export-catalog.mjs
+          test -d web/public/icons/pycharm
+          test -f web/public/programs.json
+          test -f web/public/i/program-icons/PyCharm.png
+
       - name: Install dependencies
+        working-directory: web
         run: npm ci
 
       - name: Run tests
+        working-directory: web
         run: npm test
 
       - name: Build
+        working-directory: web
         run: npm run build
 
       - name: Upload dist artifact
@@ -46,7 +63,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/feat/browser-first-spa' || github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/feat/browser-first-spa' || github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     permissions:
       contents: read
