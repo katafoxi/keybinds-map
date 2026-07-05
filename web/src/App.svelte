@@ -10,11 +10,16 @@
   import ProfileManager from './components/ProfileManager.svelte';
 
   let catalog: ProgramCatalog | null = null;
+  let draftRestored = false;
+
+  $: hasBindings = Object.keys($keymap.bindings).length > 0;
+  $: showEmptyHint = !hasBindings && !draftRestored;
 
   onMount(async () => {
     const response = await fetch(assetUrl('programs.json'));
     catalog = (await response.json()) as ProgramCatalog;
     keymap.getState().setCatalog(catalog);
+    draftRestored = await keymap.getState().restoreDraft();
   });
 
   function handleBeforeUnload(event: BeforeUnloadEvent) {
@@ -65,14 +70,33 @@
   </header>
 
   <main class="content">
+    {#if showEmptyHint}
+      <section class="empty-hint no-print">
+        <strong>Шаг 2:</strong> загрузите .xml keymap (PyCharm) или .json (VS Code), чтобы увидеть команды на клавиатуре.
+      </section>
+    {/if}
+
+    {#if draftRestored && $keymap.dirty}
+      <section class="draft-banner no-print">
+        Восстановлен автосохранённый черновик.
+      </section>
+    {/if}
+
+    {#if $keymap.importWarnings.length > 0}
+      <section class="import-warnings no-print">
+        <h3>Примечания при импорте</h3>
+        <ul>
+          {#each $keymap.importWarnings as warning}
+            <li>{warning}</li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
+
     <section class="guide no-print">
       <div>
         <p>
-          Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой
-          в выбранную программу.
-        </p>
-        <p>
-          Перетаскивайте команды по сетке клавиатуры. Все файлы обрабатываются только в вашем браузере.
+          Редактор для визуализации и правки keymap. Все файлы обрабатываются только в вашем браузере.
         </p>
       </div>
     </section>
@@ -89,7 +113,7 @@
       <button type="button" on:click={exportXml}>Скачать XML</button>
       <button type="button" on:click={printKeymap}>Печать</button>
       {#if $keymap.dirty}
-        <span class="dirty-flag">Есть несохранённые изменения</span>
+        <span class="dirty-flag">Есть несохранённые изменения (автосохранение в браузере)</span>
       {/if}
     </div>
 
@@ -122,5 +146,42 @@
   .dirty-flag {
     color: #a65400;
     font-size: 12px;
+  }
+
+  .empty-hint,
+  .draft-banner {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-size: 13px;
+  }
+
+  .empty-hint {
+    background: #fff8e6;
+    border: 1px solid #fdc073;
+  }
+
+  .draft-banner {
+    background: #efffed;
+    border: 1px solid #14a421;
+  }
+
+  .import-warnings {
+    background: #fff3f3;
+    border: 1px solid #e0a0a0;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 12px;
+  }
+
+  .import-warnings h3 {
+    margin: 0 0 0.35rem;
+    font-size: 12px;
+  }
+
+  .import-warnings ul {
+    margin: 0;
+    padding-left: 1.2rem;
   }
 </style>

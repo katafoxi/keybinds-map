@@ -511,17 +511,42 @@ display:block;}
 }
 
 @media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
   .no-print {
     display: none !important;
   }
 
   body {
     margin: 0;
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .keyboardGrid {
     break-inside: avoid;
+    transform: scale(0.92);
+    transform-origin: top left;
+    width: 108%;
+  }
+
+  .char {
+    break-inside: avoid;
+  }
+
+  .command_description,
+  .descr {
+    font-size: 7px;
+    height: auto;
+    max-height: 12px;
+    overflow: hidden;
+  }
+
+  .icons {
+    width: 10px;
+    height: 10px;
   }
 
   .command_description:hover,

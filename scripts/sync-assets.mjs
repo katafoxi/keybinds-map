@@ -16,15 +16,15 @@ const copies = [
     to: resolve(root, 'web/public/i/program-icons'),
   },
   {
-    from: resolve(root, 'keymap/static/keymap/i/logo.png'),
+    from: resolve(root, 'assets/ui/logo.png'),
     to: resolve(root, 'web/public/i/logo.png'),
   },
   {
-    from: resolve(root, 'keymap/static/keymap/i/ball.svg'),
+    from: resolve(root, 'assets/ui/ball.svg'),
     to: resolve(root, 'web/public/i/ball.svg'),
   },
   {
-    from: resolve(root, 'keymap/static/keymap/i/favicon'),
+    from: resolve(root, 'assets/ui/favicon'),
     to: resolve(root, 'web/public/i/favicon'),
   },
 ];

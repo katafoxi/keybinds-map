@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..');
-const fixturePath = resolve(root, 'keymap/fixtures/fixture_all.json');
+const fixturePath = resolve(root, 'fixtures/fixture_all.json');
 const outputPath = resolve(root, 'web/public/programs.json');
 const programIconsDir = resolve(root, 'web/public/i/program-icons');
 const sourceIconsDir = resolve(root, 'media/program_icons');
@@ -38,15 +38,21 @@ function resolveProgramIcon(iconField) {
   return fallbackIcon;
 }
 
+const HIDDEN_PROGRAMS = new Set(['testprog', 'testprog0']);
+
 for (const entry of fixture) {
   if (entry.model === 'keymap.program') {
+    const slug = entry.fields.slug;
+    if (HIDDEN_PROGRAMS.has(slug)) {
+      continue;
+    }
     programs.push({
-      slug: entry.fields.slug,
+      slug,
       title: entry.fields.title,
       icon: resolveProgramIcon(entry.fields.icon),
       site: entry.fields.site,
       settingsFileInfo: entry.fields.settings_file_info ?? '',
-      supported: entry.fields.slug === 'pycharm',
+      supported: slug === 'pycharm',
     });
   }
 
@@ -62,6 +68,15 @@ for (const entry of fixture) {
     });
   }
 }
+
+programs.push({
+  slug: 'vscode',
+  title: 'VS Code',
+  icon: fallbackIcon,
+  site: 'https://code.visualstudio.com/',
+  settingsFileInfo: 'Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)',
+  supported: true,
+});
 
 writeFileSync(
   outputPath,

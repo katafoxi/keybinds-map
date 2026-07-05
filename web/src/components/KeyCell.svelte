@@ -7,6 +7,7 @@
   export let backName: string;
   export let frontName: string;
   export let bindings: Partial<Record<ModifierSlot, CommandRef>> = {};
+  export let slotVisible: (slot: ModifierSlot) => boolean = () => true;
 
   const slotLabels: Record<ModifierSlot, string> = {
     push: '',
@@ -30,8 +31,13 @@
     acs: 'acs',
   };
 
+  function slotId(slot: ModifierSlot): string {
+    return `${backName}:${slot}`;
+  }
+
   function handleDrop(event: DragEvent, slot: ModifierSlot) {
     event.preventDefault();
+    keymap.getState().setDropHighlight(null);
     const payload = readPayload(event);
     if (!payload) {
       return;
@@ -66,12 +72,21 @@
     }
   }
 
-  function allowDrop(event: DragEvent) {
+  function allowDrop(event: DragEvent, slot: ModifierSlot) {
     event.preventDefault();
+    keymap.getState().setDropHighlight(slotId(slot));
+  }
+
+  function clearHighlight() {
+    keymap.getState().setDropHighlight(null);
   }
 
   function hiddenStyle(slot: ModifierSlot): string {
-    return $keymap.modifierVisibility[slot] ? '' : 'display:none';
+    return slotVisible(slot) ? '' : 'display:none';
+  }
+
+  function highlightClass(slot: ModifierSlot): string {
+    return $keymap.dropHighlight === slotId(slot) ? 'drop-target' : '';
   }
 </script>
 
@@ -86,11 +101,12 @@
 
   {#each MODIFIER_SLOTS as slot}
     <div
-      class="{slotClass[slot]} brdr droppable"
+      class="{slotClass[slot]} brdr droppable {highlightClass(slot)}"
       style={hiddenStyle(slot)}
       role="button"
       tabindex="0"
-      on:dragover={allowDrop}
+      on:dragover={(event) => allowDrop(event, slot)}
+      on:dragleave={clearHighlight}
       on:drop={(event) => handleDrop(event, slot)}
     >
       {#if bindings[slot]}
@@ -103,3 +119,10 @@
     </div>
   {/each}
 </div>
+
+<style>
+  :global(.drop-target) {
+    outline: 2px solid #14a421;
+    background: rgba(20, 164, 33, 0.15) !important;
+  }
+</style>

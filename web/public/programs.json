@@ -17,20 +17,12 @@
       "supported": false
     },
     {
-      "slug": "testprog",
-      "title": "testprog",
+      "slug": "vscode",
+      "title": "VS Code",
       "icon": "i/ball.svg",
-      "site": "",
-      "settingsFileInfo": "",
-      "supported": false
-    },
-    {
-      "slug": "testprog0",
-      "title": "testprog0",
-      "icon": "i/ball.svg",
-      "site": "",
-      "settingsFileInfo": "",
-      "supported": false
+      "site": "https://code.visualstudio.com/",
+      "settingsFileInfo": "Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)",
+      "supported": true
     }
   ],
   "commands": {

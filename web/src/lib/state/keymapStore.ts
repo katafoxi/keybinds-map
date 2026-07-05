@@ -2,8 +2,10 @@ import { createStore } from 'zustand/vanilla';
 import type {
   CommandCatalogEntry,
   CommandRef,
+  DraftState,
   KeyBindings,
   KeymapMetadata,
+  PrintLayerMode,
   ProgramCatalog,
   SavedProfile,
 } from '../types/keymap';
@@ -11,12 +13,20 @@ import {
   buildBindingsFromParsed,
   buildUnassignedCommands,
 } from '../keyboard/layout';
-import { parsePycharmKeymap, parsePycharmMetadata } from '../parsers/pycharm';
+import {
+  parsePycharmKeymapDetailed,
+  parsePycharmMetadata,
+} from '../parsers/pycharm';
+import { parseVsCodeKeymap } from '../parsers/vscode';
 import { serializePycharmKeymap, downloadXml } from '../parsers/pycharm-serialize';
 import { get, set } from 'idb-keyval';
 
 const PROFILES_KEY = 'keybinds-profiles';
+const DRAFT_KEY = 'keybinds-draft';
 const MAX_HISTORY = 20;
+const AUTOSAVE_MS = 1500;
+
+let autosaveTimer: ReturnType<typeof setTimeout> | null = null;
 
 export type KeymapState = {
   selectedProgram: string;
@@ -26,14 +36,17 @@ export type KeymapState = {
   metadata: KeymapMetadata;
   sourceXml: string;
   dirty: boolean;
+  importWarnings: string[];
   modifierVisibility: Record<string, boolean>;
+  printLayerMode: PrintLayerMode;
+  dropHighlight: string | null;
   historyPast: KeymapStateSnapshot[];
   historyFuture: KeymapStateSnapshot[];
 };
 
 type KeymapStateSnapshot = Pick<
   KeymapState,
-  'bindings' | 'unassigned' | 'metadata' | 'sourceXml' | 'dirty'
+  'bindings' | 'unassigned' | 'metadata' | 'sourceXml' | 'dirty' | 'importWarnings'
 >;
 
 type AssignArgs = {
@@ -54,6 +67,7 @@ function snapshotState(state: KeymapState): KeymapStateSnapshot {
     metadata: structuredClone(state.metadata),
     sourceXml: state.sourceXml,
     dirty: state.dirty,
+    importWarnings: [...state.importWarnings],
   };
 }
 
@@ -88,10 +102,40 @@ function catalogToRefs(entries: CommandCatalogEntry[] | undefined): CommandRef[]
   }));
 }
 
+async function persistDraft(state: KeymapState): Promise<void> {
+  if (!state.dirty || Object.keys(state.bindings).length === 0) {
+    return;
+  }
+  const draft: DraftState = {
+    selectedProgram: state.selectedProgram,
+    bindings: cloneBindings(state.bindings),
+    unassigned: structuredClone(state.unassigned),
+    metadata: structuredClone(state.metadata),
+    sourceXml: state.sourceXml,
+    updatedAt: Date.now(),
+  };
+  await set(DRAFT_KEY, draft);
+}
+
+function scheduleAutosave(state: KeymapState): void {
+  if (autosaveTimer) {
+    clearTimeout(autosaveTimer);
+  }
+  if (!state.dirty) {
+    return;
+  }
+  autosaveTimer = setTimeout(() => {
+    void persistDraft(get());
+  }, AUTOSAVE_MS);
+}
+
 export type KeymapActions = {
   setCatalog: (catalog: ProgramCatalog) => void;
   selectProgram: (slug: string) => void;
   loadFromXml: (xml: string) => void;
+  loadFromVsCode: (json: string) => void;
+  restoreDraft: () => Promise<boolean>;
+  clearDraft: () => Promise<void>;
   assignCommand: (args: AssignArgs) => void;
   unassignCommand: (key: string, slot: keyof KeyBindings[string]) => void;
   moveCommand: (
@@ -106,7 +150,9 @@ export type KeymapActions = {
     key: string,
     slot: keyof KeyBindings[string],
   ) => void;
+  setDropHighlight: (slotId: string | null) => void;
   toggleModifier: (slot: string, visible: boolean) => void;
+  setPrintLayerMode: (mode: PrintLayerMode) => void;
   undo: () => void;
   redo: () => void;
   exportXml: (filename?: string) => void;
@@ -123,6 +169,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
   metadata: { version: '1', name: 'Custom' },
   sourceXml: '',
   dirty: false,
+  importWarnings: [],
   modifierVisibility: {
     push: true,
     a: true,
@@ -133,6 +180,8 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     cs: true,
     acs: true,
   },
+  printLayerMode: 'visible',
+  dropHighlight: null,
   historyPast: [],
   historyFuture: [],
 
@@ -150,6 +199,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       metadata: { version: '1', name: 'Custom' },
       sourceXml: '',
       dirty: false,
+      importWarnings: [],
       historyPast: [],
       historyFuture: [],
     });
@@ -157,20 +207,66 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   loadFromXml(xml) {
     const state = get();
-    const parsed = parsePycharmKeymap(xml);
+    const parsed = parsePycharmKeymapDetailed(xml);
     const metadata = parsePycharmMetadata(xml);
     const catalogRefs = catalogToRefs(state.catalog?.commands[state.selectedProgram]);
     const resolver = (commandId: string) =>
       resolveCommand(commandId, state.catalog, state.selectedProgram);
 
-    set({
+    const next = {
       ...pushHistory(state),
-      bindings: buildBindingsFromParsed(parsed, resolver),
-      unassigned: buildUnassignedCommands(parsed, catalogRefs),
+      bindings: buildBindingsFromParsed(parsed.commands, resolver),
+      unassigned: buildUnassignedCommands(parsed.commands, catalogRefs),
       metadata,
       sourceXml: xml,
       dirty: false,
+      importWarnings: parsed.warnings,
+    };
+    set(next);
+    void persistDraft({ ...get(), ...next, dirty: false });
+  },
+
+  loadFromVsCode(json) {
+    const state = get();
+    const parsed = parseVsCodeKeymap(json);
+    const catalogRefs = catalogToRefs(state.catalog?.commands.vscode);
+    const resolver = (commandId: string) =>
+      resolveCommand(commandId, state.catalog, 'vscode');
+
+    const next = {
+      ...pushHistory(state),
+      selectedProgram: 'vscode',
+      bindings: buildBindingsFromParsed(parsed.commands, resolver),
+      unassigned: buildUnassignedCommands(parsed.commands, catalogRefs),
+      metadata: { version: '1', name: 'VS Code' },
+      sourceXml: json,
+      dirty: false,
+      importWarnings: parsed.warnings,
+    };
+    set(next);
+  },
+
+  async restoreDraft() {
+    const draft = await get<DraftState>(DRAFT_KEY);
+    if (!draft) {
+      return false;
+    }
+    set({
+      selectedProgram: draft.selectedProgram,
+      bindings: draft.bindings,
+      unassigned: draft.unassigned,
+      metadata: draft.metadata,
+      sourceXml: draft.sourceXml,
+      dirty: true,
+      importWarnings: [],
+      historyPast: [],
+      historyFuture: [],
     });
+    return true;
+  },
+
+  async clearDraft() {
+    await set(DRAFT_KEY, undefined);
   },
 
   assignCommand({ key, slot, command, replaceExisting = true }) {
@@ -193,12 +289,14 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     bindings[key][slot] = command;
     unassigned = unassigned.filter((item) => item.id !== command.id);
 
-    set({
+    const next = {
       ...pushHistory(state),
       bindings,
       unassigned,
       dirty: true,
-    });
+    };
+    set(next);
+    scheduleAutosave({ ...get(), ...next });
   },
 
   unassignCommand(key, slot) {
@@ -214,12 +312,14 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       ? state.unassigned
       : [...state.unassigned, command];
 
-    set({
+    const next = {
       ...pushHistory(state),
       bindings,
       unassigned,
       dirty: true,
-    });
+    };
+    set(next);
+    scheduleAutosave({ ...get(), ...next });
   },
 
   moveCommand(fromKey, fromSlot, toKey, toSlot) {
@@ -242,11 +342,14 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
     bindings[toKey][toSlot] = command;
 
-    set({
+    const next = {
       ...pushHistory(state),
       bindings,
       dirty: true,
-    });
+      dropHighlight: null,
+    };
+    set(next);
+    scheduleAutosave({ ...get(), ...next });
   },
 
   moveToPool(key, slot) {
@@ -257,10 +360,18 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     get().assignCommand({ key, slot, command, replaceExisting: true });
   },
 
+  setDropHighlight(slotId) {
+    set({ dropHighlight: slotId });
+  },
+
   toggleModifier(slot, visible) {
     set((state) => ({
       modifierVisibility: { ...state.modifierVisibility, [slot]: visible },
     }));
+  },
+
+  setPrintLayerMode(mode) {
+    set({ printLayerMode: mode });
   },
 
   undo() {
@@ -275,6 +386,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       historyPast: state.historyPast.slice(0, -1),
       historyFuture: [current, ...state.historyFuture].slice(0, MAX_HISTORY),
     });
+    scheduleAutosave(get());
   },
 
   redo() {
@@ -289,6 +401,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       historyPast: [...state.historyPast, current].slice(-MAX_HISTORY),
       historyFuture: state.historyFuture.slice(1),
     });
+    scheduleAutosave(get());
   },
 
   exportXml(filename = 'keymap.xml') {
@@ -296,6 +409,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     const xml = serializePycharmKeymap(bindings, metadata);
     downloadXml(filename, xml);
     set({ dirty: false, sourceXml: xml });
+    void get().clearDraft();
   },
 
   async saveProfile(name) {
@@ -311,10 +425,15 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     };
     await set(PROFILES_KEY, [...profiles, profile]);
     set({ dirty: false, sourceXml: xml });
+    await get().clearDraft();
     return profile;
   },
 
   async loadProfile(profile) {
+    if (profile.program === 'vscode') {
+      get().loadFromVsCode(profile.xml);
+      return;
+    }
     if (profile.program !== get().selectedProgram) {
       set({ selectedProgram: profile.program });
     }

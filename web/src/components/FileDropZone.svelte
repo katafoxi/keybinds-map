@@ -10,19 +10,30 @@
     }
 
     const file = files[0];
-    if (!file.name.toLowerCase().endsWith('.xml')) {
-      errorMessage = 'Нужен XML-файл keymap.';
-      return;
-    }
+    const lower = file.name.toLowerCase();
 
     const reader = new FileReader();
     reader.onload = () => {
       const text = reader.result;
-      if (typeof text === 'string') {
-        keymap.getState().loadFromXml(text);
+      if (typeof text !== 'string') {
+        return;
       }
+      if (lower.endsWith('.json')) {
+        keymap.getState().loadFromVsCode(text);
+        return;
+      }
+      if (lower.endsWith('.xml')) {
+        keymap.getState().loadFromXml(text);
+        return;
+      }
+      errorMessage = 'Поддерживаются .xml (PyCharm) и .json (VS Code).';
     };
-    reader.readAsText(file);
+
+    if (lower.endsWith('.json') || lower.endsWith('.xml')) {
+      reader.readAsText(file);
+    } else {
+      errorMessage = 'Поддерживаются .xml (PyCharm) и .json (VS Code).';
+    }
   }
 
   function onInputChange(event: Event) {
@@ -52,9 +63,14 @@
     on:drop={onDrop}
     on:dragover={onDragOver}
   >
-    Перетащите XML keymap сюда или выберите файл
+    Перетащите keymap (.xml PyCharm или .json VS Code) или выберите файл
   </div>
-  <input id="fileselect" type="file" accept=".xml,text/xml" on:change={onInputChange} />
+  <input
+    id="fileselect"
+    type="file"
+    accept=".xml,.json,text/xml,application/json"
+    on:change={onInputChange}
+  />
   {#if errorMessage}
     <p class="error">{errorMessage}</p>
   {/if}

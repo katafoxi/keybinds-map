@@ -8,7 +8,7 @@ import {
 } from './layout';
 
 const testXml = readFileSync(
-  resolve(__dirname, '../../../../keymap/tests/test.xml'),
+  resolve(__dirname, '../../../../test-fixtures/test.xml'),
   'utf-8',
 );
 

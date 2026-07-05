@@ -9,14 +9,18 @@ on:
     paths:
       - 'web/**'
       - 'scripts/**'
-      - 'keymap/fixtures/**'
+      - 'fixtures/**'
+      - 'test-fixtures/**'
+      - 'assets/**'
       - 'media/**'
       - '.github/workflows/web.yml'
   pull_request:
     paths:
       - 'web/**'
       - 'scripts/**'
-      - 'keymap/fixtures/**'
+      - 'fixtures/**'
+      - 'test-fixtures/**'
+      - 'assets/**'
       - 'media/**'
       - '.github/workflows/web.yml'
 

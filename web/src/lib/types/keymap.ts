@@ -28,6 +28,17 @@ export type KeymapMetadata = {
   name: string;
 };
 
+export type PrintLayerMode = 'all' | 'push' | 'visible';
+
+export type DraftState = {
+  selectedProgram: string;
+  bindings: KeyBindings;
+  unassigned: CommandRef[];
+  metadata: KeymapMetadata;
+  sourceXml: string;
+  updatedAt: number;
+};
+
 export type ProgramInfo = {
   slug: string;
   title: string;
