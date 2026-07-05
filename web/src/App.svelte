@@ -3,27 +3,43 @@
   import type { ProgramCatalog } from './lib/types/keymap';
   import { assetUrl } from './lib/assets';
   import { keymap } from './lib/state/keymapStore';
+  import { bundledCatalog } from './lib/catalog/bundledPrograms';
   import ProgramPicker from './components/ProgramPicker.svelte';
   import FileDropZone from './components/FileDropZone.svelte';
   import CommandPool from './components/CommandPool.svelte';
   import KeyboardGrid from './components/KeyboardGrid.svelte';
-  import ProfileManager from './components/ProfileManager.svelte';
+  import ProfileSwitcher from './components/ProfileSwitcher.svelte';
 
-  let catalog: ProgramCatalog | null = null;
-  let draftRestored = false;
+  let catalog: ProgramCatalog = bundledCatalog;
+  let ready = false;
 
-  $: hasBindings = Object.keys($keymap.bindings).length > 0;
-  $: showEmptyHint = !hasBindings && !draftRestored;
+  $: programs = catalog.programs;
+
+  $: hasBindings = Object.keys($keymap?.bindings ?? {}).length > 0;
+  $: showEmptyHint = ready && !hasBindings;
+  $: showDirtyFlag =
+    $keymap.dirty && $keymap.activeProfileId !== 'standard';
 
   onMount(async () => {
-    const response = await fetch(assetUrl('programs.json'));
-    catalog = (await response.json()) as ProgramCatalog;
-    keymap.getState().setCatalog(catalog);
-    draftRestored = await keymap.getState().restoreDraft();
+    let resolved: ProgramCatalog = bundledCatalog;
+    try {
+      const response = await fetch(assetUrl('programs.json'));
+      if (response.ok) {
+        const fetched = (await response.json()) as ProgramCatalog;
+        if (fetched.commands?.pycharm?.length) {
+          resolved = fetched;
+          catalog = fetched;
+        }
+      }
+    } catch {
+      // bundled catalog
+    }
+    await keymap.getState().boot(resolved);
+    ready = true;
   });
 
   function handleBeforeUnload(event: BeforeUnloadEvent) {
-    if ($keymap.dirty) {
+    if ($keymap.dirty && $keymap.activeProfileId !== 'standard') {
       event.preventDefault();
       event.returnValue = '';
     }
@@ -58,31 +74,29 @@
       </a>
     </div>
 
-    <div class="header_block">
+    <div class="header_block menu-block">
       <ul class="mainmenu">
         <li><a href="/">Главная</a></li>
       </ul>
     </div>
-
-    {#if catalog}
-      <ProgramPicker programs={catalog.programs} />
-    {/if}
   </header>
 
   <main class="content">
+    <section class="guide no-print">
+      <p>
+        Редактор для визуализации и правки keymap. Все файлы обрабатываются только в вашем браузере.
+      </p>
+    </section>
+
+    <ProgramPicker programs={programs} disabled={!ready} />
+
     {#if showEmptyHint}
       <section class="empty-hint no-print">
-        <strong>Шаг 2:</strong> загрузите .xml keymap (PyCharm) или .json (VS Code), чтобы увидеть команды на клавиатуре.
+        <strong>Шаг 2:</strong> загрузите .xml keymap (PyCharm) или .json (VS Code), либо нажмите «Скопировать профиль» для редактирования на базе стандартной раскладки.
       </section>
     {/if}
 
-    {#if draftRestored && $keymap.dirty}
-      <section class="draft-banner no-print">
-        Восстановлен автосохранённый черновик.
-      </section>
-    {/if}
-
-    {#if $keymap.importWarnings.length > 0}
+    {#if ($keymap?.importWarnings ?? []).length > 0}
       <section class="import-warnings no-print">
         <h3>Примечания при импорте</h3>
         <ul>
@@ -92,14 +106,6 @@
         </ul>
       </section>
     {/if}
-
-    <section class="guide no-print">
-      <div>
-        <p>
-          Редактор для визуализации и правки keymap. Все файлы обрабатываются только в вашем браузере.
-        </p>
-      </div>
-    </section>
 
     <FileDropZone />
 
@@ -112,14 +118,14 @@
       </button>
       <button type="button" on:click={exportXml}>Скачать XML</button>
       <button type="button" on:click={printKeymap}>Печать</button>
-      {#if $keymap.dirty}
-        <span class="dirty-flag">Есть несохранённые изменения (автосохранение в браузере)</span>
+      <ProfileSwitcher />
+      {#if showDirtyFlag}
+        <span class="dirty-flag">Есть несохранённые изменения (автосохранение в Custom-слот)</span>
       {/if}
     </div>
 
     <CommandPool commands={$keymap.unassigned} />
     <KeyboardGrid />
-    <ProfileManager />
   </main>
 </div>
 
@@ -148,22 +154,18 @@
     font-size: 12px;
   }
 
-  .empty-hint,
-  .draft-banner {
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 0.75rem;
+  .guide p {
+    margin: 0 0 0.5rem;
     font-size: 13px;
   }
 
   .empty-hint {
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-size: 13px;
     background: #fff8e6;
     border: 1px solid #fdc073;
-  }
-
-  .draft-banner {
-    background: #efffed;
-    border: 1px solid #14a421;
   }
 
   .import-warnings {

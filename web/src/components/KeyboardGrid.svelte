@@ -5,7 +5,7 @@
   import { keymap } from '../lib/state/keymapStore';
   import KeyCell from './KeyCell.svelte';
 
-  $: keys = mergeKeyboardWithBindings($keymap.bindings);
+  $: keys = mergeKeyboardWithBindings($keymap?.bindings ?? {});
 
   function onModifierToggle(slot: string, event: Event) {
     const input = event.currentTarget as HTMLInputElement;
