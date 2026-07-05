@@ -46,6 +46,8 @@ jobs:
           test -d web/public/icons/pycharm
           test -f web/public/programs.json
           test -f web/public/i/program-icons/PyCharm.png
+          test -f web/public/defaults/pycharm-windows.xml
+          test -f test-fixtures/Windows.xml
 
       - name: Install dependencies
         working-directory: web
