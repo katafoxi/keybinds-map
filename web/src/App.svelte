@@ -9,6 +9,7 @@
   import CommandPool from './components/CommandPool.svelte';
   import KeyboardGrid from './components/KeyboardGrid.svelte';
   import ProfileSwitcher from './components/ProfileSwitcher.svelte';
+  import ModifierLegend from './components/ModifierLegend.svelte';
 
   let catalog: ProgramCatalog = bundledCatalog;
   let ready = false;
@@ -74,25 +75,36 @@
       </a>
     </div>
 
-    <div class="header_block menu-block">
-      <ul class="mainmenu">
-        <li><a href="/">Главная</a></li>
-      </ul>
-    </div>
+    <ProgramPicker programs={programs} disabled={!ready} />
+    <ModifierLegend />
   </header>
 
   <main class="content">
-    <section class="guide no-print">
-      <p>
-        Редактор для визуализации и правки keymap. Все файлы обрабатываются только в вашем браузере.
-      </p>
-    </section>
+    <div class="control-bar no-print">
+      <FileDropZone />
+      <div class="toolbar">
+        <button type="button" on:click={() => keymap.getState().undo()} disabled={$keymap.historyPast.length === 0}>
+          Undo
+        </button>
+        <button type="button" on:click={() => keymap.getState().redo()} disabled={$keymap.historyFuture.length === 0}>
+          Redo
+        </button>
+        <button type="button" on:click={exportXml}>Скачать XML</button>
+        <button type="button" on:click={printKeymap}>Печать</button>
+        <ProfileSwitcher />
+        {#if showDirtyFlag}
+          <span class="dirty-flag">Несохранённые изменения</span>
+        {/if}
+      </div>
+    </div>
 
-    <ProgramPicker programs={programs} disabled={!ready} />
+    <section class="guide no-print">
+      <p>Редактор keymap · файлы обрабатываются только в браузере.</p>
+    </section>
 
     {#if showEmptyHint}
       <section class="empty-hint no-print">
-        <strong>Шаг 2:</strong> загрузите .xml keymap (PyCharm) или .json (VS Code), либо нажмите «Скопировать профиль» для редактирования на базе стандартной раскладки.
+        <strong>Шаг 2:</strong> загрузите .xml (PyCharm) или .json (VS Code), либо «Скопировать профиль» для редактирования стандартной раскладки.
       </section>
     {/if}
 
@@ -107,41 +119,35 @@
       </section>
     {/if}
 
-    <FileDropZone />
-
-    <div class="toolbar no-print">
-      <button type="button" on:click={() => keymap.getState().undo()} disabled={$keymap.historyPast.length === 0}>
-        Undo
-      </button>
-      <button type="button" on:click={() => keymap.getState().redo()} disabled={$keymap.historyFuture.length === 0}>
-        Redo
-      </button>
-      <button type="button" on:click={exportXml}>Скачать XML</button>
-      <button type="button" on:click={printKeymap}>Печать</button>
-      <ProfileSwitcher />
-      {#if showDirtyFlag}
-        <span class="dirty-flag">Есть несохранённые изменения (автосохранение в Custom-слот)</span>
-      {/if}
-    </div>
-
     <CommandPool commands={$keymap.unassigned} />
     <KeyboardGrid />
   </main>
 </div>
 
 <style>
+  .control-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.5rem 0;
+    overflow-x: auto;
+  }
+
   .toolbar {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
     align-items: center;
-    margin: 0.75rem 0;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .toolbar button {
     font-size: 12px;
-    padding: 0.35rem 0.75rem;
+    padding: 0.3rem 0.6rem;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .toolbar button:disabled {
@@ -151,19 +157,23 @@
 
   .dirty-flag {
     color: #a65400;
-    font-size: 12px;
+    font-size: 11px;
+    flex-shrink: 0;
   }
 
   .guide p {
-    margin: 0 0 0.5rem;
-    font-size: 13px;
+    margin: 0 0 0.35rem;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .empty-hint {
-    padding: 0.75rem 1rem;
+    padding: 0.45rem 0.75rem;
     border-radius: 6px;
-    margin-bottom: 0.75rem;
-    font-size: 13px;
+    margin-bottom: 0.5rem;
+    font-size: 12px;
     background: #fff8e6;
     border: 1px solid #fdc073;
   }

@@ -19,31 +19,27 @@ body {
 header {
     display: grid;
     grid-area: header;
-    grid-template-columns: min-content max-content 1fr;
+    grid-template-columns: min-content 1fr max-content;
     grid-template-rows: 1fr;
     gap: 25px;
     grid-auto-flow: row;
-    grid-template-areas: "logo menu .";
+    grid-template-areas: "logo programs legend";
 
     padding:10px;
+    align-items: start;
 }
 .software_pool a:visited{
     color: #FFFFFF;
 }
-.header_block{
-    color: #A65400;
-    transform: skew(-8deg);
-    /*border: 1px solid #44d450;*/
-    border-radius:5px;
-    padding:3px;
-    background-color:#efffed;
-    -webkit-box-shadow: 11px 10px 11px -4px rgba(0, 0, 0, 0.18);
-    -moz-box-shadow: 11px 10px 11px -4px rgba(0, 0, 0, 0.18);
-    box-shadow: 11px 10px 11px -4px rgba(0, 0, 0, 0.18);
+
+:global(.program-panel) {
+    grid-area: programs;
+    align-self: start;
+    min-width: 0;
 }
 
-.menu-block {
-    grid-area: menu;
+:global(.modifier-legend-panel) {
+    grid-area: legend;
     align-self: start;
 }
 
@@ -88,30 +84,16 @@ display:inline;}*/
 
 
 /* || Grid styles */
-ul.mainmenu {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	color: #fdc073;
-	font-size: 12px;
-}
 
-
-ul.mainmenu li a {
-	color: #A65400;
-	text-decoration: none;
-}
-ul.mainmenu li a:hover {
-	color: #FDA83D;
-}
-
-
-.logo * {
+.logo {
     grid-area: logo;
+}
+
+.logo img {
     width: 70px;
     margin-left: auto;
     margin-right: auto;
-
+    display: block;
 }
 
 .top-head,
@@ -307,6 +289,7 @@ label {
     "as_mod     as"
     "cs_mod     cs"
     "acs_mod    acs";
+    border: 1px solid #1c6ea4;
     border-radius: 5px;
 }
 
@@ -398,6 +381,9 @@ label {
     border-bottom-right-radius: 5px;
 }
 
+.layer-hidden {
+    display: none !important;
+}
 
 
 .flipswitch {
@@ -530,8 +516,8 @@ fieldset{
 display:block;}
 .toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
 }
 
 @media print {
@@ -558,6 +544,27 @@ display:block;}
 
   .char {
     break-inside: avoid;
+  }
+
+  .print-layer-all .layer-hidden {
+    display: block !important;
+  }
+
+  .print-layer-push .s,
+  .print-layer-push .s_mod,
+  .print-layer-push .a,
+  .print-layer-push .a_mod,
+  .print-layer-push .c,
+  .print-layer-push .c_mod,
+  .print-layer-push .ac,
+  .print-layer-push .ac_mod,
+  .print-layer-push .as,
+  .print-layer-push .as_mod,
+  .print-layer-push .cs,
+  .print-layer-push .cs_mod,
+  .print-layer-push .acs,
+  .print-layer-push .acs_mod {
+    display: none !important;
   }
 
   .command_description,

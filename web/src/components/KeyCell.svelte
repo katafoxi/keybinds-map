@@ -9,11 +9,11 @@
     isBoundedSlot,
     isBindingLocked,
   } from '../lib/keyboard/bindingPolicy';
+  import { isModifierSlotVisibleOnScreen } from '../lib/keyboard/modifierVisibility';
 
   export let backName: string;
   export let frontName: string;
   export let bindings: Partial<Record<ModifierSlot, CommandRef>> = {};
-  export let slotVisible: (slot: ModifierSlot) => boolean = () => true;
 
   const slotLabels: Record<ModifierSlot, string> = {
     push: '',
@@ -125,10 +125,6 @@
     keymap.getState().setDropHighlight(null);
   }
 
-  function hiddenStyle(slot: ModifierSlot): string {
-    return slotVisible(slot) ? '' : 'display:none';
-  }
-
   function highlightClass(slot: ModifierSlot): string {
     return $keymap.dropHighlight === slotId(slot) ? 'drop-target' : '';
   }
@@ -139,14 +135,19 @@
 
   {#each MODIFIER_SLOTS as slot}
     {#if slot !== 'push'}
-      <div class="{slot}_mod brdr abbr" style={hiddenStyle(slot)}>{slotLabels[slot]}</div>
+      <div
+        class="{slot}_mod brdr abbr"
+        class:layer-hidden={!isModifierSlotVisibleOnScreen(slot, $keymap.modifierVisibility)}
+      >
+        {slotLabels[slot]}
+      </div>
     {/if}
   {/each}
 
   {#each MODIFIER_SLOTS as slot}
     <div
       class={slotClassNames(slot)}
-      style={hiddenStyle(slot)}
+      class:layer-hidden={!isModifierSlotVisibleOnScreen(slot, $keymap.modifierVisibility)}
       role="button"
       tabindex="0"
       on:dragover={(event) => allowDrop(event, slot)}
