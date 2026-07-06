@@ -15,8 +15,7 @@
 </script>
 
 <section class="program-panel no-print" aria-label="Выбор программы">
-  <p class="step-label"><span class="underline">Шаг 1</span> Выберите программу:</p>
-  <div class="program-list">
+  <div class="program-list" role="group" aria-label="Список программ">
     {#each programs as program (program.slug)}
       <button
         type="button"
@@ -27,10 +26,12 @@
         on:click={() => selectProgram(program.slug, program.supported)}
       >
         <img class="progIcon" src={assetUrl(program.icon)} alt={program.title} />
-        <span class="program-title">{program.title}</span>
-        {#if !program.supported}
-          <span class="soon">скоро</span>
-        {/if}
+        <span class="program-title">
+          {program.title}
+          {#if !program.supported}
+            <span class="soon">скоро</span>
+          {/if}
+        </span>
       </button>
     {/each}
   </div>
@@ -39,33 +40,27 @@
 <style>
   .program-panel {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 0.65rem 1rem;
-    margin: 0.75rem 0;
-    padding: 0.65rem 0.85rem;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.45rem 0.75rem;
     border: 1px solid #44d450;
     border-radius: 6px;
     background: #efffed;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 
-  .step-label {
-    margin: 0;
-    font-size: 13px;
-    color: #a65400;
-    white-space: nowrap;
-  }
-
-  .underline {
-    text-decoration: underline;
-  }
-
   .program-list {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: 0.5rem;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-x: auto;
   }
 
   .program-button {
@@ -75,9 +70,9 @@
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.45rem;
     cursor: pointer;
-    position: relative;
+    flex-shrink: 0;
   }
 
   .program-button:disabled {
@@ -100,13 +95,13 @@
   .program-title {
     font-size: 12px;
     color: #333;
+    white-space: nowrap;
   }
 
   .soon {
-    position: absolute;
-    bottom: -0.55rem;
-    left: 0.35rem;
-    font-size: 8px;
-    color: #666;
+    margin-left: 0.2rem;
+    font-size: 9px;
+    color: #888;
+    font-style: italic;
   }
 </style>

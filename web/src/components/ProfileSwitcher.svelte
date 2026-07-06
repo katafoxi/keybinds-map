@@ -64,12 +64,14 @@
 <style>
   .profile-switcher {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 0.35rem;
     margin-left: 0.5rem;
     padding-left: 0.75rem;
     border-left: 1px solid #ccc;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .label {

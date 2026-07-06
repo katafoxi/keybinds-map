@@ -51,20 +51,10 @@
   }
 </script>
 
-<section class="file-drop no-print">
-  <p class="privacy-note">
-    Файлы обрабатываются локально в браузере и не отправляются на сервер.
-  </p>
-  <div
-    id="filedrag"
-    class="filedrag"
-    role="button"
-    tabindex="0"
-    on:drop={onDrop}
-    on:dragover={onDragOver}
-  >
-    Перетащите keymap (.xml PyCharm или .json VS Code) или выберите файл
-  </div>
+<section class="file-drop no-print" on:drop={onDrop} on:dragover={onDragOver}>
+  <span class="privacy-note">
+    Локально в браузере · перетащите .xml / .json или
+  </span>
   <input
     id="fileselect"
     type="file"
@@ -72,34 +62,37 @@
     on:change={onInputChange}
   />
   {#if errorMessage}
-    <p class="error">{errorMessage}</p>
+    <span class="error">{errorMessage}</span>
   {/if}
 </section>
 
 <style>
+  .file-drop {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .privacy-note {
     font-size: 12px;
     color: #2f6b2f;
-    margin-bottom: 0.5rem;
-  }
-
-  .filedrag {
-    border-radius: 7px;
-    border: 2px dashed #3da8ba;
-    color: #555555;
-    cursor: default;
-    padding: 1rem;
-    text-align: center;
-    background: #f9f9f9;
-    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .error {
     color: #b00020;
     font-size: 12px;
+    white-space: nowrap;
   }
 
   input[type='file'] {
     font-size: 12px;
+    max-width: 14rem;
+    flex-shrink: 1;
+    min-width: 0;
   }
 </style>
