@@ -52,10 +52,15 @@ node scripts/export-catalog.mjs
 
 GitHub Actions ([`.github/workflows/web.yml`](.github/workflows/web.yml)) синхронизирует ассеты, запускает тесты и деплоит `web/dist` на GitHub Pages.
 
+## Новая программа / парсер
+
+Контракт IR и чеклист интеграции: [`docs/PARSER_CONTRACT.md`](docs/PARSER_CONTRACT.md).
+
 ## Структура
 
 ```
 web/              — client-only SPA (Vite + Svelte + TypeScript)
+docs/             — контракт парсеров (PARSER_CONTRACT.md)
 fixtures/         — каталог программ и команд (источник для export-catalog)
 test-fixtures/    — XML/JSON для vitest
 assets/ui/        — logo, favicon (источник для sync-assets)
