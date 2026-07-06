@@ -6,7 +6,8 @@
       "icon": "i/program-icons/PyCharm.png",
       "site": "https://www.jetbrains.com/pycharm/",
       "settingsFileInfo": "����� ������� ������� ��������������� �������� ��� PyCharm  (������� ������ keymap � .xml https://plugins.jetbrains.com/plugin/18927-keymap-xml-exporter)",
-      "supported": true
+      "supported": true,
+      "isBounded": true
     },
     {
       "slug": "siemens-nx",
@@ -14,7 +15,8 @@
       "icon": "i/program-icons/UGNX.png",
       "site": "https://www.plm.automation.siemens.com/global/en/products/nx/",
       "settingsFileInfo": "",
-      "supported": false
+      "supported": false,
+      "isBounded": false
     },
     {
       "slug": "vscode",
@@ -22,7 +24,8 @@
       "icon": "i/ball.svg",
       "site": "https://code.visualstudio.com/",
       "settingsFileInfo": "Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)",
-      "supported": true
+      "supported": true,
+      "isBounded": true
     }
   ],
   "commands": {

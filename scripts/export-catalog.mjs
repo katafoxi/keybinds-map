@@ -54,6 +54,7 @@ for (const entry of fixture) {
       site: entry.fields.site,
       settingsFileInfo: entry.fields.settings_file_info ?? '',
       supported: slug === 'pycharm' || slug === 'vscode',
+      isBounded: entry.fields.is_bounded ?? slug === 'pycharm',
     });
   }
 
@@ -77,6 +78,7 @@ programs.push({
   site: 'https://code.visualstudio.com/',
   settingsFileInfo: 'Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)',
   supported: true,
+  isBounded: true,
 });
 
 const catalogJson = JSON.stringify({ programs, commands }, null, 2);

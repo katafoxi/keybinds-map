@@ -8,7 +8,8 @@
   export let sourceSlot = '';
 
   function handleDragStart(event: DragEvent) {
-    if (!event.dataTransfer) {
+    if (!draggable || !event.dataTransfer) {
+      event.preventDefault();
       return;
     }
     event.dataTransfer.effectAllowed = 'move';
@@ -25,6 +26,7 @@
 
 <div
   class="command_description"
+  class:locked-binding={!draggable}
   {draggable}
   on:dragstart={handleDragStart}
   role="listitem"

@@ -22,6 +22,7 @@ import { parseVsCodeKeymap } from '../parsers/vscode';
 import { serializePycharmKeymap, downloadXml } from '../parsers/pycharm-serialize';
 import defaultPycharmXml from '@fixtures/Windows.xml?raw';
 import { bundledCatalog } from '../catalog/bundledPrograms';
+import { canMutateBinding } from '../keyboard/bindingPolicy';
 import { get, set as idbSet } from 'idb-keyval';
 
 const PROFILES_KEY = 'keybinds-profiles';
@@ -501,6 +502,11 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   assignCommand({ key, slot, command, replaceExisting = true }) {
     const state = get();
+    const existing = state.bindings[key]?.[slot];
+    if (!canMutateBinding(state.catalog, state.selectedProgram, key, slot, existing)) {
+      return;
+    }
+
     const bindings = cloneBindings(state.bindings);
     bindings[key] ??= {};
 
@@ -535,6 +541,9 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     if (!command) {
       return;
     }
+    if (!canMutateBinding(state.catalog, state.selectedProgram, key, slot, command)) {
+      return;
+    }
 
     delete bindings[key][slot];
     const unassigned = state.unassigned.some((item) => item.id === command.id)
@@ -556,16 +565,24 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     if (!command) {
       return;
     }
+    if (!canMutateBinding(state.catalog, state.selectedProgram, fromKey, fromSlot, command)) {
+      return;
+    }
+
+    const target = state.bindings[toKey]?.[toSlot];
+    if (!canMutateBinding(state.catalog, state.selectedProgram, toKey, toSlot, target)) {
+      return;
+    }
 
     const bindings = cloneBindings(state.bindings);
     bindings[fromKey] ??= {};
     bindings[toKey] ??= {};
 
-    const target = bindings[toKey][toSlot];
+    const targetOccupant = bindings[toKey][toSlot];
     delete bindings[fromKey][fromSlot];
 
-    if (target) {
-      bindings[fromKey][fromSlot] = target;
+    if (targetOccupant) {
+      bindings[fromKey][fromSlot] = targetOccupant;
     }
 
     bindings[toKey][toSlot] = command;

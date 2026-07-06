@@ -275,6 +275,23 @@ label {
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 0.6124824929971988) 0%, rgba(175, 255, 179, 0.16710434173669464) 50%, rgba(255, 255, 255, 0.5256477591036415) 100%);
 }
+
+.bounded-slot {
+    padding-left: 1px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.158) 0%,
+        rgba(243, 180, 180, 0.21) 50%,
+        rgba(255, 255, 255, 0.211) 100%
+    );
+    cursor: not-allowed;
+}
+
+:global(.locked-binding) {
+    cursor: not-allowed;
+    opacity: 0.92;
+}
 .subtableSheme {
     font-size: 10px;
     display: grid;

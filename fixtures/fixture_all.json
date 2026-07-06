@@ -7,7 +7,8 @@
     "slug": "pycharm",
     "icon": "program_icons/PyCharm.ico",
     "settings_file_info": "Самый простой вариант воспользоваться плагином для PyCharm  (экспорт своего keymap в .xml https://plugins.jetbrains.com/plugin/18927-keymap-xml-exporter)",
-    "site": "https://www.jetbrains.com/pycharm/"
+    "site": "https://www.jetbrains.com/pycharm/",
+    "is_bounded": true
   }
 },
 {

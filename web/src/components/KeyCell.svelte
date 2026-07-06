@@ -3,6 +3,12 @@
   import { MODIFIER_SLOTS, type ModifierSlot } from '../lib/types/keymap';
   import CommandChip from './CommandChip.svelte';
   import { keymap } from '../lib/state/keymapStore';
+  import {
+    canDragBinding,
+    canDropOnSlot,
+    isBoundedSlot,
+    isBindingLocked,
+  } from '../lib/keyboard/bindingPolicy';
 
   export let backName: string;
   export let frontName: string;
@@ -38,6 +44,9 @@
   function handleDrop(event: DragEvent, slot: ModifierSlot) {
     event.preventDefault();
     keymap.getState().setDropHighlight(null);
+    if (!slotAcceptsDrop(slot)) {
+      return;
+    }
     const payload = readPayload(event);
     if (!payload) {
       return;
@@ -73,8 +82,43 @@
   }
 
   function allowDrop(event: DragEvent, slot: ModifierSlot) {
+    if (!slotAcceptsDrop(slot)) {
+      return;
+    }
     event.preventDefault();
     keymap.getState().setDropHighlight(slotId(slot));
+  }
+
+  function slotAcceptsDrop(slot: ModifierSlot): boolean {
+    const state = $keymap;
+    return canDropOnSlot(
+      state.catalog,
+      state.selectedProgram,
+      backName,
+      slot,
+      bindings[slot],
+    );
+  }
+
+  function slotClassNames(slot: ModifierSlot): string {
+    const state = $keymap;
+    const classes = [slotClass[slot], 'brdr', highlightClass(slot)];
+    const command = bindings[slot];
+    const bounded = isBoundedSlot(state.catalog, state.selectedProgram, backName, slot);
+    const locked = command && isBindingLocked(state.selectedProgram, backName, slot, command);
+
+    if (bounded || locked) {
+      classes.push('bounded-slot');
+    } else {
+      classes.push('droppable');
+    }
+    return classes.join(' ');
+  }
+
+  function chipDraggable(slot: ModifierSlot): boolean {
+    const state = $keymap;
+    const command = bindings[slot];
+    return canDragBinding(state.catalog, state.selectedProgram, backName, slot, command);
   }
 
   function clearHighlight() {
@@ -101,7 +145,7 @@
 
   {#each MODIFIER_SLOTS as slot}
     <div
-      class="{slotClass[slot]} brdr droppable {highlightClass(slot)}"
+      class={slotClassNames(slot)}
       style={hiddenStyle(slot)}
       role="button"
       tabindex="0"
@@ -114,6 +158,7 @@
           command={bindings[slot]}
           sourceKey={backName}
           sourceSlot={slot}
+          draggable={chipDraggable(slot)}
         />
       {/if}
     </div>

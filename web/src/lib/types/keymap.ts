@@ -46,6 +46,8 @@ export type ProgramInfo = {
   site: string;
   settingsFileInfo?: string;
   supported: boolean;
+  /** IDE/text editor: disallow push and Shift on symbol keys; see bindingPolicy.ts */
+  isBounded?: boolean;
 };
 
 export type CommandCatalogEntry = {
