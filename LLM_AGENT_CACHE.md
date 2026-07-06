@@ -19,7 +19,7 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Импорт VS Code JSON | `web/src/lib/parsers/vscode.ts` | `vscode.test.ts` | — |
 | Новый парсер / IR-контракт | `docs/PARSER_CONTRACT.md` | эталон: `pycharm.test.ts`, `vscode.test.ts` | — |
 | Экспорт XML | `web/src/lib/parsers/pycharm-serialize.ts` | `pycharm.test.ts` (round-trip) | — |
-| Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `web/src/lib/types/keymap.ts` | `layout.test.ts` | — |
+| Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `keymap.ts` | `layout.test.ts`, `bindingPolicy.test.ts` | — |
 | Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~717 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
 | UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte` | — | `@dnd-kit` в package.json **не используется** (нативный HTML5 DnD) |
 | Выбор программы | `ProgramPicker.svelte` + `selectProgram` в store | — | — |
@@ -164,6 +164,7 @@ keybinds/
 - `getCleanKeyboardKeys()` — пустая клавиатура
 - `buildBindingsFromParsed()` — parsed → KeyBindings
 - `mergeKeyboardWithBindings()` — для отрисовки grid
+- `bindingPolicy.ts` — `isBounded` программы, запрет push/s на символьных клавишах (IDE), locked Ctrl+C и т.п.
 
 Имена клавиш (`backName`) — внутренний ID; алиасы PyCharm → layout в `PYCHARM_KEY_ALIASES` (`pycharm.ts`) и `KEY_TO_PYCHARM` (`pycharm-serialize.ts`).
 
@@ -242,6 +243,7 @@ cd web && npm run build
 
 ```
 PARSER_CONTRACT       # docs/PARSER_CONTRACT.md — IR, слоты, чеклист парсера
+bindingPolicy         # keyboard/bindingPolicy.ts — IDE bounded slots, locked shortcuts
 modifiersToCode       # pycharm.ts — ядро маппинга модификаторов
 PYCHARM_KEY_ALIASES   # XML key → layout backName
 applyXmlToState       # keymapStore — импорт XML в state

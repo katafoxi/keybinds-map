@@ -207,13 +207,29 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 ## Чеклист: новая программа
 
 1. **Исследовать формат** файла настроек (путь, кодировка, пример).
-2. **Добавить каталог** — записи в `fixture_all.json`, `export-catalog.mjs` (`supported`), иконка программы.
+2. **Добавить каталог** — записи в `fixture_all.json`, `export-catalog.mjs` (`supported`, `is_bounded`), иконка программы.
 3. **Реализовать парсер** — `web/src/lib/parsers/<program>.ts`, выход `ParseResult`.
 4. **Таблица алиасов клавиш** — константа `*_KEY_ALIASES` рядом с парсером.
 5. **Тесты** — `web/src/lib/parsers/<program>.test.ts`, фикстура в `test-fixtures/`.
 6. **Store + UI** — `loadFromXxx`, accept в file input, `selectProgram`.
 7. **Сериализатор** (если нужен экспорт) — обратный путь `KeyBindings` → файл; сейчас только PyCharm XML.
-8. **Документировать ограничения** — что пропускается (chords, context/when, mouse).
+8. **Политика биндингов** — `is_bounded` в fixture: IDE (`true`) запрещает push/Shift на символьных клавишах; CAD (`false`) разрешает plain key. Зафиксированные сочетания (Ctrl+C и т.д.) — `bindingPolicy.ts`.
+9. **Документировать ограничения** — что пропускается (chords, context/when, mouse).
+
+---
+
+## Политика биндингов по типу программы
+
+Логика в [`bindingPolicy.ts`](../web/src/lib/keyboard/bindingPolicy.ts), флаг `ProgramInfo.isBounded` (fixture: `is_bounded`).
+
+| Профиль | `isBounded` | Поведение |
+|---------|-------------|-----------|
+| IDE / текстовый редактор | `true` | Слоты `push` и `s` на буквенно-цифровых клавишах **не принимают** drop; F-клавиши и стрелки — можно |
+| CAD и аналоги | `false` | Plain key (`push`) и Shift разрешены на любых клавишах |
+
+**Зафиксированные сочетания** (нельзя перетащить и нельзя заменить drop'ом): для PyCharm — `$Copy` на Ctrl+C, `$Paste` на Ctrl+V, `$Cut`, `$Undo`, `SaveAll`; для VS Code — clipboard/undo/save. Список расширяется в `IDE_LOCKED_BINDINGS`.
+
+Store (`assignCommand`, `moveCommand`, `unassignCommand`) и UI (`KeyCell`, `CommandChip`) вызывают `canMutateBinding` / `canDropOnSlot` / `canDragBinding`.
 
 ---
 
@@ -227,6 +243,7 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 | Context / `when` clauses | Игнорируются при импорте |
 | Конфликты на одном слоте | Last-write-wins в парсере |
 | Экспорт | Round-trip только PyCharm XML |
+| Политика IDE vs CAD | `bindingPolicy.ts`, `isBounded` в каталоге |
 | Плагины в рантайме браузера | Нет; парсер — PR в репозиторий |
 
 ---
@@ -238,6 +255,7 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 | IR-тип | `web/src/lib/types/keymap.ts` — `ParsedCommands`, `ModifierSlot`, `MODIFIER_SLOTS` |
 | Модификаторы | `web/src/lib/parsers/pycharm.ts` — `modifiersToCode` |
 | Раскладка → bindings | `web/src/lib/keyboard/layout.ts` — `buildBindingsFromParsed` |
+| Политика биндингов | `web/src/lib/keyboard/bindingPolicy.ts` |
 | Импорт в state | `web/src/lib/state/keymapStore.ts` — `applyXmlToState`, `loadFromVsCode` |
 | Резолв команд | `keymapStore.ts` — `resolveCommand`, `buildUnassignedCommands` |
 | Экспорт PyCharm | `web/src/lib/parsers/pycharm-serialize.ts` |
