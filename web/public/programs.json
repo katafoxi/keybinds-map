@@ -26,6 +26,15 @@
       "settingsFileInfo": "Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)",
       "supported": true,
       "isBounded": true
+    },
+    {
+      "slug": "bash",
+      "title": "Bash (Emacs)",
+      "icon": "i/program-icons/bash.svg",
+      "site": "https://www.gnu.org/software/bash/",
+      "settingsFileInfo": "Файл ~/.inputrc или вывод bind -p. Режим emacs. Эталон: readline(3) DEFAULT KEY BINDINGS.",
+      "supported": true,
+      "isBounded": true
     }
   ],
   "commands": {
@@ -2503,6 +2512,403 @@
       {
         "id": "XDebugger.SetValue",
         "shortName": "XDebugger.SetValue"
+      }
+    ],
+    "bash": [
+      {
+        "id": "beginning-of-line",
+        "shortName": "Line start",
+        "iconPath": "icons/bash/EditorLineStart.png"
+      },
+      {
+        "id": "end-of-line",
+        "shortName": "Line end",
+        "iconPath": "icons/bash/EditorLineEnd.png"
+      },
+      {
+        "id": "forward-char",
+        "shortName": "Forward",
+        "iconPath": "icons/bash/EditorRight.png"
+      },
+      {
+        "id": "backward-char",
+        "shortName": "Backward",
+        "iconPath": "icons/bash/EditorLeft.png"
+      },
+      {
+        "id": "forward-word",
+        "shortName": "Next word",
+        "iconPath": "icons/bash/EditorNextWord.png"
+      },
+      {
+        "id": "backward-word",
+        "shortName": "Prev word",
+        "iconPath": "icons/bash/EditorPreviousWord.png"
+      },
+      {
+        "id": "next-history",
+        "shortName": "Next hist",
+        "iconPath": "icons/bash/EditorDown.png"
+      },
+      {
+        "id": "previous-history",
+        "shortName": "Prev hist",
+        "iconPath": "icons/bash/EditorUp.png"
+      },
+      {
+        "id": "beginning-of-history",
+        "shortName": "Hist start",
+        "iconPath": "icons/bash/EditorScrollTop.png"
+      },
+      {
+        "id": "end-of-history",
+        "shortName": "Hist end",
+        "iconPath": "icons/bash/EditorScrollDown.png"
+      },
+      {
+        "id": "delete-char",
+        "shortName": "Delete",
+        "iconPath": "icons/bash/$Delete.svg"
+      },
+      {
+        "id": "backward-delete-char",
+        "shortName": "Backspace",
+        "iconPath": "icons/bash/EditorBackSpace.png"
+      },
+      {
+        "id": "kill-line",
+        "shortName": "Kill line",
+        "iconPath": "icons/bash/EditorDeleteToLineEnd.png"
+      },
+      {
+        "id": "unix-line-discard",
+        "shortName": "Kill to start",
+        "iconPath": "icons/bash/EditorDeleteToLineStart.png"
+      },
+      {
+        "id": "backward-kill-line",
+        "shortName": "Kill back line",
+        "iconPath": "icons/bash/EditorDeleteToLineStart.png"
+      },
+      {
+        "id": "kill-whole-line",
+        "shortName": "Kill whole line",
+        "iconPath": "icons/bash/EditorDeleteLine.png"
+      },
+      {
+        "id": "kill-word",
+        "shortName": "Kill word",
+        "iconPath": "icons/bash/EditorDeleteToWordEnd.png"
+      },
+      {
+        "id": "backward-kill-word",
+        "shortName": "Kill prev word",
+        "iconPath": "icons/bash/EditorDeleteToWordStart.png"
+      },
+      {
+        "id": "unix-word-rubout",
+        "shortName": "Rubout word",
+        "iconPath": "icons/bash/EditorDeleteToWordStart.png"
+      },
+      {
+        "id": "delete-horizontal-space",
+        "shortName": "Del spaces",
+        "iconPath": "icons/bash/EditorDeleteLine.png"
+      },
+      {
+        "id": "yank",
+        "shortName": "Yank",
+        "iconPath": "icons/bash/$Paste.png"
+      },
+      {
+        "id": "yank-pop",
+        "shortName": "Yank pop",
+        "iconPath": "icons/bash/EditorPasteSimple.png"
+      },
+      {
+        "id": "yank-last-arg",
+        "shortName": "Yank last arg",
+        "iconPath": "icons/bash/$Paste.png"
+      },
+      {
+        "id": "yank-nth-arg",
+        "shortName": "Yank nth arg",
+        "iconPath": "icons/bash/$Paste.png"
+      },
+      {
+        "id": "undo",
+        "shortName": "Undo",
+        "iconPath": "icons/bash/$Undo.png"
+      },
+      {
+        "id": "revert-line",
+        "shortName": "Revert",
+        "iconPath": "icons/bash/$Undo.png"
+      },
+      {
+        "id": "redo",
+        "shortName": "Redo",
+        "iconPath": "icons/bash/$Redo.svg"
+      },
+      {
+        "id": "transpose-chars",
+        "shortName": "Transpose",
+        "iconPath": "icons/bash/Replace.png"
+      },
+      {
+        "id": "transpose-words",
+        "shortName": "Transp. words",
+        "iconPath": "icons/bash/Replace.png"
+      },
+      {
+        "id": "capitalize-word",
+        "shortName": "Capitalize",
+        "iconPath": "icons/bash/EditorToggleCase.svg"
+      },
+      {
+        "id": "upcase-word",
+        "shortName": "Uppercase",
+        "iconPath": "icons/bash/EditorToggleCase.svg"
+      },
+      {
+        "id": "downcase-word",
+        "shortName": "Lowercase",
+        "iconPath": "icons/bash/EditorToggleCase.svg"
+      },
+      {
+        "id": "complete",
+        "shortName": "Complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "possible-completions",
+        "shortName": "Completions",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "insert-completions",
+        "shortName": "Insert comps",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "menu-complete",
+        "shortName": "Menu complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "menu-complete-backward",
+        "shortName": "Menu back",
+        "iconPath": "icons/bash/HippieBackwardCompletion.png"
+      },
+      {
+        "id": "complete-filename",
+        "shortName": "File complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "complete-username",
+        "shortName": "User complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "complete-variable",
+        "shortName": "Var complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "complete-hostname",
+        "shortName": "Host complete",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "glob-expand-word",
+        "shortName": "Glob expand",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "tab-insert",
+        "shortName": "Insert tab",
+        "iconPath": "icons/bash/InsertLiveTemplate.png"
+      },
+      {
+        "id": "quoted-insert",
+        "shortName": "Quoted insert",
+        "iconPath": "icons/bash/InsertLiveTemplate.png"
+      },
+      {
+        "id": "magic-space",
+        "shortName": "Magic space",
+        "iconPath": "icons/bash/InsertLiveTemplate.png"
+      },
+      {
+        "id": "accept-line",
+        "shortName": "Accept",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "operate-and-get-next",
+        "shortName": "Operate+next",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "edit-and-execute-command",
+        "shortName": "Edit command",
+        "iconPath": "icons/bash/ActivateTerminalToolWindow.svg"
+      },
+      {
+        "id": "abort",
+        "shortName": "Abort",
+        "iconPath": "icons/bash/Stop.svg"
+      },
+      {
+        "id": "overwrite-mode",
+        "shortName": "Overwrite",
+        "iconPath": "icons/bash/Pause.svg"
+      },
+      {
+        "id": "reverse-search-history",
+        "shortName": "Rev search",
+        "iconPath": "icons/bash/Find.svg"
+      },
+      {
+        "id": "forward-search-history",
+        "shortName": "Fwd search",
+        "iconPath": "icons/bash/FindNext.png"
+      },
+      {
+        "id": "non-incremental-reverse-search-history",
+        "shortName": "NI rev search",
+        "iconPath": "icons/bash/FindPrevious.png"
+      },
+      {
+        "id": "non-incremental-forward-search-history",
+        "shortName": "NI fwd search",
+        "iconPath": "icons/bash/FindNext.png"
+      },
+      {
+        "id": "history-search-backward",
+        "shortName": "Hist search ↑",
+        "iconPath": "icons/bash/Console.History.Browse.svg"
+      },
+      {
+        "id": "history-search-forward",
+        "shortName": "Hist search ↓",
+        "iconPath": "icons/bash/Console.History.Browse.svg"
+      },
+      {
+        "id": "history-expand-line",
+        "shortName": "Hist expand",
+        "iconPath": "icons/bash/Console.History.Browse.svg"
+      },
+      {
+        "id": "character-search",
+        "shortName": "Char search",
+        "iconPath": "icons/bash/SearchEverywhere.png"
+      },
+      {
+        "id": "character-search-backward",
+        "shortName": "Char search ←",
+        "iconPath": "icons/bash/FindPrevious.png"
+      },
+      {
+        "id": "execute-named-command",
+        "shortName": "Named cmd",
+        "iconPath": "icons/bash/SearchEverywhere.png"
+      },
+      {
+        "id": "insert-comment",
+        "shortName": "Comment",
+        "iconPath": "icons/bash/CommentByLineComment.png"
+      },
+      {
+        "id": "tilde-expand",
+        "shortName": "Tilde expand",
+        "iconPath": "icons/bash/GotoLine.png"
+      },
+      {
+        "id": "clear-screen",
+        "shortName": "Clear",
+        "iconPath": "icons/bash/EditorDeleteLine.png"
+      },
+      {
+        "id": "clear-display",
+        "shortName": "Clear display",
+        "iconPath": "icons/bash/EditorDeleteLine.png"
+      },
+      {
+        "id": "redraw-current-line",
+        "shortName": "Redraw",
+        "iconPath": "icons/bash/Replace.png"
+      },
+      {
+        "id": "set-mark",
+        "shortName": "Set mark",
+        "iconPath": "icons/bash/EditorSelectLine.png"
+      },
+      {
+        "id": "exchange-point-and-mark",
+        "shortName": "Exchange mark",
+        "iconPath": "icons/bash/EditorSelectLine.png"
+      },
+      {
+        "id": "digit-argument",
+        "shortName": "Digit arg",
+        "iconPath": "icons/bash/GotoLine.png"
+      },
+      {
+        "id": "vi-editing-mode",
+        "shortName": "Vi mode",
+        "iconPath": "icons/bash/Pause.svg"
+      },
+      {
+        "id": "emacs-editing-mode",
+        "shortName": "Emacs mode",
+        "iconPath": "icons/bash/Pause.svg"
+      },
+      {
+        "id": "start-kbd-macro",
+        "shortName": "Start macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "end-kbd-macro",
+        "shortName": "End macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "call-last-kbd-macro",
+        "shortName": "Call macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "re-read-init-file",
+        "shortName": "Reload inputrc",
+        "iconPath": "icons/bash/Replace.png"
+      },
+      {
+        "id": "dump-functions",
+        "shortName": "Dump functions",
+        "iconPath": "icons/bash/SearchEverywhere.png"
+      },
+      {
+        "id": "dump-variables",
+        "shortName": "Dump vars",
+        "iconPath": "icons/bash/SearchEverywhere.png"
+      },
+      {
+        "id": "dump-macros",
+        "shortName": "Dump macros",
+        "iconPath": "icons/bash/SearchEverywhere.png"
+      },
+      {
+        "id": "alias-expand-line",
+        "shortName": "Alias expand",
+        "iconPath": "icons/bash/HippieCompletion.png"
+      },
+      {
+        "id": "shell-expand-line",
+        "shortName": "Shell expand",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png"
       }
     ]
   }

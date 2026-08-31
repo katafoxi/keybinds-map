@@ -1,0 +1,104 @@
+# GNU Readline emacs-mode defaults for keybinds-map.
+# Source: readline(3) DEFAULT KEY BINDINGS + bash extras (C-o).
+# C-x prefix chords are omitted — the engine maps one keystroke.
+set editing-mode emacs
+set keymap emacs
+
+"\C-@": set-mark
+"\C-a": beginning-of-line
+"\C-b": backward-char
+"\C-d": delete-char
+"\C-e": end-of-line
+"\C-f": forward-char
+"\C-g": abort
+"\C-h": backward-delete-char
+"\t": complete
+"\C-j": accept-line
+"\C-k": kill-line
+"\C-l": clear-screen
+"\C-m": accept-line
+"\C-n": next-history
+"\C-o": operate-and-get-next
+"\C-p": previous-history
+"\C-q": quoted-insert
+"\C-r": reverse-search-history
+"\C-s": forward-search-history
+"\C-t": transpose-chars
+"\C-u": unix-line-discard
+"\C-v": quoted-insert
+"\C-w": unix-word-rubout
+"\C-y": yank
+"\C-]": character-search
+"\C-_": undo
+"\C-?": backward-delete-char
+
+"\M-b": backward-word
+"\M-c": capitalize-word
+"\M-d": kill-word
+"\M-f": forward-word
+"\M-l": downcase-word
+"\M-n": non-incremental-forward-search-history
+"\M-p": non-incremental-reverse-search-history
+"\M-r": revert-line
+"\M-t": transpose-words
+"\M-u": upcase-word
+"\M-x": execute-named-command
+"\M-y": yank-pop
+"\M- ": set-mark
+"\M-.": yank-last-arg
+"\M-_": yank-last-arg
+"\M-~": tilde-expand
+"\M-#": insert-comment
+"\M-&": tilde-expand
+"\M-*": insert-completions
+"\M-=": possible-completions
+"\M-?": possible-completions
+"\M-<": beginning-of-history
+"\M->": end-of-history
+"\M-\\": delete-horizontal-space
+"\M--": digit-argument
+"\M-0": digit-argument
+"\M-1": digit-argument
+"\M-2": digit-argument
+"\M-3": digit-argument
+"\M-4": digit-argument
+"\M-5": digit-argument
+"\M-6": digit-argument
+"\M-7": digit-argument
+"\M-8": digit-argument
+"\M-9": digit-argument
+"\M-\C-g": abort
+"\M-\C-h": backward-kill-word
+"\M-\C-i": tab-insert
+"\M-\C-j": vi-editing-mode
+"\M-\C-l": clear-display
+"\M-\C-r": revert-line
+"\M-\C-y": yank-nth-arg
+"\M-\C-]": character-search-backward
+"\M-\C-?": backward-kill-word
+"\M-\t": tab-insert
+
+"\e[A": previous-history
+"\e[B": next-history
+"\e[C": forward-char
+"\e[D": backward-char
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+"\e[2~": overwrite-mode
+"\e[3~": delete-char
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[3;5~": kill-word
+"\e[Z": tab-insert
+
+# C-x prefix (chords, skipped by parser):
+# "\C-x\C-e": edit-and-execute-command
+# "\C-x\C-r": re-read-init-file
+# "\C-x\C-u": undo
+# "\C-x\C-x": exchange-point-and-mark
+# "\C-x(": start-kbd-macro
+# "\C-x)": end-kbd-macro
+# "\C-xe": call-last-kbd-macro
+# "\C-x\C-?": backward-kill-line

@@ -53,7 +53,7 @@ for (const entry of fixture) {
       icon: resolveProgramIcon(entry.fields.icon),
       site: entry.fields.site,
       settingsFileInfo: entry.fields.settings_file_info ?? '',
-      supported: slug === 'pycharm' || slug === 'vscode',
+      supported: slug === 'pycharm' || slug === 'vscode' || slug === 'bash',
       isBounded: entry.fields.is_bounded ?? slug === 'pycharm',
     });
   }
@@ -65,7 +65,7 @@ for (const entry of fixture) {
       id: entry.fields.name,
       shortName: entry.fields.short_name,
       iconPath: entry.fields.icon
-        ? `icons/pycharm/${basename(entry.fields.icon)}`
+        ? `icons/${program}/${basename(entry.fields.icon)}`
         : undefined,
     });
   }
@@ -81,6 +81,28 @@ programs.push({
   isBounded: true,
 });
 
+const bashCatalogPath = resolve(root, 'fixtures/bash-emacs.json');
+if (existsSync(bashCatalogPath)) {
+  const bashCatalog = JSON.parse(readFileSync(bashCatalogPath, 'utf-8'));
+  const bashProgram = bashCatalog.program;
+  if (bashProgram && !programs.some((program) => program.slug === 'bash')) {
+    programs.push({
+      slug: bashProgram.slug,
+      title: bashProgram.title,
+      icon: resolveProgramIcon(bashProgram.icon),
+      site: bashProgram.site,
+      settingsFileInfo: bashProgram.settings_file_info ?? '',
+      supported: true,
+      isBounded: bashProgram.is_bounded ?? true,
+    });
+  }
+  commands.bash = (bashCatalog.commands ?? []).map((entry) => ({
+    id: entry.id,
+    shortName: entry.short_name,
+    iconPath: entry.icon ? `icons/bash/${basename(entry.icon)}` : undefined,
+  }));
+}
+
 const catalogJson = JSON.stringify({ programs, commands }, null, 2);
 
 writeFileSync(outputPath, catalogJson, 'utf-8');
@@ -88,4 +110,6 @@ writeFileSync(bundledOutputPath, catalogJson, 'utf-8');
 
 console.log(`Wrote ${outputPath}`);
 console.log(`Wrote ${bundledOutputPath}`);
-console.log(`Programs: ${programs.length}, PyCharm commands: ${commands.pycharm?.length ?? 0}`);
+console.log(
+  `Programs: ${programs.length}, PyCharm commands: ${commands.pycharm?.length ?? 0}, Bash commands: ${commands.bash?.length ?? 0}`,
+);

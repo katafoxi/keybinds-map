@@ -35,7 +35,79 @@ const copies = [
     from: resolve(root, 'test-fixtures/Windows.xml'),
     to: resolve(root, 'web/public/defaults/pycharm-windows.xml'),
   },
+  {
+    from: resolve(root, 'test-fixtures/bash-emacs.inputrc'),
+    to: resolve(root, 'web/public/defaults/bash-emacs.inputrc'),
+  },
 ];
+
+const bashProgramIcon = resolve(
+  root,
+  'media/pycharm_command_icons/ActivateTerminalToolWindow.svg',
+);
+const bashProgramIconDest = resolve(root, 'media/program_icons/bash.svg');
+if (existsSync(bashProgramIcon) && !existsSync(bashProgramIconDest)) {
+  cpSync(bashProgramIcon, bashProgramIconDest);
+  console.log(`copied ${bashProgramIcon} -> ${bashProgramIconDest}`);
+}
+
+const bashIconDir = resolve(root, 'web/public/icons/bash');
+const pycharmIconDir = resolve(root, 'media/pycharm_command_icons');
+const bashCustomIconDir = resolve(root, 'media/bash_command_icons');
+mkdirSync(bashIconDir, { recursive: true });
+
+const bashIconSources = {
+  'EditorLineStart.png': 'EditorLineStart.png',
+  'EditorLineEnd.png': 'EditorLineEnd.png',
+  'EditorRight.png': 'EditorRight.png',
+  'EditorLeft.png': 'EditorLeft.png',
+  'EditorNextWord.png': 'EditorNextWord.png',
+  'EditorPreviousWord.png': 'EditorPreviousWord.png',
+  'EditorDown.png': 'EditorDown.png',
+  'EditorUp.png': 'EditorUp.png',
+  'EditorScrollTop.png': 'EditorScrollTop.png',
+  'EditorScrollDown.png': 'EditorScrollDown.png',
+  '$Delete.svg': '$Delete.svg',
+  'EditorBackSpace.png': 'EditorBackSpace.png',
+  'EditorDeleteToLineEnd.png': 'EditorDeleteToLineEnd.png',
+  'EditorDeleteToLineStart.png': 'EditorDeleteToLineStart.png',
+  'EditorDeleteToWordEnd.png': 'EditorDeleteToWordEnd.png',
+  'EditorDeleteToWordStart.png': 'EditorDeleteToWordStart.png',
+  '$Paste.png': '$Paste.png',
+  'EditorPasteSimple.png': 'EditorPasteSimple.png',
+  '$Undo.png': '$Undo.png',
+  'Replace.png': 'Replace.png',
+  'EditorToggleCase.svg': 'EditorToggleCase.svg',
+  'HippieCompletion.png': 'HippieCompletion.png',
+  'HippieBackwardCompletion.png': 'HippieBackwardCompletion.png',
+  'InsertLiveTemplate.png': 'InsertLiveTemplate.png',
+  'ExecuteInPyConsoleAction.png': 'ExecuteInPyConsoleAction.png',
+  'Stop.svg': 'Stop.svg',
+  'Pause.svg': 'Pause.svg',
+  'Find.svg': 'Find.svg',
+  'FindNext.png': 'FindNext.png',
+  'FindPrevious.png': 'FindPrevious.png',
+  'Console.History.Browse.svg': 'Console.History.Browse.svg',
+  'SearchEverywhere.png': 'SearchEverywhere.png',
+  'CommentByLineComment.png': 'CommentByLineComment.png',
+  'GotoLine.png': 'GotoLine.png',
+  'EditorDeleteLine.png': 'EditorDeleteLine.png',
+  'EditorSelectLine.png': 'EditorSelectLine.png',
+  'ActivateTerminalToolWindow.svg': 'ActivateTerminalToolWindow.svg',
+  '$Redo.svg': '$Redo.svg',
+};
+
+for (const [filename, sourceName] of Object.entries(bashIconSources)) {
+  const custom = resolve(bashCustomIconDir, filename);
+  const source = resolve(pycharmIconDir, sourceName);
+  const dest = resolve(bashIconDir, filename);
+  const from = existsSync(custom) ? custom : source;
+  if (!existsSync(from)) {
+    console.warn(`skip missing bash icon: ${from}`);
+    continue;
+  }
+  cpSync(from, dest);
+}
 
 for (const { from, to } of copies) {
   if (!existsSync(from)) {
