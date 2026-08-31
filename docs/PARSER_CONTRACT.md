@@ -198,9 +198,11 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 | `keymap.program` | `slug`, `title`, `icon`, `site`, `settings_file_info` |
 | `keymap.command` | `program` (slug), `name` (= `commandId`), `short_name`, `icon` (опционально), `descriptions` (`{ ru, en? }`, опционально) |
 
-Флаг `supported: true` в [`export-catalog.mjs`](../scripts/export-catalog.mjs) включает программу в UI. Сейчас: `pycharm`, `vscode`, `bash`.
+Флаг `supported: true` в [`export-catalog.mjs`](../scripts/export-catalog.mjs) включает программу в UI. Сейчас: `pycharm`, `vscode`, `bash`, `vim`.
 
 Bash (emacs): каталог команд в [`fixtures/bash-emacs.json`](../fixtures/bash-emacs.json), дефолтный keymap — [`test-fixtures/bash-emacs.inputrc`](../test-fixtures/bash-emacs.inputrc). Иконки команд копируются из PyCharm в `web/public/icons/bash/` (`scripts/sync-assets.mjs`).
+
+Vim: curated JSON [`fixtures/vim-default.json`](../fixtures/vim-default.json) + рецепты [`fixtures/vim-recipes.json`](../fixtures/vim-recipes.json). Отдельный IR (`VimBinding` с `mode` / `layer`) — парсер [`vim.ts`](../web/src/lib/parsers/vim.ts), экспорт [`vim-serialize.ts`](../web/src/lib/parsers/vim-serialize.ts). `isBounded: false`; Insert ограничивает push/Shift per-mode в `bindingPolicy.ts`.
 
 Команды без каталога **работают**, но без иконок и с `shortName = id`. Для полноценного UX каталог желателен.
 
@@ -240,12 +242,13 @@ Store (`assignCommand`, `moveCommand`, `unassignCommand`) и UI (`KeyCell`, `Com
 | Возможность | Статус |
 |-------------|--------|
 | Один keystroke на shortcut | Поддерживается |
-| Chords (последовательности клавиш) | Не поддерживается; warning + skip |
+| Chords (последовательности клавиш) | Не поддерживается в IDE IR; warning + skip. Vim: префикс-слои + operator-pending в UI |
 | Mouse bindings | Не поддерживается; warning + skip |
 | Context / `when` clauses | Игнорируются при импорте |
 | Конфликты на одном слоте | Last-write-wins в парсере |
-| Экспорт | Round-trip PyCharm XML и Bash `.inputrc`; VS Code — только импорт |
+| Экспорт | Round-trip PyCharm XML и Bash `.inputrc`; VS Code — только импорт; Vim — `nnoremap`/`inoremap`/`vnoremap` |
 | Политика IDE vs CAD | `bindingPolicy.ts`, `isBounded` в каталоге |
+| Vim режимы / секторы | `VimBinding.mode`, `sector` на команде, UI-фильтры |
 | Плагины в рантайме браузера | Нет; парсер — PR в репозиторий |
 
 ---

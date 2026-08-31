@@ -18,6 +18,7 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Импорт/парсинг PyCharm XML | `web/src/lib/parsers/pycharm.ts` | `pycharm.test.ts`, `windows-default.test.ts` | `media/`, `fixture_all.json` |
 | Импорт VS Code JSON | `web/src/lib/parsers/vscode.ts` | `vscode.test.ts` | — |
 | Импорт Bash inputrc (emacs) | `web/src/lib/parsers/bash.ts` | `bash.test.ts` | `media/` |
+| Импорт Vim JSON / vimrc | `web/src/lib/parsers/vim.ts`, `vim-serialize.ts`, `web/src/lib/vim/vimView.ts` | `vim.test.ts`, `vimView.test.ts` | `media/` |
 | Новый парсер / IR-контракт | `docs/PARSER_CONTRACT.md` | эталон: `pycharm.test.ts`, `vscode.test.ts` | — |
 | Экспорт XML | `web/src/lib/parsers/pycharm-serialize.ts` | `pycharm.test.ts` (round-trip) | — |
 | Экспорт Bash inputrc | `web/src/lib/parsers/bash-serialize.ts` | `bash.test.ts` (round-trip) | — |
@@ -157,6 +158,7 @@ keybinds/
 | `pycharm.ts` | PyCharm XML | `ParsedCommands` + warnings (chords, mouse skipped) |
 | `vscode.ts` | VS Code keybindings JSON | `ParsedCommands` (через `modifiersToCode`) |
 | `bash.ts` | GNU Readline `.inputrc` / `bind -p` (emacs) | `ParsedCommands` + warnings (chords, macros) |
+| `vim.ts` | curated Vim JSON (+ recipes) | `VimBinding[]` + layers/operators; flat `ParsedCommands` только Normal root |
 | `pycharm-serialize.ts` | `KeyBindings` + metadata | XML string + `downloadXml()` |
 | `bash-serialize.ts` | `KeyBindings` | `.inputrc` + `downloadInputrc()` |
 
@@ -227,9 +229,11 @@ cd web && npm run build
 | `scripts/export-catalog.mjs` | fixture_all.json → programs.json; скрывает testprog* |
 | `web/vite.config.mts` | `base: './'`, alias `@fixtures` → test-fixtures |
 
-**Поддерживаемые программы** (флаг `supported` в export-catalog): `pycharm`, `vscode`, `bash`. Остальные в каталоге — «скоро».
+**Поддерживаемые программы** (флаг `supported` в export-catalog): `pycharm`, `vscode`, `bash`, `vim`. Остальные в каталоге — «скоро».
 
 Bash emacs: `fixtures/bash-emacs.json` + `test-fixtures/bash-emacs.inputrc`. Иконки — копии из PyCharm (`sync-assets.mjs` → `web/public/icons/bash/`). Пояснения команд: `descriptions.ru` (переключение языка — `uiLocale`, `pickLocalized`).
+
+Vim: `fixtures/vim-default.json` + `fixtures/vim-recipes.json`. IR — `VimBinding` (mode/layer), UI — режимы, секторы, prefix/operator pending (`vimView`), рецепты. Экспорт `.vim` (`nnoremap`…). `isBounded: false`.
 
 ---
 
