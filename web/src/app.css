@@ -227,28 +227,8 @@ label {
     cursor: grabbing;
 }
 
-.command_description.drag-preview .descr:hover {
-    transform: none;
-    overflow: hidden;
-    position: static;
-    width: auto;
-    z-index: auto;
-    background-color: transparent;
-}
-
 .command_description.drag-source {
     opacity: 0.35;
-}
-
-.command_description:hover,
-.descr:hover {
-    transform: scale(1.2);
-    overflow: visible;
-    position: relative;
-    width: 150px;
-    z-index: 200;
-    background-color: #e7e3e3;
-    color: #000000;
 }
 
 .icons {
@@ -602,11 +582,7 @@ display:block;}
     height: 10px;
   }
 
-  .command_description:hover,
-  .descr:hover {
-    transform: none;
-    width: auto;
-    position: static;
-    overflow: hidden;
+  .chip-popover {
+    display: none !important;
   }
 }
