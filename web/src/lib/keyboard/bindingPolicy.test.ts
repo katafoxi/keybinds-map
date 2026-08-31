@@ -75,4 +75,15 @@ describe('bindingPolicy', () => {
     expect(canDropOnSlot(null, 'siemens-nx', 'i', 'push')).toBe(true);
     expect(canDropOnSlot(null, 'siemens-nx', 'c', 'c', copy)).toBe(true);
   });
+
+  it('bounds Vim insert letter keys but not normal mode', () => {
+    const vimCatalog = {
+      programs: [{ slug: 'vim', title: 'Vim', icon: '', site: '', isBounded: false }],
+      commands: {},
+    };
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push', 'normal')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push', 'insert')).toBe(true);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'c', 'insert')).toBe(false);
+  });
 });

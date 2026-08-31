@@ -1,4 +1,4 @@
-import type { CommandRef, ModifierSlot, ProgramCatalog } from '../types/keymap';
+import type { CommandRef, ModifierSlot, ProgramCatalog, VimMode } from '../types/keymap';
 
 export type LockedBinding = {
   keyName: string;
@@ -60,7 +60,12 @@ export function isBoundedSlot(
   programSlug: string,
   keyName: string,
   slot: ModifierSlot,
+  vimMode?: VimMode,
 ): boolean {
+  // Vim Insert: plain letter keys are typing, not commands.
+  if (programSlug === 'vim' && vimMode === 'insert') {
+    return (slot === 'push' || slot === 's') && isPushShiftBoundedKey(keyName);
+  }
   if (!isProgramBounded(catalog, programSlug)) {
     return false;
   }
@@ -100,8 +105,9 @@ export function canDropOnSlot(
   keyName: string,
   slot: ModifierSlot,
   existing?: CommandRef,
+  vimMode?: VimMode,
 ): boolean {
-  if (isBoundedSlot(catalog, programSlug, keyName, slot)) {
+  if (isBoundedSlot(catalog, programSlug, keyName, slot, vimMode)) {
     return false;
   }
   if (existing && isBindingLocked(programSlug, keyName, slot, existing)) {
@@ -129,8 +135,9 @@ export function canMutateBinding(
   keyName: string,
   slot: ModifierSlot,
   existing?: CommandRef,
+  vimMode?: VimMode,
 ): boolean {
-  if (isBoundedSlot(catalog, programSlug, keyName, slot)) {
+  if (isBoundedSlot(catalog, programSlug, keyName, slot, vimMode)) {
     return false;
   }
   if (existing && isBindingLocked(programSlug, keyName, slot, existing)) {

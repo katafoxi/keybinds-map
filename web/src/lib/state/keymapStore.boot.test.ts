@@ -41,4 +41,22 @@ describe('keymapStore standard profile', () => {
       true,
     );
   });
+
+  it('loads vim defaults with normal-mode plain keys and sectors', async () => {
+    await keymapStore.getState().selectProgram('vim');
+
+    const state = keymapStore.getState();
+    expect(state.selectedProgram).toBe('vim');
+    expect(state.vimMode).toBe('normal');
+    expect(state.bindings['h']?.push?.id).toBe('vim-h');
+    expect(state.bindings['h']?.push?.sector).toBe('motion');
+    expect(state.bindings['d']?.push?.roles).toContain('operator');
+    expect(state.vimLayers.some((layer) => layer.id === 'g')).toBe(true);
+    expect(state.vimRecipes.length).toBeGreaterThan(5);
+
+    keymapStore.getState().setVimMode('insert');
+    const insert = keymapStore.getState();
+    expect(insert.bindings['h']?.push).toBeUndefined();
+    expect(insert.bindings['w']?.c?.id).toBe('vim-ins-ctrl-w');
+  });
 });
