@@ -249,6 +249,11 @@ label {
     white-space: nowrap;
 }
 
+.chip-popover-title .icons {
+    width: 28px;
+    height: 28px;
+}
+
 .chip-popover-body {
     margin: 0;
     font-size: 12px;
