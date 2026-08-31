@@ -58,12 +58,14 @@ export function buildBindingsFromParsed(
   for (const [commandId, shortcuts] of Object.entries(parsed)) {
     const command = resolveCommand(commandId);
     for (const [keyName, modifierCode] of Object.entries(shortcuts)) {
-      const slot = modifierCode as ModifierSlot;
-      if (!MODIFIER_SLOTS.includes(slot)) {
-        continue;
+      const slots = modifierCode.split(',') as ModifierSlot[];
+      for (const slot of slots) {
+        if (!MODIFIER_SLOTS.includes(slot)) {
+          continue;
+        }
+        bindings[keyName] ??= {};
+        bindings[keyName][slot] = command;
       }
-      bindings[keyName] ??= {};
-      bindings[keyName][slot] = command;
     }
   }
 
