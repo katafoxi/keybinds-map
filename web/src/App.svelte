@@ -3,6 +3,7 @@
   import type { ProgramCatalog } from './lib/types/keymap';
   import { assetUrl } from './lib/assets';
   import { keymap } from './lib/state/keymapStore';
+  import { clearSlotPreview } from './lib/drag/slotPreview';
   import { bundledCatalog } from './lib/catalog/bundledPrograms';
   import ProgramPicker from './components/ProgramPicker.svelte';
   import FileDropZone from './components/FileDropZone.svelte';
@@ -48,15 +49,27 @@
 
   onMount(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('dragend', handleDragEnd);
   });
 
   onDestroy(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.removeEventListener('dragend', handleDragEnd);
   });
 
-  function exportXml() {
+  function handleDragEnd() {
+    clearSlotPreview();
+    keymap.getState().endDrag();
+  }
+
+  function exportKeymap() {
+    const program = $keymap.selectedProgram;
+    if (program === 'bash') {
+      keymap.getState().exportKeymap('inputrc');
+      return;
+    }
     const filename = `${$keymap.metadata.name || 'keymap'}.xml`;
-    keymap.getState().exportXml(filename);
+    keymap.getState().exportKeymap(filename);
   }
 
   function printKeymap() {
@@ -89,7 +102,9 @@
         <button type="button" on:click={() => keymap.getState().redo()} disabled={$keymap.historyFuture.length === 0}>
           Redo
         </button>
-        <button type="button" on:click={exportXml}>Скачать XML</button>
+        <button type="button" on:click={exportKeymap}>
+          {$keymap.selectedProgram === 'bash' ? 'Скачать inputrc' : 'Скачать XML'}
+        </button>
         <button type="button" on:click={printKeymap}>Печать</button>
         <ProfileSwitcher />
         {#if showDirtyFlag}
@@ -104,7 +119,7 @@
 
     {#if showEmptyHint}
       <section class="empty-hint no-print">
-        <strong>Шаг 2:</strong> загрузите .xml (PyCharm) или .json (VS Code), либо «Скопировать профиль» для редактирования стандартной раскладки.
+        <strong>Шаг 2:</strong> загрузите .xml (PyCharm), .json (VS Code) или .inputrc (Bash), либо «Скопировать профиль» для редактирования стандартной раскладки.
       </section>
     {/if}
 

@@ -27,4 +27,17 @@ describe('keymapStore standard profile', () => {
     expect(state.bindings['c']?.c?.id).toBeDefined();
     expect(state.bindings['c']?.c?.icon).toMatch(/^icons\/pycharm\//);
   });
+
+  it('loads bash emacs defaults with catalog command icons', async () => {
+    await keymapStore.getState().selectProgram('bash');
+
+    const state = keymapStore.getState();
+    expect(state.selectedProgram).toBe('bash');
+    expect(state.bindings['a']?.c?.id).toBe('beginning-of-line');
+    expect(state.bindings['a']?.c?.icon).toMatch(/^icons\/bash\//);
+    expect(state.bindings['tab']?.push?.id).toBe('complete');
+    expect(state.unassigned.some((command) => command.id === 'edit-and-execute-command')).toBe(
+      true,
+    );
+  });
 });

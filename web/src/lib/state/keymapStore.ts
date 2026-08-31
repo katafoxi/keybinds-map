@@ -4,11 +4,13 @@ import type {
   CommandRef,
   KeyBindings,
   KeymapMetadata,
+  ParsedCommands,
   PrintLayerMode,
   ProfileSlotId,
   ProfileSlotsStore,
   ProgramCatalog,
   SavedProfile,
+  DragState,
 } from '../types/keymap';
 import {
   buildBindingsFromParsed,
@@ -19,8 +21,11 @@ import {
   parsePycharmMetadata,
 } from '../parsers/pycharm';
 import { parseVsCodeKeymap } from '../parsers/vscode';
+import { parseBashKeymap } from '../parsers/bash';
 import { serializePycharmKeymap, downloadXml } from '../parsers/pycharm-serialize';
+import { serializeBashInputrc, downloadInputrc } from '../parsers/bash-serialize';
 import defaultPycharmXml from '@fixtures/Windows.xml?raw';
+import defaultBashInputrc from '@fixtures/bash-emacs.inputrc?raw';
 import { bundledCatalog } from '../catalog/bundledPrograms';
 import { canMutateBinding } from '../keyboard/bindingPolicy';
 import { get, set as idbSet } from 'idb-keyval';
@@ -58,7 +63,7 @@ export type KeymapState = {
   importWarnings: string[];
   modifierVisibility: Record<string, boolean>;
   printLayerMode: PrintLayerMode;
-  dropHighlight: string | null;
+  drag: DragState | null;
   historyPast: KeymapStateSnapshot[];
   historyFuture: KeymapStateSnapshot[];
 };
@@ -163,14 +168,14 @@ function rehydrateCommands(
   };
 }
 
-function applyXmlToState(
+function applyParsedToState(
   state: KeymapState,
-  xml: string,
   program: string,
+  source: string,
+  parsed: { commands: ParsedCommands; warnings: string[] },
+  metadata: KeymapMetadata,
 ): Partial<KeymapState> {
   const catalog = catalogFor(state);
-  const parsed = parsePycharmKeymapDetailed(xml);
-  const metadata = parsePycharmMetadata(xml);
   const catalogRefs = catalogToRefs(catalog.commands[program]);
   const resolver = (commandId: string) => resolveCommand(commandId, catalog, program);
 
@@ -180,12 +185,52 @@ function applyXmlToState(
     bindings: buildBindingsFromParsed(parsed.commands, resolver),
     unassigned: buildUnassignedCommands(parsed.commands, catalogRefs),
     metadata,
-    sourceXml: xml,
+    sourceXml: source,
     dirty: false,
     importWarnings: parsed.warnings,
     historyPast: [],
     historyFuture: [],
   };
+}
+
+function applyXmlToState(
+  state: KeymapState,
+  xml: string,
+  program: string,
+): Partial<KeymapState> {
+  const parsed = parsePycharmKeymapDetailed(xml);
+  const metadata = parsePycharmMetadata(xml);
+  return applyParsedToState(state, program, xml, parsed, metadata);
+}
+
+function applySourceToState(
+  state: KeymapState,
+  source: string,
+  program: string,
+): Partial<KeymapState> {
+  if (program === 'bash') {
+    return applyParsedToState(state, 'bash', source, parseBashKeymap(source), {
+      version: '1',
+      name: 'Bash Emacs',
+    });
+  }
+  if (program === 'vscode') {
+    return applyParsedToState(state, 'vscode', source, parseVsCodeKeymap(source), {
+      version: '1',
+      name: 'VS Code',
+    });
+  }
+  return applyXmlToState(state, source, program);
+}
+
+function serializeSource(state: KeymapState): string {
+  if (state.selectedProgram === 'bash') {
+    return serializeBashInputrc(state.bindings);
+  }
+  if (state.selectedProgram === 'vscode') {
+    return state.sourceXml;
+  }
+  return serializePycharmKeymap(state.bindings, state.metadata);
 }
 
 const MODIFIER_VISIBILITY_DEFAULT = {
@@ -212,7 +257,7 @@ function emptyKeymapState(catalog: ProgramCatalog): KeymapState {
     importWarnings: [],
     modifierVisibility: { ...MODIFIER_VISIBILITY_DEFAULT },
     printLayerMode: 'visible',
-    dropHighlight: null,
+    drag: null,
     historyPast: [],
     historyFuture: [],
   };
@@ -231,6 +276,7 @@ export type KeymapActions = {
   selectProgram: (slug: string) => Promise<void>;
   loadFromXml: (xml: string) => void;
   loadFromVsCode: (json: string) => void;
+  loadFromBash: (source: string) => void;
   loadDefaultKeymap: () => boolean;
   switchProfile: (slotId: ProfileSlotId) => Promise<boolean>;
   copyCurrentProfile: () => Promise<ProfileSlotId | null>;
@@ -250,12 +296,17 @@ export type KeymapActions = {
     key: string,
     slot: keyof KeyBindings[string],
   ) => void;
-  setDropHighlight: (slotId: string | null) => void;
+  setDragTarget: (targetKey: string, targetSlot: keyof KeyBindings[string]) => void;
+  clearDragTarget: () => void;
+  startDrag: (command: CommandRef, sourceKey?: string, sourceSlot?: string) => void;
+  clearDrag: () => void;
+  endDrag: () => void;
   toggleModifier: (slot: string, visible: boolean) => void;
   setPrintLayerMode: (mode: PrintLayerMode) => void;
   undo: () => void;
   redo: () => void;
   exportXml: (filename?: string) => void;
+  exportKeymap: (filename?: string) => void;
   saveProfile: (name: string) => Promise<SavedProfile>;
   loadProfile: (profile: SavedProfile) => Promise<void>;
   deleteProfile: (id: string) => Promise<void>;
@@ -282,7 +333,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
   importWarnings: initialStandardState.importWarnings ?? [],
   modifierVisibility: { ...MODIFIER_VISIBILITY_DEFAULT },
   printLayerMode: 'visible',
-  dropHighlight: null,
+  drag: null,
   historyPast: [],
   historyFuture: [],
 
@@ -377,38 +428,42 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
         historyPast: [],
         historyFuture: [],
       });
+      return;
+    }
+
+    if (slug === 'bash') {
+      if (state.selectedProgram === 'bash' && bindingKeyCount(state.bindings) > 0) {
+        return;
+      }
+      get().loadFromBash(defaultBashInputrc);
     }
   },
 
   loadFromXml(xml) {
-    const state = get();
     set({
-      ...applyXmlToState(state, xml, state.selectedProgram),
+      ...applyXmlToState(get(), xml, 'pycharm'),
     });
   },
 
   loadFromVsCode(json) {
-    const state = get();
-    const parsed = parseVsCodeKeymap(json);
-    const catalogRefs = catalogToRefs(state.catalog?.commands.vscode);
-    const resolver = (commandId: string) =>
-      resolveCommand(commandId, state.catalog, 'vscode');
-
     set({
-      selectedProgram: 'vscode',
-      bindings: buildBindingsFromParsed(parsed.commands, resolver),
-      unassigned: buildUnassignedCommands(parsed.commands, catalogRefs),
-      metadata: { version: '1', name: 'VS Code' },
-      sourceXml: json,
-      dirty: false,
-      importWarnings: parsed.warnings,
-      historyPast: [],
-      historyFuture: [],
+      ...applySourceToState(get(), json, 'vscode'),
+    });
+  },
+
+  loadFromBash(source) {
+    set({
+      ...applySourceToState(get(), source, 'bash'),
     });
   },
 
   loadDefaultKeymap() {
-    if (get().selectedProgram !== 'pycharm') {
+    const program = get().selectedProgram;
+    if (program === 'bash') {
+      get().loadFromBash(defaultBashInputrc);
+      return true;
+    }
+    if (program !== 'pycharm') {
       return false;
     }
     get().loadFromXml(defaultPycharmXml);
@@ -428,7 +483,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       if (!slot) {
         return false;
       }
-      const next = applyXmlToState(state, slot.xml, slot.program);
+      const next = applySourceToState(state, slot.xml, slot.program);
       if (bindingKeyCount(next.bindings ?? {}) === 0) {
         return false;
       }
@@ -462,8 +517,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       }
     }
 
-    const xml =
-      state.sourceXml || serializePycharmKeymap(state.bindings, state.metadata);
+    const xml = serializeSource(state);
     slots[target] = {
       program: state.selectedProgram,
       xml,
@@ -489,7 +543,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       return;
     }
 
-    const xml = serializePycharmKeymap(state.bindings, state.metadata);
+    const xml = serializeSource(state);
     const slots = await getProfileSlots();
     slots[slotId] = {
       program: state.selectedProgram,
@@ -530,6 +584,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       bindings,
       unassigned,
       dirty: true,
+      drag: null,
     });
     scheduleSlotAutosave();
   },
@@ -591,7 +646,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       ...pushHistory(state),
       bindings,
       dirty: true,
-      dropHighlight: null,
+      drag: null,
     });
     scheduleSlotAutosave();
   },
@@ -604,8 +659,46 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     get().assignCommand({ key, slot, command, replaceExisting: true });
   },
 
-  setDropHighlight(slotId) {
-    set({ dropHighlight: slotId });
+  startDrag(command, sourceKey = '', sourceSlot = '') {
+    set({
+      drag: {
+        command,
+        sourceKey: sourceKey || undefined,
+        sourceSlot: sourceSlot || undefined,
+      },
+    });
+  },
+
+  setDragTarget(targetKey, targetSlot) {
+    const drag = get().drag;
+    if (!drag) {
+      return;
+    }
+    set({
+      drag: { ...drag, targetKey, targetSlot },
+    });
+  },
+
+  clearDragTarget() {
+    const drag = get().drag;
+    if (!drag?.targetKey) {
+      return;
+    }
+    set({
+      drag: { ...drag, targetKey: undefined, targetSlot: undefined },
+    });
+  },
+
+  clearDrag() {
+    set({ drag: null });
+  },
+
+  endDrag() {
+    setTimeout(() => {
+      if (get().drag) {
+        set({ drag: null });
+      }
+    }, 0);
   },
 
   toggleModifier(slot, visible) {
@@ -651,15 +744,23 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
   },
 
   exportXml(filename = 'keymap.xml') {
-    const { bindings, metadata } = get();
-    const xml = serializePycharmKeymap(bindings, metadata);
-    downloadXml(filename, xml);
-    set({ dirty: false, sourceXml: xml });
+    get().exportKeymap(filename);
+  },
+
+  exportKeymap(filename) {
+    const state = get();
+    const source = serializeSource(state);
+    if (state.selectedProgram === 'bash') {
+      downloadInputrc(filename ?? 'inputrc', source);
+    } else {
+      downloadXml(filename ?? 'keymap.xml', source);
+    }
+    set({ dirty: false, sourceXml: source });
   },
 
   async saveProfile(name) {
     const state = get();
-    const xml = serializePycharmKeymap(state.bindings, state.metadata);
+    const xml = serializeSource(state);
     const profiles = await getSavedProfiles();
     const profile: SavedProfile = {
       id: crypto.randomUUID(),
@@ -674,14 +775,9 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
   },
 
   async loadProfile(profile) {
-    if (profile.program === 'vscode') {
-      get().loadFromVsCode(profile.xml);
-      return;
-    }
-    if (profile.program !== get().selectedProgram) {
-      set({ selectedProgram: profile.program });
-    }
-    get().loadFromXml(profile.xml);
+    set({
+      ...applySourceToState(get(), profile.xml, profile.program),
+    });
   },
 
   async deleteProfile(id) {
@@ -728,6 +824,7 @@ function normalizeStoreState(
     historyPast: state.historyPast ?? [],
     historyFuture: state.historyFuture ?? [],
     modifierVisibility: state.modifierVisibility ?? { ...MODIFIER_VISIBILITY_DEFAULT },
+    drag: state.drag ?? null,
   };
 }
 

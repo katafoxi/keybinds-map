@@ -2,6 +2,7 @@
   import { mergeKeyboardWithBindings } from '../lib/keyboard/layout';
   import type { PrintLayerMode } from '../lib/types/keymap';
   import { keymap } from '../lib/state/keymapStore';
+  import { clearSlotPreview } from '../lib/drag/slotPreview';
   import KeyCell from './KeyCell.svelte';
 
   $: keys = mergeKeyboardWithBindings($keymap?.bindings ?? {});
@@ -16,7 +17,16 @@
   <p>{new Date().toLocaleDateString('ru-RU')}</p>
 </div>
 
-<div id="keyboardGrid" class="keyboardGrid print-layer-{$keymap.printLayerMode}">
+<div
+  id="keyboardGrid"
+  class="keyboardGrid print-layer-{$keymap.printLayerMode}"
+  on:dragleave={(event) => {
+    if (event.currentTarget === event.target) {
+      clearSlotPreview();
+      keymap.getState().clearDragTarget();
+    }
+  }}
+>
   {#each keys as key (key.backName)}
     <KeyCell
       backName={key.backName}

@@ -17,6 +17,15 @@ export type CommandRef = {
   icon?: string;
 };
 
+/** Active HTML5 drag: source chip + optional hover target for in-slot preview. */
+export type DragState = {
+  command: CommandRef;
+  sourceKey?: string;
+  sourceSlot?: string;
+  targetKey?: string;
+  targetSlot?: ModifierSlot;
+};
+
 export type SlotBindings = Partial<Record<ModifierSlot, CommandRef>>;
 
 export type KeyBindings = Record<string, SlotBindings>;

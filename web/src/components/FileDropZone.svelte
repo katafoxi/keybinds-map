@@ -11,11 +11,16 @@
 
     const file = files[0];
     const lower = file.name.toLowerCase();
+    const selected = $keymap.selectedProgram;
 
     const reader = new FileReader();
     reader.onload = () => {
       const text = reader.result;
       if (typeof text !== 'string') {
+        return;
+      }
+      if (lower.endsWith('.inputrc') || lower === 'inputrc') {
+        keymap.getState().loadFromBash(text);
         return;
       }
       if (lower.endsWith('.json')) {
@@ -26,13 +31,23 @@
         keymap.getState().loadFromXml(text);
         return;
       }
-      errorMessage = 'Поддерживаются .xml (PyCharm) и .json (VS Code).';
+      if (selected === 'bash') {
+        keymap.getState().loadFromBash(text);
+        return;
+      }
+      errorMessage = 'Поддерживаются .xml (PyCharm), .json (VS Code) и .inputrc (Bash).';
     };
 
-    if (lower.endsWith('.json') || lower.endsWith('.xml')) {
+    if (
+      lower.endsWith('.json') ||
+      lower.endsWith('.xml') ||
+      lower.endsWith('.inputrc') ||
+      lower === 'inputrc' ||
+      selected === 'bash'
+    ) {
       reader.readAsText(file);
     } else {
-      errorMessage = 'Поддерживаются .xml (PyCharm) и .json (VS Code).';
+      errorMessage = 'Поддерживаются .xml (PyCharm), .json (VS Code) и .inputrc (Bash).';
     }
   }
 
@@ -53,12 +68,12 @@
 
 <section class="file-drop no-print" on:drop={onDrop} on:dragover={onDragOver}>
   <span class="privacy-note">
-    Локально в браузере · перетащите .xml / .json или
+    Локально в браузере · перетащите .xml / .json / .inputrc или
   </span>
   <input
     id="fileselect"
     type="file"
-    accept=".xml,.json,text/xml,application/json"
+    accept=".xml,.json,.inputrc,text/xml,application/json,text/plain"
     on:change={onInputChange}
   />
   {#if errorMessage}

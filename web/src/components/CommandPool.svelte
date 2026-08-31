@@ -2,11 +2,13 @@
   import type { CommandRef } from '../lib/types/keymap';
   import CommandChip from './CommandChip.svelte';
   import { keymap } from '../lib/state/keymapStore';
+  import { clearSlotPreview } from '../lib/drag/slotPreview';
 
   export let commands: CommandRef[] = [];
 
   function handleDrop(event: DragEvent) {
     event.preventDefault();
+    clearSlotPreview();
     const raw = event.dataTransfer?.getData('application/json');
     if (!raw) {
       return;
@@ -22,10 +24,13 @@
     } catch {
       // ignore invalid payload
     }
+    keymap.getState().clearDrag();
   }
 
   function allowDrop(event: DragEvent) {
     event.preventDefault();
+    clearSlotPreview();
+    keymap.getState().clearDragTarget();
   }
 </script>
 

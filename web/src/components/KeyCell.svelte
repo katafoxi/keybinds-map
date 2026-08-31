@@ -10,6 +10,7 @@
     isBindingLocked,
   } from '../lib/keyboard/bindingPolicy';
   import { isModifierSlotVisibleOnScreen } from '../lib/keyboard/modifierVisibility';
+  import { clearSlotPreview, showSlotPreview } from '../lib/drag/slotPreview';
 
   export let backName: string;
   export let frontName: string;
@@ -37,13 +38,9 @@
     acs: 'acs',
   };
 
-  function slotId(slot: ModifierSlot): string {
-    return `${backName}:${slot}`;
-  }
-
   function handleDrop(event: DragEvent, slot: ModifierSlot) {
     event.preventDefault();
-    keymap.getState().setDropHighlight(null);
+    clearSlotPreview();
     if (!slotAcceptsDrop(slot)) {
       return;
     }
@@ -63,6 +60,7 @@
     }
 
     keymap.getState().assignFromPool(payload.command, backName, slot);
+    keymap.getState().clearDrag();
   }
 
   function readPayload(event: DragEvent) {
@@ -85,8 +83,21 @@
     if (!slotAcceptsDrop(slot)) {
       return;
     }
+    const drag = keymap.getState().drag;
+    if (drag?.sourceKey === backName && drag?.sourceSlot === slot) {
+      event.preventDefault();
+      keymap.getState().clearDragTarget();
+      clearSlotPreview();
+      return;
+    }
     event.preventDefault();
-    keymap.getState().setDropHighlight(slotId(slot));
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+    keymap.getState().setDragTarget(backName, slot);
+    if (drag) {
+      showSlotPreview(event.currentTarget as HTMLElement, drag.command);
+    }
   }
 
   function slotAcceptsDrop(slot: ModifierSlot): boolean {
@@ -102,7 +113,7 @@
 
   function slotClassNames(slot: ModifierSlot): string {
     const state = $keymap;
-    const classes = [slotClass[slot], 'brdr', highlightClass(slot)];
+    const classes = [slotClass[slot], 'brdr'];
     const command = bindings[slot];
     const bounded = isBoundedSlot(state.catalog, state.selectedProgram, backName, slot);
     const locked = command && isBindingLocked(state.selectedProgram, backName, slot, command);
@@ -119,14 +130,6 @@
     const state = $keymap;
     const command = bindings[slot];
     return canDragBinding(state.catalog, state.selectedProgram, backName, slot, command);
-  }
-
-  function clearHighlight() {
-    keymap.getState().setDropHighlight(null);
-  }
-
-  function highlightClass(slot: ModifierSlot): string {
-    return $keymap.dropHighlight === slotId(slot) ? 'drop-target' : '';
   }
 </script>
 
@@ -151,7 +154,6 @@
       role="button"
       tabindex="0"
       on:dragover={(event) => allowDrop(event, slot)}
-      on:dragleave={clearHighlight}
       on:drop={(event) => handleDrop(event, slot)}
     >
       {#if bindings[slot]}

@@ -17,6 +17,15 @@ describe('bindingPolicy', () => {
     expect(isProgramBounded(null, 'pycharm')).toBe(true);
     expect(isProgramBounded(null, 'vscode')).toBe(true);
     expect(isProgramBounded(null, 'siemens-nx')).toBe(false);
+    expect(
+      isProgramBounded(
+        {
+          programs: [{ slug: 'bash', title: 'Bash', icon: '', site: '', isBounded: true }],
+          commands: {},
+        },
+        'bash',
+      ),
+    ).toBe(true);
   });
 
   it('respects isBounded from catalog', () => {

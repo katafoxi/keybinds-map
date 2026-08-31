@@ -219,6 +219,27 @@ label {
 
 }
 
+.command_description.drag-preview {
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0.55;
+    pointer-events: none;
+    cursor: grabbing;
+}
+
+.command_description.drag-preview .descr:hover {
+    transform: none;
+    overflow: hidden;
+    position: static;
+    width: auto;
+    z-index: auto;
+    background-color: transparent;
+}
+
+.command_description.drag-source {
+    opacity: 0.35;
+}
+
 .command_description:hover,
 .descr:hover {
     transform: scale(1.2);
@@ -260,14 +281,15 @@ label {
 
 .bounded-slot {
     padding-left: 1px;
-    background: rgb(255, 255, 255);
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.158) 0%,
-        rgba(243, 180, 180, 0.21) 50%,
-        rgba(255, 255, 255, 0.211) 100%
-    );
     cursor: not-allowed;
+    background-color: #f9f9f9;
+    background-image: repeating-linear-gradient(
+        -45deg,
+        transparent 0,
+        transparent 4px,
+        rgba(0, 0, 0, 0.045) 4px,
+        rgba(0, 0, 0, 0.045) 5px
+    );
 }
 
 :global(.locked-binding) {
