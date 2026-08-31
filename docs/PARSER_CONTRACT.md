@@ -28,7 +28,7 @@ flowchart LR
   SER --> OUT[Экспорт]
 ```
 
-Эталонные реализации: [`pycharm.ts`](../web/src/lib/parsers/pycharm.ts), [`vscode.ts`](../web/src/lib/parsers/vscode.ts).
+Эталонные реализации: [`pycharm.ts`](../web/src/lib/parsers/pycharm.ts), [`vscode.ts`](../web/src/lib/parsers/vscode.ts), [`bash.ts`](../web/src/lib/parsers/bash.ts).
 
 ---
 
@@ -198,7 +198,9 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 | `keymap.program` | `slug`, `title`, `icon`, `site`, `settings_file_info` |
 | `keymap.command` | `program` (slug), `name` (= `commandId`), `short_name`, `icon` (опционально) |
 
-Флаг `supported: true` в [`export-catalog.mjs`](../scripts/export-catalog.mjs) включает программу в UI. Сейчас: `pycharm`, `vscode`.
+Флаг `supported: true` в [`export-catalog.mjs`](../scripts/export-catalog.mjs) включает программу в UI. Сейчас: `pycharm`, `vscode`, `bash`.
+
+Bash (emacs): каталог команд в [`fixtures/bash-emacs.json`](../fixtures/bash-emacs.json), дефолтный keymap — [`test-fixtures/bash-emacs.inputrc`](../test-fixtures/bash-emacs.inputrc). Иконки команд копируются из PyCharm в `web/public/icons/bash/` (`scripts/sync-assets.mjs`).
 
 Команды без каталога **работают**, но без иконок и с `shortName = id`. Для полноценного UX каталог желателен.
 
@@ -242,7 +244,7 @@ Store (`assignCommand`, `moveCommand`, `unassignCommand`) и UI (`KeyCell`, `Com
 | Mouse bindings | Не поддерживается; warning + skip |
 | Context / `when` clauses | Игнорируются при импорте |
 | Конфликты на одном слоте | Last-write-wins в парсере |
-| Экспорт | Round-trip только PyCharm XML |
+| Экспорт | Round-trip PyCharm XML и Bash `.inputrc`; VS Code — только импорт |
 | Политика IDE vs CAD | `bindingPolicy.ts`, `isBounded` в каталоге |
 | Плагины в рантайме браузера | Нет; парсер — PR в репозиторий |
 
@@ -256,9 +258,10 @@ Store (`assignCommand`, `moveCommand`, `unassignCommand`) и UI (`KeyCell`, `Com
 | Модификаторы | `web/src/lib/parsers/pycharm.ts` — `modifiersToCode` |
 | Раскладка → bindings | `web/src/lib/keyboard/layout.ts` — `buildBindingsFromParsed` |
 | Политика биндингов | `web/src/lib/keyboard/bindingPolicy.ts` |
-| Импорт в state | `web/src/lib/state/keymapStore.ts` — `applyXmlToState`, `loadFromVsCode` |
+| Импорт в state | `web/src/lib/state/keymapStore.ts` — `applyXmlToState`, `loadFromVsCode`, `loadFromBash` |
 | Резолв команд | `keymapStore.ts` — `resolveCommand`, `buildUnassignedCommands` |
 | Экспорт PyCharm | `web/src/lib/parsers/pycharm-serialize.ts` |
+| Экспорт Bash | `web/src/lib/parsers/bash-serialize.ts` |
 
 ---
 

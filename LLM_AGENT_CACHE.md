@@ -17,8 +17,10 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 |--------|-------------------------|-------|-----------|
 | Импорт/парсинг PyCharm XML | `web/src/lib/parsers/pycharm.ts` | `pycharm.test.ts`, `windows-default.test.ts` | `media/`, `fixture_all.json` |
 | Импорт VS Code JSON | `web/src/lib/parsers/vscode.ts` | `vscode.test.ts` | — |
+| Импорт Bash inputrc (emacs) | `web/src/lib/parsers/bash.ts` | `bash.test.ts` | `media/` |
 | Новый парсер / IR-контракт | `docs/PARSER_CONTRACT.md` | эталон: `pycharm.test.ts`, `vscode.test.ts` | — |
 | Экспорт XML | `web/src/lib/parsers/pycharm-serialize.ts` | `pycharm.test.ts` (round-trip) | — |
+| Экспорт Bash inputrc | `web/src/lib/parsers/bash-serialize.ts` | `bash.test.ts` (round-trip) | — |
 | Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `keymap.ts` | `layout.test.ts`, `bindingPolicy.test.ts` | — |
 | Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~717 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
 | UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte` | — | `@dnd-kit` в package.json **не используется** (нативный HTML5 DnD) |
@@ -135,12 +137,12 @@ keybinds/
 |--------|------------|
 | `boot(catalog)` | Инициализация при старте App, загрузка IndexedDB |
 | `selectProgram(slug)` | Смена программы |
-| `loadFromXml` / `loadFromVsCode` | Импорт файла |
+| `loadFromXml` / `loadFromVsCode` / `loadFromBash` | Импорт файла |
 | `loadDefaultKeymap` | Дефолтный PyCharm Windows XML |
 | `switchProfile` / `copyCurrentProfile` | Слоты Standard / Custom1 / Custom2 |
 | `assignCommand`, `moveCommand`, `moveToPool`, `assignFromPool` | DnD-операции |
 | `undo` / `redo` | История до 20 шагов |
-| `exportXml` | Скачивание XML |
+| `exportXml` / `exportKeymap` | Скачивание XML или `.inputrc` |
 | `saveProfile` / `loadProfile` / `deleteProfile` | Именованные профили в IndexedDB |
 | `toggleModifier`, `setPrintLayerMode` | Видимость слоёв / режим печати |
 
@@ -154,7 +156,9 @@ keybinds/
 |------|------|-------|
 | `pycharm.ts` | PyCharm XML | `ParsedCommands` + warnings (chords, mouse skipped) |
 | `vscode.ts` | VS Code keybindings JSON | `ParsedCommands` (через `modifiersToCode`) |
+| `bash.ts` | GNU Readline `.inputrc` / `bind -p` (emacs) | `ParsedCommands` + warnings (chords, macros) |
 | `pycharm-serialize.ts` | `KeyBindings` + metadata | XML string + `downloadXml()` |
+| `bash-serialize.ts` | `KeyBindings` | `.inputrc` + `downloadInputrc()` |
 
 Общая логика модификаторов: `modifiersToCode()` в `pycharm.ts` — ключи сортируются, код = первая буква каждого модификатора (`ctrl alt` → `ca` → slot `ac`).
 
@@ -221,7 +225,9 @@ cd web && npm run build
 | `scripts/export-catalog.mjs` | fixture_all.json → programs.json; скрывает testprog* |
 | `web/vite.config.mts` | `base: './'`, alias `@fixtures` → test-fixtures |
 
-**Поддерживаемые программы** (флаг `supported` в export-catalog): `pycharm`, `vscode`. Остальные в каталоге — «скоро».
+**Поддерживаемые программы** (флаг `supported` в export-catalog): `pycharm`, `vscode`, `bash`. Остальные в каталоге — «скоро».
+
+Bash emacs: `fixtures/bash-emacs.json` + `test-fixtures/bash-emacs.inputrc`. Иконки — копии из PyCharm (`sync-assets.mjs` → `web/public/icons/bash/`).
 
 ---
 
