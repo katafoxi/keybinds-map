@@ -227,7 +227,7 @@ cd web && npm run build
 
 **Поддерживаемые программы** (флаг `supported` в export-catalog): `pycharm`, `vscode`, `bash`. Остальные в каталоге — «скоро».
 
-Bash emacs: `fixtures/bash-emacs.json` + `test-fixtures/bash-emacs.inputrc`. Иконки — копии из PyCharm (`sync-assets.mjs` → `web/public/icons/bash/`).
+Bash emacs: `fixtures/bash-emacs.json` + `test-fixtures/bash-emacs.inputrc`. Иконки — копии из PyCharm (`sync-assets.mjs` → `web/public/icons/bash/`). Пояснения команд: `descriptions.ru` (переключение языка — `uiLocale`, `pickLocalized`).
 
 ---
 

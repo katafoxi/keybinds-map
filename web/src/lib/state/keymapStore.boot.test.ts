@@ -36,6 +36,7 @@ describe('keymapStore standard profile', () => {
     expect(state.bindings['a']?.c?.id).toBe('beginning-of-line');
     expect(state.bindings['a']?.c?.icon).toMatch(/^icons\/bash\//);
     expect(state.bindings['tab']?.push?.id).toBe('complete');
+    expect(state.bindings['a']?.c?.descriptions?.ru).toMatch(/начало/i);
     expect(state.unassigned.some((command) => command.id === 'edit-and-execute-command')).toBe(
       true,
     );

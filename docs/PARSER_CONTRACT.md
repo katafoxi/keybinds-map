@@ -196,7 +196,7 @@ IR ссылается на команды по `commandId`. Каталог (`Pro
 | Модель в fixture | Поля |
 |------------------|------|
 | `keymap.program` | `slug`, `title`, `icon`, `site`, `settings_file_info` |
-| `keymap.command` | `program` (slug), `name` (= `commandId`), `short_name`, `icon` (опционально) |
+| `keymap.command` | `program` (slug), `name` (= `commandId`), `short_name`, `icon` (опционально), `descriptions` (`{ ru, en? }`, опционально) |
 
 Флаг `supported: true` в [`export-catalog.mjs`](../scripts/export-catalog.mjs) включает программу в UI. Сейчас: `pycharm`, `vscode`, `bash`.
 

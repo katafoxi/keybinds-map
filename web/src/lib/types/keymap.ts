@@ -11,10 +11,15 @@ export const MODIFIER_SLOTS: ModifierSlot[] = [
   'acs',
 ];
 
+export const UI_LOCALES = ['ru', 'en'] as const;
+export type UiLocale = (typeof UI_LOCALES)[number];
+export const DEFAULT_UI_LOCALE: UiLocale = 'ru';
+
 export type CommandRef = {
   id: string;
   shortName: string;
   icon?: string;
+  descriptions?: Partial<Record<UiLocale, string>>;
 };
 
 /** Active HTML5 drag: source chip + optional hover target for in-slot preview. */
@@ -63,6 +68,7 @@ export type CommandCatalogEntry = {
   id: string;
   shortName: string;
   iconPath?: string;
+  descriptions?: Partial<Record<UiLocale, string>>;
 };
 
 export type ProgramCatalog = {

@@ -113,6 +113,7 @@ function resolveCommand(
       id: fromCatalog.id,
       shortName: fromCatalog.shortName,
       icon: fromCatalog.iconPath,
+      descriptions: fromCatalog.descriptions,
     };
   }
   return { id: commandId, shortName: commandId };
@@ -123,6 +124,7 @@ function catalogToRefs(entries: CommandCatalogEntry[] | undefined): CommandRef[]
     id: entry.id,
     shortName: entry.shortName,
     icon: entry.iconPath,
+    descriptions: entry.descriptions,
   }));
 }
 

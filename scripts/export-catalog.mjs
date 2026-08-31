@@ -100,6 +100,7 @@ if (existsSync(bashCatalogPath)) {
     id: entry.id,
     shortName: entry.short_name,
     iconPath: entry.icon ? `icons/bash/${basename(entry.icon)}` : undefined,
+    descriptions: entry.descriptions,
   }));
 }
 

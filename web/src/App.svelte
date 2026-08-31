@@ -4,12 +4,14 @@
   import { assetUrl } from './lib/assets';
   import { keymap } from './lib/state/keymapStore';
   import { clearSlotPreview } from './lib/drag/slotPreview';
+  import { uiLocale } from './lib/i18n/locale';
   import { bundledCatalog } from './lib/catalog/bundledPrograms';
   import ProgramPicker from './components/ProgramPicker.svelte';
   import FileDropZone from './components/FileDropZone.svelte';
   import CommandPool from './components/CommandPool.svelte';
   import KeyboardGrid from './components/KeyboardGrid.svelte';
   import ProfileSwitcher from './components/ProfileSwitcher.svelte';
+  import LocaleSwitcher from './components/LocaleSwitcher.svelte';
   import ModifierLegend from './components/ModifierLegend.svelte';
 
   let catalog: ProgramCatalog = bundledCatalog;
@@ -23,6 +25,7 @@
     $keymap.dirty && $keymap.activeProfileId !== 'standard';
 
   onMount(async () => {
+    uiLocale.start();
     let resolved: ProgramCatalog = bundledCatalog;
     try {
       const response = await fetch(assetUrl('programs.json'));
@@ -107,6 +110,7 @@
         </button>
         <button type="button" on:click={printKeymap}>Печать</button>
         <ProfileSwitcher />
+        <LocaleSwitcher />
         {#if showDirtyFlag}
           <span class="dirty-flag">Несохранённые изменения</span>
         {/if}
