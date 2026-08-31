@@ -108,6 +108,7 @@
       backName,
       slot,
       bindings[slot],
+      state.selectedProgram === 'vim' ? state.vimMode : undefined,
     );
   }
 
@@ -115,13 +116,31 @@
     const state = $keymap;
     const classes = [slotClass[slot], 'brdr'];
     const command = bindings[slot];
-    const bounded = isBoundedSlot(state.catalog, state.selectedProgram, backName, slot);
+    const bounded = isBoundedSlot(
+      state.catalog,
+      state.selectedProgram,
+      backName,
+      slot,
+      state.selectedProgram === 'vim' ? state.vimMode : undefined,
+    );
     const locked = command && isBindingLocked(state.selectedProgram, backName, slot, command);
 
     if (bounded || locked) {
       classes.push('bounded-slot');
     } else {
       classes.push('droppable');
+    }
+
+    if (
+      state.selectedProgram === 'vim' &&
+      (state.vimView.kind === 'operator' || state.vimView.kind === 'textobject') &&
+      command
+    ) {
+      const roles = command.roles ?? [];
+      const highlightRoles = state.vimHighlightRoles ?? [];
+      if (highlightRoles.some((role) => roles.includes(role as never))) {
+        classes.push('vim-pending-target');
+      }
     }
     return classes.join(' ');
   }
@@ -172,5 +191,10 @@
   :global(.drop-target) {
     outline: 2px solid #14a421;
     background: rgba(20, 164, 33, 0.15) !important;
+  }
+
+  :global(.vim-pending-target) {
+    outline: 2px dashed #c27a00;
+    background: rgba(255, 200, 80, 0.2) !important;
   }
 </style>

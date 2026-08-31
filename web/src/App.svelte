@@ -13,6 +13,10 @@
   import ProfileSwitcher from './components/ProfileSwitcher.svelte';
   import LocaleSwitcher from './components/LocaleSwitcher.svelte';
   import ModifierLegend from './components/ModifierLegend.svelte';
+  import VimModeSwitcher from './components/VimModeSwitcher.svelte';
+  import SectorLegend from './components/SectorLegend.svelte';
+  import RecipePanel from './components/RecipePanel.svelte';
+  import ExCommandPanel from './components/ExCommandPanel.svelte';
 
   let catalog: ProgramCatalog = bundledCatalog;
   let ready = false;
@@ -71,6 +75,10 @@
       keymap.getState().exportKeymap('inputrc');
       return;
     }
+    if (program === 'vim') {
+      keymap.getState().exportKeymap('keybinds.vim');
+      return;
+    }
     const filename = `${$keymap.metadata.name || 'keymap'}.xml`;
     keymap.getState().exportKeymap(filename);
   }
@@ -78,7 +86,15 @@
   function printKeymap() {
     window.print();
   }
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && $keymap.selectedProgram === 'vim') {
+      keymap.getState().resetVimView();
+    }
+  }
 </script>
+
+<svelte:window on:keydown={onKeydown} />
 
 <div class="mainPage">
   <header class="header no-print">
@@ -106,7 +122,13 @@
           Redo
         </button>
         <button type="button" on:click={exportKeymap}>
-          {$keymap.selectedProgram === 'bash' ? 'Скачать inputrc' : 'Скачать XML'}
+          {#if $keymap.selectedProgram === 'bash'}
+            Скачать inputrc
+          {:else if $keymap.selectedProgram === 'vim'}
+            Скачать vimrc
+          {:else}
+            Скачать XML
+          {/if}
         </button>
         <button type="button" on:click={printKeymap}>Печать</button>
         <ProfileSwitcher />
@@ -121,9 +143,12 @@
       <p>Редактор keymap · файлы обрабатываются только в браузере.</p>
     </section>
 
+    <VimModeSwitcher />
+    <SectorLegend />
+
     {#if showEmptyHint}
       <section class="empty-hint no-print">
-        <strong>Шаг 2:</strong> загрузите .xml (PyCharm), .json (VS Code) или .inputrc (Bash), либо «Скопировать профиль» для редактирования стандартной раскладки.
+        <strong>Шаг 2:</strong> загрузите .xml (PyCharm), .json (VS Code / Vim), .inputrc (Bash) или .vim (map dump), либо «Скопировать профиль» для редактирования стандартной раскладки.
       </section>
     {/if}
 
@@ -138,6 +163,8 @@
       </section>
     {/if}
 
+    <RecipePanel />
+    <ExCommandPanel />
     <CommandPool commands={$keymap.unassigned} />
     <KeyboardGrid />
   </main>

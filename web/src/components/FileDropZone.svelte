@@ -23,7 +23,18 @@
         keymap.getState().loadFromBash(text);
         return;
       }
+      if (lower.endsWith('.vim') || lower.endsWith('.vimrc') || lower === 'vimrc') {
+        keymap.getState().loadFromVimrc(text);
+        return;
+      }
       if (lower.endsWith('.json')) {
+        if (
+          selected === 'vim' ||
+          (text.includes('"bindings"') && text.includes('"vim-'))
+        ) {
+          keymap.getState().loadFromVim(text);
+          return;
+        }
         keymap.getState().loadFromVsCode(text);
         return;
       }
@@ -35,7 +46,12 @@
         keymap.getState().loadFromBash(text);
         return;
       }
-      errorMessage = 'Поддерживаются .xml (PyCharm), .json (VS Code) и .inputrc (Bash).';
+      if (selected === 'vim') {
+        keymap.getState().loadFromVimrc(text);
+        return;
+      }
+      errorMessage =
+        'Поддерживаются .xml (PyCharm), .json (VS Code/Vim), .inputrc (Bash) и .vim (map).';
     };
 
     if (
@@ -43,11 +59,16 @@
       lower.endsWith('.xml') ||
       lower.endsWith('.inputrc') ||
       lower === 'inputrc' ||
-      selected === 'bash'
+      lower.endsWith('.vim') ||
+      lower.endsWith('.vimrc') ||
+      lower === 'vimrc' ||
+      selected === 'bash' ||
+      selected === 'vim'
     ) {
       reader.readAsText(file);
     } else {
-      errorMessage = 'Поддерживаются .xml (PyCharm), .json (VS Code) и .inputrc (Bash).';
+      errorMessage =
+        'Поддерживаются .xml (PyCharm), .json (VS Code/Vim), .inputrc (Bash) и .vim (map).';
     }
   }
 
@@ -68,12 +89,12 @@
 
 <section class="file-drop no-print" on:drop={onDrop} on:dragover={onDragOver}>
   <span class="privacy-note">
-    Локально в браузере · перетащите .xml / .json / .inputrc или
+    Локально в браузере · перетащите .xml / .json / .inputrc / .vim или
   </span>
   <input
     id="fileselect"
     type="file"
-    accept=".xml,.json,.inputrc,text/xml,application/json,text/plain"
+    accept=".xml,.json,.inputrc,.vim,.vimrc,text/xml,application/json,text/plain"
     on:change={onInputChange}
   />
   {#if errorMessage}

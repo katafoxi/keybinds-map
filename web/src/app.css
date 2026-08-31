@@ -269,6 +269,26 @@ label {
     opacity: 0.35;
 }
 
+.command_description.sector-dimmed {
+    opacity: 0.28;
+    filter: grayscale(0.7);
+}
+
+.command_description.vim-highlighted {
+    outline: 2px solid #14a421;
+    background: rgba(20, 164, 33, 0.2);
+    opacity: 1;
+    filter: none;
+}
+
+.command_description.sector-motion { background: rgba(158, 197, 232, 0.35); }
+.command_description.sector-delete { background: rgba(232, 158, 158, 0.35); }
+.command_description.sector-edit { background: rgba(232, 200, 158, 0.35); }
+.command_description.sector-file { background: rgba(158, 232, 158, 0.35); }
+.command_description.sector-marks { background: rgba(192, 158, 232, 0.35); }
+.command_description.sector-search { background: rgba(158, 232, 232, 0.35); }
+.command_description.sector-windows { background: rgba(232, 158, 200, 0.35); }
+
 .icons {
     vertical-align: sub;
     padding: 0%;

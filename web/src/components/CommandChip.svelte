@@ -24,6 +24,15 @@
     ($keymap.drag?.sourceKey ?? '') === sourceKey &&
     ($keymap.drag?.sourceSlot ?? '') === sourceSlot;
 
+  $: sectorClass = command.sector ? `sector-${command.sector}` : '';
+  $: sectorDimmed =
+    $keymap.selectedProgram === 'vim' &&
+    ($keymap.activeSectors?.length ?? 0) > 0 &&
+    (!command.sector || !$keymap.activeSectors.includes(command.sector));
+  $: vimHighlighted =
+    $keymap.selectedProgram === 'vim' &&
+    ($keymap.vimHighlightCommandIds ?? []).includes(command.id);
+
   $: if ($keymap.drag || preview) {
     tipVisible = false;
   }
@@ -50,6 +59,13 @@
     keymap.getState().endDrag();
   }
 
+  function handleActivate() {
+    if (preview || $keymap.selectedProgram !== 'vim' || !sourceKey) {
+      return;
+    }
+    keymap.getState().activateVimCommand(command, sourceKey, sourceSlot);
+  }
+
   function showTip(event: MouseEvent) {
     if (preview || $keymap.drag) {
       return;
@@ -69,16 +85,25 @@
 </script>
 
 <div
-  class="command_description"
+  class="command_description {sectorClass}"
   class:locked-binding={!draggable && !preview}
   class:drag-preview={preview}
   class:drag-source={isDragSource}
+  class:sector-dimmed={sectorDimmed}
+  class:vim-highlighted={vimHighlighted}
   draggable={draggable && !preview}
   on:dragstart={handleDragStart}
   on:dragend={handleDragEnd}
+  on:click={handleActivate}
+  on:keydown={(event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleActivate();
+    }
+  }}
   on:mouseenter={showTip}
   on:mouseleave={hideTip}
-  role="listitem"
+  role={$keymap.selectedProgram === 'vim' && sourceKey && !preview ? 'button' : 'listitem'}
 >
   <div class="descr">
     {#if command.icon}

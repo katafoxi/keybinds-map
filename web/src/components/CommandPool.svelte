@@ -6,6 +6,17 @@
 
   export let commands: CommandRef[] = [];
 
+  $: visibleCommands = commands.filter((command) => {
+    if ($keymap.selectedProgram !== 'vim') {
+      return true;
+    }
+    const sectors = $keymap.activeSectors ?? [];
+    if (!sectors.length) {
+      return true;
+    }
+    return command.sector ? sectors.includes(command.sector) : false;
+  });
+
   function handleDrop(event: DragEvent) {
     event.preventDefault();
     clearSlotPreview();
@@ -41,7 +52,7 @@
   role="list"
   aria-label="Пул команд без комбинаций"
 >
-  {#each commands as command (command.id)}
+  {#each visibleCommands as command (command.id)}
     <CommandChip {command} sourceKey="" sourceSlot="" />
   {/each}
 </div>
