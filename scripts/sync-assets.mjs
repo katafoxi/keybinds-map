@@ -39,6 +39,22 @@ const copies = [
     from: resolve(root, 'test-fixtures/bash-emacs.inputrc'),
     to: resolve(root, 'web/public/defaults/bash-emacs.inputrc'),
   },
+  {
+    from: resolve(root, 'fixtures/vim-default.json'),
+    to: resolve(root, 'test-fixtures/vim-default.json'),
+  },
+  {
+    from: resolve(root, 'fixtures/vim-recipes.json'),
+    to: resolve(root, 'test-fixtures/vim-recipes.json'),
+  },
+  {
+    from: resolve(root, 'fixtures/vim-default.json'),
+    to: resolve(root, 'web/public/defaults/vim-default.json'),
+  },
+  {
+    from: resolve(root, 'fixtures/vim-recipes.json'),
+    to: resolve(root, 'web/public/defaults/vim-recipes.json'),
+  },
 ];
 
 const bashProgramIcon = resolve(
@@ -107,6 +123,30 @@ for (const [filename, sourceName] of Object.entries(bashIconSources)) {
     continue;
   }
   cpSync(from, dest);
+}
+
+const vimProgramIcon = resolve(root, 'media/pycharm_command_icons/ActivateTerminalToolWindow.svg');
+const vimProgramIconDest = resolve(root, 'media/program_icons/vim.svg');
+if (existsSync(vimProgramIcon) && !existsSync(vimProgramIconDest)) {
+  cpSync(vimProgramIcon, vimProgramIconDest);
+  console.log(`copied ${vimProgramIcon} -> ${vimProgramIconDest}`);
+}
+
+const vimIconDir = resolve(root, 'web/public/icons/vim');
+mkdirSync(vimIconDir, { recursive: true });
+const vimIconSources = {
+  ...bashIconSources,
+  '$Copy.png': '$Copy.png',
+  'SaveAll.svg': 'SaveAll.svg',
+};
+for (const [filename, sourceName] of Object.entries(vimIconSources)) {
+  const source = resolve(pycharmIconDir, sourceName);
+  const dest = resolve(vimIconDir, filename);
+  if (!existsSync(source)) {
+    console.warn(`skip missing vim icon: ${source}`);
+    continue;
+  }
+  cpSync(source, dest);
 }
 
 for (const { from, to } of copies) {

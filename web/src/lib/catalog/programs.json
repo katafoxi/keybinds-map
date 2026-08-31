@@ -35,6 +35,15 @@
       "settingsFileInfo": "Файл ~/.inputrc или вывод bind -p. Режим emacs. Эталон: readline(3) DEFAULT KEY BINDINGS.",
       "supported": true,
       "isBounded": true
+    },
+    {
+      "slug": "vim",
+      "title": "Vim",
+      "icon": "i/program-icons/vim.svg",
+      "site": "https://www.vim.org/",
+      "settingsFileInfo": "Curated default map (Normal/Insert/Visual/Cmdline). Import: :map dump or simple vimrc. Export: nnoremap/inoremap/vnoremap.",
+      "supported": true,
+      "isBounded": false
     }
   ],
   "commands": {
@@ -3146,6 +3155,1986 @@
         "descriptions": {
           "ru": "Выполнить все виды раскрытия оболочки в текущей строке."
         }
+      }
+    ],
+    "vim": [
+      {
+        "id": "vim-h",
+        "shortName": "←",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "Курсор влево.",
+          "en": "Move left."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-j",
+        "shortName": "↓",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "Курсор вниз.",
+          "en": "Move down."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-k",
+        "shortName": "↑",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "Курсор вверх.",
+          "en": "Move up."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-l",
+        "shortName": "→",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "Курсор вправо.",
+          "en": "Move right."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-w",
+        "shortName": "word→",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К началу следующего слова.",
+          "en": "Next word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-b",
+        "shortName": "←word",
+        "iconPath": "icons/vim/EditorPreviousWord.png",
+        "descriptions": {
+          "ru": "К началу предыдущего слова.",
+          "en": "Previous word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-e",
+        "shortName": "end→",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К концу слова.",
+          "en": "End of word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-W",
+        "shortName": "WORD→",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К следующему WORD (пробел).",
+          "en": "Next WORD."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-B",
+        "shortName": "←WORD",
+        "iconPath": "icons/vim/EditorPreviousWord.png",
+        "descriptions": {
+          "ru": "К предыдущему WORD.",
+          "en": "Previous WORD."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-0",
+        "shortName": "0",
+        "iconPath": "icons/vim/EditorLineStart.png",
+        "descriptions": {
+          "ru": "В начало строки.",
+          "en": "Start of line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-dollar",
+        "shortName": "$",
+        "iconPath": "icons/vim/EditorLineEnd.png",
+        "descriptions": {
+          "ru": "В конец строки.",
+          "en": "End of line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-caret",
+        "shortName": "^",
+        "iconPath": "icons/vim/EditorLineStart.png",
+        "descriptions": {
+          "ru": "К первому непробельному символу.",
+          "en": "First non-blank."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-G",
+        "shortName": "G",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "К последней строке.",
+          "en": "Go to last line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gg",
+        "shortName": "gg",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "К первой строке.",
+          "en": "Go to first line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-f",
+        "shortName": "f…",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "К следующему введённому символу (f{char}).",
+          "en": "Find char forward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-F",
+        "shortName": "F…",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "К предыдущему символу (F{char}).",
+          "en": "Find char backward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-t",
+        "shortName": "t…",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "До символа вперёд (t{char}).",
+          "en": "Till char forward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-T",
+        "shortName": "T…",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "До символа назад (T{char}).",
+          "en": "Till char backward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-semicolon",
+        "shortName": ";",
+        "iconPath": "icons/vim/FindNext.png",
+        "descriptions": {
+          "ru": "Повторить последний f/t.",
+          "en": "Repeat f/t."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-comma",
+        "shortName": ",",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Повторить f/t в обратную сторону.",
+          "en": "Repeat f/t opposite."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-percent",
+        "shortName": "%",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К парной скобке.",
+          "en": "Match paren."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-H",
+        "shortName": "H",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "К верхней строке экрана.",
+          "en": "Top of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-M",
+        "shortName": "M",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К средней строке экрана.",
+          "en": "Middle of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-L",
+        "shortName": "L",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "К нижней строке экрана.",
+          "en": "Bottom of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-ctrl-d",
+        "shortName": "½↓",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Прокрутка на пол-экрана вниз.",
+          "en": "Half-page down."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-u",
+        "shortName": "½↑",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Прокрутка на пол-экрана вверх.",
+          "en": "Half-page up."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-f",
+        "shortName": "Pg↓",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Страница вниз.",
+          "en": "Page down."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-b",
+        "shortName": "Pg↑",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Страница вверх.",
+          "en": "Page up."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-o",
+        "shortName": "←jmp",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Назад по списку прыжков.",
+          "en": "Older jump."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-i",
+        "shortName": "jmp→",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Вперёд по списку прыжков.",
+          "en": "Newer jump."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-x",
+        "shortName": "x",
+        "iconPath": "icons/vim/$Delete.svg",
+        "descriptions": {
+          "ru": "Удалить символ под курсором.",
+          "en": "Delete char."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-X",
+        "shortName": "X",
+        "iconPath": "icons/vim/EditorBackSpace.png",
+        "descriptions": {
+          "ru": "Удалить символ слева.",
+          "en": "Delete left."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-d",
+        "shortName": "d",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Оператор удаления (d{motion}, dd).",
+          "en": "Delete operator."
+        },
+        "sector": "delete",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-dd",
+        "shortName": "dd",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Удалить строку.",
+          "en": "Delete line."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-D",
+        "shortName": "D",
+        "iconPath": "icons/vim/EditorDeleteToLineEnd.png",
+        "descriptions": {
+          "ru": "Удалить до конца строки.",
+          "en": "Delete to EOL."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-c",
+        "shortName": "c",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Оператор смены (c{motion}, cc).",
+          "en": "Change operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-cc",
+        "shortName": "cc",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить строку.",
+          "en": "Change line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-C",
+        "shortName": "C",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить до конца строки.",
+          "en": "Change to EOL."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-y",
+        "shortName": "y",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Оператор копирования (y{motion}, yy).",
+          "en": "Yank operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-yy",
+        "shortName": "yy",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Скопировать строку.",
+          "en": "Yank line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-Y",
+        "shortName": "Y",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Скопировать строку (как yy).",
+          "en": "Yank line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-p",
+        "shortName": "p",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить после курсора.",
+          "en": "Paste after."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-P",
+        "shortName": "P",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить перед курсором.",
+          "en": "Paste before."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-r",
+        "shortName": "r…",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Заменить символ (r{char}).",
+          "en": "Replace char."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-R",
+        "shortName": "R",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Режим замены.",
+          "en": "Replace mode."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-s",
+        "shortName": "s",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Заменить символ и войти в Insert.",
+          "en": "Substitute char."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-S",
+        "shortName": "S",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить всю строку.",
+          "en": "Substitute line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-tilde",
+        "shortName": "~",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "Сменить регистр символа.",
+          "en": "Toggle case."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-u",
+        "shortName": "u",
+        "iconPath": "icons/vim/$Undo.png",
+        "descriptions": {
+          "ru": "Отменить.",
+          "en": "Undo."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-r",
+        "shortName": "redo",
+        "iconPath": "icons/vim/$Redo.svg",
+        "descriptions": {
+          "ru": "Повторить отменённое.",
+          "en": "Redo."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-dot",
+        "shortName": ".",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Повторить последнее изменение.",
+          "en": "Repeat change."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gt",
+        "shortName": ">",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "Сдвинуть вправо (indent).",
+          "en": "Indent."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-lt",
+        "shortName": "<",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "Сдвинуть влево (outdent).",
+          "en": "Outdent."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-J",
+        "shortName": "J",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Объединить строки.",
+          "en": "Join lines."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-i",
+        "shortName": "i",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert перед курсором / textobject inner.",
+          "en": "Insert / inner textobject."
+        },
+        "sector": "edit",
+        "roles": [
+          "command",
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-I",
+        "shortName": "I",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert в начало строки.",
+          "en": "Insert at line start."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a",
+        "shortName": "a",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert после курсора / textobject around.",
+          "en": "Append / around textobject."
+        },
+        "sector": "edit",
+        "roles": [
+          "command",
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-A",
+        "shortName": "A",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert в конец строки.",
+          "en": "Append at EOL."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-o",
+        "shortName": "o",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Новая строка ниже + Insert.",
+          "en": "Open line below."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-O",
+        "shortName": "O",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Новая строка выше + Insert.",
+          "en": "Open line above."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-v",
+        "shortName": "v",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual посимвольно.",
+          "en": "Character visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-V",
+        "shortName": "V",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual построчно.",
+          "en": "Line visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-v",
+        "shortName": "□v",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual блоком.",
+          "en": "Block visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-esc",
+        "shortName": "Esc",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Вернуться в Normal.",
+          "en": "Back to Normal."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert",
+          "visual",
+          "cmdline"
+        ]
+      },
+      {
+        "id": "vim-m",
+        "shortName": "m…",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Поставить закладку (m{a-z}).",
+          "en": "Set mark."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-tick",
+        "shortName": "'…",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К закладке (строка).",
+          "en": "Jump to mark (line)."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-backtick",
+        "shortName": "`…",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К закладке (позиция).",
+          "en": "Jump to mark (exact)."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-slash",
+        "shortName": "/",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Поиск вперёд.",
+          "en": "Search forward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-question",
+        "shortName": "?",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Поиск назад.",
+          "en": "Search backward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-n",
+        "shortName": "n",
+        "iconPath": "icons/vim/FindNext.png",
+        "descriptions": {
+          "ru": "Следующее совпадение.",
+          "en": "Next match."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-N",
+        "shortName": "N",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Предыдущее совпадение.",
+          "en": "Previous match."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-star",
+        "shortName": "*",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Искать слово под курсором вперёд.",
+          "en": "Search word forward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-hash",
+        "shortName": "#",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Искать слово под курсором назад.",
+          "en": "Search word backward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-colon",
+        "shortName": ":",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Command-line (Ex).",
+          "en": "Ex command-line."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ZZ",
+        "shortName": "ZZ",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Сохранить и выйти.",
+          "en": "Write and quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ZQ",
+        "shortName": "ZQ",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти без сохранения.",
+          "en": "Quit without write."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-prefix-g",
+        "shortName": "g…",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Префикс g (gg, gt, gj…).",
+          "en": "g prefix."
+        },
+        "sector": "motion",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-prefix-z",
+        "shortName": "z…",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Префикс z (zz, zt, zb…).",
+          "en": "z prefix."
+        },
+        "sector": "motion",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-prefix-ctrl-w",
+        "shortName": "^W…",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Префикс окна Ctrl-W.",
+          "en": "Window prefix."
+        },
+        "sector": "windows",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gj",
+        "shortName": "gj",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "Вниз по экранной строке.",
+          "en": "Down display line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gk",
+        "shortName": "gk",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "Вверх по экранной строке.",
+          "en": "Up display line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gt-tab",
+        "shortName": "gt",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Следующая вкладка.",
+          "en": "Next tab."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gT",
+        "shortName": "gT",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Предыдущая вкладка.",
+          "en": "Previous tab."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gu",
+        "shortName": "gu",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В нижний регистр (gu{motion}).",
+          "en": "Lowercase operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gU",
+        "shortName": "gU",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В верхний регистр (gU{motion}).",
+          "en": "Uppercase operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zz",
+        "shortName": "zz",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Текущая строка по центру экрана.",
+          "en": "Center cursor line."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zt",
+        "shortName": "zt",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Текущая строка к верху экрана.",
+          "en": "Cursor line to top."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zb",
+        "shortName": "zb",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Текущая строка к низу экрана.",
+          "en": "Cursor line to bottom."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-s",
+        "shortName": "^Ws",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Разделить окно горизонтально.",
+          "en": "Split horizontal."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-v",
+        "shortName": "^Wv",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Разделить окно вертикально.",
+          "en": "Split vertical."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-h",
+        "shortName": "^Wh",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "К окну слева.",
+          "en": "Window left."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-j",
+        "shortName": "^Wj",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "К окну снизу.",
+          "en": "Window below."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-k",
+        "shortName": "^Wk",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "К окну сверху.",
+          "en": "Window above."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-l",
+        "shortName": "^Wl",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "К окну справа.",
+          "en": "Window right."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-c",
+        "shortName": "^Wc",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Закрыть окно.",
+          "en": "Close window."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-o",
+        "shortName": "^Wo",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Только текущее окно.",
+          "en": "Only this window."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-iw",
+        "shortName": "iw",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутреннее слово (textobject).",
+          "en": "Inner word."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-aw",
+        "shortName": "aw",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Слово с пробелами (textobject).",
+          "en": "A word."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-i-quote",
+        "shortName": "i\"",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутри кавычек.",
+          "en": "Inner quotes."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a-quote",
+        "shortName": "a\"",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Кавычки целиком.",
+          "en": "A quotes."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-i-paren",
+        "shortName": "i(",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутри скобок.",
+          "en": "Inner paren."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a-paren",
+        "shortName": "a(",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Скобки целиком.",
+          "en": "A paren."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-w",
+        "shortName": "^W",
+        "iconPath": "icons/vim/EditorDeleteToWordStart.png",
+        "descriptions": {
+          "ru": "Удалить слово слева (Insert).",
+          "en": "Delete word left (Insert)."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-h",
+        "shortName": "^H",
+        "iconPath": "icons/vim/EditorBackSpace.png",
+        "descriptions": {
+          "ru": "Backspace (Insert).",
+          "en": "Backspace (Insert)."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-n",
+        "shortName": "^N",
+        "iconPath": "icons/vim/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнение вперёд.",
+          "en": "Complete next."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-p",
+        "shortName": "^P",
+        "iconPath": "icons/vim/HippieBackwardCompletion.png",
+        "descriptions": {
+          "ru": "Дополнение назад.",
+          "en": "Complete previous."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-o",
+        "shortName": "^O",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Одна Normal-команда из Insert.",
+          "en": "One Normal cmd from Insert."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-r",
+        "shortName": "^R",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить из регистра.",
+          "en": "Insert from register."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-vis-o",
+        "shortName": "o",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Другой конец выделения.",
+          "en": "Other end of selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-vis-u",
+        "shortName": "u",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В нижний регистр выделенного.",
+          "en": "Lowercase selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-vis-U",
+        "shortName": "U",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В верхний регистр выделенного.",
+          "en": "Uppercase selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "ex-w",
+        "shortName": ":w",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Записать файл.",
+          "en": "Write file."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-wq",
+        "shortName": ":wq",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Записать и выйти.",
+          "en": "Write and quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-q",
+        "shortName": ":q",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти.",
+          "en": "Quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-qbang",
+        "shortName": ":q!",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти принудительно.",
+          "en": "Force quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-e",
+        "shortName": ":e",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Открыть файл.",
+          "en": "Edit file."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-sp",
+        "shortName": ":sp",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Горизонтальный split.",
+          "en": "Horizontal split."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-vs",
+        "shortName": ":vs",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Вертикальный split.",
+          "en": "Vertical split."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-noh",
+        "shortName": ":noh",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Снять подсветку поиска.",
+          "en": "No highlight search."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
       }
     ]
   }

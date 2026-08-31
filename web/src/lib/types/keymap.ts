@@ -15,11 +15,37 @@ export const UI_LOCALES = ['ru', 'en'] as const;
 export type UiLocale = (typeof UI_LOCALES)[number];
 export const DEFAULT_UI_LOCALE: UiLocale = 'ru';
 
+export const VIM_MODES = ['normal', 'insert', 'visual', 'cmdline'] as const;
+export type VimMode = (typeof VIM_MODES)[number];
+
+export const VIM_SECTORS = [
+  'motion',
+  'delete',
+  'edit',
+  'file',
+  'marks',
+  'search',
+  'windows',
+] as const;
+export type VimSector = (typeof VIM_SECTORS)[number];
+
+export const VIM_ROLES = [
+  'command',
+  'operator',
+  'motion',
+  'prefix',
+  'textobject',
+] as const;
+export type VimRole = (typeof VIM_ROLES)[number];
+
 export type CommandRef = {
   id: string;
   shortName: string;
   icon?: string;
   descriptions?: Partial<Record<UiLocale, string>>;
+  sector?: VimSector;
+  roles?: VimRole[];
+  modes?: VimMode[];
 };
 
 /** Active HTML5 drag: source chip + optional hover target for in-slot preview. */
@@ -69,7 +95,62 @@ export type CommandCatalogEntry = {
   shortName: string;
   iconPath?: string;
   descriptions?: Partial<Record<UiLocale, string>>;
+  sector?: VimSector;
+  roles?: VimRole[];
+  modes?: VimMode[];
 };
+
+/** One keystroke in a Vim mode, optionally under a prefix layer. */
+export type VimBinding = {
+  commandId: string;
+  mode: VimMode;
+  keyName: string;
+  slot: ModifierSlot;
+  /** Prefix layer id; undefined/null = root of the mode. */
+  layer?: string | null;
+};
+
+export type VimLayerDef = {
+  id: string;
+  triggerCommandId: string;
+  mode: VimMode;
+  keyName: string;
+  slot: ModifierSlot;
+};
+
+export type VimOperatorDef = {
+  commandId: string;
+  doubledCommandId?: string;
+  accepts: Array<'motion' | 'textobject'>;
+};
+
+export type VimRecipeStep = {
+  mode: VimMode;
+  keyName: string;
+  slot: ModifierSlot;
+  layer?: string | null;
+};
+
+export type VimRecipe = {
+  id: string;
+  title: string;
+  sector?: VimSector;
+  descriptions?: Partial<Record<UiLocale, string>>;
+  steps: VimRecipeStep[];
+};
+
+export type VimExCommand = {
+  id: string;
+  shortName: string;
+  descriptions?: Partial<Record<UiLocale, string>>;
+  sector?: VimSector;
+};
+
+export type VimViewState =
+  | { kind: 'idle' }
+  | { kind: 'prefix'; layerId: string }
+  | { kind: 'operator'; commandId: string }
+  | { kind: 'textobject'; operatorId: string; kindInner: 'inner' | 'around' };
 
 export type ProgramCatalog = {
   programs: ProgramInfo[];

@@ -53,7 +53,7 @@ for (const entry of fixture) {
       icon: resolveProgramIcon(entry.fields.icon),
       site: entry.fields.site,
       settingsFileInfo: entry.fields.settings_file_info ?? '',
-      supported: slug === 'pycharm' || slug === 'vscode' || slug === 'bash',
+      supported: slug === 'pycharm' || slug === 'vscode' || slug === 'bash' || slug === 'vim',
       isBounded: entry.fields.is_bounded ?? slug === 'pycharm',
     });
   }
@@ -104,6 +104,32 @@ if (existsSync(bashCatalogPath)) {
   }));
 }
 
+const vimCatalogPath = resolve(root, 'fixtures/vim-default.json');
+if (existsSync(vimCatalogPath)) {
+  const vimCatalog = JSON.parse(readFileSync(vimCatalogPath, 'utf-8'));
+  const vimProgram = vimCatalog.program;
+  if (vimProgram && !programs.some((program) => program.slug === 'vim')) {
+    programs.push({
+      slug: vimProgram.slug,
+      title: vimProgram.title,
+      icon: resolveProgramIcon(vimProgram.icon),
+      site: vimProgram.site,
+      settingsFileInfo: vimProgram.settings_file_info ?? '',
+      supported: true,
+      isBounded: vimProgram.is_bounded ?? false,
+    });
+  }
+  commands.vim = (vimCatalog.commands ?? []).map((entry) => ({
+    id: entry.id,
+    shortName: entry.short_name,
+    iconPath: entry.icon ? `icons/vim/${basename(entry.icon)}` : undefined,
+    descriptions: entry.descriptions,
+    sector: entry.sector,
+    roles: entry.roles,
+    modes: entry.modes,
+  }));
+}
+
 const catalogJson = JSON.stringify({ programs, commands }, null, 2);
 
 writeFileSync(outputPath, catalogJson, 'utf-8');
@@ -112,5 +138,5 @@ writeFileSync(bundledOutputPath, catalogJson, 'utf-8');
 console.log(`Wrote ${outputPath}`);
 console.log(`Wrote ${bundledOutputPath}`);
 console.log(
-  `Programs: ${programs.length}, PyCharm commands: ${commands.pycharm?.length ?? 0}, Bash commands: ${commands.bash?.length ?? 0}`,
+  `Programs: ${programs.length}, PyCharm commands: ${commands.pycharm?.length ?? 0}, Bash commands: ${commands.bash?.length ?? 0}, Vim commands: ${commands.vim?.length ?? 0}`,
 );
