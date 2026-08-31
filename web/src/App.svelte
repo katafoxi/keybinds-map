@@ -146,20 +146,19 @@
 <style>
   .control-bar {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.75rem;
     margin: 0.5rem 0;
-    overflow-x: auto;
+    min-width: 0;
   }
 
   .toolbar {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 0.35rem;
     align-items: center;
-    flex-shrink: 0;
-    white-space: nowrap;
+    min-width: 0;
   }
 
   .toolbar button {
