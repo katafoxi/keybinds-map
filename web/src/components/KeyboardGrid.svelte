@@ -27,12 +27,16 @@
     }
   }}
 >
-  {#each keys as key (key.backName)}
-    <KeyCell
-      backName={key.backName}
-      frontName={key.frontName}
-      bindings={key.bindings}
-    />
+  {#each keys as key, index (`${key.backName}:${index}`)}
+    {#if key.frontName}
+      <KeyCell
+        backName={key.backName}
+        frontName={key.frontName}
+        bindings={key.bindings}
+      />
+    {:else}
+      <div class="char char-spacer" aria-hidden="true"></div>
+    {/if}
   {/each}
 </div>
 

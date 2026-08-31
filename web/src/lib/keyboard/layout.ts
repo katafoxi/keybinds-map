@@ -40,13 +40,11 @@ export function getCleanKeyboardKeys(): KeyboardKey[] {
   const back = flattenRows(BUTTONS_BACK);
   const front = flattenRows(BUTTONS_FRONT);
 
-  return back
-    .map((backName, index) => ({
-      backName,
-      frontName: front[index] ?? '',
-      bindings: {},
-    }))
-    .filter((key) => key.frontName !== '');
+  return back.map((backName, index) => ({
+    backName,
+    frontName: front[index] ?? '',
+    bindings: {},
+  }));
 }
 
 export function buildBindingsFromParsed(

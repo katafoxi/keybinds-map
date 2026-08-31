@@ -423,6 +423,11 @@ label {
     display: none !important;
 }
 
+.char-spacer {
+    pointer-events: none;
+    background: transparent;
+}
+
 
 .flipswitch {
     margin: 0px;
