@@ -23,7 +23,7 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Экспорт Bash inputrc | `web/src/lib/parsers/bash-serialize.ts` | `bash.test.ts` (round-trip) | — |
 | Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `keymap.ts` | `layout.test.ts`, `bindingPolicy.test.ts` | — |
 | Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~717 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
-| UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte` | — | `@dnd-kit` в package.json **не используется** (нативный HTML5 DnD) |
+| UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte` | `CommandChip.test.ts`, `portal.test.ts` | `@dnd-kit` в package.json **не используется** (нативный HTML5 DnD) |
 | Выбор программы | `ProgramPicker.svelte` + `selectProgram` в store | — | — |
 | Загрузка файлов | `FileDropZone.svelte` + `loadFromXml` / `loadFromVsCode` | — | — |
 | Профили Standard/Custom1/Custom2 | `ProfileSwitcher.svelte` + `switchProfile`, `copyCurrentProfile` в store | `keymapStore.boot.test.ts` | `ProfileManager.svelte` — **не подключён** в App |
@@ -31,7 +31,7 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Каталог команд / иконки программ | `scripts/export-catalog.mjs`, `fixtures/fixture_all.json` | — | `media/pycharm_command_icons/` (сотни PNG) |
 | Синхронизация ассетов | `scripts/sync-assets.mjs` | CI workflow | `web/public/icons/pycharm/` |
 | CI / деплой | `.github/workflows/web.yml` | — | — |
-| Стили, шапка, layout страницы | `App.svelte`, `app.css` | — | — |
+| Стили, шапка, layout страницы | `App.svelte`, `app.css` | `app.css.test.ts` | — |
 
 ---
 
@@ -199,6 +199,8 @@ DnD payload: `application/json` с `{ sourceKey, sourceSlot, command? }`.
 | `vscode.test.ts` | Парсинг JSON keybindings |
 | `windows-default.test.ts` | Дефолтный Windows.xml |
 | `layout.test.ts` | Раскладка, merge |
+| `app.css.test.ts` | Контракт вёрстки: сетка 17 колонок, без `:global()`, tooltip `position:fixed` |
+| `CommandChip.test.ts` | Один корень чипа, tooltip через portal на `document.body` |
 | `keymapStore.boot.test.ts` | Boot + профили |
 | `keymapStore.subscribe.test.ts` | Подписка, assign/move |
 

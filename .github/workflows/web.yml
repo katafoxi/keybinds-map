@@ -61,6 +61,19 @@ jobs:
         working-directory: web
         run: npm run build
 
+      - name: Check layout CSS reached the bundle
+        working-directory: web
+        run: |
+          css=$(find dist -name '*.css' | head -1)
+          test -n "$css"
+          grep -q 'keyboardGrid' "$css"
+          grep -q 'minmax(0, 1fr)' "$css"
+          grep -q 'chip-popover' "$css"
+          if grep -q ':global(' "$css"; then
+            echo 'bundled CSS must not contain :global()'
+            exit 1
+          fi
+
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
         with:
