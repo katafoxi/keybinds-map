@@ -3160,7 +3160,7 @@
     "vim": [
       {
         "id": "vim-h",
-        "shortName": "←",
+        "shortName": "Left",
         "iconPath": "icons/vim/EditorLeft.png",
         "descriptions": {
           "ru": "Курсор влево.",
@@ -3178,7 +3178,7 @@
       },
       {
         "id": "vim-j",
-        "shortName": "↓",
+        "shortName": "Down",
         "iconPath": "icons/vim/EditorDown.png",
         "descriptions": {
           "ru": "Курсор вниз.",
@@ -3196,7 +3196,7 @@
       },
       {
         "id": "vim-k",
-        "shortName": "↑",
+        "shortName": "Up",
         "iconPath": "icons/vim/EditorUp.png",
         "descriptions": {
           "ru": "Курсор вверх.",
@@ -3214,7 +3214,7 @@
       },
       {
         "id": "vim-l",
-        "shortName": "→",
+        "shortName": "Right",
         "iconPath": "icons/vim/EditorRight.png",
         "descriptions": {
           "ru": "Курсор вправо.",
@@ -3232,7 +3232,7 @@
       },
       {
         "id": "vim-w",
-        "shortName": "word→",
+        "shortName": "Word→",
         "iconPath": "icons/vim/EditorNextWord.png",
         "descriptions": {
           "ru": "К началу следующего слова.",
@@ -3250,7 +3250,7 @@
       },
       {
         "id": "vim-b",
-        "shortName": "←word",
+        "shortName": "←Word",
         "iconPath": "icons/vim/EditorPreviousWord.png",
         "descriptions": {
           "ru": "К началу предыдущего слова.",
@@ -3268,7 +3268,7 @@
       },
       {
         "id": "vim-e",
-        "shortName": "end→",
+        "shortName": "End w",
         "iconPath": "icons/vim/EditorNextWord.png",
         "descriptions": {
           "ru": "К концу слова.",
@@ -3322,7 +3322,7 @@
       },
       {
         "id": "vim-0",
-        "shortName": "0",
+        "shortName": "Line0",
         "iconPath": "icons/vim/EditorLineStart.png",
         "descriptions": {
           "ru": "В начало строки.",
@@ -3340,7 +3340,7 @@
       },
       {
         "id": "vim-dollar",
-        "shortName": "$",
+        "shortName": "EOL",
         "iconPath": "icons/vim/EditorLineEnd.png",
         "descriptions": {
           "ru": "В конец строки.",
@@ -3358,7 +3358,7 @@
       },
       {
         "id": "vim-caret",
-        "shortName": "^",
+        "shortName": "First",
         "iconPath": "icons/vim/EditorLineStart.png",
         "descriptions": {
           "ru": "К первому непробельному символу.",
@@ -3376,7 +3376,7 @@
       },
       {
         "id": "vim-G",
-        "shortName": "G",
+        "shortName": "Bottom",
         "iconPath": "icons/vim/EditorScrollDown.png",
         "descriptions": {
           "ru": "К последней строке.",
@@ -3394,7 +3394,7 @@
       },
       {
         "id": "vim-gg",
-        "shortName": "gg",
+        "shortName": "Top",
         "iconPath": "icons/vim/EditorScrollTop.png",
         "descriptions": {
           "ru": "К первой строке.",
@@ -3412,7 +3412,7 @@
       },
       {
         "id": "vim-f",
-        "shortName": "f…",
+        "shortName": "Find…",
         "iconPath": "icons/vim/Find.svg",
         "descriptions": {
           "ru": "К следующему введённому символу (f{char}).",
@@ -3430,7 +3430,7 @@
       },
       {
         "id": "vim-F",
-        "shortName": "F…",
+        "shortName": "Find←…",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "К предыдущему символу (F{char}).",
@@ -3448,7 +3448,7 @@
       },
       {
         "id": "vim-t",
-        "shortName": "t…",
+        "shortName": "Till…",
         "iconPath": "icons/vim/Find.svg",
         "descriptions": {
           "ru": "До символа вперёд (t{char}).",
@@ -3466,7 +3466,7 @@
       },
       {
         "id": "vim-T",
-        "shortName": "T…",
+        "shortName": "Till←…",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "До символа назад (T{char}).",
@@ -3484,7 +3484,7 @@
       },
       {
         "id": "vim-semicolon",
-        "shortName": ";",
+        "shortName": "Repeat f",
         "iconPath": "icons/vim/FindNext.png",
         "descriptions": {
           "ru": "Повторить последний f/t.",
@@ -3502,7 +3502,7 @@
       },
       {
         "id": "vim-comma",
-        "shortName": ",",
+        "shortName": "Rev f",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "Повторить f/t в обратную сторону.",
@@ -3520,7 +3520,7 @@
       },
       {
         "id": "vim-percent",
-        "shortName": "%",
+        "shortName": "Match",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "К парной скобке.",
@@ -3538,7 +3538,7 @@
       },
       {
         "id": "vim-H",
-        "shortName": "H",
+        "shortName": "Scr top",
         "iconPath": "icons/vim/EditorScrollTop.png",
         "descriptions": {
           "ru": "К верхней строке экрана.",
@@ -3556,7 +3556,7 @@
       },
       {
         "id": "vim-M",
-        "shortName": "M",
+        "shortName": "Scr mid",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "К средней строке экрана.",
@@ -3574,7 +3574,7 @@
       },
       {
         "id": "vim-L",
-        "shortName": "L",
+        "shortName": "Scr bot",
         "iconPath": "icons/vim/EditorScrollDown.png",
         "descriptions": {
           "ru": "К нижней строке экрана.",
@@ -3592,7 +3592,7 @@
       },
       {
         "id": "vim-ctrl-d",
-        "shortName": "½↓",
+        "shortName": "Half↓",
         "iconPath": "icons/vim/EditorScrollDown.png",
         "descriptions": {
           "ru": "Прокрутка на пол-экрана вниз.",
@@ -3608,7 +3608,7 @@
       },
       {
         "id": "vim-ctrl-u",
-        "shortName": "½↑",
+        "shortName": "Half↑",
         "iconPath": "icons/vim/EditorScrollTop.png",
         "descriptions": {
           "ru": "Прокрутка на пол-экрана вверх.",
@@ -3624,7 +3624,7 @@
       },
       {
         "id": "vim-ctrl-f",
-        "shortName": "Pg↓",
+        "shortName": "Page↓",
         "iconPath": "icons/vim/EditorScrollDown.png",
         "descriptions": {
           "ru": "Страница вниз.",
@@ -3640,7 +3640,7 @@
       },
       {
         "id": "vim-ctrl-b",
-        "shortName": "Pg↑",
+        "shortName": "Page↑",
         "iconPath": "icons/vim/EditorScrollTop.png",
         "descriptions": {
           "ru": "Страница вверх.",
@@ -3656,7 +3656,7 @@
       },
       {
         "id": "vim-ctrl-o",
-        "shortName": "←jmp",
+        "shortName": "Jump←",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "Назад по списку прыжков.",
@@ -3672,7 +3672,7 @@
       },
       {
         "id": "vim-ctrl-i",
-        "shortName": "jmp→",
+        "shortName": "Jump→",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "Вперёд по списку прыжков.",
@@ -3688,7 +3688,7 @@
       },
       {
         "id": "vim-x",
-        "shortName": "x",
+        "shortName": "Del",
         "iconPath": "icons/vim/$Delete.svg",
         "descriptions": {
           "ru": "Удалить символ под курсором.",
@@ -3704,7 +3704,7 @@
       },
       {
         "id": "vim-X",
-        "shortName": "X",
+        "shortName": "Del←",
         "iconPath": "icons/vim/EditorBackSpace.png",
         "descriptions": {
           "ru": "Удалить символ слева.",
@@ -3720,7 +3720,7 @@
       },
       {
         "id": "vim-d",
-        "shortName": "d",
+        "shortName": "Del…",
         "iconPath": "icons/vim/EditorDeleteLine.png",
         "descriptions": {
           "ru": "Оператор удаления (d{motion}, dd).",
@@ -3737,7 +3737,7 @@
       },
       {
         "id": "vim-dd",
-        "shortName": "dd",
+        "shortName": "Del ln",
         "iconPath": "icons/vim/EditorDeleteLine.png",
         "descriptions": {
           "ru": "Удалить строку.",
@@ -3753,7 +3753,7 @@
       },
       {
         "id": "vim-D",
-        "shortName": "D",
+        "shortName": "Del $",
         "iconPath": "icons/vim/EditorDeleteToLineEnd.png",
         "descriptions": {
           "ru": "Удалить до конца строки.",
@@ -3769,7 +3769,7 @@
       },
       {
         "id": "vim-c",
-        "shortName": "c",
+        "shortName": "Chg…",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Оператор смены (c{motion}, cc).",
@@ -3786,7 +3786,7 @@
       },
       {
         "id": "vim-cc",
-        "shortName": "cc",
+        "shortName": "Chg ln",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Сменить строку.",
@@ -3802,7 +3802,7 @@
       },
       {
         "id": "vim-C",
-        "shortName": "C",
+        "shortName": "Chg $",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Сменить до конца строки.",
@@ -3818,7 +3818,7 @@
       },
       {
         "id": "vim-y",
-        "shortName": "y",
+        "shortName": "Yank…",
         "iconPath": "icons/vim/$Copy.png",
         "descriptions": {
           "ru": "Оператор копирования (y{motion}, yy).",
@@ -3835,7 +3835,7 @@
       },
       {
         "id": "vim-yy",
-        "shortName": "yy",
+        "shortName": "Yank ln",
         "iconPath": "icons/vim/$Copy.png",
         "descriptions": {
           "ru": "Скопировать строку.",
@@ -3851,7 +3851,7 @@
       },
       {
         "id": "vim-Y",
-        "shortName": "Y",
+        "shortName": "Yank ln",
         "iconPath": "icons/vim/$Copy.png",
         "descriptions": {
           "ru": "Скопировать строку (как yy).",
@@ -3867,7 +3867,7 @@
       },
       {
         "id": "vim-p",
-        "shortName": "p",
+        "shortName": "Paste",
         "iconPath": "icons/vim/$Paste.png",
         "descriptions": {
           "ru": "Вставить после курсора.",
@@ -3884,7 +3884,7 @@
       },
       {
         "id": "vim-P",
-        "shortName": "P",
+        "shortName": "Paste↑",
         "iconPath": "icons/vim/$Paste.png",
         "descriptions": {
           "ru": "Вставить перед курсором.",
@@ -3901,7 +3901,7 @@
       },
       {
         "id": "vim-r",
-        "shortName": "r…",
+        "shortName": "Repl…",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Заменить символ (r{char}).",
@@ -3917,7 +3917,7 @@
       },
       {
         "id": "vim-R",
-        "shortName": "R",
+        "shortName": "Replace",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Режим замены.",
@@ -3933,7 +3933,7 @@
       },
       {
         "id": "vim-s",
-        "shortName": "s",
+        "shortName": "Subst",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Заменить символ и войти в Insert.",
@@ -3949,7 +3949,7 @@
       },
       {
         "id": "vim-S",
-        "shortName": "S",
+        "shortName": "Subst ln",
         "iconPath": "icons/vim/Replace.png",
         "descriptions": {
           "ru": "Сменить всю строку.",
@@ -3965,7 +3965,7 @@
       },
       {
         "id": "vim-tilde",
-        "shortName": "~",
+        "shortName": "Case~",
         "iconPath": "icons/vim/EditorToggleCase.svg",
         "descriptions": {
           "ru": "Сменить регистр символа.",
@@ -3982,7 +3982,7 @@
       },
       {
         "id": "vim-u",
-        "shortName": "u",
+        "shortName": "Undo",
         "iconPath": "icons/vim/$Undo.png",
         "descriptions": {
           "ru": "Отменить.",
@@ -3998,7 +3998,7 @@
       },
       {
         "id": "vim-ctrl-r",
-        "shortName": "redo",
+        "shortName": "Redo",
         "iconPath": "icons/vim/$Redo.svg",
         "descriptions": {
           "ru": "Повторить отменённое.",
@@ -4014,7 +4014,7 @@
       },
       {
         "id": "vim-dot",
-        "shortName": ".",
+        "shortName": "Repeat",
         "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
         "descriptions": {
           "ru": "Повторить последнее изменение.",
@@ -4030,7 +4030,7 @@
       },
       {
         "id": "vim-gt",
-        "shortName": ">",
+        "shortName": "Indent",
         "iconPath": "icons/vim/EditorRight.png",
         "descriptions": {
           "ru": "Сдвинуть вправо (indent).",
@@ -4048,7 +4048,7 @@
       },
       {
         "id": "vim-lt",
-        "shortName": "<",
+        "shortName": "Outdent",
         "iconPath": "icons/vim/EditorLeft.png",
         "descriptions": {
           "ru": "Сдвинуть влево (outdent).",
@@ -4066,7 +4066,7 @@
       },
       {
         "id": "vim-J",
-        "shortName": "J",
+        "shortName": "Join",
         "iconPath": "icons/vim/EditorDeleteLine.png",
         "descriptions": {
           "ru": "Объединить строки.",
@@ -4083,7 +4083,7 @@
       },
       {
         "id": "vim-i",
-        "shortName": "i",
+        "shortName": "Insert",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Insert перед курсором / textobject inner.",
@@ -4100,7 +4100,7 @@
       },
       {
         "id": "vim-I",
-        "shortName": "I",
+        "shortName": "Ins ^",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Insert в начало строки.",
@@ -4116,7 +4116,7 @@
       },
       {
         "id": "vim-a",
-        "shortName": "a",
+        "shortName": "Append",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Insert после курсора / textobject around.",
@@ -4133,7 +4133,7 @@
       },
       {
         "id": "vim-A",
-        "shortName": "A",
+        "shortName": "App $",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Insert в конец строки.",
@@ -4149,7 +4149,7 @@
       },
       {
         "id": "vim-o",
-        "shortName": "o",
+        "shortName": "Open↓",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Новая строка ниже + Insert.",
@@ -4165,7 +4165,7 @@
       },
       {
         "id": "vim-O",
-        "shortName": "O",
+        "shortName": "Open↑",
         "iconPath": "icons/vim/InsertLiveTemplate.png",
         "descriptions": {
           "ru": "Новая строка выше + Insert.",
@@ -4181,7 +4181,7 @@
       },
       {
         "id": "vim-v",
-        "shortName": "v",
+        "shortName": "Visual",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Visual посимвольно.",
@@ -4197,7 +4197,7 @@
       },
       {
         "id": "vim-V",
-        "shortName": "V",
+        "shortName": "Vis ln",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Visual построчно.",
@@ -4213,7 +4213,7 @@
       },
       {
         "id": "vim-ctrl-v",
-        "shortName": "□v",
+        "shortName": "Vis blk",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Visual блоком.",
@@ -4229,7 +4229,7 @@
       },
       {
         "id": "vim-esc",
-        "shortName": "Esc",
+        "shortName": "Normal",
         "iconPath": "icons/vim/Stop.svg",
         "descriptions": {
           "ru": "Вернуться в Normal.",
@@ -4247,7 +4247,7 @@
       },
       {
         "id": "vim-m",
-        "shortName": "m…",
+        "shortName": "Mark…",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Поставить закладку (m{a-z}).",
@@ -4263,7 +4263,7 @@
       },
       {
         "id": "vim-tick",
-        "shortName": "'…",
+        "shortName": "To mark",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "К закладке (строка).",
@@ -4280,7 +4280,7 @@
       },
       {
         "id": "vim-backtick",
-        "shortName": "`…",
+        "shortName": "To pos",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "К закладке (позиция).",
@@ -4297,7 +4297,7 @@
       },
       {
         "id": "vim-slash",
-        "shortName": "/",
+        "shortName": "Search",
         "iconPath": "icons/vim/Find.svg",
         "descriptions": {
           "ru": "Поиск вперёд.",
@@ -4314,7 +4314,7 @@
       },
       {
         "id": "vim-question",
-        "shortName": "?",
+        "shortName": "Search←",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "Поиск назад.",
@@ -4331,7 +4331,7 @@
       },
       {
         "id": "vim-n",
-        "shortName": "n",
+        "shortName": "Next",
         "iconPath": "icons/vim/FindNext.png",
         "descriptions": {
           "ru": "Следующее совпадение.",
@@ -4348,7 +4348,7 @@
       },
       {
         "id": "vim-N",
-        "shortName": "N",
+        "shortName": "Prev",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "Предыдущее совпадение.",
@@ -4365,7 +4365,7 @@
       },
       {
         "id": "vim-star",
-        "shortName": "*",
+        "shortName": "*word",
         "iconPath": "icons/vim/Find.svg",
         "descriptions": {
           "ru": "Искать слово под курсором вперёд.",
@@ -4381,7 +4381,7 @@
       },
       {
         "id": "vim-hash",
-        "shortName": "#",
+        "shortName": "#word",
         "iconPath": "icons/vim/FindPrevious.png",
         "descriptions": {
           "ru": "Искать слово под курсором назад.",
@@ -4397,7 +4397,7 @@
       },
       {
         "id": "vim-colon",
-        "shortName": ":",
+        "shortName": "Ex",
         "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
         "descriptions": {
           "ru": "Command-line (Ex).",
@@ -4413,7 +4413,7 @@
       },
       {
         "id": "vim-ZZ",
-        "shortName": "ZZ",
+        "shortName": "Save+q",
         "iconPath": "icons/vim/SaveAll.svg",
         "descriptions": {
           "ru": "Сохранить и выйти.",
@@ -4429,7 +4429,7 @@
       },
       {
         "id": "vim-ZQ",
-        "shortName": "ZQ",
+        "shortName": "Quit!",
         "iconPath": "icons/vim/Stop.svg",
         "descriptions": {
           "ru": "Выйти без сохранения.",
@@ -4478,7 +4478,7 @@
       },
       {
         "id": "vim-prefix-ctrl-w",
-        "shortName": "^W…",
+        "shortName": "Win…",
         "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
         "descriptions": {
           "ru": "Префикс окна Ctrl-W.",
@@ -4494,7 +4494,7 @@
       },
       {
         "id": "vim-gj",
-        "shortName": "gj",
+        "shortName": "Disp↓",
         "iconPath": "icons/vim/EditorDown.png",
         "descriptions": {
           "ru": "Вниз по экранной строке.",
@@ -4512,7 +4512,7 @@
       },
       {
         "id": "vim-gk",
-        "shortName": "gk",
+        "shortName": "Disp↑",
         "iconPath": "icons/vim/EditorUp.png",
         "descriptions": {
           "ru": "Вверх по экранной строке.",
@@ -4530,7 +4530,7 @@
       },
       {
         "id": "vim-gt-tab",
-        "shortName": "gt",
+        "shortName": "Tab→",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "Следующая вкладка.",
@@ -4546,7 +4546,7 @@
       },
       {
         "id": "vim-gT",
-        "shortName": "gT",
+        "shortName": "Tab←",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "Предыдущая вкладка.",
@@ -4562,7 +4562,7 @@
       },
       {
         "id": "vim-gu",
-        "shortName": "gu",
+        "shortName": "Lower…",
         "iconPath": "icons/vim/EditorToggleCase.svg",
         "descriptions": {
           "ru": "В нижний регистр (gu{motion}).",
@@ -4578,7 +4578,7 @@
       },
       {
         "id": "vim-gU",
-        "shortName": "gU",
+        "shortName": "Upper…",
         "iconPath": "icons/vim/EditorToggleCase.svg",
         "descriptions": {
           "ru": "В верхний регистр (gU{motion}).",
@@ -4594,7 +4594,7 @@
       },
       {
         "id": "vim-zz",
-        "shortName": "zz",
+        "shortName": "Center",
         "iconPath": "icons/vim/GotoLine.png",
         "descriptions": {
           "ru": "Текущая строка по центру экрана.",
@@ -4610,7 +4610,7 @@
       },
       {
         "id": "vim-zt",
-        "shortName": "zt",
+        "shortName": "To top",
         "iconPath": "icons/vim/EditorScrollTop.png",
         "descriptions": {
           "ru": "Текущая строка к верху экрана.",
@@ -4626,7 +4626,7 @@
       },
       {
         "id": "vim-zb",
-        "shortName": "zb",
+        "shortName": "To bot",
         "iconPath": "icons/vim/EditorScrollDown.png",
         "descriptions": {
           "ru": "Текущая строка к низу экрана.",
@@ -4642,7 +4642,7 @@
       },
       {
         "id": "vim-cw-s",
-        "shortName": "^Ws",
+        "shortName": "HSplit",
         "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
         "descriptions": {
           "ru": "Разделить окно горизонтально.",
@@ -4658,7 +4658,7 @@
       },
       {
         "id": "vim-cw-v",
-        "shortName": "^Wv",
+        "shortName": "VSplit",
         "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
         "descriptions": {
           "ru": "Разделить окно вертикально.",
@@ -4674,7 +4674,7 @@
       },
       {
         "id": "vim-cw-h",
-        "shortName": "^Wh",
+        "shortName": "Win←",
         "iconPath": "icons/vim/EditorLeft.png",
         "descriptions": {
           "ru": "К окну слева.",
@@ -4690,7 +4690,7 @@
       },
       {
         "id": "vim-cw-j",
-        "shortName": "^Wj",
+        "shortName": "Win↓",
         "iconPath": "icons/vim/EditorDown.png",
         "descriptions": {
           "ru": "К окну снизу.",
@@ -4706,7 +4706,7 @@
       },
       {
         "id": "vim-cw-k",
-        "shortName": "^Wk",
+        "shortName": "Win↑",
         "iconPath": "icons/vim/EditorUp.png",
         "descriptions": {
           "ru": "К окну сверху.",
@@ -4722,7 +4722,7 @@
       },
       {
         "id": "vim-cw-l",
-        "shortName": "^Wl",
+        "shortName": "Win→",
         "iconPath": "icons/vim/EditorRight.png",
         "descriptions": {
           "ru": "К окну справа.",
@@ -4738,7 +4738,7 @@
       },
       {
         "id": "vim-cw-c",
-        "shortName": "^Wc",
+        "shortName": "Close",
         "iconPath": "icons/vim/Stop.svg",
         "descriptions": {
           "ru": "Закрыть окно.",
@@ -4754,7 +4754,7 @@
       },
       {
         "id": "vim-cw-o",
-        "shortName": "^Wo",
+        "shortName": "Only",
         "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
         "descriptions": {
           "ru": "Только текущее окно.",
@@ -4770,7 +4770,7 @@
       },
       {
         "id": "vim-iw",
-        "shortName": "iw",
+        "shortName": "in word",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Внутреннее слово (textobject).",
@@ -4786,7 +4786,7 @@
       },
       {
         "id": "vim-aw",
-        "shortName": "aw",
+        "shortName": "a word",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Слово с пробелами (textobject).",
@@ -4802,7 +4802,7 @@
       },
       {
         "id": "vim-i-quote",
-        "shortName": "i\"",
+        "shortName": "in \"",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Внутри кавычек.",
@@ -4818,7 +4818,7 @@
       },
       {
         "id": "vim-a-quote",
-        "shortName": "a\"",
+        "shortName": "a \"",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Кавычки целиком.",
@@ -4834,7 +4834,7 @@
       },
       {
         "id": "vim-i-paren",
-        "shortName": "i(",
+        "shortName": "in ()",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Внутри скобок.",
@@ -4850,7 +4850,7 @@
       },
       {
         "id": "vim-a-paren",
-        "shortName": "a(",
+        "shortName": "a ()",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Скобки целиком.",
@@ -4866,7 +4866,7 @@
       },
       {
         "id": "vim-ins-ctrl-w",
-        "shortName": "^W",
+        "shortName": "Del←w",
         "iconPath": "icons/vim/EditorDeleteToWordStart.png",
         "descriptions": {
           "ru": "Удалить слово слева (Insert).",
@@ -4882,7 +4882,7 @@
       },
       {
         "id": "vim-ins-ctrl-h",
-        "shortName": "^H",
+        "shortName": "BS",
         "iconPath": "icons/vim/EditorBackSpace.png",
         "descriptions": {
           "ru": "Backspace (Insert).",
@@ -4898,7 +4898,7 @@
       },
       {
         "id": "vim-ins-ctrl-n",
-        "shortName": "^N",
+        "shortName": "Compl↓",
         "iconPath": "icons/vim/HippieCompletion.png",
         "descriptions": {
           "ru": "Дополнение вперёд.",
@@ -4914,7 +4914,7 @@
       },
       {
         "id": "vim-ins-ctrl-p",
-        "shortName": "^P",
+        "shortName": "Compl↑",
         "iconPath": "icons/vim/HippieBackwardCompletion.png",
         "descriptions": {
           "ru": "Дополнение назад.",
@@ -4930,7 +4930,7 @@
       },
       {
         "id": "vim-ins-ctrl-o",
-        "shortName": "^O",
+        "shortName": "Norm×1",
         "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
         "descriptions": {
           "ru": "Одна Normal-команда из Insert.",
@@ -4946,7 +4946,7 @@
       },
       {
         "id": "vim-ins-ctrl-r",
-        "shortName": "^R",
+        "shortName": "Paste^R",
         "iconPath": "icons/vim/$Paste.png",
         "descriptions": {
           "ru": "Вставить из регистра.",
@@ -4962,7 +4962,7 @@
       },
       {
         "id": "vim-vis-o",
-        "shortName": "o",
+        "shortName": "Swap end",
         "iconPath": "icons/vim/EditorSelectLine.png",
         "descriptions": {
           "ru": "Другой конец выделения.",
@@ -4978,7 +4978,7 @@
       },
       {
         "id": "vim-vis-u",
-        "shortName": "u",
+        "shortName": "Lower",
         "iconPath": "icons/vim/EditorToggleCase.svg",
         "descriptions": {
           "ru": "В нижний регистр выделенного.",
@@ -4994,7 +4994,7 @@
       },
       {
         "id": "vim-vis-U",
-        "shortName": "U",
+        "shortName": "Upper",
         "iconPath": "icons/vim/EditorToggleCase.svg",
         "descriptions": {
           "ru": "В верхний регистр выделенного.",
