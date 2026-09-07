@@ -20,7 +20,9 @@ describe('bindingPolicy', () => {
     expect(
       isProgramBounded(
         {
-          programs: [{ slug: 'bash', title: 'Bash', icon: '', site: '', isBounded: true }],
+          programs: [
+            { slug: 'bash', title: 'Bash', icon: '', site: '', supported: true, isBounded: true },
+          ],
           commands: {},
         },
         'bash',
@@ -32,7 +34,16 @@ describe('bindingPolicy', () => {
     expect(
       isProgramBounded(
         {
-          programs: [{ slug: 'siemens-nx', title: 'NX', icon: '', site: '', isBounded: false }],
+          programs: [
+            {
+              slug: 'siemens-nx',
+              title: 'NX',
+              icon: '',
+              site: '',
+              supported: false,
+              isBounded: false,
+            },
+          ],
           commands: {},
         },
         'siemens-nx',
@@ -41,7 +52,16 @@ describe('bindingPolicy', () => {
     expect(
       isProgramBounded(
         {
-          programs: [{ slug: 'siemens-nx', title: 'NX', icon: '', site: '', isBounded: true }],
+          programs: [
+            {
+              slug: 'siemens-nx',
+              title: 'NX',
+              icon: '',
+              site: '',
+              supported: false,
+              isBounded: true,
+            },
+          ],
           commands: {},
         },
         'siemens-nx',
@@ -78,7 +98,9 @@ describe('bindingPolicy', () => {
 
   it('bounds Vim insert letter keys but not normal mode', () => {
     const vimCatalog = {
-      programs: [{ slug: 'vim', title: 'Vim', icon: '', site: '', isBounded: false }],
+      programs: [
+        { slug: 'vim', title: 'Vim', icon: '', site: '', supported: true, isBounded: false },
+      ],
       commands: {},
     };
     expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push')).toBe(false);
@@ -92,7 +114,9 @@ describe('bindingPolicy', () => {
 
   it('keeps Vim Normal/Visual unbounded even if catalog marks isBounded', () => {
     const vimCatalog = {
-      programs: [{ slug: 'vim', title: 'Vim', icon: '', site: '', isBounded: true }],
+      programs: [
+        { slug: 'vim', title: 'Vim', icon: '', site: '', supported: true, isBounded: true },
+      ],
       commands: {},
     };
     expect(isBoundedSlot(vimCatalog, 'vim', 'g', 's', 'normal')).toBe(false);

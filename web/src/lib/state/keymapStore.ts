@@ -411,9 +411,9 @@ function applyVimToState(state: KeymapState, source: string): Partial<KeymapStat
     vimHighlightCommandIds: [],
     vimRecipeActiveId: null,
     vimRecipeStepIndex: 0,
-    // Command modes need plain + Shift layers visible.
+    // Command modes need plain + Shift layers visible; keep other toggles.
     modifierVisibility: {
-      ...MODIFIER_VISIBILITY_DEFAULT,
+      ...state.modifierVisibility,
       push: true,
       s: true,
     },
@@ -823,28 +823,13 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   assignCommand({ key, slot, command, replaceExisting = true }) {
     const state = get();
-    const existing = state.bindings[key]?.[slot];
-    if (!canMutateBinding(state.catalog, state.selectedProgram, key, slot, existing, state.vimMode)) {
+    const previous = state.bindings[key]?.[slot];
+    if (!canMutateBinding(state.catalog, state.selectedProgram, key, slot, previous, state.vimMode)) {
       return;
     }
-
-    const bindings = cloneBindings(state.bindings);
-    bindings[key] ??= {};
-
-    const previous = bindings[key][slot];
     if (previous && !replaceExisting) {
       return;
     }
-
-    let unassigned = [...state.unassigned];
-    if (previous && previous.id !== command.id) {
-      if (!unassigned.some((item) => item.id === previous.id)) {
-        unassigned.push(previous);
-      }
-    }
-
-    bindings[key][slot] = command;
-    unassigned = unassigned.filter((item) => item.id !== command.id);
 
     if (state.selectedProgram === 'vim') {
       const layer = vimDisplayLayer(state.vimView);
@@ -866,6 +851,18 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       scheduleSlotAutosave();
       return;
     }
+
+    const bindings = cloneBindings(state.bindings);
+    bindings[key] ??= {};
+    bindings[key][slot] = command;
+
+    let unassigned = [...state.unassigned];
+    if (previous && previous.id !== command.id) {
+      if (!unassigned.some((item) => item.id === previous.id)) {
+        unassigned.push(previous);
+      }
+    }
+    unassigned = unassigned.filter((item) => item.id !== command.id);
 
     set({
       ...pushHistory(state),

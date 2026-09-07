@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CommandRef } from '../lib/types/keymap';
+  import type { CommandRef, ModifierSlot } from '../lib/types/keymap';
   import CommandChip from './CommandChip.svelte';
   import { keymap } from '../lib/state/keymapStore';
   import { clearSlotPreview } from '../lib/drag/slotPreview';
@@ -30,7 +30,9 @@
         sourceSlot?: string;
       };
       if (payload.sourceKey && payload.sourceSlot) {
-        keymap.getState().moveToPool(payload.sourceKey, payload.sourceSlot);
+        keymap
+          .getState()
+          .moveToPool(payload.sourceKey, payload.sourceSlot as ModifierSlot);
       }
     } catch {
       // ignore invalid payload

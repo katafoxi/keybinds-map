@@ -20,6 +20,8 @@
 <div
   id="keyboardGrid"
   class="keyboardGrid print-layer-{$keymap.printLayerMode}"
+  role="region"
+  aria-label="Клавиатура keymap"
   on:dragleave={(event) => {
     if (event.currentTarget === event.target) {
       clearSlotPreview();
@@ -27,7 +29,7 @@
     }
   }}
 >
-  {#each keys as key, index (`${key.backName}:${index}:${$keymap.selectedProgram}:${$keymap.vimMode}`)}
+  {#each keys as key, index (`${key.backName}:${index}`)}
     {#if key.frontName}
       <KeyCell
         backName={key.backName}
