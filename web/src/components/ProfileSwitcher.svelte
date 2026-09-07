@@ -29,9 +29,24 @@
   }
 
   async function copyProfile() {
-    const target = await keymap.getState().copyCurrentProfile();
+    let target = await keymap.getState().copyCurrentProfile();
     if (target) {
       await refreshFilled();
+      return;
+    }
+    const filledNow = await keymap.getState().getCustomSlotsFilled();
+    if (filledNow.custom1 && filledNow.custom2) {
+      if (
+        !window.confirm(
+          'Custom1 и Custom2 заняты. Перезаписать Custom1 текущей раскладкой?',
+        )
+      ) {
+        return;
+      }
+      target = await keymap.getState().copyCurrentProfile({ overwriteCustom1: true });
+      if (target) {
+        await refreshFilled();
+      }
     }
   }
 

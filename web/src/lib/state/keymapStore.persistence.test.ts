@@ -83,4 +83,47 @@ describe('keymapStore profile persistence', () => {
     expect(restored.selectedProgram).toBe('vscode');
     expect(restored.bindings['k']?.c?.id).toBe('workbench.action.showCommands');
   });
+
+  it('refuses to overwrite when both custom slots are full unless forced', async () => {
+    const originalCustom1 = {
+      program: 'pycharm',
+      xml: defaultPycharmXml,
+      updatedAt: 1,
+    };
+    idb.set('keybinds-profile-slots', {
+      custom1: originalCustom1,
+      custom2: {
+        program: 'pycharm',
+        xml: defaultPycharmXml,
+        updatedAt: 2,
+      },
+    });
+
+    keymapStore.getState().loadFromXml(defaultPycharmXml);
+    keymapStore.getState().assignCommand({
+      key: 'q',
+      slot: 'c',
+      command: { id: 'Find', shortName: 'Find' },
+    });
+
+    const refused = await keymapStore.getState().copyCurrentProfile();
+    expect(refused).toBeNull();
+    const slotsBefore = idb.get('keybinds-profile-slots') as Record<
+      string,
+      { program: string; xml: string; updatedAt: number }
+    >;
+    expect(slotsBefore.custom1.updatedAt).toBe(1);
+    expect(slotsBefore.custom1.xml).toBe(defaultPycharmXml);
+
+    const forced = await keymapStore.getState().copyCurrentProfile({
+      overwriteCustom1: true,
+    });
+    expect(forced).toBe('custom1');
+    const slotsAfter = idb.get('keybinds-profile-slots') as Record<
+      string,
+      { program: string; xml: string }
+    >;
+    expect(slotsAfter.custom1.xml).not.toBe(defaultPycharmXml);
+    expect(slotsAfter.custom1.xml).toContain('Find');
+  });
 });
