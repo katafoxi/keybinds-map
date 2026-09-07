@@ -1,13 +1,11 @@
 import { createStore } from 'zustand/vanilla';
 import type {
-  CommandCatalogEntry,
   CommandRef,
   KeyBindings,
   KeymapMetadata,
   ParsedCommands,
   PrintLayerMode,
   ProfileSlotId,
-  ProfileSlotsStore,
   ProgramCatalog,
   SavedProfile,
   DragState,
@@ -30,11 +28,7 @@ import {
 } from '../parsers/pycharm';
 import { parseVsCodeKeymap } from '../parsers/vscode';
 import { parseBashKeymap } from '../parsers/bash';
-import {
-  assignedCommandIds,
-  parseVimKeymap,
-  vimBindingsToKeyBindings,
-} from '../parsers/vim';
+import { parseVimKeymap } from '../parsers/vim';
 import {
   downloadVimrc,
   parseVimrcMaps,
@@ -53,21 +47,40 @@ import defaultVimJson from '@fixtures/vim-default.json?raw';
 import defaultVimRecipes from '@fixtures/vim-recipes.json?raw';
 import { bundledCatalog } from '../catalog/bundledPrograms';
 import { canMutateBinding } from '../keyboard/bindingPolicy';
-// Aliased: the store initializer below shadows a bare `get` with zustand's getter.
-import { get as idbGet, set as idbSet } from 'idb-keyval';
+import {
+  clearDraftKey,
+  getActiveProfileId,
+  getProfileSlots,
+  getSavedProfiles,
+  saveNamedProfiles,
+  setActiveProfileId,
+  setProfileSlots,
+} from './profilePersistence';
+import {
+  MAX_HISTORY,
+  cloneBindings,
+  pushHistory,
+  restoreDisplay,
+  snapshotState,
+  type KeymapStateSnapshot,
+} from './history';
+import {
+  EMPTY_VIM,
+  applyVimToState,
+  buildVimDisplayState,
+  catalogFor,
+  catalogToRefs,
+  patchVimBinding,
+  resolveCommand,
+  vimDisplayLayer,
+} from './vimHelpers';
 
-const PROFILES_KEY = 'keybinds-profiles';
-const PROFILE_SLOTS_KEY = 'keybinds-profile-slots';
-const ACTIVE_PROFILE_KEY = 'keybinds-active-profile';
-const MAX_HISTORY = 20;
+export { getSavedProfiles } from './profilePersistence';
+
 const AUTOSAVE_MS = 1500;
 
 let autosaveTimer: ReturnType<typeof setTimeout> | null = null;
 let bootPromise: Promise<void> | null = null;
-
-function catalogFor(state: KeymapState): ProgramCatalog {
-  return state.catalog ?? bundledCatalog;
-}
 
 function bindingKeyCount(bindings: KeyBindings): number {
   return Object.keys(bindings).length;
@@ -108,171 +121,12 @@ export type KeymapState = {
   vimRecipeStepIndex: number;
 };
 
-type KeymapStateSnapshot = Pick<
-  KeymapState,
-  | 'bindings'
-  | 'unassigned'
-  | 'metadata'
-  | 'sourceXml'
-  | 'dirty'
-  | 'importWarnings'
-  // Source of truth in Vim: `bindings` is only a projection of the active mode/layer.
-  | 'vimBindings'
->;
-
 type AssignArgs = {
   key: string;
   slot: keyof KeyBindings[string];
   command: CommandRef;
   replaceExisting?: boolean;
 };
-
-function cloneBindings(bindings: KeyBindings): KeyBindings {
-  return structuredClone(bindings);
-}
-
-function snapshotState(state: KeymapState): KeymapStateSnapshot {
-  return {
-    bindings: cloneBindings(state.bindings),
-    unassigned: structuredClone(state.unassigned),
-    metadata: structuredClone(state.metadata),
-    sourceXml: state.sourceXml,
-    dirty: state.dirty,
-    importWarnings: [...state.importWarnings],
-    vimBindings: structuredClone(state.vimBindings ?? []),
-  };
-}
-
-function pushHistory(state: KeymapState): Pick<KeymapState, 'historyPast' | 'historyFuture'> {
-  return {
-    historyPast: [...state.historyPast, snapshotState(state)].slice(-MAX_HISTORY),
-    historyFuture: [],
-  };
-}
-
-function resolveCommand(
-  commandId: string,
-  catalog: ProgramCatalog | null,
-  program: string,
-): CommandRef {
-  const fromCatalog = catalog?.commands[program]?.find((entry) => entry.id === commandId);
-  if (fromCatalog) {
-    return {
-      id: fromCatalog.id,
-      shortName: fromCatalog.shortName,
-      icon: fromCatalog.iconPath,
-      descriptions: fromCatalog.descriptions,
-      sector: fromCatalog.sector,
-      roles: fromCatalog.roles,
-      modes: fromCatalog.modes,
-    };
-  }
-  return { id: commandId, shortName: commandId };
-}
-
-function catalogToRefs(entries: CommandCatalogEntry[] | undefined): CommandRef[] {
-  return (entries ?? []).map((entry) => ({
-    id: entry.id,
-    shortName: entry.shortName,
-    icon: entry.iconPath,
-    descriptions: entry.descriptions,
-    sector: entry.sector,
-    roles: entry.roles,
-    modes: entry.modes,
-  }));
-}
-
-const EMPTY_VIM = {
-  vimMode: 'normal' as VimMode,
-  vimBindings: [] as VimBinding[],
-  vimLayers: [] as VimLayerDef[],
-  vimOperators: [] as VimOperatorDef[],
-  vimExCommands: [] as VimExCommand[],
-  vimRecipes: [] as VimRecipe[],
-  vimView: { kind: 'idle' } as VimViewState,
-  activeSectors: [] as VimSector[],
-  vimFlash: null as string | null,
-  vimHighlightRoles: [] as string[],
-  vimHighlightCommandIds: [] as string[],
-  vimRecipeActiveId: null as string | null,
-  vimRecipeStepIndex: 0,
-};
-
-function vimDisplayLayer(view: VimViewState): string | null {
-  return view.kind === 'prefix' ? view.layerId : null;
-}
-
-function patchVimBinding(
-  vimBindings: VimBinding[],
-  mode: VimMode,
-  layer: string | null,
-  keyName: string,
-  slot: string,
-  commandId: string | null,
-): VimBinding[] {
-  const next = vimBindings.filter(
-    (binding) =>
-      !(
-        binding.mode === mode &&
-        (binding.layer ?? null) === layer &&
-        binding.keyName === keyName &&
-        binding.slot === slot
-      ),
-  );
-  if (commandId) {
-    next.push({
-      commandId,
-      mode,
-      keyName,
-      slot: slot as VimBinding['slot'],
-      layer,
-    });
-  }
-  return next;
-}
-
-function buildVimDisplayState(
-  state: KeymapState,
-  overrides: Partial<KeymapState> = {},
-): Partial<KeymapState> {
-  const merged = { ...state, ...overrides };
-  const catalog = catalogFor(merged);
-  const resolver = (commandId: string) => resolveCommand(commandId, catalog, 'vim');
-  const layer = vimDisplayLayer(merged.vimView);
-  const bindings = vimBindingsToKeyBindings(
-    merged.vimBindings,
-    merged.vimMode,
-    layer,
-    resolver,
-  );
-  const assigned = assignedCommandIds(merged.vimBindings);
-  const unassigned = catalogToRefs(catalog.commands.vim).filter(
-    (command) => !assigned.has(command.id),
-  );
-  return { bindings, unassigned };
-}
-
-/**
- * In Vim `bindings` is only a projection of `vimBindings` onto the visible
- * mode/layer, so restoring a snapshot has to re-derive it for the current view.
- */
-function restoreDisplay(
-  state: KeymapState,
-  snapshot: KeymapStateSnapshot,
-): Partial<KeymapState> {
-  if (state.selectedProgram !== 'vim') {
-    return {};
-  }
-  return buildVimDisplayState(state, { vimBindings: snapshot.vimBindings });
-}
-
-async function getProfileSlots(): Promise<ProfileSlotsStore> {
-  return (await idbGet<ProfileSlotsStore>(PROFILE_SLOTS_KEY)) ?? {};
-}
-
-async function setProfileSlots(slots: ProfileSlotsStore): Promise<void> {
-  await idbSet(PROFILE_SLOTS_KEY, slots);
-}
 
 function scheduleSlotAutosave(): void {
   if (autosaveTimer) {
@@ -367,7 +221,7 @@ function applySourceToState(
     };
   }
   if (program === 'vim') {
-    return applyVimToState(state, source);
+    return applyVimToState(state, source, defaultVimRecipes) as Partial<KeymapState>;
   }
   return {
     ...EMPTY_VIM,
@@ -385,44 +239,6 @@ const MODIFIER_VISIBILITY_DEFAULT = {
   cs: true,
   acs: true,
 } as const;
-
-function applyVimToState(state: KeymapState, source: string): Partial<KeymapState> {
-  const parsed = parseVimKeymap(source, defaultVimRecipes);
-  const catalog = catalogFor(state);
-  const next: Partial<KeymapState> = {
-    selectedProgram: 'vim',
-    catalog,
-    metadata: { version: '1', name: 'Vim Default' },
-    sourceXml: source,
-    dirty: false,
-    importWarnings: parsed.warnings,
-    historyPast: [],
-    historyFuture: [],
-    vimMode: 'normal',
-    vimBindings: parsed.vimBindings,
-    vimLayers: parsed.layers,
-    vimOperators: parsed.operators,
-    vimExCommands: parsed.exCommands,
-    vimRecipes: parsed.recipes,
-    vimView: { kind: 'idle' },
-    activeSectors: [],
-    vimFlash: null,
-    vimHighlightRoles: [],
-    vimHighlightCommandIds: [],
-    vimRecipeActiveId: null,
-    vimRecipeStepIndex: 0,
-    // Command modes need plain + Shift layers visible; keep other toggles.
-    modifierVisibility: {
-      ...state.modifierVisibility,
-      push: true,
-      s: true,
-    },
-  };
-  return {
-    ...next,
-    ...buildVimDisplayState({ ...state, ...next } as KeymapState),
-  };
-}
 
 function serializeSource(state: KeymapState): string {
   if (state.selectedProgram === 'bash') {
@@ -475,7 +291,9 @@ export type KeymapActions = {
   loadFromVimrc: (source: string) => void;
   loadDefaultKeymap: () => boolean;
   switchProfile: (slotId: ProfileSlotId) => Promise<boolean>;
-  copyCurrentProfile: () => Promise<ProfileSlotId | null>;
+  copyCurrentProfile: (options?: {
+    overwriteCustom1?: boolean;
+  }) => Promise<ProfileSlotId | null>;
   getCustomSlotsFilled: () => Promise<Record<'custom1' | 'custom2', boolean>>;
   persistActiveCustomSlot: () => Promise<void>;
   assignCommand: (args: AssignArgs) => void;
@@ -521,7 +339,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       activeProfileId: 'standard',
       ...applyXmlToState(get(), defaultPycharmXml, 'pycharm'),
     });
-    await idbSet(ACTIVE_PROFILE_KEY, 'standard');
+    await setActiveProfileId('standard');
   };
 
   return {
@@ -583,10 +401,10 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
   },
 
   async initialize() {
-    await idbSet('keybinds-draft', undefined);
+    await clearDraftKey();
 
     const slots = await getProfileSlots();
-    const savedActive = await idbGet<ProfileSlotId>(ACTIVE_PROFILE_KEY);
+    const savedActive = await getActiveProfileId();
     let active: ProfileSlotId = savedActive ?? 'standard';
 
     if (active !== 'standard' && !slots[active]) {
@@ -672,7 +490,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   loadFromVim(source) {
     set({
-      ...applyVimToState(get(), source),
+      ...(applyVimToState(get(), source, defaultVimRecipes) as Partial<KeymapState>),
     });
   },
 
@@ -712,7 +530,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       null,
       2,
     );
-    const applied = applyVimToState(state, nextSource);
+    const applied = applyVimToState(state, nextSource, defaultVimRecipes) as Partial<KeymapState>;
     set({
       ...applied,
       importWarnings: [...(applied.importWarnings ?? []), ...imported.warnings],
@@ -758,7 +576,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
         activeProfileId: slotId,
         ...next,
       });
-      await idbSet(ACTIVE_PROFILE_KEY, slotId);
+      await setActiveProfileId(slotId);
       return true;
     }
 
@@ -766,23 +584,19 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     return true;
   },
 
-  async copyCurrentProfile() {
+  async copyCurrentProfile(options = {}) {
     const state = get();
     const slots = await getProfileSlots();
+    const bothFull = Boolean(slots.custom1 && slots.custom2);
+    if (bothFull && !options.overwriteCustom1) {
+      return null;
+    }
+
     const target: 'custom1' | 'custom2' = !slots.custom1
       ? 'custom1'
       : !slots.custom2
         ? 'custom2'
         : 'custom1';
-
-    if (slots.custom1 && slots.custom2) {
-      const overwrite = window.confirm(
-        'Custom1 и Custom2 заняты. Перезаписать Custom1 текущей раскладкой?',
-      );
-      if (!overwrite) {
-        return null;
-      }
-    }
 
     const xml = serializeSource(state);
     slots[target] = {
@@ -1055,7 +869,6 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
         ? state.modifierVisibility
         : {
             ...state.modifierVisibility,
-            // Normal/Visual/Cmdline: plain keys and Shift are first-class commands.
             push: true,
             s: true,
           };
@@ -1155,7 +968,6 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       })
       .join(' → ');
 
-    // Highlight keys visible on the recipe's starting mode/layer (static, no timed walk).
     const focusLayer = first.layer ?? null;
     const highlightIds: string[] = [];
     for (const step of recipe.steps) {
@@ -1275,7 +1087,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       xml,
       updatedAt: Date.now(),
     };
-    await idbSet(PROFILES_KEY, [...profiles, profile]);
+    await saveNamedProfiles([...profiles, profile]);
     set({ dirty: false, sourceXml: xml });
     return profile;
   },
@@ -1288,17 +1100,10 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   async deleteProfile(id) {
     const profiles = await getSavedProfiles();
-    await idbSet(
-      PROFILES_KEY,
-      profiles.filter((profile) => profile.id !== id),
-    );
+    await saveNamedProfiles(profiles.filter((profile) => profile.id !== id));
   },
 };
 });
-
-export async function getSavedProfiles(): Promise<SavedProfile[]> {
-  return (await idbGet<SavedProfile[]>(PROFILES_KEY)) ?? [];
-}
 
 export function bindKeymapStore() {
   let current = normalizeStoreState(keymapStore.getState());
