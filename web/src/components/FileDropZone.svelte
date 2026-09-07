@@ -87,7 +87,13 @@
   }
 </script>
 
-<section class="file-drop no-print" on:drop={onDrop} on:dragover={onDragOver}>
+<section
+  class="file-drop no-print"
+  role="group"
+  aria-label="Загрузка файла keymap"
+  on:drop={onDrop}
+  on:dragover={onDragOver}
+>
   <span class="privacy-note">
     Локально в браузере · перетащите .xml / .json / .inputrc / .vim или
   </span>

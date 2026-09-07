@@ -5,7 +5,7 @@
 
 ## Суть проекта (30 сек)
 
-Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный редактор keymap для **PyCharm** (XML) и **VS Code** (JSON). Всё выполняется **локально в браузере** — сервера нет. Состояние — Zustand + Immer, персистенс — IndexedDB (`idb-keyval`).
+Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный редактор keymap для **PyCharm** (XML), **VS Code** (JSON/JSONC), **Bash** (inputrc) и **Vim**. Всё выполняется **локально в браузере** — сервера нет. Состояние — Zustand (`structuredClone` для истории), персистенс — IndexedDB (`idb-keyval`).
 
 **Prod:** https://katafoxi.github.io/keybinds-map/
 
@@ -16,22 +16,25 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Задача | Читать в первую очередь | Тесты | Не читать |
 |--------|-------------------------|-------|-----------|
 | Импорт/парсинг PyCharm XML | `web/src/lib/parsers/pycharm.ts` | `pycharm.test.ts`, `windows-default.test.ts` | `media/`, `fixture_all.json` |
-| Импорт VS Code JSON | `web/src/lib/parsers/vscode.ts` | `vscode.test.ts` | — |
+| Импорт VS Code JSON/JSONC | `web/src/lib/parsers/vscode.ts` (`parseJsonc`) | `vscode.test.ts` | — |
+| Экспорт VS Code JSON | `web/src/lib/parsers/vscode-serialize.ts` | `vscode-serialize.test.ts` | — |
 | Импорт Bash inputrc (emacs) | `web/src/lib/parsers/bash.ts` | `bash.test.ts` | `media/` |
 | Импорт Vim JSON / vimrc | `web/src/lib/parsers/vim.ts`, `vim-serialize.ts`, `web/src/lib/vim/vimView.ts` | `vim.test.ts`, `vimView.test.ts` | `media/` |
 | Новый парсер / IR-контракт | `docs/PARSER_CONTRACT.md` | эталон: `pycharm.test.ts`, `vscode.test.ts` | — |
 | Экспорт XML | `web/src/lib/parsers/pycharm-serialize.ts` | `pycharm.test.ts` (round-trip) | — |
 | Экспорт Bash inputrc | `web/src/lib/parsers/bash-serialize.ts` | `bash.test.ts` (round-trip) | — |
-| Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `keymap.ts` | `layout.test.ts`, `bindingPolicy.test.ts` | — |
-| Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~717 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
-| UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte` | `CommandChip.test.ts`, `portal.test.ts` | `@dnd-kit` в package.json **не используется** (нативный HTML5 DnD) |
+| Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `modifierVisibility.ts` | `layout.test.ts`, `bindingPolicy.test.ts`, `modifierVisibility.test.ts` | — |
+| Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~1350 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
+| UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte`, `lib/drag/slotPreview.ts` | `CommandChip.test.ts`, `portal.test.ts` | нативный HTML5 DnD |
 | Выбор программы | `ProgramPicker.svelte` + `selectProgram` в store | — | — |
-| Загрузка файлов | `FileDropZone.svelte` + `loadFromXml` / `loadFromVsCode` | — | — |
-| Профили Standard/Custom1/Custom2 | `ProfileSwitcher.svelte` + `switchProfile`, `copyCurrentProfile` в store | `keymapStore.boot.test.ts` | `ProfileManager.svelte` — **не подключён** в App |
+| Загрузка файлов | `FileDropZone.svelte` + `loadFromXml` / `loadFromVsCode` / `loadFromBash` / `loadFromVim` | — | — |
+| Профили Standard/Custom1/Custom2 | `ProfileSwitcher.svelte` + `switchProfile`, `copyCurrentProfile` в store | `keymapStore.boot.test.ts`, `keymapStore.persistence.test.ts` | `ProfileManager.svelte` — **не подключён** в App |
+| Vim UI (режимы, секторы, рецепты) | `VimModeSwitcher`, `SectorLegend`, `RecipePanel`, `ExCommandPanel` | `keymapStore.boot.test.ts`, `vimView.test.ts` | — |
+| i18n описаний команд | `web/src/lib/i18n/locale.ts`, `LocaleSwitcher.svelte` | `locale.test.ts` | — |
 | Печать keymap | `KeyboardGrid.svelte`, `app.css` (`.print-only`, `.no-print`) | — | — |
 | Каталог команд / иконки программ | `scripts/export-catalog.mjs`, `fixtures/fixture_all.json` | — | `media/pycharm_command_icons/` (сотни PNG) |
 | Синхронизация ассетов | `scripts/sync-assets.mjs` | CI workflow | `web/public/icons/pycharm/` |
-| CI / деплой | `.github/workflows/web.yml` | — | — |
+| CI / деплой | `.github/workflows/web.yml` (test → **check** → build → Pages) | — | — |
 | Стили, шапка, layout страницы | `App.svelte`, `app.css` | `app.css.test.ts` | — |
 
 ---
@@ -43,12 +46,16 @@ flowchart LR
   subgraph input
     XML[PyCharm .xml]
     JSON[VS Code .json]
+    BASH[Bash .inputrc]
+    VIM[Vim JSON / .vim]
     DEF[defaults/pycharm-windows.xml]
   end
 
   subgraph parsers
     P[pycharm.ts]
     V[vscode.ts]
+    B[bash.ts]
+    VI[vim.ts]
   end
 
   subgraph core
@@ -64,15 +71,19 @@ flowchart LR
   end
 
   subgraph output
-    SER[pycharm-serialize.ts]
+    SER[pycharm / vscode / bash / vim serialize]
     IDB[(IndexedDB)]
   end
 
   XML --> P
   JSON --> V
+  BASH --> B
+  VIM --> VI
   DEF --> P
   P --> L
   V --> L
+  B --> L
+  VI --> S
   L --> S
   T --> S
   S --> KG
@@ -84,7 +95,7 @@ flowchart LR
 
 **Каталог команд:** `fixtures/fixture_all.json` → `scripts/export-catalog.mjs` → `web/public/programs.json` + `web/src/lib/catalog/programs.json` (bundled fallback через `bundledPrograms.ts`).
 
-**IR парсеров:** `ParsedCommands` (`commandId → keyName → modifierSlot`). Спека и чеклист новой программы — [`docs/PARSER_CONTRACT.md`](docs/PARSER_CONTRACT.md).
+**IR парсеров:** `ParsedCommands` (`commandId → keyName → modifierSlot`). Vim дополнительно хранит `VimBinding[]`. Спека — [`docs/PARSER_CONTRACT.md`](docs/PARSER_CONTRACT.md).
 
 ---
 
@@ -98,12 +109,16 @@ keybinds/
 │   │   ├── App.svelte            # Корневой layout, toolbar, boot
 │   │   ├── main.ts               # Точка входа
 │   │   ├── app.css               # Глобальные стили + print
-│   │   ├── components/           # Svelte UI (7 компонентов)
+│   │   ├── components/           # Svelte UI (~14 компонентов)
 │   │   └── lib/
 │   │       ├── types/keymap.ts   # Все доменные типы
-│   │       ├── state/keymapStore.ts  # Единый стор + actions
-│   │       ├── parsers/          # parse + serialize
-│   │       ├── keyboard/layout.ts    # Физическая раскладка клавиатуры
+│   │       ├── state/keymapStore.ts  # Единый стор + actions (~1350)
+│   │       ├── parsers/          # parse + serialize (pycharm/vscode/bash/vim)
+│   │       ├── keyboard/         # layout, bindingPolicy, modifierVisibility
+│   │       ├── vim/vimView.ts    # автомат режимов/prefix/operator
+│   │       ├── i18n/locale.ts    # ru/en для descriptions
+│   │       ├── drag/slotPreview.ts
+│   │       ├── dom/portal.ts
 │   │       ├── catalog/          # bundled programs.json
 │   │       └── assets.ts         # assetUrl() для GitHub Pages base
 │   └── public/                   # Статика (генерируется scripts/)
@@ -112,25 +127,26 @@ keybinds/
 ├── scripts/                      # sync-assets.mjs, export-catalog.mjs
 ├── media/                        # Исходники иконок PyCharm — НЕ читать агенту
 ├── assets/ui/                    # logo, favicon
-└── .github/workflows/web.yml     # CI: test → build → GitHub Pages
+└── .github/workflows/web.yml     # CI: test → check → build → GitHub Pages
 ```
 
 ---
 
 ## Ключевые файлы (индекс)
 
-### Типы — `web/src/lib/types/keymap.ts` (~91)
+### Типы — `web/src/lib/types/keymap.ts` (~190)
 
 | Тип / константа | Назначение |
 |-----------------|------------|
 | `ModifierSlot` | `push`, `a`, `c`, `s`, `ac`, `as`, `cs`, `acs` — слои на клавише |
 | `KeyBindings` | `Record<keyName, SlotBindings>` — основная модель раскладки |
-| `CommandRef` | `{ id, shortName, icon? }` — команда на клавише или в пуле |
+| `CommandRef` | `{ id, shortName, icon?, descriptions?, sector?, roles? }` |
 | `ParsedCommands` | Промежуточный формат парсера: `commandId → { keyName → modifierCode }` |
+| `VimBinding` / `VimViewState` / `VimRecipe` | Vim IR и UI-автомат |
 | `ProgramCatalog` | Список программ + каталог команд по slug |
 | `ProfileSlotId` | `standard` \| `custom1` \| `custom2` |
 
-### Store — `web/src/lib/state/keymapStore.ts` (~717)
+### Store — `web/src/lib/state/keymapStore.ts` (~1350)
 
 Экспорт: `keymap` (Svelte-подписка), `getSavedProfiles()`.
 
@@ -138,16 +154,17 @@ keybinds/
 |--------|------------|
 | `boot(catalog)` | Инициализация при старте App, загрузка IndexedDB |
 | `selectProgram(slug)` | Смена программы |
-| `loadFromXml` / `loadFromVsCode` / `loadFromBash` | Импорт файла |
-| `loadDefaultKeymap` | Дефолтный PyCharm Windows XML |
+| `loadFromXml` / `loadFromVsCode` / `loadFromBash` / `loadFromVim` / `loadFromVimrc` | Импорт файла |
+| `loadDefaultKeymap` | Дефолтный keymap текущей программы |
 | `switchProfile` / `copyCurrentProfile` | Слоты Standard / Custom1 / Custom2 |
 | `assignCommand`, `moveCommand`, `moveToPool`, `assignFromPool` | DnD-операции |
-| `undo` / `redo` | История до 20 шагов |
-| `exportXml` / `exportKeymap` | Скачивание XML или `.inputrc` |
+| `undo` / `redo` | История до 20 шагов (для Vim — через `vimBindings` + `restoreDisplay`) |
+| `exportXml` / `exportKeymap` | Скачивание XML / `.inputrc` / `keybindings.json` / `.vim` |
+| `setVimMode` / `playVimRecipe` / `activateVimCommand` | Vim UI |
 | `saveProfile` / `loadProfile` / `deleteProfile` | Именованные профили в IndexedDB |
 | `toggleModifier`, `setPrintLayerMode` | Видимость слоёв / режим печати |
 
-**IndexedDB ключи:** `keybinds-profiles`, `keybinds-profile-slots`, `keybinds-active-profile`. Автосохранение custom-слота: debounce 1500 ms.
+**IndexedDB ключи:** `keybinds-profiles`, `keybinds-profile-slots`, `keybinds-active-profile`. Автосохранение custom-слота: debounce 1500 ms. Чтение IDB — через `idbGet` (не путать с zustand `get`).
 
 **Дефолтный keymap:** импорт `test-fixtures/Windows.xml` через Vite alias `@fixtures` (см. `vite.config.mts`).
 
@@ -156,11 +173,13 @@ keybinds/
 | Файл | Вход | Выход |
 |------|------|-------|
 | `pycharm.ts` | PyCharm XML | `ParsedCommands` + warnings (chords, mouse skipped) |
-| `vscode.ts` | VS Code keybindings JSON | `ParsedCommands` (через `modifiersToCode`) |
+| `vscode.ts` | VS Code keybindings JSON/**JSONC** | `ParsedCommands`; skips `-cmd` removals, meta/win/super; warns on `when` |
 | `bash.ts` | GNU Readline `.inputrc` / `bind -p` (emacs) | `ParsedCommands` + warnings (chords, macros) |
-| `vim.ts` | curated Vim JSON (+ recipes) | `VimBinding[]` + layers/operators; flat `ParsedCommands` только Normal root |
+| `vim.ts` | curated Vim JSON (+ recipes) | `VimBinding[]` + layers/operators |
 | `pycharm-serialize.ts` | `KeyBindings` + metadata | XML string + `downloadXml()` |
+| `vscode-serialize.ts` | `KeyBindings` | `keybindings.json` + `downloadVsCodeKeymap()` |
 | `bash-serialize.ts` | `KeyBindings` | `.inputrc` + `downloadInputrc()` |
+| `vim-serialize.ts` | `VimBinding[]` | `.vim` map dump |
 
 Общая логика модификаторов: `modifiersToCode()` в `pycharm.ts` — ключи сортируются, код = первая буква каждого модификатора (`ctrl alt` → `ca` → slot `ac`).
 
@@ -170,21 +189,28 @@ keybinds/
 - `getCleanKeyboardKeys()` — пустая клавиатура
 - `buildBindingsFromParsed()` — parsed → KeyBindings
 - `mergeKeyboardWithBindings()` — для отрисовки grid
-- `bindingPolicy.ts` — `isBounded` программы, запрет push/s на символьных клавишах (IDE), locked Ctrl+C и т.п.
+- `bindingPolicy.ts` — `isBounded` программы, запрет push/s на символьных клавишах (IDE), locked Ctrl+C; Vim Insert vs Normal
+- `modifierVisibility.ts` — какие слои видны на экране / в печати
 
-Имена клавиш (`backName`) — внутренний ID; алиасы PyCharm → layout в `PYCHARM_KEY_ALIASES` (`pycharm.ts`) и `KEY_TO_PYCHARM` (`pycharm-serialize.ts`).
+Имена клавиш (`backName`) — внутренний ID; алиасы PyCharm → layout в `PYCHARM_KEY_ALIASES` (`pycharm.ts`); VS Code — `LAYOUT_TO_VSCODE_KEY` в `vscode.ts`.
 
 ### UI компоненты
 
 | Компонент | Роль |
 |-----------|------|
-| `ProgramPicker` | Шаг 1: выбор PyCharm / VS Code |
-| `FileDropZone` | Drag & drop / file input `.xml` / `.json` |
+| `ProgramPicker` | Шаг 1: выбор программы |
+| `FileDropZone` | Drag & drop / file input |
 | `ProfileSwitcher` | Standard / Custom1 / Custom2 + «Скопировать профиль» |
+| `LocaleSwitcher` | ru/en для подсказок команд |
+| `ModifierLegend` | Переключатели видимости слоёв |
 | `CommandPool` | Неназначенные команды (drop target) |
 | `KeyboardGrid` | Сетка клавиш + print header |
 | `KeyCell` | Одна клавиша, 8 modifier-слотов, DnD |
 | `CommandChip` | Иконка команды, drag source |
+| `VimModeSwitcher` | Normal / Insert / Visual / Cmdline |
+| `SectorLegend` | Фильтр секторов Vim |
+| `RecipePanel` | Типовые последовательности Vim |
+| `ExCommandPanel` | Ex-команды Vim |
 | `ProfileManager` | **Legacy:** save/load именованных профилей — не в App |
 
 DnD payload: `application/json` с `{ sourceKey, sourceSlot, command? }`.
@@ -193,18 +219,22 @@ DnD payload: `application/json` с `{ sourceKey, sourceSlot, command? }`.
 
 ## Тесты
 
-Запуск: `cd web && npm test` (Vitest + jsdom).
+Запуск: `cd web && npm test` (Vitest + jsdom). Typecheck: `cd web && npm run check` (есть в CI).
 
 | Файл | Покрывает |
 |------|-----------|
 | `pycharm.test.ts` | Парсинг XML, modifiersToCode |
-| `vscode.test.ts` | Парсинг JSON keybindings |
+| `vscode.test.ts` | JSONC, removals, when, meta |
+| `vscode-serialize.test.ts` | Экспорт + round-trip спецклавиш |
 | `windows-default.test.ts` | Дефолтный Windows.xml |
 | `layout.test.ts` | Раскладка, merge |
 | `app.css.test.ts` | Контракт вёрстки: сетка 17 колонок, без `:global()`, tooltip `position:fixed` |
 | `CommandChip.test.ts` | Один корень чипа, tooltip через portal на `document.body` |
-| `keymapStore.boot.test.ts` | Boot + профили |
+| `keymapStore.boot.test.ts` | Boot + bash/vim defaults |
+| `keymapStore.persistence.test.ts` | Восстановление custom-слота, VS Code round-trip через профиль |
+| `keymapStore.history.test.ts` | Undo/redo PyCharm + Vim |
 | `keymapStore.subscribe.test.ts` | Подписка, assign/move |
+| `assets.test.ts` | `$` literal в `assetUrl` |
 
 Фикстуры: `test-fixtures/Windows.xml`, примеры в тестах.
 
@@ -220,6 +250,7 @@ cd web && npm install && npm run dev    # http://127.0.0.1:5173
 # Или
 npm run dev          # из корня
 cd web && npm test
+cd web && npm run check
 cd web && npm run build
 ```
 
@@ -233,7 +264,7 @@ cd web && npm run build
 
 Bash emacs: `fixtures/bash-emacs.json` + `test-fixtures/bash-emacs.inputrc`. Иконки — копии из PyCharm (`sync-assets.mjs` → `web/public/icons/bash/`). Пояснения команд: `descriptions.ru` (переключение языка — `uiLocale`, `pickLocalized`).
 
-Vim: `fixtures/vim-default.json` + `fixtures/vim-recipes.json`. IR — `VimBinding` (mode/layer), UI — режимы, секторы, prefix/operator pending (`vimView`), рецепты. Экспорт `.vim` (`nnoremap`…). `isBounded: false`.
+Vim: `fixtures/vim-default.json` + `fixtures/vim-recipes.json`. IR — `VimBinding` (mode/layer), UI — режимы, секторы, prefix/operator pending (`vimView`), рецепты. Экспорт `.vim` (`nnoremap`…). Insert: push/Shift bounded; Normal/Visual — нет.
 
 ---
 
@@ -258,12 +289,17 @@ PARSER_CONTRACT       # docs/PARSER_CONTRACT.md — IR, слоты, чеклис
 bindingPolicy         # keyboard/bindingPolicy.ts — IDE bounded slots, locked shortcuts
 modifiersToCode       # pycharm.ts — ядро маппинга модификаторов
 PYCHARM_KEY_ALIASES   # XML key → layout backName
+LAYOUT_TO_VSCODE_KEY  # layout ↔ VS Code key tokens
+parseJsonc            # vscode.ts — JSONC без зависимости
+serializeVsCodeKeymap # vscode-serialize.ts — экспорт keybindings.json
 applyXmlToState       # keymapStore — импорт XML в state
+restoreDisplay        # keymapStore — undo/redo для Vim projection
+idbGet                # keymapStore — IndexedDB (не zustand get)
 rehydrateCommands     # keymapStore — обновление CommandRef из catalog
 MODIFIER_SLOTS        # keymap.ts — порядок слоёв
 PROFILES_KEY          # IndexedDB именованные профили
 PROFILE_SLOTS_KEY     # custom1/custom2 XML
-assetUrl              # пути для GitHub Pages
+assetUrl              # пути для GitHub Pages ($ literal)
 ```
 
 ---
@@ -272,7 +308,7 @@ assetUrl              # пути для GitHub Pages
 
 | Пакет | Где |
 |-------|-----|
-| `zustand` + `immer` | keymapStore |
+| `zustand` | keymapStore |
 | `fast-xml-parser` | pycharm.ts |
 | `idb-keyval` | персистенс профилей |
 | `svelte` 4 | UI |

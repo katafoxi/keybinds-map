@@ -168,8 +168,8 @@
       class:layer-hidden={!isModifierSlotVisibleOnScreen(slot, $keymap.modifierVisibility)}
       data-slot={slot}
       data-bounded={slotUi[slot].bounded ? '1' : '0'}
-      role="button"
-      tabindex="0"
+      role="group"
+      aria-label="{frontName} {slot === 'push' ? 'без модификатора' : slot}"
       on:dragover={(event) => allowDrop(event, slot)}
       on:drop={(event) => handleDrop(event, slot)}
     >
