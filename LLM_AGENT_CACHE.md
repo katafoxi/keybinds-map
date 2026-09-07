@@ -24,11 +24,11 @@ Browser-first SPA (Vite + Svelte 4 + TypeScript): визуальный реда�
 | Экспорт XML | `web/src/lib/parsers/pycharm-serialize.ts` | `pycharm.test.ts` (round-trip) | — |
 | Экспорт Bash inputrc | `web/src/lib/parsers/bash-serialize.ts` | `bash.test.ts` (round-trip) | — |
 | Раскладка клавиш, слоты модификаторов | `web/src/lib/keyboard/layout.ts`, `bindingPolicy.ts`, `modifierVisibility.ts` | `layout.test.ts`, `bindingPolicy.test.ts`, `modifierVisibility.test.ts` | — |
-| Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (~1350 строк) | `keymapStore.*.test.ts` | весь файл целиком — ищи по action name |
+| Состояние, профили, undo, автосохранение | `web/src/lib/state/keymapStore.ts` (оркестратор) + `profilePersistence` / `history` / `vimHelpers` | `keymapStore.*.test.ts` | не читать store целиком — ищи action / модуль |
 | UI / drag-and-drop | `KeyCell.svelte`, `CommandPool.svelte`, `CommandChip.svelte`, `lib/drag/slotPreview.ts` | `CommandChip.test.ts`, `portal.test.ts` | нативный HTML5 DnD |
 | Выбор программы | `ProgramPicker.svelte` + `selectProgram` в store | — | — |
 | Загрузка файлов | `FileDropZone.svelte` + `loadFromXml` / `loadFromVsCode` / `loadFromBash` / `loadFromVim` | — | — |
-| Профили Standard/Custom1/Custom2 | `ProfileSwitcher.svelte` + `switchProfile`, `copyCurrentProfile` в store | `keymapStore.boot.test.ts`, `keymapStore.persistence.test.ts` | `ProfileManager.svelte` — **не подключён** в App |
+| Профили Standard/Custom1/Custom2 | `ProfileSwitcher.svelte` (confirm при перезаписи) + `switchProfile` / `copyCurrentProfile({ overwriteCustom1? })` | `keymapStore.boot.test.ts`, `keymapStore.persistence.test.ts` | `ProfileManager.svelte` — **не подключён** в App |
 | Vim UI (режимы, секторы, рецепты) | `VimModeSwitcher`, `SectorLegend`, `RecipePanel`, `ExCommandPanel` | `keymapStore.boot.test.ts`, `vimView.test.ts` | — |
 | i18n описаний команд | `web/src/lib/i18n/locale.ts`, `LocaleSwitcher.svelte` | `locale.test.ts` | — |
 | Печать keymap | `KeyboardGrid.svelte`, `app.css` (`.print-only`, `.no-print`) | — | — |
@@ -112,7 +112,11 @@ keybinds/
 │   │   ├── components/           # Svelte UI (~14 компонентов)
 │   │   └── lib/
 │   │       ├── types/keymap.ts   # Все доменные типы
-│   │       ├── state/keymapStore.ts  # Единый стор + actions (~1350)
+│   │       ├── state/                # keymapStore + persistence/history/vimHelpers
+│   │       │   ├── keymapStore.ts    # оркестратор actions (~1150)
+│   │       │   ├── profilePersistence.ts  # IndexedDB ключи/слоты
+│   │       │   ├── history.ts        # snapshot / undo helpers
+│   │       │   └── vimHelpers.ts     # Vim projection / patch bindings
 │   │       ├── parsers/          # parse + serialize (pycharm/vscode/bash/vim)
 │   │       ├── keyboard/         # layout, bindingPolicy, modifierVisibility
 │   │       ├── vim/vimView.ts    # автомат режимов/prefix/operator
@@ -146,9 +150,17 @@ keybinds/
 | `ProgramCatalog` | Список программ + каталог команд по slug |
 | `ProfileSlotId` | `standard` \| `custom1` \| `custom2` |
 
-### Store — `web/src/lib/state/keymapStore.ts` (~1350)
+### Store — `web/src/lib/state/`
 
-Экспорт: `keymap` (Svelte-подписка), `getSavedProfiles()`.
+Оркестратор: [`keymapStore.ts`](web/src/lib/state/keymapStore.ts) (~1150). Чистые хелперы:
+
+| Модуль | Назначение |
+|--------|------------|
+| `profilePersistence.ts` | IDB ключи, слоты custom1/custom2, named profiles |
+| `history.ts` | `KeymapStateSnapshot`, `pushHistory`, `restoreDisplay` |
+| `vimHelpers.ts` | `EMPTY_VIM`, `buildVimDisplayState`, `patchVimBinding`, `applyVimToState` |
+
+Экспорт для UI: `keymap`, `keymapStore`, `getSavedProfiles` (реэкспорт из persistence).
 
 | Action | Что делает |
 |--------|------------|
@@ -156,7 +168,7 @@ keybinds/
 | `selectProgram(slug)` | Смена программы |
 | `loadFromXml` / `loadFromVsCode` / `loadFromBash` / `loadFromVim` / `loadFromVimrc` | Импорт файла |
 | `loadDefaultKeymap` | Дефолтный keymap текущей программы |
-| `switchProfile` / `copyCurrentProfile` | Слоты Standard / Custom1 / Custom2 |
+| `switchProfile` / `copyCurrentProfile({ overwriteCustom1? })` | Слоты Standard / Custom1 / Custom2; confirm — в ProfileSwitcher |
 | `assignCommand`, `moveCommand`, `moveToPool`, `assignFromPool` | DnD-операции |
 | `undo` / `redo` | История до 20 шагов (для Vim — через `vimBindings` + `restoreDisplay`) |
 | `exportXml` / `exportKeymap` | Скачивание XML / `.inputrc` / `keybindings.json` / `.vim` |
@@ -164,7 +176,7 @@ keybinds/
 | `saveProfile` / `loadProfile` / `deleteProfile` | Именованные профили в IndexedDB |
 | `toggleModifier`, `setPrintLayerMode` | Видимость слоёв / режим печати |
 
-**IndexedDB ключи:** `keybinds-profiles`, `keybinds-profile-slots`, `keybinds-active-profile`. Автосохранение custom-слота: debounce 1500 ms. Чтение IDB — через `idbGet` (не путать с zustand `get`).
+**IndexedDB ключи:** `keybinds-profiles`, `keybinds-profile-slots`, `keybinds-active-profile` (см. `profilePersistence.ts`). Автосохранение custom-слота: debounce 1500 ms.
 
 **Дефолтный keymap:** импорт `test-fixtures/Windows.xml` через Vite alias `@fixtures` (см. `vite.config.mts`).
 
@@ -200,7 +212,7 @@ keybinds/
 |-----------|------|
 | `ProgramPicker` | Шаг 1: выбор программы |
 | `FileDropZone` | Drag & drop / file input |
-| `ProfileSwitcher` | Standard / Custom1 / Custom2 + «Скопировать профиль» |
+| `ProfileSwitcher` | Standard / Custom1 / Custom2 + «Скопировать профиль» (confirm при обоих занятых) |
 | `LocaleSwitcher` | ru/en для подсказок команд |
 | `ModifierLegend` | Переключатели видимости слоёв |
 | `CommandPool` | Неназначенные команды (drop target) |
@@ -231,7 +243,7 @@ DnD payload: `application/json` с `{ sourceKey, sourceSlot, command? }`.
 | `app.css.test.ts` | Контракт вёрстки: сетка 17 колонок, без `:global()`, tooltip `position:fixed` |
 | `CommandChip.test.ts` | Один корень чипа, tooltip через portal на `document.body` |
 | `keymapStore.boot.test.ts` | Boot + bash/vim defaults |
-| `keymapStore.persistence.test.ts` | Восстановление custom-слота, VS Code round-trip через профиль |
+| `keymapStore.persistence.test.ts` | Восстановление custom-слота, VS Code round-trip, overwriteCustom1 |
 | `keymapStore.history.test.ts` | Undo/redo PyCharm + Vim |
 | `keymapStore.subscribe.test.ts` | Подписка, assign/move |
 | `assets.test.ts` | `$` literal в `assetUrl` |
@@ -293,11 +305,13 @@ LAYOUT_TO_VSCODE_KEY  # layout ↔ VS Code key tokens
 parseJsonc            # vscode.ts — JSONC без зависимости
 serializeVsCodeKeymap # vscode-serialize.ts — экспорт keybindings.json
 applyXmlToState       # keymapStore — импорт XML в state
-restoreDisplay        # keymapStore — undo/redo для Vim projection
-idbGet                # keymapStore — IndexedDB (не zustand get)
+restoreDisplay        # history.ts — undo/redo для Vim projection
+profilePersistence    # state/profilePersistence.ts — IndexedDB
+copyCurrentProfile    # store API; confirm в ProfileSwitcher
+vimHelpers            # state/vimHelpers.ts — buildVimDisplayState, patchVimBinding
 rehydrateCommands     # keymapStore — обновление CommandRef из catalog
 MODIFIER_SLOTS        # keymap.ts — порядок слоёв
-PROFILES_KEY          # IndexedDB именованные профили
+PROFILES_KEY          # IndexedDB именованные профили (profilePersistence)
 PROFILE_SLOTS_KEY     # custom1/custom2 XML
 assetUrl              # пути для GitHub Pages ($ literal)
 ```
@@ -308,7 +322,7 @@ assetUrl              # пути для GitHub Pages ($ literal)
 
 | Пакет | Где |
 |-------|-----|
-| `zustand` | keymapStore |
+| `zustand` | keymapStore (оркестратор) |
 | `fast-xml-parser` | pycharm.ts |
 | `idb-keyval` | персистенс профилей |
 | `svelte` 4 | UI |
