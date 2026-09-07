@@ -1,0 +1,5141 @@
+{
+  "programs": [
+    {
+      "slug": "pycharm",
+      "title": "PyCharm",
+      "icon": "i/program-icons/PyCharm.png",
+      "site": "https://www.jetbrains.com/pycharm/",
+      "settingsFileInfo": "����� ������� ������� ��������������� �������� ��� PyCharm  (������� ������ keymap � .xml https://plugins.jetbrains.com/plugin/18927-keymap-xml-exporter)",
+      "supported": true,
+      "isBounded": true
+    },
+    {
+      "slug": "siemens-nx",
+      "title": "Siemens NX",
+      "icon": "i/program-icons/UGNX.png",
+      "site": "https://www.plm.automation.siemens.com/global/en/products/nx/",
+      "settingsFileInfo": "",
+      "supported": false,
+      "isBounded": false
+    },
+    {
+      "slug": "vscode",
+      "title": "VS Code",
+      "icon": "i/ball.svg",
+      "site": "https://code.visualstudio.com/",
+      "settingsFileInfo": "Экспорт: Command Palette → Preferences: Open Default Keyboard Shortcuts (JSON)",
+      "supported": true,
+      "isBounded": true
+    },
+    {
+      "slug": "bash",
+      "title": "Bash (Emacs)",
+      "icon": "i/program-icons/bash.svg",
+      "site": "https://www.gnu.org/software/bash/",
+      "settingsFileInfo": "Файл ~/.inputrc или вывод bind -p. Режим emacs. Эталон: readline(3) DEFAULT KEY BINDINGS.",
+      "supported": true,
+      "isBounded": true
+    },
+    {
+      "slug": "vim",
+      "title": "Vim",
+      "icon": "i/program-icons/vim.svg",
+      "site": "https://www.vim.org/",
+      "settingsFileInfo": "Curated default map (Normal/Insert/Visual/Cmdline). Import: :map dump or simple vimrc. Export: nnoremap/inoremap/vnoremap.",
+      "supported": true,
+      "isBounded": false
+    }
+  ],
+  "commands": {
+    "pycharm": [
+      {
+        "id": "$Copy",
+        "shortName": "$Copy",
+        "iconPath": "icons/pycharm/$Copy.png"
+      },
+      {
+        "id": "$Cut",
+        "shortName": "$Cut",
+        "iconPath": "icons/pycharm/$Cut.png"
+      },
+      {
+        "id": "$Delete",
+        "shortName": "$Del.",
+        "iconPath": "icons/pycharm/$Delete.svg"
+      },
+      {
+        "id": "$EditorTranslateAction",
+        "shortName": "$EditorTranslateAction",
+        "iconPath": "icons/pycharm/$EditorTranslateAction.png"
+      },
+      {
+        "id": "$Paste",
+        "shortName": "$Paste",
+        "iconPath": "icons/pycharm/$Paste.png"
+      },
+      {
+        "id": "$Redo",
+        "shortName": "$Redo",
+        "iconPath": "icons/pycharm/$Redo.svg"
+      },
+      {
+        "id": "$SelectAll",
+        "shortName": "$slctAll",
+        "iconPath": "icons/pycharm/$SelectAll.png"
+      },
+      {
+        "id": "$Undo",
+        "shortName": "$Undo",
+        "iconPath": "icons/pycharm/$Undo.png"
+      },
+      {
+        "id": "ActivateBookmarksToolWindow",
+        "shortName": "ActivateBookmarksToolWindow"
+      },
+      {
+        "id": "ActivateCommitToolWindow",
+        "shortName": "Act.CommitTW",
+        "iconPath": "icons/pycharm/ActivateCommitToolWindow.png"
+      },
+      {
+        "id": "ActivateDebugToolWindow",
+        "shortName": "Act.DebugTW",
+        "iconPath": "icons/pycharm/ActivateDebugToolWindow.svg"
+      },
+      {
+        "id": "ActivateFavoritesToolWindow",
+        "shortName": "Act.FavoritesTW",
+        "iconPath": "icons/pycharm/ActivateFavoritesToolWindow.png"
+      },
+      {
+        "id": "ActivateFindToolWindow",
+        "shortName": "Act.FindTW",
+        "iconPath": "icons/pycharm/ActivateFindToolWindow.svg"
+      },
+      {
+        "id": "ActivateNuGetToolWindow",
+        "shortName": "ActivateNuGetToolWindow"
+      },
+      {
+        "id": "ActivateProblemsViewToolWindow",
+        "shortName": "Act.ProblemsViewTW",
+        "iconPath": "icons/pycharm/ActivateProblemsViewToolWindow.png"
+      },
+      {
+        "id": "ActivateProjectToolWindow",
+        "shortName": "Act.ProjectTW",
+        "iconPath": "icons/pycharm/ActivateProjectToolWindow.png"
+      },
+      {
+        "id": "ActivatePullRequestsToolWindow",
+        "shortName": "Act.PullRequestsTW",
+        "iconPath": "icons/pycharm/ActivatePullRequestsToolWindow.svg"
+      },
+      {
+        "id": "ActivatePythonConsoleToolWindow",
+        "shortName": "Act.PythonConsole",
+        "iconPath": "icons/pycharm/ActivatePythonConsoleToolWindow.svg"
+      },
+      {
+        "id": "ActivateRunToolWindow",
+        "shortName": "Act.RunToolWindow",
+        "iconPath": "icons/pycharm/ActivateRunToolWindow.svg"
+      },
+      {
+        "id": "ActivateServicesToolWindow",
+        "shortName": "Act.ServicesTW",
+        "iconPath": "icons/pycharm/ActivateServicesToolWindow.png"
+      },
+      {
+        "id": "ActivateStructureToolWindow",
+        "shortName": "Act.StructureTW",
+        "iconPath": "icons/pycharm/ActivateStructureToolWindow.png"
+      },
+      {
+        "id": "ActivateTerminalToolWindow",
+        "shortName": "Act.TerminalTW",
+        "iconPath": "icons/pycharm/ActivateTerminalToolWindow.svg"
+      },
+      {
+        "id": "ActivateUnitTestsToolWindow",
+        "shortName": "ActivateUnitTestsToolWindow"
+      },
+      {
+        "id": "ActivateVersionControlToolWindow",
+        "shortName": "Act.VCSToolWindow",
+        "iconPath": "icons/pycharm/ActivateVersionControlToolWindow.svg"
+      },
+      {
+        "id": "AddToFavoritesPopup",
+        "shortName": "AddToFavoritesPopup",
+        "iconPath": "icons/pycharm/AddToFavoritesPopup.png"
+      },
+      {
+        "id": "Annotate",
+        "shortName": "Annotate",
+        "iconPath": "icons/pycharm/Annotate.svg"
+      },
+      {
+        "id": "Arrangement.Rule.Edit",
+        "shortName": "Arrangement.Rule.Edit"
+      },
+      {
+        "id": "Arrangement.Rule.Match.Condition.Move.Down",
+        "shortName": "A.R.M.C.M.Down",
+        "iconPath": "icons/pycharm/Arrangement.Rule.Match.Condition.Move.Down.svg"
+      },
+      {
+        "id": "Arrangement.Rule.Match.Condition.Move.Up",
+        "shortName": "A.R.M.C.M.Up"
+      },
+      {
+        "id": "AutoIndentLines",
+        "shortName": "AutoIndentLines",
+        "iconPath": "icons/pycharm/AutoIndentLines.png"
+      },
+      {
+        "id": "Back",
+        "shortName": "Back"
+      },
+      {
+        "id": "BraceOrQuoteOut",
+        "shortName": "BraceOrQuoteOut"
+      },
+      {
+        "id": "CallHierarchy",
+        "shortName": "CallHierarchy",
+        "iconPath": "icons/pycharm/CallHierarchy.png"
+      },
+      {
+        "id": "ChangeSignature",
+        "shortName": "ChangeSignature"
+      },
+      {
+        "id": "ChangesView.AddUnversioned",
+        "shortName": "Ch.View.AddUnversioned",
+        "iconPath": "icons/pycharm/ChangesView.AddUnversioned.png"
+      },
+      {
+        "id": "ChangesView.Diff",
+        "shortName": "Changes.View.Diff",
+        "iconPath": "icons/pycharm/ChangesView.Diff.png"
+      },
+      {
+        "id": "ChangesView.GroupBy.Directory",
+        "shortName": "Ch.View.GroupBy.Directory",
+        "iconPath": "icons/pycharm/ChangesView.GroupBy.Directory.png"
+      },
+      {
+        "id": "ChangesView.GroupBy.Module",
+        "shortName": "Ch.View.GroupBy.Module",
+        "iconPath": "icons/pycharm/ChangesView.GroupBy.Module.png"
+      },
+      {
+        "id": "ChangesView.Move",
+        "shortName": "Ch.View.Move",
+        "iconPath": "icons/pycharm/ChangesView.Move.png"
+      },
+      {
+        "id": "ChangesView.Rename",
+        "shortName": "ChangesView.Rename"
+      },
+      {
+        "id": "ChangesView.Revert",
+        "shortName": "Ch.View.Revert",
+        "iconPath": "icons/pycharm/ChangesView.Revert.svg"
+      },
+      {
+        "id": "ChangesView.SetDefault",
+        "shortName": "ChangesView.SetDefault"
+      },
+      {
+        "id": "ChangesView.ShelveSilently",
+        "shortName": "Ch.View.ShelveSilently",
+        "iconPath": "icons/pycharm/ChangesView.ShelveSilently.svg"
+      },
+      {
+        "id": "ChangesView.UnshelveSilently",
+        "shortName": "Ch.View.UnshelveSilently",
+        "iconPath": "icons/pycharm/ChangesView.UnshelveSilently.svg"
+      },
+      {
+        "id": "ChangeTypeSignature",
+        "shortName": "ChangeTypeSignature"
+      },
+      {
+        "id": "CheckinFiles",
+        "shortName": "CheckinFiles",
+        "iconPath": "icons/pycharm/CheckinFiles.svg"
+      },
+      {
+        "id": "CheckinProject",
+        "shortName": "CheckinProject",
+        "iconPath": "icons/pycharm/CheckinProject.png"
+      },
+      {
+        "id": "ChooseDebugConfiguration",
+        "shortName": "ChooseDebugConfiguration",
+        "iconPath": "icons/pycharm/ChooseDebugConfiguration.png"
+      },
+      {
+        "id": "ChooseRunConfiguration",
+        "shortName": "ChooseRunConfiguration",
+        "iconPath": "icons/pycharm/ChooseRunConfiguration.png"
+      },
+      {
+        "id": "ClassNameCompletion",
+        "shortName": "ClassNameCompletion"
+      },
+      {
+        "id": "CloseActiveTab",
+        "shortName": "CloseActiveTab"
+      },
+      {
+        "id": "CloseContent",
+        "shortName": "CloseContent"
+      },
+      {
+        "id": "CloseGotItTooltip",
+        "shortName": "CloseGotItTooltip"
+      },
+      {
+        "id": "CodeCompletion",
+        "shortName": "CodeCompletion"
+      },
+      {
+        "id": "CodeInspection.OnEditor",
+        "shortName": "CodeInspection.OnEditor",
+        "iconPath": "icons/pycharm/CodeInspection.OnEditor.svg"
+      },
+      {
+        "id": "CollapseAll",
+        "shortName": "CollapseAll"
+      },
+      {
+        "id": "CollapseAllRegions",
+        "shortName": "CollapseAllRegions"
+      },
+      {
+        "id": "CollapseBlock",
+        "shortName": "CollapseBlock",
+        "iconPath": "icons/pycharm/CollapseBlock.png"
+      },
+      {
+        "id": "CollapseExpandableComponent",
+        "shortName": "CollapseExpandableComponent"
+      },
+      {
+        "id": "CollapseRegion",
+        "shortName": "CollapseRegion",
+        "iconPath": "icons/pycharm/CollapseRegion.png"
+      },
+      {
+        "id": "CollapseRegionRecursively",
+        "shortName": "CollapseRegionRecursively"
+      },
+      {
+        "id": "CollapseSelection",
+        "shortName": "CollapseSlctn",
+        "iconPath": "icons/pycharm/CollapseSelection.png"
+      },
+      {
+        "id": "CollapseTreeNode",
+        "shortName": "CollapseTreeNode"
+      },
+      {
+        "id": "CollapsiblePanel-toggle",
+        "shortName": "CollapsiblePanel-toggle"
+      },
+      {
+        "id": "com.intellij.ide.actions.searcheverywhere.ml.actions.OpenFeaturesInScratchFileAction",
+        "shortName": "OpenFeaturesInScratchFileAction"
+      },
+      {
+        "id": "CommentByBlockComment",
+        "shortName": "CommentByBlock",
+        "iconPath": "icons/pycharm/CommentByBlockComment.png"
+      },
+      {
+        "id": "CommentByLineComment",
+        "shortName": "CommentByLine",
+        "iconPath": "icons/pycharm/CommentByLineComment.png"
+      },
+      {
+        "id": "Compare.SameVersion",
+        "shortName": "Compare.SameVersion",
+        "iconPath": "icons/pycharm/Compare.SameVersion.png"
+      },
+      {
+        "id": "Compare.Selected",
+        "shortName": "Compare.Selected",
+        "iconPath": "icons/pycharm/Compare.Selected.png"
+      },
+      {
+        "id": "CompareTwoFiles",
+        "shortName": "CompareTwoFiles",
+        "iconPath": "icons/pycharm/CompareTwoFiles.png"
+      },
+      {
+        "id": "Compile",
+        "shortName": "Compile"
+      },
+      {
+        "id": "CompileDirty",
+        "shortName": "CompileDirty"
+      },
+      {
+        "id": "Console.Execute",
+        "shortName": "Console.Execute"
+      },
+      {
+        "id": "Console.Execute.Multiline",
+        "shortName": "Console.Execute.Multiline"
+      },
+      {
+        "id": "Console.History.Browse",
+        "shortName": "Console.History.Browse",
+        "iconPath": "icons/pycharm/Console.History.Browse.svg"
+      },
+      {
+        "id": "Console.Open",
+        "shortName": "Console.Open"
+      },
+      {
+        "id": "context.clear",
+        "shortName": "context.clear",
+        "iconPath": "icons/pycharm/context.clear.png"
+      },
+      {
+        "id": "context.load",
+        "shortName": "context.load",
+        "iconPath": "icons/pycharm/context.load.png"
+      },
+      {
+        "id": "context.save",
+        "shortName": "context.save",
+        "iconPath": "icons/pycharm/context.save.png"
+      },
+      {
+        "id": "ContextHelp",
+        "shortName": "ContextHelp"
+      },
+      {
+        "id": "CopyElement",
+        "shortName": "CopyElement"
+      },
+      {
+        "id": "CopyPaths",
+        "shortName": "CopyPaths",
+        "iconPath": "icons/pycharm/CopyPaths.png"
+      },
+      {
+        "id": "CopyReference",
+        "shortName": "CopyReference",
+        "iconPath": "icons/pycharm/CopyReference.png"
+      },
+      {
+        "id": "CurrentLeadUnfollowAction",
+        "shortName": "CurrentLeadUnfollowAction"
+      },
+      {
+        "id": "CWMHostShowPopupAction",
+        "shortName": "CWMHostShowPopupAction"
+      },
+      {
+        "id": "Debug",
+        "shortName": "Debug",
+        "iconPath": "icons/pycharm/Debug.png"
+      },
+      {
+        "id": "Debugger.RestoreBreakpoint",
+        "shortName": "Debugger.RestoreBreakpoint",
+        "iconPath": "icons/pycharm/Debugger.RestoreBreakpoint.png"
+      },
+      {
+        "id": "Diff.ApplyLeftSide",
+        "shortName": "Diff.ApplyLeftSide"
+      },
+      {
+        "id": "Diff.ApplyRightSide",
+        "shortName": "Diff.ApplyRightSide"
+      },
+      {
+        "id": "Diff.FocusOppositePane",
+        "shortName": "Diff.FocusOppositePane"
+      },
+      {
+        "id": "Diff.NextChange",
+        "shortName": "Diff.NextChange"
+      },
+      {
+        "id": "Diff.PrevChange",
+        "shortName": "Diff.PrevChange"
+      },
+      {
+        "id": "Diff.ShowDiff",
+        "shortName": "Diff.ShowDiff",
+        "iconPath": "icons/pycharm/Diff.ShowDiff.png"
+      },
+      {
+        "id": "Diff.ShowSettingsPopup",
+        "shortName": "Diff.ShowSettingsPopup",
+        "iconPath": "icons/pycharm/Diff.ShowSettingsPopup.svg"
+      },
+      {
+        "id": "DirDiffMenu.SynchronizeDiff",
+        "shortName": "DirDiffMenu.SynchronizeDiff"
+      },
+      {
+        "id": "DirDiffMenu.SynchronizeDiff.All",
+        "shortName": "DirDiffMenu.SynchronizeDiff.All"
+      },
+      {
+        "id": "DomCollectionControl.Add",
+        "shortName": "DomCollectionControl.Add"
+      },
+      {
+        "id": "DomElementsTreeView.AddElement",
+        "shortName": "DomElementsTreeView.AddElement"
+      },
+      {
+        "id": "DumpLookupElementWeights",
+        "shortName": "DumpLookupElementWeights",
+        "iconPath": "icons/pycharm/DumpLookupElementWeights.png"
+      },
+      {
+        "id": "DumpMLCompletionFeatures",
+        "shortName": "DumpMLCompletionFeatures",
+        "iconPath": "icons/pycharm/DumpMLCompletionFeatures.png"
+      },
+      {
+        "id": "DuplicatesForm.SendToLeft",
+        "shortName": "DuplicatesForm.SendToLeft",
+        "iconPath": "icons/pycharm/DuplicatesForm.SendToLeft.png"
+      },
+      {
+        "id": "DuplicatesForm.SendToRight",
+        "shortName": "DuplicatesForm.SendToRight"
+      },
+      {
+        "id": "EditBreakpoint",
+        "shortName": "EditBreakpoint"
+      },
+      {
+        "id": "Editor Delete",
+        "shortName": "Edtr. Del.",
+        "iconPath": "icons/pycharm/Editor Delete.png"
+      },
+      {
+        "id": "Editor Redo",
+        "shortName": "Edtr. Redo",
+        "iconPath": "icons/pycharm/Editor Redo.png"
+      },
+      {
+        "id": "EditorAddCaretPerSelectedLine",
+        "shortName": "Edtr.AddCaretPerSelectedLine",
+        "iconPath": "icons/pycharm/EditorAddCaretPerSelectedLine.png"
+      },
+      {
+        "id": "EditorAddOrRemoveCaret",
+        "shortName": "EditorAddOrRemoveCaret"
+      },
+      {
+        "id": "EditorAddRectangularSelectionOnMouseDrag",
+        "shortName": "EditorAddRectangularslctionOnMouseDrag"
+      },
+      {
+        "id": "EditorBackSpace",
+        "shortName": "Edtr.BackSpace",
+        "iconPath": "icons/pycharm/EditorBackSpace.png"
+      },
+      {
+        "id": "EditorBackwardParagraph",
+        "shortName": "Edtr.BackwardParagraph",
+        "iconPath": "icons/pycharm/EditorBackwardParagraph.png"
+      },
+      {
+        "id": "EditorBackwardParagraphWithSelection",
+        "shortName": "Edtr.BackwardPar.WithSlctn",
+        "iconPath": "icons/pycharm/EditorBackwardParagraphWithSelection.png"
+      },
+      {
+        "id": "EditorChooseLookupItem",
+        "shortName": "EditorChooseLookupItem"
+      },
+      {
+        "id": "EditorChooseLookupItemDot",
+        "shortName": "Edtr.ChooseLookupItemDot",
+        "iconPath": "icons/pycharm/EditorChooseLookupItemDot.png"
+      },
+      {
+        "id": "EditorChooseLookupItemReplace",
+        "shortName": "EditorChooseLookupItemReplace"
+      },
+      {
+        "id": "EditorCodeBlockEnd",
+        "shortName": "Move Caret to Code Block End",
+        "iconPath": "icons/pycharm/EditorCodeBlockEnd.png"
+      },
+      {
+        "id": "EditorCodeBlockEndWithSelection",
+        "shortName": "Edtr.CodeBlockEndWithSlctn",
+        "iconPath": "icons/pycharm/EditorCodeBlockEndWithSelection.png"
+      },
+      {
+        "id": "EditorCodeBlockStart",
+        "shortName": "Edtr.CodeBlockStart",
+        "iconPath": "icons/pycharm/EditorCodeBlockStart.png"
+      },
+      {
+        "id": "EditorCodeBlockStartWithSelection",
+        "shortName": "Edtr.CodeBlockStartWithSlctn",
+        "iconPath": "icons/pycharm/EditorCodeBlockStartWithSelection.png"
+      },
+      {
+        "id": "EditorCompleteStatement",
+        "shortName": "EditorCompleteStatement"
+      },
+      {
+        "id": "EditorContextInfo",
+        "shortName": "Edtr.ContextInfo",
+        "iconPath": "icons/pycharm/EditorContextInfo.png"
+      },
+      {
+        "id": "EditorCreateRectangularSelection",
+        "shortName": "EditorCreateRectangularslction"
+      },
+      {
+        "id": "EditorCreateRectangularSelectionOnMouseDrag",
+        "shortName": "EditorCreateRectangularslctionOnMouseDrag"
+      },
+      {
+        "id": "EditorDeleteLine",
+        "shortName": "Edtr.Del.Line",
+        "iconPath": "icons/pycharm/EditorDeleteLine.png"
+      },
+      {
+        "id": "EditorDeleteToLineEnd",
+        "shortName": "Edtr.Del.ToLineEnd",
+        "iconPath": "icons/pycharm/EditorDeleteToLineEnd.png"
+      },
+      {
+        "id": "EditorDeleteToLineStart",
+        "shortName": "Edtr.Del.ToLineStart",
+        "iconPath": "icons/pycharm/EditorDeleteToLineStart.png"
+      },
+      {
+        "id": "EditorDeleteToWordEnd",
+        "shortName": "Edtr.Del.ToWordEnd",
+        "iconPath": "icons/pycharm/EditorDeleteToWordEnd.png"
+      },
+      {
+        "id": "EditorDeleteToWordStart",
+        "shortName": "Edtr.Del.ToWordStart",
+        "iconPath": "icons/pycharm/EditorDeleteToWordStart.png"
+      },
+      {
+        "id": "EditorDown",
+        "shortName": "Edtr.Down",
+        "iconPath": "icons/pycharm/EditorDown.png"
+      },
+      {
+        "id": "EditorDownWithSelection",
+        "shortName": "Edtr.DownWithSlctn",
+        "iconPath": "icons/pycharm/EditorDownWithSelection.png"
+      },
+      {
+        "id": "EditorDuplicate",
+        "shortName": "Edtr.Duplicate",
+        "iconPath": "icons/pycharm/EditorDuplicate.png"
+      },
+      {
+        "id": "EditorDuplicateLines",
+        "shortName": "Edtr.DuplicateLines",
+        "iconPath": "icons/pycharm/EditorDuplicateLines.png"
+      },
+      {
+        "id": "EditorEnter",
+        "shortName": "EditorEnter"
+      },
+      {
+        "id": "EditorEscape",
+        "shortName": "EditorEscape"
+      },
+      {
+        "id": "EditorFocusGutter",
+        "shortName": "Edtr.FocusGutter",
+        "iconPath": "icons/pycharm/EditorFocusGutter.png"
+      },
+      {
+        "id": "EditorForwardParagraph",
+        "shortName": "Edtr.ForwardParagraph",
+        "iconPath": "icons/pycharm/EditorForwardParagraph.png"
+      },
+      {
+        "id": "EditorForwardParagraphWithSelection",
+        "shortName": "Edtr.ForwardP.WithSlctn",
+        "iconPath": "icons/pycharm/EditorForwardParagraphWithSelection.png"
+      },
+      {
+        "id": "EditorIndentSelection",
+        "shortName": "EditorIndentslction"
+      },
+      {
+        "id": "EditorJoinLines",
+        "shortName": "Edtr.JoinLines",
+        "iconPath": "icons/pycharm/EditorJoinLines.png"
+      },
+      {
+        "id": "EditorLeft",
+        "shortName": "Edtr.Left",
+        "iconPath": "icons/pycharm/EditorLeft.png"
+      },
+      {
+        "id": "EditorLeftWithSelection",
+        "shortName": "Edtr.LeftWithSlctn",
+        "iconPath": "icons/pycharm/EditorLeftWithSelection.png"
+      },
+      {
+        "id": "EditorLineEnd",
+        "shortName": "Edtr.LineEnd",
+        "iconPath": "icons/pycharm/EditorLineEnd.png"
+      },
+      {
+        "id": "EditorLineEndWithSelection",
+        "shortName": "Edtr.LineEndWithSlctn",
+        "iconPath": "icons/pycharm/EditorLineEndWithSelection.png"
+      },
+      {
+        "id": "EditorLineStart",
+        "shortName": "Edtr.LineStart",
+        "iconPath": "icons/pycharm/EditorLineStart.png"
+      },
+      {
+        "id": "EditorLineStartWithSelection",
+        "shortName": "Edtr.LineStartWithSlctn",
+        "iconPath": "icons/pycharm/EditorLineStartWithSelection.png"
+      },
+      {
+        "id": "EditorLookupDown",
+        "shortName": "EditorLookupDown"
+      },
+      {
+        "id": "EditorLookupUp",
+        "shortName": "EditorLookupUp"
+      },
+      {
+        "id": "EditorMatchBrace",
+        "shortName": "Edtr.MatchBrace",
+        "iconPath": "icons/pycharm/EditorMatchBrace.png"
+      },
+      {
+        "id": "EditorMoveToPageBottom",
+        "shortName": "EditorMoveToPageBottom"
+      },
+      {
+        "id": "EditorMoveToPageBottomWithSelection",
+        "shortName": "EditorMoveToPageBottomWithslction"
+      },
+      {
+        "id": "EditorMoveToPageTop",
+        "shortName": "EditorMoveToPageTop"
+      },
+      {
+        "id": "EditorMoveToPageTopWithSelection",
+        "shortName": "EditorMoveToPageTopWithslction"
+      },
+      {
+        "id": "EditorNextWord",
+        "shortName": "Edtr.NextWord",
+        "iconPath": "icons/pycharm/EditorNextWord.png"
+      },
+      {
+        "id": "EditorNextWordWithSelection",
+        "shortName": "Edtr.NextWordWithSlctn",
+        "iconPath": "icons/pycharm/EditorNextWordWithSelection.png"
+      },
+      {
+        "id": "EditorPageDown",
+        "shortName": "EditorPageDown"
+      },
+      {
+        "id": "EditorPageDownWithSelection",
+        "shortName": "EditorPageDownWithslction"
+      },
+      {
+        "id": "EditorPageUp",
+        "shortName": "EditorPageUp"
+      },
+      {
+        "id": "EditorPageUpWithSelection",
+        "shortName": "EditorPageUpWithslction"
+      },
+      {
+        "id": "EditorPasteFromX11",
+        "shortName": "EditorPasteFromX11"
+      },
+      {
+        "id": "EditorPasteSimple",
+        "shortName": "Edtr.PasteSimple",
+        "iconPath": "icons/pycharm/EditorPasteSimple.png"
+      },
+      {
+        "id": "EditorPreviousWord",
+        "shortName": "Edtr.Prev.Word",
+        "iconPath": "icons/pycharm/EditorPreviousWord.png"
+      },
+      {
+        "id": "EditorPreviousWordWithSelection",
+        "shortName": "Edtr.Prev.WordWithSlctn",
+        "iconPath": "icons/pycharm/EditorPreviousWordWithSelection.png"
+      },
+      {
+        "id": "EditorRight",
+        "shortName": "Edtr.Right",
+        "iconPath": "icons/pycharm/EditorRight.png"
+      },
+      {
+        "id": "EditorRightWithSelection",
+        "shortName": "Edtr.RightWithSlctn",
+        "iconPath": "icons/pycharm/EditorRightWithSelection.png"
+      },
+      {
+        "id": "EditorScrollDown",
+        "shortName": "Edtr.ScrollDown",
+        "iconPath": "icons/pycharm/EditorScrollDown.png"
+      },
+      {
+        "id": "EditorScrollLeft",
+        "shortName": "Edtr.ScrollLeft",
+        "iconPath": "icons/pycharm/EditorScrollLeft.png"
+      },
+      {
+        "id": "EditorScrollRight",
+        "shortName": "Edtr.ScrollRight",
+        "iconPath": "icons/pycharm/EditorScrollRight.png"
+      },
+      {
+        "id": "EditorScrollToCenter",
+        "shortName": "Edtr.ScrollToCenter",
+        "iconPath": "icons/pycharm/EditorScrollToCenter.png"
+      },
+      {
+        "id": "EditorScrollTop",
+        "shortName": "Edtr.ScrollTop",
+        "iconPath": "icons/pycharm/EditorScrollTop.png"
+      },
+      {
+        "id": "EditorScrollUp",
+        "shortName": "Edtr.ScrollUp",
+        "iconPath": "icons/pycharm/EditorScrollUp.png"
+      },
+      {
+        "id": "EditorSelectLine",
+        "shortName": "Edtr.SelectLine",
+        "iconPath": "icons/pycharm/EditorSelectLine.png"
+      },
+      {
+        "id": "EditorSelectWord",
+        "shortName": "Extend Slctn",
+        "iconPath": "icons/pycharm/EditorSelectWord.png"
+      },
+      {
+        "id": "EditorShowGutterIconTooltip",
+        "shortName": "Edtr.ShowGutterIconTooltip",
+        "iconPath": "icons/pycharm/EditorShowGutterIconTooltip.png"
+      },
+      {
+        "id": "EditorSplitLine",
+        "shortName": "EditorSplitLine"
+      },
+      {
+        "id": "EditorStartNewLine",
+        "shortName": "EditorStartNewLine"
+      },
+      {
+        "id": "EditorStartNewLineBefore",
+        "shortName": "EditorStartNewLineBefore"
+      },
+      {
+        "id": "EditorTab",
+        "shortName": "EditorTab"
+      },
+      {
+        "id": "EditorTextEnd",
+        "shortName": "EditorTextEnd"
+      },
+      {
+        "id": "EditorTextEndWithSelection",
+        "shortName": "EditorTextEndWithslction"
+      },
+      {
+        "id": "EditorTextStart",
+        "shortName": "EditorTextStart"
+      },
+      {
+        "id": "EditorTextStartWithSelection",
+        "shortName": "EditorTextStartWithslction"
+      },
+      {
+        "id": "EditorToggleCase",
+        "shortName": "Edtr.ToggleCase",
+        "iconPath": "icons/pycharm/EditorToggleCase.svg"
+      },
+      {
+        "id": "EditorToggleColumnMode",
+        "shortName": "EditorToggleColumnMode"
+      },
+      {
+        "id": "EditorToggleInsertState",
+        "shortName": "EditorToggleInsertState"
+      },
+      {
+        "id": "EditorUnindentSelection",
+        "shortName": "EditorUnindentslction"
+      },
+      {
+        "id": "EditorUnSelectWord",
+        "shortName": "Shrink Slctn",
+        "iconPath": "icons/pycharm/EditorUnSelectWord.png"
+      },
+      {
+        "id": "EditorUp",
+        "shortName": "Edtr.Up",
+        "iconPath": "icons/pycharm/EditorUp.png"
+      },
+      {
+        "id": "EditorUpWithSelection",
+        "shortName": "Edtr.UpWithSlctn",
+        "iconPath": "icons/pycharm/EditorUpWithSelection.png"
+      },
+      {
+        "id": "EditSource",
+        "shortName": "EditSource",
+        "iconPath": "icons/pycharm/EditSource.png"
+      },
+      {
+        "id": "EditSourceInNewWindow",
+        "shortName": "EditSourceInNewWindow"
+      },
+      {
+        "id": "EmmetNextEditPoint",
+        "shortName": "EmmetNextEditPoint"
+      },
+      {
+        "id": "EmmetPreviousEditPoint",
+        "shortName": "EmmetPreviousEditPoint"
+      },
+      {
+        "id": "EscUnfollowUserAction",
+        "shortName": "EscUnfollowUserAction"
+      },
+      {
+        "id": "EvaluateExpression",
+        "shortName": "EvaluateExpression",
+        "iconPath": "icons/pycharm/EvaluateExpression.svg"
+      },
+      {
+        "id": "ExecuteInPyConsoleAction",
+        "shortName": "ExecuteInPyConsoleAct.",
+        "iconPath": "icons/pycharm/ExecuteInPyConsoleAction.png"
+      },
+      {
+        "id": "ExpandAll",
+        "shortName": "ExpandAll"
+      },
+      {
+        "id": "ExpandAllRegions",
+        "shortName": "ExpandAllRegions"
+      },
+      {
+        "id": "ExpandAllToLevel1",
+        "shortName": "ExpandAllToLvl1"
+      },
+      {
+        "id": "ExpandAllToLevel2",
+        "shortName": "ExpandAllToLvl2"
+      },
+      {
+        "id": "ExpandAllToLevel3",
+        "shortName": "ExpandAllToLvl3"
+      },
+      {
+        "id": "ExpandAllToLevel4",
+        "shortName": "ExpandAllToLvl4"
+      },
+      {
+        "id": "ExpandAllToLevel5",
+        "shortName": "ExpandAllToLvl5"
+      },
+      {
+        "id": "ExpandExpandableComponent",
+        "shortName": "ExpandExpandableComponent"
+      },
+      {
+        "id": "ExpandLiveTemplateByTab",
+        "shortName": "ExpandLiveTemplateByTab"
+      },
+      {
+        "id": "ExpandRegion",
+        "shortName": "ExpandRegion",
+        "iconPath": "icons/pycharm/ExpandRegion.png"
+      },
+      {
+        "id": "ExpandRegionRecursively",
+        "shortName": "ExpandRegionRecursively"
+      },
+      {
+        "id": "ExpandToLevel1",
+        "shortName": "ExpandToLvl1"
+      },
+      {
+        "id": "ExpandToLevel2",
+        "shortName": "ExpandToLvl2"
+      },
+      {
+        "id": "ExpandToLevel3",
+        "shortName": "ExpandToLvl3"
+      },
+      {
+        "id": "ExpandToLevel4",
+        "shortName": "ExpandToLvl4"
+      },
+      {
+        "id": "ExpandToLevel5",
+        "shortName": "ExpandToLvl5"
+      },
+      {
+        "id": "ExpandTreeNode",
+        "shortName": "ExpandTreeNode"
+      },
+      {
+        "id": "ExportToTextFile",
+        "shortName": "ExportToTextFile",
+        "iconPath": "icons/pycharm/ExportToTextFile.svg"
+      },
+      {
+        "id": "ExpressionTypeInfo",
+        "shortName": "ExpressionTypeInfo",
+        "iconPath": "icons/pycharm/ExpressionTypeInfo.png"
+      },
+      {
+        "id": "ExternalJavaDoc",
+        "shortName": "Ext.Documentation",
+        "iconPath": "icons/pycharm/ExternalJavaDoc.png"
+      },
+      {
+        "id": "ExternalSystem.ProjectRefreshAction",
+        "shortName": "Ext.Sys.Proj.RefreshAct.",
+        "iconPath": "icons/pycharm/ExternalSystem.ProjectRefreshAction.svg"
+      },
+      {
+        "id": "ExtractClass",
+        "shortName": "Extract Delegate...",
+        "iconPath": "icons/pycharm/ExtractClass.png"
+      },
+      {
+        "id": "ExtractInclude",
+        "shortName": "Include File...",
+        "iconPath": "icons/pycharm/ExtractInclude.png"
+      },
+      {
+        "id": "ExtractInterface",
+        "shortName": "ExtractInterface",
+        "iconPath": "icons/pycharm/ExtractInterface.png"
+      },
+      {
+        "id": "ExtractMethod",
+        "shortName": "ExtractMethod",
+        "iconPath": "icons/pycharm/ExtractMethod.svg"
+      },
+      {
+        "id": "ExtractModule",
+        "shortName": "ExtractModule",
+        "iconPath": "icons/pycharm/ExtractModule.png"
+      },
+      {
+        "id": "ExtractSuperclass",
+        "shortName": "ExtractSuperclass",
+        "iconPath": "icons/pycharm/ExtractSuperclass.png"
+      },
+      {
+        "id": "FileChooser.GotoDesktop",
+        "shortName": "FileChooser.GotoDesktop",
+        "iconPath": "icons/pycharm/FileChooser.GotoDesktop.svg"
+      },
+      {
+        "id": "FileChooser.GotoHome",
+        "shortName": "FileChooser.GotoHome",
+        "iconPath": "icons/pycharm/FileChooser.GotoHome.png"
+      },
+      {
+        "id": "FileChooser.GotoModule",
+        "shortName": "FileChooser.GotoModule"
+      },
+      {
+        "id": "FileChooser.GotoProject",
+        "shortName": "FileChooser.GotoProject"
+      },
+      {
+        "id": "FileChooser.NewFolder",
+        "shortName": "FileChooser.NewFolder",
+        "iconPath": "icons/pycharm/FileChooser.NewFolder.svg"
+      },
+      {
+        "id": "FileChooser.TogglePathBar",
+        "shortName": "FileChooser.TogglePathBar"
+      },
+      {
+        "id": "FileChooser.TogglePathShowing",
+        "shortName": "FileChooser.TogglePathShow",
+        "iconPath": "icons/pycharm/FileChooser.TogglePathShowing.png"
+      },
+      {
+        "id": "FileChooserList.LevelUp",
+        "shortName": "FileChooserList.LvlUp"
+      },
+      {
+        "id": "FileChooserList.Root",
+        "shortName": "FileChooserList.Root"
+      },
+      {
+        "id": "FileStructurePopup",
+        "shortName": "FileStructurePopup",
+        "iconPath": "icons/pycharm/FileStructurePopup.png"
+      },
+      {
+        "id": "Find",
+        "shortName": "Find",
+        "iconPath": "icons/pycharm/Find.svg"
+      },
+      {
+        "id": "FindInPath",
+        "shortName": "FindInPath",
+        "iconPath": "icons/pycharm/FindInPath.png"
+      },
+      {
+        "id": "FindNext",
+        "shortName": "FindNext",
+        "iconPath": "icons/pycharm/FindNext.png"
+      },
+      {
+        "id": "FindPrevious",
+        "shortName": "FindPrev.",
+        "iconPath": "icons/pycharm/FindPrevious.png"
+      },
+      {
+        "id": "FindPrevWordAtCaret",
+        "shortName": "FindPrevWordAtCaret"
+      },
+      {
+        "id": "FindUsages",
+        "shortName": "FindUsages"
+      },
+      {
+        "id": "FindUsagesInFile",
+        "shortName": "FindUsagesInFile"
+      },
+      {
+        "id": "FindWordAtCaret",
+        "shortName": "FindWordAtCaret"
+      },
+      {
+        "id": "FocusEditor",
+        "shortName": "FocusEditor"
+      },
+      {
+        "id": "ForceOthersToFollowAction",
+        "shortName": "ForceOthersToFollowAction"
+      },
+      {
+        "id": "ForceRefresh",
+        "shortName": "ForceRefresh"
+      },
+      {
+        "id": "ForceRunToCursor",
+        "shortName": "ForceRunToCursor",
+        "iconPath": "icons/pycharm/ForceRunToCursor.png"
+      },
+      {
+        "id": "ForceStepInto",
+        "shortName": "ForceStepInto",
+        "iconPath": "icons/pycharm/ForceStepInto.png"
+      },
+      {
+        "id": "ForceStepOver",
+        "shortName": "ForceStepOver",
+        "iconPath": "icons/pycharm/ForceStepOver.png"
+      },
+      {
+        "id": "Forward",
+        "shortName": "Forward"
+      },
+      {
+        "id": "FullyExpandTreeNode",
+        "shortName": "FullyExpandTreeNode"
+      },
+      {
+        "id": "Generate",
+        "shortName": "Generate"
+      },
+      {
+        "id": "Git.Branches",
+        "shortName": "Git.Branches",
+        "iconPath": "icons/pycharm/Git.Branches.svg"
+      },
+      {
+        "id": "Git.Clone",
+        "shortName": "Git.Clone",
+        "iconPath": "icons/pycharm/Git.Clone.png"
+      },
+      {
+        "id": "Git.Commit.And.Push.Executor",
+        "shortName": "Git.Commit.And.Push.Executor"
+      },
+      {
+        "id": "Git.CompareWithBranch",
+        "shortName": "Git.CompareWithBranch",
+        "iconPath": "icons/pycharm/Git.CompareWithBranch.png"
+      },
+      {
+        "id": "Git.Configure.Remotes",
+        "shortName": "Git.Configure.Remotes",
+        "iconPath": "icons/pycharm/Git.Configure.Remotes.png"
+      },
+      {
+        "id": "Git.Fetch",
+        "shortName": "Git.Fetch",
+        "iconPath": "icons/pycharm/Git.Fetch.png"
+      },
+      {
+        "id": "Git.Log.Branches.Change.Branch.Filter",
+        "shortName": "Git.Log.B.Ch.Branch.Filter"
+      },
+      {
+        "id": "Git.Merge",
+        "shortName": "Git.Merge",
+        "iconPath": "icons/pycharm/Git.Merge.svg"
+      },
+      {
+        "id": "Git.OpenExcludeFile",
+        "shortName": "Git.OpenExcludeFile",
+        "iconPath": "icons/pycharm/Git.OpenExcludeFile.png"
+      },
+      {
+        "id": "Git.Pull",
+        "shortName": "Git.Pull",
+        "iconPath": "icons/pycharm/Git.Pull.png"
+      },
+      {
+        "id": "Git.Rebase",
+        "shortName": "Git.Rebase",
+        "iconPath": "icons/pycharm/Git.Rebase.png"
+      },
+      {
+        "id": "Git.Rename.Local.Branch",
+        "shortName": "Git.Rename.Local.Branch"
+      },
+      {
+        "id": "Git.Reset",
+        "shortName": "Git.Reset",
+        "iconPath": "icons/pycharm/Git.Reset.png"
+      },
+      {
+        "id": "Git.ResolveConflicts",
+        "shortName": "Git.ResolveConflicts",
+        "iconPath": "icons/pycharm/Git.ResolveConflicts.png"
+      },
+      {
+        "id": "Git.Reword.Commit",
+        "shortName": "Git.Reword.Commit"
+      },
+      {
+        "id": "Git.Stage.Revert",
+        "shortName": "Git.Stage.Revert",
+        "iconPath": "icons/pycharm/Git.Stage.Revert.png"
+      },
+      {
+        "id": "Git.Stash",
+        "shortName": "Git.Stash",
+        "iconPath": "icons/pycharm/Git.Stash.png"
+      },
+      {
+        "id": "Git.Tag",
+        "shortName": "Git.Tag",
+        "iconPath": "icons/pycharm/Git.Tag.png"
+      },
+      {
+        "id": "Git.Unstash",
+        "shortName": "Git.Unstash",
+        "iconPath": "icons/pycharm/Git.Unstash.png"
+      },
+      {
+        "id": "Github.PullRequest.Diff.Comment.Create",
+        "shortName": "Github.Comment.Create"
+      },
+      {
+        "id": "GotoAction",
+        "shortName": "GotoAct.",
+        "iconPath": "icons/pycharm/GotoAction.png"
+      },
+      {
+        "id": "GotoBookmark0",
+        "shortName": "GotoBkmrk0",
+        "iconPath": "icons/pycharm/GotoBookmark0.png"
+      },
+      {
+        "id": "GotoBookmark1",
+        "shortName": "GotoBkmrk1",
+        "iconPath": "icons/pycharm/GotoBookmark1.png"
+      },
+      {
+        "id": "GotoBookmark2",
+        "shortName": "GotoBkmrk2",
+        "iconPath": "icons/pycharm/GotoBookmark2.png"
+      },
+      {
+        "id": "GotoBookmark3",
+        "shortName": "GotoBkmrk3",
+        "iconPath": "icons/pycharm/GotoBookmark3.png"
+      },
+      {
+        "id": "GotoBookmark4",
+        "shortName": "GotoBkmrk4",
+        "iconPath": "icons/pycharm/GotoBookmark4.png"
+      },
+      {
+        "id": "GotoBookmark5",
+        "shortName": "GotoBkmrk5",
+        "iconPath": "icons/pycharm/GotoBookmark5.png"
+      },
+      {
+        "id": "GotoBookmark6",
+        "shortName": "GotoBkmrk6",
+        "iconPath": "icons/pycharm/GotoBookmark6.png"
+      },
+      {
+        "id": "GotoBookmark7",
+        "shortName": "GotoBkmrk7",
+        "iconPath": "icons/pycharm/GotoBookmark7.png"
+      },
+      {
+        "id": "GotoBookmark8",
+        "shortName": "GotoBkmrk8",
+        "iconPath": "icons/pycharm/GotoBookmark8.png"
+      },
+      {
+        "id": "GotoBookmark9",
+        "shortName": "GotoBkmrk9",
+        "iconPath": "icons/pycharm/GotoBookmark9.png"
+      },
+      {
+        "id": "GotoChangedFile",
+        "shortName": "GotoChangedFile",
+        "iconPath": "icons/pycharm/GotoChangedFile.png"
+      },
+      {
+        "id": "GotoClass",
+        "shortName": "GotoClass",
+        "iconPath": "icons/pycharm/GotoClass.png"
+      },
+      {
+        "id": "GotoCustomRegion",
+        "shortName": "GotoCustomRegion",
+        "iconPath": "icons/pycharm/GotoCustomRegion.png"
+      },
+      {
+        "id": "GotoDeclaration",
+        "shortName": "GotoDeclaration"
+      },
+      {
+        "id": "GotoFile",
+        "shortName": "GotoFile",
+        "iconPath": "icons/pycharm/GotoFile.png"
+      },
+      {
+        "id": "GotoImplementation",
+        "shortName": "GotoImplementation"
+      },
+      {
+        "id": "GotoLine",
+        "shortName": "GotoLine",
+        "iconPath": "icons/pycharm/GotoLine.png"
+      },
+      {
+        "id": "GotoNextBookmark",
+        "shortName": "GotoNextBkmrk",
+        "iconPath": "icons/pycharm/GotoNextBookmark.png"
+      },
+      {
+        "id": "GotoNextElementUnderCaretUsage",
+        "shortName": "Next Edit Location",
+        "iconPath": "icons/pycharm/GotoNextElementUnderCaretUsage.png"
+      },
+      {
+        "id": "GotoNextError",
+        "shortName": "GotoNextError"
+      },
+      {
+        "id": "GotoPrevElementUnderCaretUsage",
+        "shortName": "GotoPrevElemUnderCaret",
+        "iconPath": "icons/pycharm/GotoPrevElementUnderCaretUsage.png"
+      },
+      {
+        "id": "GotoPreviousBookmark",
+        "shortName": "Last Edit Location",
+        "iconPath": "icons/pycharm/GotoPreviousBookmark.png"
+      },
+      {
+        "id": "GotoPreviousError",
+        "shortName": "GotoPreviousError"
+      },
+      {
+        "id": "GotoRelated",
+        "shortName": "GotoRelated"
+      },
+      {
+        "id": "GotoSuperMethod",
+        "shortName": "GotoSuperMethod",
+        "iconPath": "icons/pycharm/GotoSuperMethod.png"
+      },
+      {
+        "id": "GotoSymbol",
+        "shortName": "GotoSymbol",
+        "iconPath": "icons/pycharm/GotoSymbol.png"
+      },
+      {
+        "id": "GotoTest",
+        "shortName": "GotoTest",
+        "iconPath": "icons/pycharm/GotoTest.svg"
+      },
+      {
+        "id": "GotoTypeDeclaration",
+        "shortName": "GotoTypeDeclaration",
+        "iconPath": "icons/pycharm/GotoTypeDeclaration.png"
+      },
+      {
+        "id": "Hg.Commit.And.Push.Executor",
+        "shortName": "Hg.Commit.And.Push.Executor"
+      },
+      {
+        "id": "hg4idea.QFold",
+        "shortName": "hg4idea.QFold",
+        "iconPath": "icons/pycharm/hg4idea.QFold.png"
+      },
+      {
+        "id": "hg4idea.QGotoFromPatches",
+        "shortName": "hg4idea.QGotoFromPatches",
+        "iconPath": "icons/pycharm/hg4idea.QGotoFromPatches.png"
+      },
+      {
+        "id": "hg4idea.QPushAction",
+        "shortName": "hg4idea.QPushAction"
+      },
+      {
+        "id": "HideActiveWindow",
+        "shortName": "HideActiveWindow"
+      },
+      {
+        "id": "HideAllWindows",
+        "shortName": "HideAllWindows"
+      },
+      {
+        "id": "HighlightUsagesInFile",
+        "shortName": "HighlightUsagesInFile"
+      },
+      {
+        "id": "HippieBackwardCompletion",
+        "shortName": "HippieBackwardCompletion",
+        "iconPath": "icons/pycharm/HippieBackwardCompletion.png"
+      },
+      {
+        "id": "HippieCompletion",
+        "shortName": "HippieCompletion",
+        "iconPath": "icons/pycharm/HippieCompletion.png"
+      },
+      {
+        "id": "Images.EditExternally",
+        "shortName": "Img.EditExternally"
+      },
+      {
+        "id": "Images.Editor.ActualSize",
+        "shortName": "Images.Editor.ActualSize",
+        "iconPath": "icons/pycharm/Images.Editor.ActualSize.png"
+      },
+      {
+        "id": "Images.Editor.ToggleGrid",
+        "shortName": "Img.Editor.ToggleGrid"
+      },
+      {
+        "id": "Images.Thumbnails.EnterAction",
+        "shortName": "Img.Thumbnails.EnterAction"
+      },
+      {
+        "id": "Images.Thumbnails.ToggleRecursive",
+        "shortName": "Img.Thumbnails.ToggleRecursive"
+      },
+      {
+        "id": "Images.Thumbnails.UpFolder",
+        "shortName": "Img.Thumbnails.UpFolder"
+      },
+      {
+        "id": "ImplementMethods",
+        "shortName": "ImplementMethods",
+        "iconPath": "icons/pycharm/ImplementMethods.png"
+      },
+      {
+        "id": "ImportTests",
+        "shortName": "ImportTests",
+        "iconPath": "icons/pycharm/ImportTests.svg"
+      },
+      {
+        "id": "Inline",
+        "shortName": "Inline",
+        "iconPath": "icons/pycharm/Inline.png"
+      },
+      {
+        "id": "InsertLiveTemplate",
+        "shortName": "InsertLiveTemplate",
+        "iconPath": "icons/pycharm/InsertLiveTemplate.png"
+      },
+      {
+        "id": "IntroduceConstant",
+        "shortName": "IntroduceConstant",
+        "iconPath": "icons/pycharm/IntroduceConstant.png"
+      },
+      {
+        "id": "IntroduceField",
+        "shortName": "IntroduceField",
+        "iconPath": "icons/pycharm/IntroduceField.png"
+      },
+      {
+        "id": "IntroduceParameter",
+        "shortName": "IntroduceParameter",
+        "iconPath": "icons/pycharm/IntroduceParameter.png"
+      },
+      {
+        "id": "IntroduceVariable",
+        "shortName": "IntroduceVariable",
+        "iconPath": "icons/pycharm/IntroduceVariable.png"
+      },
+      {
+        "id": "JumpToLastChange",
+        "shortName": "JumpToLastChange",
+        "iconPath": "icons/pycharm/JumpToLastChange.png"
+      },
+      {
+        "id": "JumpToLastWindow",
+        "shortName": "JumpToLastWindow"
+      },
+      {
+        "id": "JumpToNextChange",
+        "shortName": "JumpToNextChange",
+        "iconPath": "icons/pycharm/JumpToNextChange.png"
+      },
+      {
+        "id": "LocalHistory.PutLabel",
+        "shortName": "LocalHistory.PutLabel",
+        "iconPath": "icons/pycharm/LocalHistory.PutLabel.png"
+      },
+      {
+        "id": "MaintenanceAction",
+        "shortName": "MaintenanceAct.",
+        "iconPath": "icons/pycharm/MaintenanceAction.png"
+      },
+      {
+        "id": "Markdown.Styling.CreateLink",
+        "shortName": "Markdown.Styling.CreateLink"
+      },
+      {
+        "id": "MaximizeToolWindow",
+        "shortName": "MaximizeToolWindow"
+      },
+      {
+        "id": "MethodDown",
+        "shortName": "MethodDown",
+        "iconPath": "icons/pycharm/MethodDown.png"
+      },
+      {
+        "id": "MethodHierarchy",
+        "shortName": "MethodHierarchy",
+        "iconPath": "icons/pycharm/MethodHierarchy.png"
+      },
+      {
+        "id": "MethodOverloadSwitchDown",
+        "shortName": "MethodOverloadSwitchDown"
+      },
+      {
+        "id": "MethodOverloadSwitchUp",
+        "shortName": "MethodOverloadSwitchUp"
+      },
+      {
+        "id": "MethodUp",
+        "shortName": "MethodUp",
+        "iconPath": "icons/pycharm/MethodUp.png"
+      },
+      {
+        "id": "Move",
+        "shortName": "Move"
+      },
+      {
+        "id": "MoveElementLeft",
+        "shortName": "MoveElementLeft",
+        "iconPath": "icons/pycharm/MoveElementLeft.png"
+      },
+      {
+        "id": "MoveElementRight",
+        "shortName": "MoveElementRight",
+        "iconPath": "icons/pycharm/MoveElementRight.png"
+      },
+      {
+        "id": "MoveLineDown",
+        "shortName": "MoveLineDown",
+        "iconPath": "icons/pycharm/MoveLineDown.png"
+      },
+      {
+        "id": "MoveLineUp",
+        "shortName": "MoveLineUp",
+        "iconPath": "icons/pycharm/MoveLineUp.png"
+      },
+      {
+        "id": "MoveStatementDown",
+        "shortName": "MoveStatementDown",
+        "iconPath": "icons/pycharm/MoveStatementDown.png"
+      },
+      {
+        "id": "MoveStatementUp",
+        "shortName": "MoveStatementUp",
+        "iconPath": "icons/pycharm/MoveStatementUp.png"
+      },
+      {
+        "id": "NewElement",
+        "shortName": "NewElement"
+      },
+      {
+        "id": "NewElementSamePlace",
+        "shortName": "NewElementSamePlace"
+      },
+      {
+        "id": "NewScratchFile",
+        "shortName": "NewScratchFile"
+      },
+      {
+        "id": "NextDiff",
+        "shortName": "NextDiff"
+      },
+      {
+        "id": "NextEditorTab",
+        "shortName": "NextEditorTab"
+      },
+      {
+        "id": "NextOccurence",
+        "shortName": "NextOccurence"
+      },
+      {
+        "id": "NextParameter",
+        "shortName": "NextParameter"
+      },
+      {
+        "id": "NextProjectWindow",
+        "shortName": "NextProjectWindow"
+      },
+      {
+        "id": "NextTab",
+        "shortName": "NextTab"
+      },
+      {
+        "id": "NextTemplateVariable",
+        "shortName": "NextTemplateVariable"
+      },
+      {
+        "id": "openAssertEqualsDiff",
+        "shortName": "openAssertEqualsDiff",
+        "iconPath": "icons/pycharm/openAssertEqualsDiff.png"
+      },
+      {
+        "id": "OpenInRightSplit",
+        "shortName": "OpenInRightSplit"
+      },
+      {
+        "id": "OptimizeImports",
+        "shortName": "OptimizeImports",
+        "iconPath": "icons/pycharm/OptimizeImports.png"
+      },
+      {
+        "id": "org.intellij.plugins.markdown.ui.actions.styling.InsertImageAction",
+        "shortName": "InsertImageAction"
+      },
+      {
+        "id": "org.intellij.plugins.markdown.ui.actions.styling.ToggleBoldAction",
+        "shortName": "ToggleBoldAction"
+      },
+      {
+        "id": "org.intellij.plugins.markdown.ui.actions.styling.ToggleCodeSpanAction",
+        "shortName": "ToggleCodeSpanAction"
+      },
+      {
+        "id": "org.intellij.plugins.markdown.ui.actions.styling.ToggleItalicAction",
+        "shortName": "ToggleItalicAction"
+      },
+      {
+        "id": "org.intellij.plugins.markdown.ui.actions.styling.ToggleStrikethroughAction",
+        "shortName": "ToggleStrikethroughAction"
+      },
+      {
+        "id": "org.jetbrains.r.console.RConsoleView.REofAction",
+        "shortName": "RConsoleView.REofAct.",
+        "iconPath": "icons/pycharm/org.jetbrains.r.console.RConsoleView.REofAction.png"
+      },
+      {
+        "id": "org.jetbrains.r.rendering.chunk.DebugChunkAction",
+        "shortName": "DebugChunkAct.",
+        "iconPath": "icons/pycharm/org.jetbrains.r.rendering.chunk.DebugChunkAction.png"
+      },
+      {
+        "id": "org.jetbrains.r.rendering.chunk.InterruptChunkExecutionAction",
+        "shortName": "InterruptChunkExecutionAct.",
+        "iconPath": "icons/pycharm/org.jetbrains.r.rendering.chunk.InterruptChunkExecutionAction.png"
+      },
+      {
+        "id": "org.jetbrains.r.rendering.chunk.RunChunkAction",
+        "shortName": "RunChunkAct.",
+        "iconPath": "icons/pycharm/org.jetbrains.r.rendering.chunk.RunChunkAction.png"
+      },
+      {
+        "id": "OverrideMethods",
+        "shortName": "OverrideMethods",
+        "iconPath": "icons/pycharm/OverrideMethods.png"
+      },
+      {
+        "id": "ParameterInfo",
+        "shortName": "ParameterInfo",
+        "iconPath": "icons/pycharm/ParameterInfo.png"
+      },
+      {
+        "id": "PasteMultiple",
+        "shortName": "PasteMultiple"
+      },
+      {
+        "id": "Pause",
+        "shortName": "Pause",
+        "iconPath": "icons/pycharm/Pause.svg"
+      },
+      {
+        "id": "PopupHector",
+        "shortName": "PopupHector",
+        "iconPath": "icons/pycharm/PopupHector.png"
+      },
+      {
+        "id": "PreviousDiff",
+        "shortName": "PreviousDiff"
+      },
+      {
+        "id": "PreviousEditorTab",
+        "shortName": "PreviousEditorTab"
+      },
+      {
+        "id": "PreviousOccurence",
+        "shortName": "PreviousOccurence"
+      },
+      {
+        "id": "PreviousProjectWindow",
+        "shortName": "PreviousProjectWindow"
+      },
+      {
+        "id": "PreviousTab",
+        "shortName": "PreviousTab"
+      },
+      {
+        "id": "PreviousTemplateVariable",
+        "shortName": "PreviousTemplateVariable"
+      },
+      {
+        "id": "PrevParameter",
+        "shortName": "PrevParameter"
+      },
+      {
+        "id": "QuickActionPopup",
+        "shortName": "QuickActionPopup"
+      },
+      {
+        "id": "QuickChangeScheme",
+        "shortName": "QuickChangeScheme"
+      },
+      {
+        "id": "QuickEvaluateExpression",
+        "shortName": "QuickEvaluateExpression"
+      },
+      {
+        "id": "QuickImplementations",
+        "shortName": "Quick Definition",
+        "iconPath": "icons/pycharm/QuickImplementations.png"
+      },
+      {
+        "id": "QuickJavaDoc",
+        "shortName": "QuickJavaDoc",
+        "iconPath": "icons/pycharm/QuickJavaDoc.png"
+      },
+      {
+        "id": "QuickPreview",
+        "shortName": "QuickPreview"
+      },
+      {
+        "id": "QuickTypeDefinition",
+        "shortName": "QuickTypeDefinition",
+        "iconPath": "icons/pycharm/QuickTypeDefinition.png"
+      },
+      {
+        "id": "RecentChanges",
+        "shortName": "RecentChanges",
+        "iconPath": "icons/pycharm/RecentChanges.png"
+      },
+      {
+        "id": "RecentFiles",
+        "shortName": "RecentFiles",
+        "iconPath": "icons/pycharm/RecentFiles.png"
+      },
+      {
+        "id": "RecentLocations",
+        "shortName": "RecentLocations",
+        "iconPath": "icons/pycharm/RecentLocations.png"
+      },
+      {
+        "id": "Refactorings.QuickListPopupAction",
+        "shortName": "Rename...",
+        "iconPath": "icons/pycharm/Refactorings.QuickListPopupAction.png"
+      },
+      {
+        "id": "ReformatCode",
+        "shortName": "ReformatCode",
+        "iconPath": "icons/pycharm/ReformatCode.png"
+      },
+      {
+        "id": "Refresh",
+        "shortName": "Refresh"
+      },
+      {
+        "id": "RenameElement",
+        "shortName": "RenameElement",
+        "iconPath": "icons/pycharm/RenameElement.png"
+      },
+      {
+        "id": "Replace",
+        "shortName": "Replace",
+        "iconPath": "icons/pycharm/Replace.png"
+      },
+      {
+        "id": "ReplaceInPath",
+        "shortName": "ReplaceInPath"
+      },
+      {
+        "id": "Rerun",
+        "shortName": "Rerun"
+      },
+      {
+        "id": "RerunTests",
+        "shortName": "RerunTests"
+      },
+      {
+        "id": "ResizeToolWindowDown",
+        "shortName": "ResizeToolWindowDown"
+      },
+      {
+        "id": "ResizeToolWindowLeft",
+        "shortName": "ResizeToolWindowLeft"
+      },
+      {
+        "id": "ResizeToolWindowRight",
+        "shortName": "ResizeToolWindowRight"
+      },
+      {
+        "id": "ResizeToolWindowUp",
+        "shortName": "ResizeToolWindowUp"
+      },
+      {
+        "id": "RestoreDefaultLayout",
+        "shortName": "RestoreDefaultLayout"
+      },
+      {
+        "id": "Resume",
+        "shortName": "Resume",
+        "iconPath": "icons/pycharm/Resume.svg"
+      },
+      {
+        "id": "RInsertPipeAction",
+        "shortName": "RInsertPipeAct.",
+        "iconPath": "icons/pycharm/RInsertPipeAction.png"
+      },
+      {
+        "id": "RMarkdownNewChunk",
+        "shortName": "RMarkdownNewChunk",
+        "iconPath": "icons/pycharm/RMarkdownNewChunk.png"
+      },
+      {
+        "id": "Run",
+        "shortName": "Run",
+        "iconPath": "icons/pycharm/Run.png"
+      },
+      {
+        "id": "RunClass",
+        "shortName": "RunClass"
+      },
+      {
+        "id": "RunInspection",
+        "shortName": "RunInspection",
+        "iconPath": "icons/pycharm/RunInspection.png"
+      },
+      {
+        "id": "RunToCursor",
+        "shortName": "RunToCursor",
+        "iconPath": "icons/pycharm/RunToCursor.svg"
+      },
+      {
+        "id": "SafeDelete",
+        "shortName": "SafeDelete"
+      },
+      {
+        "id": "SaveAll",
+        "shortName": "SaveAll",
+        "iconPath": "icons/pycharm/SaveAll.svg"
+      },
+      {
+        "id": "SearchEverywhere",
+        "shortName": "SearchEverywhere",
+        "iconPath": "icons/pycharm/SearchEverywhere.png"
+      },
+      {
+        "id": "SearchEverywhere.CompleteCommand",
+        "shortName": "S.E.CompleteCommand"
+      },
+      {
+        "id": "SearchEverywhere.NavigateToNextGroup",
+        "shortName": "S.E.NavigateToNextGroup"
+      },
+      {
+        "id": "SearchEverywhere.NavigateToPrevGroup",
+        "shortName": "S.E.NavigateToPrevGroup"
+      },
+      {
+        "id": "SearchEverywhere.NextTab",
+        "shortName": "S.E.NextTab"
+      },
+      {
+        "id": "SearchEverywhere.PrevTab",
+        "shortName": "S.E.PrevTab"
+      },
+      {
+        "id": "SearchEverywhere.SelectItem",
+        "shortName": "S.E.slctItem"
+      },
+      {
+        "id": "SelectAllOccurrences",
+        "shortName": "SelectAllOccurrences",
+        "iconPath": "icons/pycharm/SelectAllOccurrences.svg"
+      },
+      {
+        "id": "SelectIn",
+        "shortName": "SelectIn",
+        "iconPath": "icons/pycharm/SelectIn.svg"
+      },
+      {
+        "id": "SelectNextOccurrence",
+        "shortName": "SelectNextOccurrence",
+        "iconPath": "icons/pycharm/SelectNextOccurrence.png"
+      },
+      {
+        "id": "SelectVirtualTemplateElement",
+        "shortName": "slctVirtualTemplateElement"
+      },
+      {
+        "id": "SendEOF",
+        "shortName": "SendEOF",
+        "iconPath": "icons/pycharm/SendEOF.svg"
+      },
+      {
+        "id": "ServiceView.GroupByContributor",
+        "shortName": "ServiceView.GroupByContributor"
+      },
+      {
+        "id": "ServiceView.GroupByServiceGroups",
+        "shortName": "GroupByServiceGroups",
+        "iconPath": "icons/pycharm/ServiceView.GroupByServiceGroups.png"
+      },
+      {
+        "id": "ServiceView.ShowServices",
+        "shortName": "ServiceView.ShowServices",
+        "iconPath": "icons/pycharm/ServiceView.ShowServices.png"
+      },
+      {
+        "id": "SetNextStatement",
+        "shortName": "Jump To Cursor",
+        "iconPath": "icons/pycharm/SetNextStatement.png"
+      },
+      {
+        "id": "ShelveChanges.UnshelveWithDialog",
+        "shortName": "UnshelveWithDialog",
+        "iconPath": "icons/pycharm/ShelveChanges.UnshelveWithDialog.svg"
+      },
+      {
+        "id": "ShelvedChanges.Rename",
+        "shortName": "ShelvedChanges.Rename"
+      },
+      {
+        "id": "Show.Current.Revision",
+        "shortName": "Show.Current.Revision",
+        "iconPath": "icons/pycharm/Show.Current.Revision.png"
+      },
+      {
+        "id": "ShowBookmarks",
+        "shortName": "ShowBkmrks",
+        "iconPath": "icons/pycharm/ShowBookmarks.png"
+      },
+      {
+        "id": "ShowContent",
+        "shortName": "ShowContent",
+        "iconPath": "icons/pycharm/ShowContent.png"
+      },
+      {
+        "id": "ShowErrorDescription",
+        "shortName": "ShowErrorDescription",
+        "iconPath": "icons/pycharm/ShowErrorDescription.svg"
+      },
+      {
+        "id": "ShowExecutionPoint",
+        "shortName": "ShowExecutionPoint",
+        "iconPath": "icons/pycharm/ShowExecutionPoint.png"
+      },
+      {
+        "id": "ShowFilePath",
+        "shortName": "ShowFilePath",
+        "iconPath": "icons/pycharm/ShowFilePath.png"
+      },
+      {
+        "id": "ShowFilterPopup",
+        "shortName": "ShowFilterPopup"
+      },
+      {
+        "id": "ShowIntentionActions",
+        "shortName": "ShowIntentionActions"
+      },
+      {
+        "id": "ShowNavBar",
+        "shortName": "ShowNavBar"
+      },
+      {
+        "id": "ShowPopupMenu",
+        "shortName": "ShowPopupMenu"
+      },
+      {
+        "id": "ShowProjectStructureSettings",
+        "shortName": "ShowProjectStructureSettings"
+      },
+      {
+        "id": "ShowReformatFileDialog",
+        "shortName": "ShowReformatFileDialog",
+        "iconPath": "icons/pycharm/ShowReformatFileDialog.png"
+      },
+      {
+        "id": "ShowSearchHistory",
+        "shortName": "ShowSearchHistory",
+        "iconPath": "icons/pycharm/ShowSearchHistory.svg"
+      },
+      {
+        "id": "ShowSettings",
+        "shortName": "ShowSettings",
+        "iconPath": "icons/pycharm/ShowSettings.svg"
+      },
+      {
+        "id": "ShowSettingsAndFindUsages",
+        "shortName": "ShowSettingsAndFindUsages"
+      },
+      {
+        "id": "ShowTypeBookmarks",
+        "shortName": "ShowTypeBookmarks"
+      },
+      {
+        "id": "ShowUsages",
+        "shortName": "ShowUsages"
+      },
+      {
+        "id": "SingleUserFollowAction",
+        "shortName": "SingleUserFollowAction"
+      },
+      {
+        "id": "SmartStepInto",
+        "shortName": "SmartStepInto",
+        "iconPath": "icons/pycharm/SmartStepInto.png"
+      },
+      {
+        "id": "SmartTypeCompletion",
+        "shortName": "SmartTypeCompletion"
+      },
+      {
+        "id": "Space.Review.CreateDiffComment",
+        "shortName": "Space.Review.CreateDiffComment"
+      },
+      {
+        "id": "SplitChooser",
+        "shortName": "SplitChooser"
+      },
+      {
+        "id": "SplitChooser.Duplicate",
+        "shortName": "SplitChooser.Duplicate"
+      },
+      {
+        "id": "SplitChooser.NextWindow",
+        "shortName": "SplitChooser.NextWindow"
+      },
+      {
+        "id": "SplitChooser.PreviousWindow",
+        "shortName": "SplitChooser.PreviousWindow"
+      },
+      {
+        "id": "SplitChooser.Split",
+        "shortName": "SplitChooser.Split"
+      },
+      {
+        "id": "SplitChooser.SplitCenter",
+        "shortName": "SplitChooser.SplitCenter"
+      },
+      {
+        "id": "StepInto",
+        "shortName": "StepInto",
+        "iconPath": "icons/pycharm/StepInto.svg"
+      },
+      {
+        "id": "StepIntoMyCode",
+        "shortName": "StepIntoMyCode"
+      },
+      {
+        "id": "StepOut",
+        "shortName": "StepOut",
+        "iconPath": "icons/pycharm/StepOut.svg"
+      },
+      {
+        "id": "StepOver",
+        "shortName": "StepOver",
+        "iconPath": "icons/pycharm/StepOver.png"
+      },
+      {
+        "id": "Stop",
+        "shortName": "Stop",
+        "iconPath": "icons/pycharm/Stop.svg"
+      },
+      {
+        "id": "StopBackgroundProcesses",
+        "shortName": "StopBackgroundProcesses"
+      },
+      {
+        "id": "Subversion.CleanupProject",
+        "shortName": "Subversion.CleanupProject",
+        "iconPath": "icons/pycharm/Subversion.CleanupProject.png"
+      },
+      {
+        "id": "SurroundWith",
+        "shortName": "SurroundWith",
+        "iconPath": "icons/pycharm/SurroundWith.png"
+      },
+      {
+        "id": "SurroundWithLiveTemplate",
+        "shortName": "SurroundWithLiveTemplate",
+        "iconPath": "icons/pycharm/SurroundWithLiveTemplate.png"
+      },
+      {
+        "id": "SwitchCoverage",
+        "shortName": "SwitchCoverage",
+        "iconPath": "icons/pycharm/SwitchCoverage.svg"
+      },
+      {
+        "id": "Switcher",
+        "shortName": "Switcher"
+      },
+      {
+        "id": "SwitcherIterateItems",
+        "shortName": "SwitcherIterateItems",
+        "iconPath": "icons/pycharm/SwitcherIterateItems.png"
+      },
+      {
+        "id": "SwitcherRecentEditedChangedToggleCheckBox",
+        "shortName": "Toggle Changed Only Files",
+        "iconPath": "icons/pycharm/SwitcherRecentEditedChangedToggleCheckBox.png"
+      },
+      {
+        "id": "SwitchHeaderSource",
+        "shortName": "SwitchHeaderSource"
+      },
+      {
+        "id": "Synchronize",
+        "shortName": "Synchronize"
+      },
+      {
+        "id": "Table-startEditing",
+        "shortName": "Table-startEditing"
+      },
+      {
+        "id": "tasks.close",
+        "shortName": "tasks.close",
+        "iconPath": "icons/pycharm/tasks.close.svg"
+      },
+      {
+        "id": "tasks.goto",
+        "shortName": "Open Task...",
+        "iconPath": "icons/pycharm/tasks.goto.png"
+      },
+      {
+        "id": "tasks.open.in.browser",
+        "shortName": "tasks.open.in.browser",
+        "iconPath": "icons/pycharm/tasks.open.in.browser.png"
+      },
+      {
+        "id": "tasks.switch",
+        "shortName": "tasks.switch",
+        "iconPath": "icons/pycharm/tasks.switch.png"
+      },
+      {
+        "id": "Terminal.ClearBuffer",
+        "shortName": "Terminal.ClearBuffer"
+      },
+      {
+        "id": "Terminal.CopySelectedText",
+        "shortName": "Terminal.CopyslctedText"
+      },
+      {
+        "id": "Terminal.Paste",
+        "shortName": "Terminal.Paste"
+      },
+      {
+        "id": "Terminal.SmartCommandExecution.Debug",
+        "shortName": "Terminal.SCE.Debug"
+      },
+      {
+        "id": "Terminal.SmartCommandExecution.Run",
+        "shortName": "Terminal.SCE.Run"
+      },
+      {
+        "id": "Terminal.SwitchFocusToEditor",
+        "shortName": "Terminal.SwitchFocusToEditor"
+      },
+      {
+        "id": "TextSearchAction",
+        "shortName": "TextSearchAction"
+      },
+      {
+        "id": "TodoViewGroupByFlattenPackage",
+        "shortName": "GroupByFlattenPackage",
+        "iconPath": "icons/pycharm/TodoViewGroupByFlattenPackage.svg"
+      },
+      {
+        "id": "TodoViewGroupByShowModules",
+        "shortName": "GroupByShowModules",
+        "iconPath": "icons/pycharm/TodoViewGroupByShowModules.png"
+      },
+      {
+        "id": "TodoViewGroupByShowPackages",
+        "shortName": "GroupByShowPackages",
+        "iconPath": "icons/pycharm/TodoViewGroupByShowPackages.png"
+      },
+      {
+        "id": "ToggleBookmark",
+        "shortName": "ToggleBkmrk",
+        "iconPath": "icons/pycharm/ToggleBookmark.png"
+      },
+      {
+        "id": "ToggleBookmark0",
+        "shortName": "ToggleBkmrk0",
+        "iconPath": "icons/pycharm/ToggleBookmark0.png"
+      },
+      {
+        "id": "ToggleBookmark1",
+        "shortName": "ToggleBkmrk1",
+        "iconPath": "icons/pycharm/ToggleBookmark1.png"
+      },
+      {
+        "id": "ToggleBookmark2",
+        "shortName": "ToggleBkmrk2",
+        "iconPath": "icons/pycharm/ToggleBookmark2.png"
+      },
+      {
+        "id": "ToggleBookmark3",
+        "shortName": "ToggleBkmrk3",
+        "iconPath": "icons/pycharm/ToggleBookmark3.png"
+      },
+      {
+        "id": "ToggleBookmark4",
+        "shortName": "ToggleBkmrk4",
+        "iconPath": "icons/pycharm/ToggleBookmark4.png"
+      },
+      {
+        "id": "ToggleBookmark5",
+        "shortName": "ToggleBkmrk5",
+        "iconPath": "icons/pycharm/ToggleBookmark5.png"
+      },
+      {
+        "id": "ToggleBookmark6",
+        "shortName": "ToggleBkmrk6",
+        "iconPath": "icons/pycharm/ToggleBookmark6.png"
+      },
+      {
+        "id": "ToggleBookmark7",
+        "shortName": "ToggleBkmrk7",
+        "iconPath": "icons/pycharm/ToggleBookmark7.png"
+      },
+      {
+        "id": "ToggleBookmark8",
+        "shortName": "ToggleBkmrk8",
+        "iconPath": "icons/pycharm/ToggleBookmark8.png"
+      },
+      {
+        "id": "ToggleBookmark9",
+        "shortName": "ToggleBkmrk9",
+        "iconPath": "icons/pycharm/ToggleBookmark9.png"
+      },
+      {
+        "id": "ToggleBookmarkWithMnemonic",
+        "shortName": "ToggleBkmrkWithMnemonic",
+        "iconPath": "icons/pycharm/ToggleBookmarkWithMnemonic.png"
+      },
+      {
+        "id": "ToggleBreakpointEnabled",
+        "shortName": "ToggleBreakpointEnabled",
+        "iconPath": "icons/pycharm/ToggleBreakpointEnabled.png"
+      },
+      {
+        "id": "ToggleFindInSelection",
+        "shortName": "ToggleFindInSlctn",
+        "iconPath": "icons/pycharm/ToggleFindInSelection.png"
+      },
+      {
+        "id": "ToggleLineBreakpoint",
+        "shortName": "ToggleLineBreakpoint",
+        "iconPath": "icons/pycharm/ToggleLineBreakpoint.svg"
+      },
+      {
+        "id": "ToggleRenderedDocPresentation",
+        "shortName": "ToggleRndrdDocPrsnttion",
+        "iconPath": "icons/pycharm/ToggleRenderedDocPresentation.png"
+      },
+      {
+        "id": "ToggleTemporaryLineBreakpoint",
+        "shortName": "ToggleTemporaryLineBreakpoint"
+      },
+      {
+        "id": "Tree-startEditing",
+        "shortName": "Tree-startEditing"
+      },
+      {
+        "id": "TypeHierarchy",
+        "shortName": "TypeHierarchy",
+        "iconPath": "icons/pycharm/TypeHierarchy.png"
+      },
+      {
+        "id": "UnselectPreviousOccurrence",
+        "shortName": "UnselectPrev.Occurrence",
+        "iconPath": "icons/pycharm/UnselectPreviousOccurrence.svg"
+      },
+      {
+        "id": "Unwrap",
+        "shortName": "Unwrap"
+      },
+      {
+        "id": "UpdateRunningApplication",
+        "shortName": "UpdateRunningApplication"
+      },
+      {
+        "id": "UsageFiltering.Imports",
+        "shortName": "UsageFiltering.Imports"
+      },
+      {
+        "id": "UsageFiltering.ReadAccess",
+        "shortName": "UsageFiltering.ReadAccess"
+      },
+      {
+        "id": "UsageFiltering.WriteAccess",
+        "shortName": "UsageFiltering.WriteAccess"
+      },
+      {
+        "id": "UsageGrouping.Directory",
+        "shortName": "UsageGrouping.Directory",
+        "iconPath": "icons/pycharm/UsageGrouping.Directory.png"
+      },
+      {
+        "id": "UsageGrouping.DirectoryStructure",
+        "shortName": "UsageGrouping.Dir.Structure"
+      },
+      {
+        "id": "UsageGrouping.FileStructure",
+        "shortName": "UsageGrouping.FileStructure"
+      },
+      {
+        "id": "UsageGrouping.FlattenModules",
+        "shortName": "UsageGrouping.FlattenModls",
+        "iconPath": "icons/pycharm/UsageGrouping.FlattenModules.png"
+      },
+      {
+        "id": "UsageGrouping.Module",
+        "shortName": "UsageGrouping.Module",
+        "iconPath": "icons/pycharm/UsageGrouping.Module.png"
+      },
+      {
+        "id": "UsageGrouping.Package",
+        "shortName": "UsageGrouping.Package",
+        "iconPath": "icons/pycharm/UsageGrouping.Package.png"
+      },
+      {
+        "id": "UsageGrouping.UsageType",
+        "shortName": "UsageGrouping.UsageType"
+      },
+      {
+        "id": "UsageView.Include",
+        "shortName": "UsageView.Include"
+      },
+      {
+        "id": "UsageView.ShowRecentFindUsages",
+        "shortName": "ShowRecentFindUsages",
+        "iconPath": "icons/pycharm/UsageView.ShowRecentFindUsages.png"
+      },
+      {
+        "id": "Vcs.IntegrateProject",
+        "shortName": "Vcs.IntegrateProject",
+        "iconPath": "icons/pycharm/Vcs.IntegrateProject.png"
+      },
+      {
+        "id": "Vcs.Log.FocusTextFilter",
+        "shortName": "Vcs.Log.FocusTextFilter",
+        "iconPath": "icons/pycharm/Vcs.Log.FocusTextFilter.png"
+      },
+      {
+        "id": "Vcs.Log.GoToChild",
+        "shortName": "Vcs.Log.GoToChild"
+      },
+      {
+        "id": "Vcs.Log.GoToParent",
+        "shortName": "Vcs.Log.GoToParent"
+      },
+      {
+        "id": "Vcs.Log.GoToRef",
+        "shortName": "Vcs.Log.GoToRef",
+        "iconPath": "icons/pycharm/Vcs.Log.GoToRef.png"
+      },
+      {
+        "id": "Vcs.Log.ShowAllAffected",
+        "shortName": "Vcs.Log.ShowAllAffected",
+        "iconPath": "icons/pycharm/Vcs.Log.ShowAllAffected.png"
+      },
+      {
+        "id": "Vcs.MoveChangedLinesToChangelist",
+        "shortName": "Vcs.MoveChngdLinesToCh.list",
+        "iconPath": "icons/pycharm/Vcs.MoveChangedLinesToChangelist.png"
+      },
+      {
+        "id": "Vcs.Push",
+        "shortName": "Vcs.Push",
+        "iconPath": "icons/pycharm/Vcs.Push.png"
+      },
+      {
+        "id": "Vcs.QuickListPopupAction",
+        "shortName": "Vcs.QuickListPopupAct.",
+        "iconPath": "icons/pycharm/Vcs.QuickListPopupAction.png"
+      },
+      {
+        "id": "Vcs.ReformatCommitMessage",
+        "shortName": "Vcs.ReformatCommitMessage",
+        "iconPath": "icons/pycharm/Vcs.ReformatCommitMessage.png"
+      },
+      {
+        "id": "Vcs.RefreshStatuses",
+        "shortName": "Vcs.RefreshStatuses",
+        "iconPath": "icons/pycharm/Vcs.RefreshStatuses.png"
+      },
+      {
+        "id": "Vcs.RollbackChangedLines",
+        "shortName": "Vcs.RollbackChangedLines",
+        "iconPath": "icons/pycharm/Vcs.RollbackChangedLines.png"
+      },
+      {
+        "id": "Vcs.ShowHistoryForBlock",
+        "shortName": "Vcs.ShowHistoryForBlock",
+        "iconPath": "icons/pycharm/Vcs.ShowHistoryForBlock.png"
+      },
+      {
+        "id": "Vcs.ShowMessageHistory",
+        "shortName": "Vcs.ShowMessageHistory",
+        "iconPath": "icons/pycharm/Vcs.ShowMessageHistory.png"
+      },
+      {
+        "id": "Vcs.ShowTabbedFileHistory",
+        "shortName": "Vcs.ShowTabbedFileHistory",
+        "iconPath": "icons/pycharm/Vcs.ShowTabbedFileHistory.png"
+      },
+      {
+        "id": "Vcs.ToggleAmendCommitMode",
+        "shortName": "Vcs.ToggleAmendCommitMode",
+        "iconPath": "icons/pycharm/Vcs.ToggleAmendCommitMode.png"
+      },
+      {
+        "id": "Vcs.UpdateProject",
+        "shortName": "Vcs.UpdateProject",
+        "iconPath": "icons/pycharm/Vcs.UpdateProject.png"
+      },
+      {
+        "id": "VcsHistory.ShowAllAffected",
+        "shortName": "VcsHistory.ShowAllAffected",
+        "iconPath": "icons/pycharm/VcsHistory.ShowAllAffected.png"
+      },
+      {
+        "id": "VcsShowNextChangeMarker",
+        "shortName": "VcsShowNextChangeMarker",
+        "iconPath": "icons/pycharm/VcsShowNextChangeMarker.png"
+      },
+      {
+        "id": "VcsShowPrevChangeMarker",
+        "shortName": "VcsShowPrevChangeMarker",
+        "iconPath": "icons/pycharm/VcsShowPrevChangeMarker.png"
+      },
+      {
+        "id": "ViewBreakpoints",
+        "shortName": "ViewBreakpoints",
+        "iconPath": "icons/pycharm/ViewBreakpoints.png"
+      },
+      {
+        "id": "ViewSource",
+        "shortName": "ViewSource"
+      },
+      {
+        "id": "WelcomeScreen.ChangeProjectIcon",
+        "shortName": "ChangeProjectIcon",
+        "iconPath": "icons/pycharm/WelcomeScreen.ChangeProjectIcon.svg"
+      },
+      {
+        "id": "XDebugger.AttachToProcess",
+        "shortName": "XDebugger.AttachToProcess",
+        "iconPath": "icons/pycharm/XDebugger.AttachToProcess.png"
+      },
+      {
+        "id": "XDebugger.JumpToTypeSource",
+        "shortName": "XDebugger.JumpToTypeSource"
+      },
+      {
+        "id": "XDebugger.NewWatch",
+        "shortName": "XDebugger.NewWatch"
+      },
+      {
+        "id": "XDebugger.SetValue",
+        "shortName": "XDebugger.SetValue"
+      }
+    ],
+    "bash": [
+      {
+        "id": "beginning-of-line",
+        "shortName": "Line start",
+        "iconPath": "icons/bash/EditorLineStart.png",
+        "descriptions": {
+          "ru": "Перейти в начало текущей строки."
+        }
+      },
+      {
+        "id": "end-of-line",
+        "shortName": "Line end",
+        "iconPath": "icons/bash/EditorLineEnd.png",
+        "descriptions": {
+          "ru": "Перейти в конец текущей строки."
+        }
+      },
+      {
+        "id": "forward-char",
+        "shortName": "Forward",
+        "iconPath": "icons/bash/EditorRight.png",
+        "descriptions": {
+          "ru": "Сдвинуть курсор на один символ вперёд."
+        }
+      },
+      {
+        "id": "backward-char",
+        "shortName": "Backward",
+        "iconPath": "icons/bash/EditorLeft.png",
+        "descriptions": {
+          "ru": "Сдвинуть курсор на один символ назад."
+        }
+      },
+      {
+        "id": "forward-word",
+        "shortName": "Next word",
+        "iconPath": "icons/bash/EditorNextWord.png",
+        "descriptions": {
+          "ru": "Перейти к концу следующего слова."
+        }
+      },
+      {
+        "id": "backward-word",
+        "shortName": "Prev word",
+        "iconPath": "icons/bash/EditorPreviousWord.png",
+        "descriptions": {
+          "ru": "Перейти к началу предыдущего слова."
+        }
+      },
+      {
+        "id": "next-history",
+        "shortName": "Next hist",
+        "iconPath": "icons/bash/EditorDown.png",
+        "descriptions": {
+          "ru": "Следующая команда в истории."
+        }
+      },
+      {
+        "id": "previous-history",
+        "shortName": "Prev hist",
+        "iconPath": "icons/bash/EditorUp.png",
+        "descriptions": {
+          "ru": "Предыдущая команда в истории."
+        }
+      },
+      {
+        "id": "beginning-of-history",
+        "shortName": "Hist start",
+        "iconPath": "icons/bash/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Перейти к самой первой команде в истории."
+        }
+      },
+      {
+        "id": "end-of-history",
+        "shortName": "Hist end",
+        "iconPath": "icons/bash/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Перейти к самой новой команде в истории."
+        }
+      },
+      {
+        "id": "delete-char",
+        "shortName": "Delete",
+        "iconPath": "icons/bash/$Delete.svg",
+        "descriptions": {
+          "ru": "Удалить символ под курсором."
+        }
+      },
+      {
+        "id": "backward-delete-char",
+        "shortName": "Backspace",
+        "iconPath": "icons/bash/EditorBackSpace.png",
+        "descriptions": {
+          "ru": "Удалить символ слева от курсора."
+        }
+      },
+      {
+        "id": "kill-line",
+        "shortName": "Kill line",
+        "iconPath": "icons/bash/EditorDeleteToLineEnd.png",
+        "descriptions": {
+          "ru": "Вырезать текст от курсора до конца строки в kill-ring."
+        }
+      },
+      {
+        "id": "unix-line-discard",
+        "shortName": "Kill to start",
+        "iconPath": "icons/bash/EditorDeleteToLineStart.png",
+        "descriptions": {
+          "ru": "Вырезать текст от начала строки до курсора."
+        }
+      },
+      {
+        "id": "backward-kill-line",
+        "shortName": "Kill back line",
+        "iconPath": "icons/bash/EditorDeleteToLineStart.png",
+        "descriptions": {
+          "ru": "Вырезать текст от курсора назад до начала строки."
+        }
+      },
+      {
+        "id": "kill-whole-line",
+        "shortName": "Kill whole line",
+        "iconPath": "icons/bash/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Вырезать всю текущую строку."
+        }
+      },
+      {
+        "id": "kill-word",
+        "shortName": "Kill word",
+        "iconPath": "icons/bash/EditorDeleteToWordEnd.png",
+        "descriptions": {
+          "ru": "Вырезать слово справа от курсора."
+        }
+      },
+      {
+        "id": "backward-kill-word",
+        "shortName": "Kill prev word",
+        "iconPath": "icons/bash/EditorDeleteToWordStart.png",
+        "descriptions": {
+          "ru": "Вырезать слово слева от курсора."
+        }
+      },
+      {
+        "id": "unix-word-rubout",
+        "shortName": "Rubout word",
+        "iconPath": "icons/bash/EditorDeleteToWordStart.png",
+        "descriptions": {
+          "ru": "Вырезать слово слева, считая пробел границей (как в Unix)."
+        }
+      },
+      {
+        "id": "delete-horizontal-space",
+        "shortName": "Del spaces",
+        "iconPath": "icons/bash/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Удалить пробелы и табы вокруг курсора."
+        }
+      },
+      {
+        "id": "yank",
+        "shortName": "Yank",
+        "iconPath": "icons/bash/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить последний вырезанный фрагмент из kill-ring."
+        }
+      },
+      {
+        "id": "yank-pop",
+        "shortName": "Yank pop",
+        "iconPath": "icons/bash/EditorPasteSimple.png",
+        "descriptions": {
+          "ru": "После yank подставить предыдущий фрагмент из kill-ring."
+        }
+      },
+      {
+        "id": "yank-last-arg",
+        "shortName": "Yank last arg",
+        "iconPath": "icons/bash/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить последний аргумент предыдущей команды из истории."
+        }
+      },
+      {
+        "id": "yank-nth-arg",
+        "shortName": "Yank nth arg",
+        "iconPath": "icons/bash/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить n-й аргумент предыдущей команды (с digit-argument)."
+        }
+      },
+      {
+        "id": "undo",
+        "shortName": "Undo",
+        "iconPath": "icons/bash/$Undo.png",
+        "descriptions": {
+          "ru": "Отменить последнее изменение строки."
+        }
+      },
+      {
+        "id": "revert-line",
+        "shortName": "Revert",
+        "iconPath": "icons/bash/$Undo.png",
+        "descriptions": {
+          "ru": "Вернуть строку к состоянию до любых правок."
+        }
+      },
+      {
+        "id": "redo",
+        "shortName": "Redo",
+        "iconPath": "icons/bash/$Redo.svg",
+        "descriptions": {
+          "ru": "Повторить отменённое изменение."
+        }
+      },
+      {
+        "id": "transpose-chars",
+        "shortName": "Transpose",
+        "iconPath": "icons/bash/Replace.png",
+        "descriptions": {
+          "ru": "Поменять местами символ до курсора и символ под ним."
+        }
+      },
+      {
+        "id": "transpose-words",
+        "shortName": "Transp. words",
+        "iconPath": "icons/bash/Replace.png",
+        "descriptions": {
+          "ru": "Поменять местами текущее и предыдущее слово."
+        }
+      },
+      {
+        "id": "capitalize-word",
+        "shortName": "Capitalize",
+        "iconPath": "icons/bash/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "Сделать заглавной первую букву слова справа."
+        }
+      },
+      {
+        "id": "upcase-word",
+        "shortName": "Uppercase",
+        "iconPath": "icons/bash/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "Перевести слово справа в верхний регистр."
+        }
+      },
+      {
+        "id": "downcase-word",
+        "shortName": "Lowercase",
+        "iconPath": "icons/bash/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "Перевести слово справа в нижний регистр."
+        }
+      },
+      {
+        "id": "complete",
+        "shortName": "Complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнить команду, файл или переменную перед курсором."
+        }
+      },
+      {
+        "id": "possible-completions",
+        "shortName": "Completions",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Показать список возможных дополнений."
+        }
+      },
+      {
+        "id": "insert-completions",
+        "shortName": "Insert comps",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Вставить все возможные дополнения сразу."
+        }
+      },
+      {
+        "id": "menu-complete",
+        "shortName": "Menu complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Циклически подставлять следующее совпадение дополнения."
+        }
+      },
+      {
+        "id": "menu-complete-backward",
+        "shortName": "Menu back",
+        "iconPath": "icons/bash/HippieBackwardCompletion.png",
+        "descriptions": {
+          "ru": "Циклически подставлять предыдущее совпадение дополнения."
+        }
+      },
+      {
+        "id": "complete-filename",
+        "shortName": "File complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнить только имя файла."
+        }
+      },
+      {
+        "id": "complete-username",
+        "shortName": "User complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнить имя пользователя."
+        }
+      },
+      {
+        "id": "complete-variable",
+        "shortName": "Var complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнить имя переменной окружения."
+        }
+      },
+      {
+        "id": "complete-hostname",
+        "shortName": "Host complete",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнить имя хоста."
+        }
+      },
+      {
+        "id": "glob-expand-word",
+        "shortName": "Glob expand",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Развернуть glob-шаблон (например *.txt) в список файлов."
+        }
+      },
+      {
+        "id": "tab-insert",
+        "shortName": "Insert tab",
+        "iconPath": "icons/bash/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Вставить символ табуляции, не запуская дополнение."
+        }
+      },
+      {
+        "id": "quoted-insert",
+        "shortName": "Quoted insert",
+        "iconPath": "icons/bash/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Вставить следующий символ буквально, даже если это комбинация."
+        }
+      },
+      {
+        "id": "magic-space",
+        "shortName": "Magic space",
+        "iconPath": "icons/bash/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Вставить пробел и выполнить history expansion."
+        }
+      },
+      {
+        "id": "accept-line",
+        "shortName": "Accept",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Принять строку и выполнить команду."
+        }
+      },
+      {
+        "id": "operate-and-get-next",
+        "shortName": "Operate+next",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Выполнить строку и сразу подставить следующую из истории."
+        }
+      },
+      {
+        "id": "edit-and-execute-command",
+        "shortName": "Edit command",
+        "iconPath": "icons/bash/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Открыть строку во внешнем редакторе и выполнить результат."
+        }
+      },
+      {
+        "id": "abort",
+        "shortName": "Abort",
+        "iconPath": "icons/bash/Stop.svg",
+        "descriptions": {
+          "ru": "Прервать текущее действие readline (поиск, макрос, ввод)."
+        }
+      },
+      {
+        "id": "overwrite-mode",
+        "shortName": "Overwrite",
+        "iconPath": "icons/bash/Pause.svg",
+        "descriptions": {
+          "ru": "Переключить вставку и замену символов."
+        }
+      },
+      {
+        "id": "reverse-search-history",
+        "shortName": "Rev search",
+        "iconPath": "icons/bash/Find.svg",
+        "descriptions": {
+          "ru": "Инкрементальный поиск по истории назад."
+        }
+      },
+      {
+        "id": "forward-search-history",
+        "shortName": "Fwd search",
+        "iconPath": "icons/bash/FindNext.png",
+        "descriptions": {
+          "ru": "Инкрементальный поиск по истории вперёд."
+        }
+      },
+      {
+        "id": "non-incremental-reverse-search-history",
+        "shortName": "NI rev search",
+        "iconPath": "icons/bash/FindPrevious.png",
+        "descriptions": {
+          "ru": "Неинкрементальный поиск по истории назад."
+        }
+      },
+      {
+        "id": "non-incremental-forward-search-history",
+        "shortName": "NI fwd search",
+        "iconPath": "icons/bash/FindNext.png",
+        "descriptions": {
+          "ru": "Неинкрементальный поиск по истории вперёд."
+        }
+      },
+      {
+        "id": "history-search-backward",
+        "shortName": "Hist search ↑",
+        "iconPath": "icons/bash/Console.History.Browse.svg",
+        "descriptions": {
+          "ru": "Искать в истории команды с тем же префиксом, что до курсора, назад."
+        }
+      },
+      {
+        "id": "history-search-forward",
+        "shortName": "Hist search ↓",
+        "iconPath": "icons/bash/Console.History.Browse.svg",
+        "descriptions": {
+          "ru": "Искать в истории команды с тем же префиксом, что до курсора, вперёд."
+        }
+      },
+      {
+        "id": "history-expand-line",
+        "shortName": "Hist expand",
+        "iconPath": "icons/bash/Console.History.Browse.svg",
+        "descriptions": {
+          "ru": "Развернуть history-подстановки (!!, !$) в текущей строке."
+        }
+      },
+      {
+        "id": "character-search",
+        "shortName": "Char search",
+        "iconPath": "icons/bash/SearchEverywhere.png",
+        "descriptions": {
+          "ru": "Перейти вперёд к следующему введённому символу."
+        }
+      },
+      {
+        "id": "character-search-backward",
+        "shortName": "Char search ←",
+        "iconPath": "icons/bash/FindPrevious.png",
+        "descriptions": {
+          "ru": "Перейти назад к предыдущему введённому символу."
+        }
+      },
+      {
+        "id": "execute-named-command",
+        "shortName": "Named cmd",
+        "iconPath": "icons/bash/SearchEverywhere.png",
+        "descriptions": {
+          "ru": "Выполнить readline-команду по имени."
+        }
+      },
+      {
+        "id": "insert-comment",
+        "shortName": "Comment",
+        "iconPath": "icons/bash/CommentByLineComment.png",
+        "descriptions": {
+          "ru": "Поставить # в начало строки и принять её как комментарий."
+        }
+      },
+      {
+        "id": "tilde-expand",
+        "shortName": "Tilde expand",
+        "iconPath": "icons/bash/GotoLine.png",
+        "descriptions": {
+          "ru": "Развернуть ~ в домашний каталог."
+        }
+      },
+      {
+        "id": "clear-screen",
+        "shortName": "Clear",
+        "iconPath": "icons/bash/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Очистить экран и перерисовать текущую строку."
+        }
+      },
+      {
+        "id": "clear-display",
+        "shortName": "Clear display",
+        "iconPath": "icons/bash/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Очистить экран, включая буфер прокрутки."
+        }
+      },
+      {
+        "id": "redraw-current-line",
+        "shortName": "Redraw",
+        "iconPath": "icons/bash/Replace.png",
+        "descriptions": {
+          "ru": "Перерисовать текущую строку ввода."
+        }
+      },
+      {
+        "id": "set-mark",
+        "shortName": "Set mark",
+        "iconPath": "icons/bash/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Поставить метку в позиции курсора."
+        }
+      },
+      {
+        "id": "exchange-point-and-mark",
+        "shortName": "Exchange mark",
+        "iconPath": "icons/bash/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Поменять местами курсор и метку."
+        }
+      },
+      {
+        "id": "digit-argument",
+        "shortName": "Digit arg",
+        "iconPath": "icons/bash/GotoLine.png",
+        "descriptions": {
+          "ru": "Задать числовой аргумент для следующей команды (повторить n раз)."
+        }
+      },
+      {
+        "id": "vi-editing-mode",
+        "shortName": "Vi mode",
+        "iconPath": "icons/bash/Pause.svg",
+        "descriptions": {
+          "ru": "Переключить редактирование строки в режим vi."
+        }
+      },
+      {
+        "id": "emacs-editing-mode",
+        "shortName": "Emacs mode",
+        "iconPath": "icons/bash/Pause.svg",
+        "descriptions": {
+          "ru": "Переключить редактирование строки в режим emacs."
+        }
+      },
+      {
+        "id": "start-kbd-macro",
+        "shortName": "Start macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Начать запись клавиатурного макроса."
+        }
+      },
+      {
+        "id": "end-kbd-macro",
+        "shortName": "End macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Закончить запись клавиатурного макроса."
+        }
+      },
+      {
+        "id": "call-last-kbd-macro",
+        "shortName": "Call macro",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Воспроизвести последний записанный макрос."
+        }
+      },
+      {
+        "id": "re-read-init-file",
+        "shortName": "Reload inputrc",
+        "iconPath": "icons/bash/Replace.png",
+        "descriptions": {
+          "ru": "Перечитать ~/.inputrc без перезапуска оболочки."
+        }
+      },
+      {
+        "id": "dump-functions",
+        "shortName": "Dump functions",
+        "iconPath": "icons/bash/SearchEverywhere.png",
+        "descriptions": {
+          "ru": "Вывести все readline-функции и их привязки."
+        }
+      },
+      {
+        "id": "dump-variables",
+        "shortName": "Dump vars",
+        "iconPath": "icons/bash/SearchEverywhere.png",
+        "descriptions": {
+          "ru": "Вывести переменные readline."
+        }
+      },
+      {
+        "id": "dump-macros",
+        "shortName": "Dump macros",
+        "iconPath": "icons/bash/SearchEverywhere.png",
+        "descriptions": {
+          "ru": "Вывести записанные макросы и их клавиши."
+        }
+      },
+      {
+        "id": "alias-expand-line",
+        "shortName": "Alias expand",
+        "iconPath": "icons/bash/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Развернуть алиасы в текущей строке."
+        }
+      },
+      {
+        "id": "shell-expand-line",
+        "shortName": "Shell expand",
+        "iconPath": "icons/bash/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Выполнить все виды раскрытия оболочки в текущей строке."
+        }
+      }
+    ],
+    "vim": [
+      {
+        "id": "vim-h",
+        "shortName": "Left",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "Курсор влево.",
+          "en": "Move left."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-j",
+        "shortName": "Down",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "Курсор вниз.",
+          "en": "Move down."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-k",
+        "shortName": "Up",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "Курсор вверх.",
+          "en": "Move up."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-l",
+        "shortName": "Right",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "Курсор вправо.",
+          "en": "Move right."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-w",
+        "shortName": "Word→",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К началу следующего слова.",
+          "en": "Next word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-b",
+        "shortName": "←Word",
+        "iconPath": "icons/vim/EditorPreviousWord.png",
+        "descriptions": {
+          "ru": "К началу предыдущего слова.",
+          "en": "Previous word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-e",
+        "shortName": "End w",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К концу слова.",
+          "en": "End of word."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-W",
+        "shortName": "WORD→",
+        "iconPath": "icons/vim/EditorNextWord.png",
+        "descriptions": {
+          "ru": "К следующему WORD (пробел).",
+          "en": "Next WORD."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-B",
+        "shortName": "←WORD",
+        "iconPath": "icons/vim/EditorPreviousWord.png",
+        "descriptions": {
+          "ru": "К предыдущему WORD.",
+          "en": "Previous WORD."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-0",
+        "shortName": "Line0",
+        "iconPath": "icons/vim/EditorLineStart.png",
+        "descriptions": {
+          "ru": "В начало строки.",
+          "en": "Start of line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-dollar",
+        "shortName": "EOL",
+        "iconPath": "icons/vim/EditorLineEnd.png",
+        "descriptions": {
+          "ru": "В конец строки.",
+          "en": "End of line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-caret",
+        "shortName": "First",
+        "iconPath": "icons/vim/EditorLineStart.png",
+        "descriptions": {
+          "ru": "К первому непробельному символу.",
+          "en": "First non-blank."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-G",
+        "shortName": "Bottom",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "К последней строке.",
+          "en": "Go to last line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gg",
+        "shortName": "Top",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "К первой строке.",
+          "en": "Go to first line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-f",
+        "shortName": "Find…",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "К следующему введённому символу (f{char}).",
+          "en": "Find char forward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-F",
+        "shortName": "Find←…",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "К предыдущему символу (F{char}).",
+          "en": "Find char backward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-t",
+        "shortName": "Till…",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "До символа вперёд (t{char}).",
+          "en": "Till char forward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-T",
+        "shortName": "Till←…",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "До символа назад (T{char}).",
+          "en": "Till char backward."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-semicolon",
+        "shortName": "Repeat f",
+        "iconPath": "icons/vim/FindNext.png",
+        "descriptions": {
+          "ru": "Повторить последний f/t.",
+          "en": "Repeat f/t."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-comma",
+        "shortName": "Rev f",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Повторить f/t в обратную сторону.",
+          "en": "Repeat f/t opposite."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-percent",
+        "shortName": "Match",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К парной скобке.",
+          "en": "Match paren."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-H",
+        "shortName": "Scr top",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "К верхней строке экрана.",
+          "en": "Top of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-M",
+        "shortName": "Scr mid",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К средней строке экрана.",
+          "en": "Middle of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-L",
+        "shortName": "Scr bot",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "К нижней строке экрана.",
+          "en": "Bottom of screen."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-ctrl-d",
+        "shortName": "Half↓",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Прокрутка на пол-экрана вниз.",
+          "en": "Half-page down."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-u",
+        "shortName": "Half↑",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Прокрутка на пол-экрана вверх.",
+          "en": "Half-page up."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-f",
+        "shortName": "Page↓",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Страница вниз.",
+          "en": "Page down."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-b",
+        "shortName": "Page↑",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Страница вверх.",
+          "en": "Page up."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-o",
+        "shortName": "Jump←",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Назад по списку прыжков.",
+          "en": "Older jump."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-i",
+        "shortName": "Jump→",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Вперёд по списку прыжков.",
+          "en": "Newer jump."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-x",
+        "shortName": "Del",
+        "iconPath": "icons/vim/$Delete.svg",
+        "descriptions": {
+          "ru": "Удалить символ под курсором.",
+          "en": "Delete char."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-X",
+        "shortName": "Del←",
+        "iconPath": "icons/vim/EditorBackSpace.png",
+        "descriptions": {
+          "ru": "Удалить символ слева.",
+          "en": "Delete left."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-d",
+        "shortName": "Del…",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Оператор удаления (d{motion}, dd).",
+          "en": "Delete operator."
+        },
+        "sector": "delete",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-dd",
+        "shortName": "Del ln",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Удалить строку.",
+          "en": "Delete line."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-D",
+        "shortName": "Del $",
+        "iconPath": "icons/vim/EditorDeleteToLineEnd.png",
+        "descriptions": {
+          "ru": "Удалить до конца строки.",
+          "en": "Delete to EOL."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-c",
+        "shortName": "Chg…",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Оператор смены (c{motion}, cc).",
+          "en": "Change operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-cc",
+        "shortName": "Chg ln",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить строку.",
+          "en": "Change line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-C",
+        "shortName": "Chg $",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить до конца строки.",
+          "en": "Change to EOL."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-y",
+        "shortName": "Yank…",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Оператор копирования (y{motion}, yy).",
+          "en": "Yank operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-yy",
+        "shortName": "Yank ln",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Скопировать строку.",
+          "en": "Yank line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-Y",
+        "shortName": "Yank ln",
+        "iconPath": "icons/vim/$Copy.png",
+        "descriptions": {
+          "ru": "Скопировать строку (как yy).",
+          "en": "Yank line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-p",
+        "shortName": "Paste",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить после курсора.",
+          "en": "Paste after."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-P",
+        "shortName": "Paste↑",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить перед курсором.",
+          "en": "Paste before."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-r",
+        "shortName": "Repl…",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Заменить символ (r{char}).",
+          "en": "Replace char."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-R",
+        "shortName": "Replace",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Режим замены.",
+          "en": "Replace mode."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-s",
+        "shortName": "Subst",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Заменить символ и войти в Insert.",
+          "en": "Substitute char."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-S",
+        "shortName": "Subst ln",
+        "iconPath": "icons/vim/Replace.png",
+        "descriptions": {
+          "ru": "Сменить всю строку.",
+          "en": "Substitute line."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-tilde",
+        "shortName": "Case~",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "Сменить регистр символа.",
+          "en": "Toggle case."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-u",
+        "shortName": "Undo",
+        "iconPath": "icons/vim/$Undo.png",
+        "descriptions": {
+          "ru": "Отменить.",
+          "en": "Undo."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-r",
+        "shortName": "Redo",
+        "iconPath": "icons/vim/$Redo.svg",
+        "descriptions": {
+          "ru": "Повторить отменённое.",
+          "en": "Redo."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-dot",
+        "shortName": "Repeat",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Повторить последнее изменение.",
+          "en": "Repeat change."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gt",
+        "shortName": "Indent",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "Сдвинуть вправо (indent).",
+          "en": "Indent."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-lt",
+        "shortName": "Outdent",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "Сдвинуть влево (outdent).",
+          "en": "Outdent."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-J",
+        "shortName": "Join",
+        "iconPath": "icons/vim/EditorDeleteLine.png",
+        "descriptions": {
+          "ru": "Объединить строки.",
+          "en": "Join lines."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-i",
+        "shortName": "Insert",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert перед курсором / textobject inner.",
+          "en": "Insert / inner textobject."
+        },
+        "sector": "edit",
+        "roles": [
+          "command",
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-I",
+        "shortName": "Ins ^",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert в начало строки.",
+          "en": "Insert at line start."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a",
+        "shortName": "Append",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert после курсора / textobject around.",
+          "en": "Append / around textobject."
+        },
+        "sector": "edit",
+        "roles": [
+          "command",
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-A",
+        "shortName": "App $",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Insert в конец строки.",
+          "en": "Append at EOL."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-o",
+        "shortName": "Open↓",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Новая строка ниже + Insert.",
+          "en": "Open line below."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-O",
+        "shortName": "Open↑",
+        "iconPath": "icons/vim/InsertLiveTemplate.png",
+        "descriptions": {
+          "ru": "Новая строка выше + Insert.",
+          "en": "Open line above."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-v",
+        "shortName": "Visual",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual посимвольно.",
+          "en": "Character visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-V",
+        "shortName": "Vis ln",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual построчно.",
+          "en": "Line visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ctrl-v",
+        "shortName": "Vis blk",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Visual блоком.",
+          "en": "Block visual."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-esc",
+        "shortName": "Normal",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Вернуться в Normal.",
+          "en": "Back to Normal."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert",
+          "visual",
+          "cmdline"
+        ]
+      },
+      {
+        "id": "vim-m",
+        "shortName": "Mark…",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Поставить закладку (m{a-z}).",
+          "en": "Set mark."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-tick",
+        "shortName": "To mark",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К закладке (строка).",
+          "en": "Jump to mark (line)."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-backtick",
+        "shortName": "To pos",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "К закладке (позиция).",
+          "en": "Jump to mark (exact)."
+        },
+        "sector": "marks",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-slash",
+        "shortName": "Search",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Поиск вперёд.",
+          "en": "Search forward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-question",
+        "shortName": "Search←",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Поиск назад.",
+          "en": "Search backward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-n",
+        "shortName": "Next",
+        "iconPath": "icons/vim/FindNext.png",
+        "descriptions": {
+          "ru": "Следующее совпадение.",
+          "en": "Next match."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-N",
+        "shortName": "Prev",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Предыдущее совпадение.",
+          "en": "Previous match."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-star",
+        "shortName": "*word",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Искать слово под курсором вперёд.",
+          "en": "Search word forward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-hash",
+        "shortName": "#word",
+        "iconPath": "icons/vim/FindPrevious.png",
+        "descriptions": {
+          "ru": "Искать слово под курсором назад.",
+          "en": "Search word backward."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-colon",
+        "shortName": "Ex",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Command-line (Ex).",
+          "en": "Ex command-line."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ZZ",
+        "shortName": "Save+q",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Сохранить и выйти.",
+          "en": "Write and quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ZQ",
+        "shortName": "Quit!",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти без сохранения.",
+          "en": "Quit without write."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-prefix-g",
+        "shortName": "g…",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Префикс g (gg, gt, gj…).",
+          "en": "g prefix."
+        },
+        "sector": "motion",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-prefix-z",
+        "shortName": "z…",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Префикс z (zz, zt, zb…).",
+          "en": "z prefix."
+        },
+        "sector": "motion",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-prefix-ctrl-w",
+        "shortName": "Win…",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Префикс окна Ctrl-W.",
+          "en": "Window prefix."
+        },
+        "sector": "windows",
+        "roles": [
+          "prefix"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gj",
+        "shortName": "Disp↓",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "Вниз по экранной строке.",
+          "en": "Down display line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gk",
+        "shortName": "Disp↑",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "Вверх по экранной строке.",
+          "en": "Up display line."
+        },
+        "sector": "motion",
+        "roles": [
+          "motion",
+          "command"
+        ],
+        "modes": [
+          "normal",
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-gt-tab",
+        "shortName": "Tab→",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Следующая вкладка.",
+          "en": "Next tab."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gT",
+        "shortName": "Tab←",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Предыдущая вкладка.",
+          "en": "Previous tab."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gu",
+        "shortName": "Lower…",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В нижний регистр (gu{motion}).",
+          "en": "Lowercase operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-gU",
+        "shortName": "Upper…",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В верхний регистр (gU{motion}).",
+          "en": "Uppercase operator."
+        },
+        "sector": "edit",
+        "roles": [
+          "operator"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zz",
+        "shortName": "Center",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Текущая строка по центру экрана.",
+          "en": "Center cursor line."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zt",
+        "shortName": "To top",
+        "iconPath": "icons/vim/EditorScrollTop.png",
+        "descriptions": {
+          "ru": "Текущая строка к верху экрана.",
+          "en": "Cursor line to top."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-zb",
+        "shortName": "To bot",
+        "iconPath": "icons/vim/EditorScrollDown.png",
+        "descriptions": {
+          "ru": "Текущая строка к низу экрана.",
+          "en": "Cursor line to bottom."
+        },
+        "sector": "motion",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-s",
+        "shortName": "HSplit",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Разделить окно горизонтально.",
+          "en": "Split horizontal."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-v",
+        "shortName": "VSplit",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Разделить окно вертикально.",
+          "en": "Split vertical."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-h",
+        "shortName": "Win←",
+        "iconPath": "icons/vim/EditorLeft.png",
+        "descriptions": {
+          "ru": "К окну слева.",
+          "en": "Window left."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-j",
+        "shortName": "Win↓",
+        "iconPath": "icons/vim/EditorDown.png",
+        "descriptions": {
+          "ru": "К окну снизу.",
+          "en": "Window below."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-k",
+        "shortName": "Win↑",
+        "iconPath": "icons/vim/EditorUp.png",
+        "descriptions": {
+          "ru": "К окну сверху.",
+          "en": "Window above."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-l",
+        "shortName": "Win→",
+        "iconPath": "icons/vim/EditorRight.png",
+        "descriptions": {
+          "ru": "К окну справа.",
+          "en": "Window right."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-c",
+        "shortName": "Close",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Закрыть окно.",
+          "en": "Close window."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-cw-o",
+        "shortName": "Only",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Только текущее окно.",
+          "en": "Only this window."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-iw",
+        "shortName": "in word",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутреннее слово (textobject).",
+          "en": "Inner word."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-aw",
+        "shortName": "a word",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Слово с пробелами (textobject).",
+          "en": "A word."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-i-quote",
+        "shortName": "in \"",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутри кавычек.",
+          "en": "Inner quotes."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a-quote",
+        "shortName": "a \"",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Кавычки целиком.",
+          "en": "A quotes."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-i-paren",
+        "shortName": "in ()",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Внутри скобок.",
+          "en": "Inner paren."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-a-paren",
+        "shortName": "a ()",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Скобки целиком.",
+          "en": "A paren."
+        },
+        "sector": "edit",
+        "roles": [
+          "textobject"
+        ],
+        "modes": [
+          "normal"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-w",
+        "shortName": "Del←w",
+        "iconPath": "icons/vim/EditorDeleteToWordStart.png",
+        "descriptions": {
+          "ru": "Удалить слово слева (Insert).",
+          "en": "Delete word left (Insert)."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-h",
+        "shortName": "BS",
+        "iconPath": "icons/vim/EditorBackSpace.png",
+        "descriptions": {
+          "ru": "Backspace (Insert).",
+          "en": "Backspace (Insert)."
+        },
+        "sector": "delete",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-n",
+        "shortName": "Compl↓",
+        "iconPath": "icons/vim/HippieCompletion.png",
+        "descriptions": {
+          "ru": "Дополнение вперёд.",
+          "en": "Complete next."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-p",
+        "shortName": "Compl↑",
+        "iconPath": "icons/vim/HippieBackwardCompletion.png",
+        "descriptions": {
+          "ru": "Дополнение назад.",
+          "en": "Complete previous."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-o",
+        "shortName": "Norm×1",
+        "iconPath": "icons/vim/ExecuteInPyConsoleAction.png",
+        "descriptions": {
+          "ru": "Одна Normal-команда из Insert.",
+          "en": "One Normal cmd from Insert."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-ins-ctrl-r",
+        "shortName": "Paste^R",
+        "iconPath": "icons/vim/$Paste.png",
+        "descriptions": {
+          "ru": "Вставить из регистра.",
+          "en": "Insert from register."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "insert"
+        ]
+      },
+      {
+        "id": "vim-vis-o",
+        "shortName": "Swap end",
+        "iconPath": "icons/vim/EditorSelectLine.png",
+        "descriptions": {
+          "ru": "Другой конец выделения.",
+          "en": "Other end of selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-vis-u",
+        "shortName": "Lower",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В нижний регистр выделенного.",
+          "en": "Lowercase selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "vim-vis-U",
+        "shortName": "Upper",
+        "iconPath": "icons/vim/EditorToggleCase.svg",
+        "descriptions": {
+          "ru": "В верхний регистр выделенного.",
+          "en": "Uppercase selection."
+        },
+        "sector": "edit",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "visual"
+        ]
+      },
+      {
+        "id": "ex-w",
+        "shortName": ":w",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Записать файл.",
+          "en": "Write file."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-wq",
+        "shortName": ":wq",
+        "iconPath": "icons/vim/SaveAll.svg",
+        "descriptions": {
+          "ru": "Записать и выйти.",
+          "en": "Write and quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-q",
+        "shortName": ":q",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти.",
+          "en": "Quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-qbang",
+        "shortName": ":q!",
+        "iconPath": "icons/vim/Stop.svg",
+        "descriptions": {
+          "ru": "Выйти принудительно.",
+          "en": "Force quit."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-e",
+        "shortName": ":e",
+        "iconPath": "icons/vim/GotoLine.png",
+        "descriptions": {
+          "ru": "Открыть файл.",
+          "en": "Edit file."
+        },
+        "sector": "file",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-sp",
+        "shortName": ":sp",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Горизонтальный split.",
+          "en": "Horizontal split."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-vs",
+        "shortName": ":vs",
+        "iconPath": "icons/vim/ActivateTerminalToolWindow.svg",
+        "descriptions": {
+          "ru": "Вертикальный split.",
+          "en": "Vertical split."
+        },
+        "sector": "windows",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      },
+      {
+        "id": "ex-noh",
+        "shortName": ":noh",
+        "iconPath": "icons/vim/Find.svg",
+        "descriptions": {
+          "ru": "Снять подсветку поиска.",
+          "en": "No highlight search."
+        },
+        "sector": "search",
+        "roles": [
+          "command"
+        ],
+        "modes": [
+          "cmdline"
+        ]
+      }
+    ]
+  }
+}

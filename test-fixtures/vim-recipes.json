@@ -1,0 +1,253 @@
+{
+  "recipes": [
+    {
+      "id": "rec-dd",
+      "title": "dd — удалить строку",
+      "sector": "delete",
+      "descriptions": { "ru": "Оператор d дважды: удалить текущую строку.", "en": "d twice: delete current line." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "push" },
+        { "mode": "normal", "keyName": "d", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-dw",
+      "title": "dw — удалить слово",
+      "sector": "delete",
+      "descriptions": { "ru": "d + motion w.", "en": "d + w motion." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "push" },
+        { "mode": "normal", "keyName": "w", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-ciw",
+      "title": "ciw — сменить слово",
+      "sector": "edit",
+      "descriptions": { "ru": "c + inner + word.", "en": "c + inner + word." },
+      "steps": [
+        { "mode": "normal", "keyName": "c", "slot": "push" },
+        { "mode": "normal", "keyName": "i", "slot": "push" },
+        { "mode": "normal", "keyName": "w", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-ggVG",
+      "title": "ggVG — выделить файл",
+      "sector": "edit",
+      "descriptions": { "ru": "В начало, Visual-line, в конец.", "en": "Top, line-visual, bottom." },
+      "steps": [
+        { "mode": "normal", "keyName": "g", "slot": "push" },
+        { "mode": "normal", "keyName": "g", "slot": "push", "layer": "g" },
+        { "mode": "normal", "keyName": "v", "slot": "s" },
+        { "mode": "visual", "keyName": "g", "slot": "s" }
+      ]
+    },
+    {
+      "id": "rec-zz",
+      "title": "zz — центр экрана",
+      "sector": "motion",
+      "descriptions": { "ru": "Префикс z, затем z.", "en": "z then z." },
+      "steps": [
+        { "mode": "normal", "keyName": "z", "slot": "push" },
+        { "mode": "normal", "keyName": "z", "slot": "push", "layer": "z" }
+      ]
+    },
+    {
+      "id": "rec-mark-a",
+      "title": "ma → 'a — закладка",
+      "sector": "marks",
+      "descriptions": { "ru": "Поставить закладку a и вернуться к ней.", "en": "Set mark a and jump back." },
+      "steps": [
+        { "mode": "normal", "keyName": "m", "slot": "push" },
+        { "mode": "normal", "keyName": "apostrophe", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-yy-p",
+      "title": "yyp — дублировать строку",
+      "sector": "edit",
+      "descriptions": { "ru": "Yank line, paste below.", "en": "Yank line, paste." },
+      "steps": [
+        { "mode": "normal", "keyName": "y", "slot": "push" },
+        { "mode": "normal", "keyName": "y", "slot": "push" },
+        { "mode": "normal", "keyName": "p", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-cw-s",
+      "title": "Ctrl-W s — split",
+      "sector": "windows",
+      "descriptions": { "ru": "Префикс окна, затем s.", "en": "Window prefix then s." },
+      "steps": [
+        { "mode": "normal", "keyName": "w", "slot": "c" },
+        { "mode": "normal", "keyName": "s", "slot": "push", "layer": "ctrl-w" }
+      ]
+    },
+    {
+      "id": "rec-wq",
+      "title": ":wq — сохранить и выйти",
+      "sector": "file",
+      "descriptions": { "ru": "Открыть Ex и :wq.", "en": "Open Ex and :wq." },
+      "steps": [
+        { "mode": "normal", "keyName": "semicolon", "slot": "s" }
+      ]
+    },
+    {
+      "id": "rec-d-dollar",
+      "title": "d$ — удалить до конца строки",
+      "sector": "delete",
+      "descriptions": { "ru": "d + $.", "en": "d + $." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "push" },
+        { "mode": "normal", "keyName": "4", "slot": "s" }
+      ]
+    },
+    {
+      "id": "rec-cc",
+      "title": "cc — сменить строку",
+      "sector": "edit",
+      "descriptions": { "ru": "c дважды.", "en": "c twice." },
+      "steps": [
+        { "mode": "normal", "keyName": "c", "slot": "push" },
+        { "mode": "normal", "keyName": "c", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-gg",
+      "title": "gg — в начало файла",
+      "sector": "motion",
+      "descriptions": { "ru": "Префикс g, затем g.", "en": "g then g." },
+      "steps": [
+        { "mode": "normal", "keyName": "g", "slot": "push" },
+        { "mode": "normal", "keyName": "g", "slot": "push", "layer": "g" }
+      ]
+    },
+    {
+      "id": "rec-star-n",
+      "title": "* n — слово и следующее",
+      "sector": "search",
+      "descriptions": { "ru": "Поиск слова под курсором, затем n.", "en": "Search word then n." },
+      "steps": [
+        { "mode": "normal", "keyName": "8", "slot": "s" },
+        { "mode": "normal", "keyName": "n", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-diw",
+      "title": "diw — удалить слово",
+      "sector": "delete",
+      "descriptions": { "ru": "d + inner + word.", "en": "d + inner + word." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "push" },
+        { "mode": "normal", "keyName": "i", "slot": "push" },
+        { "mode": "normal", "keyName": "w", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-ctrl-d",
+      "title": "Ctrl-D — пол-экрана вниз",
+      "sector": "motion",
+      "descriptions": { "ru": "Прокрутка вниз.", "en": "Half page down." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "c" }
+      ]
+    },
+    {
+      "id": "rec-o-esc",
+      "title": "o Esc — строка ниже",
+      "sector": "edit",
+      "descriptions": { "ru": "Открыть строку и вернуться в Normal.", "en": "Open line then Esc." },
+      "steps": [
+        { "mode": "normal", "keyName": "o", "slot": "push" },
+        { "mode": "insert", "keyName": "escape", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-xp",
+      "title": "xp — поменять символы",
+      "sector": "edit",
+      "descriptions": { "ru": "Удалить символ и вставить после следующего.", "en": "Swap two chars." },
+      "steps": [
+        { "mode": "normal", "keyName": "x", "slot": "push" },
+        { "mode": "normal", "keyName": "p", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-yaw",
+      "title": "yaw — yank слово",
+      "sector": "edit",
+      "descriptions": { "ru": "y + around + word.", "en": "y + around + word." },
+      "steps": [
+        { "mode": "normal", "keyName": "y", "slot": "push" },
+        { "mode": "normal", "keyName": "a", "slot": "push" },
+        { "mode": "normal", "keyName": "w", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-ctrl-w-v",
+      "title": "Ctrl-W v — vsplit",
+      "sector": "windows",
+      "descriptions": { "ru": "Вертикальный split.", "en": "Vertical split." },
+      "steps": [
+        { "mode": "normal", "keyName": "w", "slot": "c" },
+        { "mode": "normal", "keyName": "v", "slot": "push", "layer": "ctrl-w" }
+      ]
+    },
+    {
+      "id": "rec-zt",
+      "title": "zt — строка к верху",
+      "sector": "motion",
+      "descriptions": { "ru": "z затем t.", "en": "z then t." },
+      "steps": [
+        { "mode": "normal", "keyName": "z", "slot": "push" },
+        { "mode": "normal", "keyName": "t", "slot": "push", "layer": "z" }
+      ]
+    },
+    {
+      "id": "rec-G",
+      "title": "G — конец файла",
+      "sector": "motion",
+      "descriptions": { "ru": "Shift+G.", "en": "Shift+G." },
+      "steps": [
+        { "mode": "normal", "keyName": "g", "slot": "s" }
+      ]
+    },
+    {
+      "id": "rec-D",
+      "title": "D — удалить до EOL",
+      "sector": "delete",
+      "descriptions": { "ru": "Shift+D.", "en": "Shift+D." },
+      "steps": [
+        { "mode": "normal", "keyName": "d", "slot": "s" }
+      ]
+    },
+    {
+      "id": "rec-u",
+      "title": "u — undo",
+      "sector": "edit",
+      "descriptions": { "ru": "Отменить.", "en": "Undo." },
+      "steps": [
+        { "mode": "normal", "keyName": "u", "slot": "push" }
+      ]
+    },
+    {
+      "id": "rec-ctrl-r",
+      "title": "Ctrl-R — redo",
+      "sector": "edit",
+      "descriptions": { "ru": "Повторить отменённое.", "en": "Redo." },
+      "steps": [
+        { "mode": "normal", "keyName": "r", "slot": "c" }
+      ]
+    },
+    {
+      "id": "rec-dot",
+      "title": ". — повторить изменение",
+      "sector": "edit",
+      "descriptions": { "ru": "Повторить последнее изменение.", "en": "Repeat last change." },
+      "steps": [
+        { "mode": "normal", "keyName": "period", "slot": "push" }
+      ]
+    }
+  ]
+}

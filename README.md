@@ -1,34 +1,69 @@
-# keybinds map
+# Keybinds Map (browser-first SPA)
 
-![2022-07-15 22_46_06-Редактор комбинаций pycharm](https://user-images.githubusercontent.com/83884504/179300137-c64d232e-2299-4341-9281-ca6717570bf7.png)
+Визуальный редактор keymap для PyCharm и VS Code. Файлы обрабатываются **локально в браузере** — на сервер ничего не отправляется.
 
+## Development (SPA)
 
+```bash
+node scripts/sync-assets.mjs
+node scripts/export-catalog.mjs
+cd web
+npm install
+npm run dev
+```
 
-Сайт предназначен для составления расположений команд приложения на клавиатуре с последующей установкой в выбранную программу. 
-Также можно применять редактор, как способ визуализации существующих штатных комбинаций в выбранной программе.
-Как обычно выглядит настройка keymap
+Откройте http://127.0.0.1:5173 (Node **20+**, см. [`.nvmrc`](.nvmrc))
 
-![image](https://user-images.githubusercontent.com/83884504/178107126-2b3efba1-7838-4998-9c79-ecc5332d4f55.png)
+### Тесты и сборка
 
-Умножаем скриншот еще на 10, и получается огромных размеров список в котором очень просто утонуть, и очень сложно разобраться. 
-Соответственно о какой-либо системности или удобстве или логичности речи не идет. 
+```bash
+cd web
+npm test
+npm run build
+npm run preview
+```
 
-Предполагаемая модель взаимодействия:
-1) Загружаешь свой keymap-файл для программы.
-2) keymap-файл анализируется и команды распределяются по сетке клавиатуры в соответствии со своими назначенными комбинациями.
+Или одной командой подготовки ассетов:
 
-![image](https://user-images.githubusercontent.com/83884504/178106341-3d7b71cf-f338-422d-a358-b421f37097ab.png)
+```bash
+cd web && npm run prepare:assets
+```
 
-3)Перетаскивайте мышкой (drag&drop) команды/значки команд, находящиеся на сетке клавиатуры в удобное/логичное положение.
-![image](https://user-images.githubusercontent.com/83884504/178107186-2d3eb15e-05fe-4f58-b84b-4920b782c5a3.png) Например на эту команду хочу комбинацию (Shift + 4)
+### Каталог команд и иконки
 
-4)После настройки генерируется keymap-файл с нужными/удобными комбинациями.
+После клонирования или изменения [`fixtures/fixture_all.json`](fixtures/fixture_all.json):
 
-5)Чтобы запоминание не было долгим и мучительным, распечатываем keymap и определяем его на видное место рядом с монитором.
+```bash
+node scripts/sync-assets.mjs
+node scripts/export-catalog.mjs
+```
 
-Например
+## Workflow
 
-![image](https://user-images.githubusercontent.com/83884504/178106960-82504b81-afb4-484c-ad4d-002c721423f1.png)
+1. Выберите программу (PyCharm или VS Code)
+2. Загрузите `.xml` (PyCharm) или `.json` (VS Code keybindings)
+3. Перетащите команды по клавиатуре
+4. Скачайте XML или сохраните профиль в IndexedDB (есть автосохранение черновика)
+5. Распечатайте шпаргалку (кнопка «Печать», режим слоёв)
 
+## Deploy
 
-6)profit
+**Production:** https://katafoxi.github.io/keybinds-map/
+
+GitHub Actions ([`.github/workflows/web.yml`](.github/workflows/web.yml)) синхронизирует ассеты, запускает тесты и деплоит `web/dist` на GitHub Pages.
+
+## Новая программа / парсер
+
+Контракт IR и чеклист интеграции: [`docs/PARSER_CONTRACT.md`](docs/PARSER_CONTRACT.md).
+
+## Структура
+
+```
+web/              — client-only SPA (Vite + Svelte + TypeScript)
+docs/             — контракт парсеров (PARSER_CONTRACT.md)
+fixtures/         — каталог программ и команд (источник для export-catalog)
+test-fixtures/    — XML/JSON для vitest
+assets/ui/        — logo, favicon (источник для sync-assets)
+media/            — иконки команд PyCharm (источник для sync-assets)
+scripts/          — export-catalog.mjs, sync-assets.mjs
+```

@@ -1,0 +1,12 @@
+{
+  "name": "keybinds-map",
+  "private": true,
+  "scripts": {
+    "sync-assets": "node scripts/sync-assets.mjs",
+    "export-catalog": "node scripts/export-catalog.mjs",
+    "prepare:assets": "node scripts/sync-assets.mjs && node scripts/export-catalog.mjs",
+    "dev": "npm run dev --prefix web",
+    "build": "npm run prepare:assets && npm run build --prefix web",
+    "test": "npm test --prefix web"
+  }
+}
