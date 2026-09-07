@@ -38,6 +38,46 @@
     acs: 'acs',
   };
 
+  // Explicit reactive deps so slot chrome updates on program/mode change.
+  $: program = $keymap.selectedProgram;
+  $: catalog = $keymap.catalog;
+  $: vimMode = program === 'vim' ? $keymap.vimMode : undefined;
+  $: viewKind = $keymap.vimView?.kind ?? 'idle';
+  $: highlightRoles = $keymap.vimHighlightRoles ?? [];
+
+  $: slotUi = Object.fromEntries(
+    MODIFIER_SLOTS.map((slot) => {
+      const command = bindings[slot];
+      const bounded = isBoundedSlot(catalog, program, backName, slot, vimMode);
+      const locked = Boolean(command && isBindingLocked(program, backName, slot, command));
+      const roles = command?.roles ?? [];
+      const pendingTarget =
+        program === 'vim' &&
+        (viewKind === 'operator' || viewKind === 'textobject') &&
+        Boolean(command) &&
+        highlightRoles.some((role) => roles.includes(role as never));
+      return [
+        slot,
+        {
+          bounded,
+          locked,
+          pendingTarget,
+          droppable: !bounded && !locked,
+          draggable: canDragBinding(catalog, program, backName, slot, command),
+        },
+      ];
+    }),
+  ) as Record<
+    ModifierSlot,
+    {
+      bounded: boolean;
+      locked: boolean;
+      pendingTarget: boolean;
+      droppable: boolean;
+      draggable: boolean;
+    }
+  >;
+
   function handleDrop(event: DragEvent, slot: ModifierSlot) {
     event.preventDefault();
     clearSlotPreview();
@@ -101,58 +141,11 @@
   }
 
   function slotAcceptsDrop(slot: ModifierSlot): boolean {
-    const state = $keymap;
-    return canDropOnSlot(
-      state.catalog,
-      state.selectedProgram,
-      backName,
-      slot,
-      bindings[slot],
-      state.selectedProgram === 'vim' ? state.vimMode : undefined,
-    );
-  }
-
-  function slotClassNames(slot: ModifierSlot): string {
-    const state = $keymap;
-    const classes = [slotClass[slot], 'brdr'];
-    const command = bindings[slot];
-    const bounded = isBoundedSlot(
-      state.catalog,
-      state.selectedProgram,
-      backName,
-      slot,
-      state.selectedProgram === 'vim' ? state.vimMode : undefined,
-    );
-    const locked = command && isBindingLocked(state.selectedProgram, backName, slot, command);
-
-    if (bounded || locked) {
-      classes.push('bounded-slot');
-    } else {
-      classes.push('droppable');
-    }
-
-    if (
-      state.selectedProgram === 'vim' &&
-      (state.vimView.kind === 'operator' || state.vimView.kind === 'textobject') &&
-      command
-    ) {
-      const roles = command.roles ?? [];
-      const highlightRoles = state.vimHighlightRoles ?? [];
-      if (highlightRoles.some((role) => roles.includes(role as never))) {
-        classes.push('vim-pending-target');
-      }
-    }
-    return classes.join(' ');
-  }
-
-  function chipDraggable(slot: ModifierSlot): boolean {
-    const state = $keymap;
-    const command = bindings[slot];
-    return canDragBinding(state.catalog, state.selectedProgram, backName, slot, command);
+    return canDropOnSlot(catalog, program, backName, slot, bindings[slot], vimMode);
   }
 </script>
 
-<div class="char key_{backName}">
+<div class="char key_{backName}" data-program={program} data-vim-mode={vimMode ?? ''}>
   <div class="key brdr">{frontName}</div>
 
   {#each MODIFIER_SLOTS as slot}
@@ -168,8 +161,13 @@
 
   {#each MODIFIER_SLOTS as slot}
     <div
-      class={slotClassNames(slot)}
+      class="{slotClass[slot]} brdr"
+      class:bounded-slot={slotUi[slot].bounded || slotUi[slot].locked}
+      class:droppable={slotUi[slot].droppable}
+      class:vim-pending-target={slotUi[slot].pendingTarget}
       class:layer-hidden={!isModifierSlotVisibleOnScreen(slot, $keymap.modifierVisibility)}
+      data-slot={slot}
+      data-bounded={slotUi[slot].bounded ? '1' : '0'}
       role="button"
       tabindex="0"
       on:dragover={(event) => allowDrop(event, slot)}
@@ -180,7 +178,7 @@
           command={bindings[slot]}
           sourceKey={backName}
           sourceSlot={slot}
-          draggable={chipDraggable(slot)}
+          draggable={slotUi[slot].draggable}
         />
       {/if}
     </div>

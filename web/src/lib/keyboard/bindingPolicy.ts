@@ -62,9 +62,13 @@ export function isBoundedSlot(
   slot: ModifierSlot,
   vimMode?: VimMode,
 ): boolean {
-  // Vim Insert: plain letter keys are typing, not commands.
-  if (programSlug === 'vim' && vimMode === 'insert') {
-    return (slot === 'push' || slot === 's') && isPushShiftBoundedKey(keyName);
+  // Vim: Normal/Visual/Cmdline are command maps — push and Shift are valid.
+  // Only Insert treats letter keys as typing, so push/Shift slots stay closed.
+  if (programSlug === 'vim') {
+    if (vimMode === 'insert') {
+      return (slot === 'push' || slot === 's') && isPushShiftBoundedKey(keyName);
+    }
+    return false;
   }
   if (!isProgramBounded(catalog, programSlug)) {
     return false;

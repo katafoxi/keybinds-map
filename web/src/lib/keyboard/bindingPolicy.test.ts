@@ -83,7 +83,20 @@ describe('bindingPolicy', () => {
     };
     expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push')).toBe(false);
     expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push', 'normal')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 's', 'normal')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 's', 'visual')).toBe(false);
     expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'push', 'insert')).toBe(true);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'h', 's', 'insert')).toBe(true);
     expect(isBoundedSlot(vimCatalog, 'vim', 'h', 'c', 'insert')).toBe(false);
+  });
+
+  it('keeps Vim Normal/Visual unbounded even if catalog marks isBounded', () => {
+    const vimCatalog = {
+      programs: [{ slug: 'vim', title: 'Vim', icon: '', site: '', isBounded: true }],
+      commands: {},
+    };
+    expect(isBoundedSlot(vimCatalog, 'vim', 'g', 's', 'normal')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'g', 'push', 'normal')).toBe(false);
+    expect(isBoundedSlot(vimCatalog, 'vim', 'g', 's', 'insert')).toBe(true);
   });
 });

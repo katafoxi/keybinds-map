@@ -27,7 +27,7 @@
     }
   }}
 >
-  {#each keys as key, index (`${key.backName}:${index}`)}
+  {#each keys as key, index (`${key.backName}:${index}:${$keymap.selectedProgram}:${$keymap.vimMode}`)}
     {#if key.frontName}
       <KeyCell
         backName={key.backName}
