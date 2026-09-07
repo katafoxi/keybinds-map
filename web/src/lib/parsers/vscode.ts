@@ -17,6 +17,45 @@ const VSCODE_MODIFIER_MAP: Record<string, string> = {
   meta: 'alt',
 };
 
+/**
+ * Canonical layout backName → VS Code user-settings key token.
+ * Keys absent here are identical in both notations (letters, digits, f1..f12,
+ * arrows, enter, tab, space, escape, insert, delete, home, end).
+ * Mouse buttons and `None3` have no VS Code counterpart and are not listed.
+ */
+export const LAYOUT_TO_VSCODE_KEY: Record<string, string> = {
+  minus: '-',
+  equals: '=',
+  open_bracket: '[',
+  close_bracket: ']',
+  back_quote: '`',
+  semicolon: ';',
+  apostrophe: "'",
+  comma: ',',
+  period: '.',
+  slash: '/',
+  back_space: 'backspace',
+  'page up': 'pageup',
+  'page down': 'pagedown',
+  'scroll lock': 'scrolllock',
+  pause: 'pausebreak',
+  divide: 'numpad_divide',
+  multiply: 'numpad_multiply',
+  subtract: 'numpad_subtract',
+  add: 'numpad_add',
+};
+
+const VSCODE_KEY_TO_LAYOUT: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(LAYOUT_TO_VSCODE_KEY).map(([layout, vscode]) => [vscode, layout]),
+  ),
+  // Accepted on import only; serialization uses the canonical token above.
+  backquote: 'back_quote',
+  pause: 'pause',
+  scroll_lock: 'scroll lock',
+  numpad_decimal: 'period',
+};
+
 function parseVsCodeKey(key: string): Record<string, string> | null {
   const parts = key.toLowerCase().split('+').map((part) => part.trim()).filter(Boolean);
   if (parts.length === 0) {
@@ -34,7 +73,13 @@ function parseVsCodeKey(key: string): Record<string, string> | null {
 
   const keystroke =
     modifiers.length > 0 ? `${modifiers.join(' ')} ${keyPart}` : keyPart;
-  return modifiersToCode(keystroke);
+  const mapped = modifiersToCode(keystroke);
+  const entry = Object.entries(mapped)[0];
+  if (!entry) {
+    return null;
+  }
+  const [parsedKey, code] = entry;
+  return { [VSCODE_KEY_TO_LAYOUT[parsedKey] ?? parsedKey]: code };
 }
 
 export function parseVsCodeKeymap(json: string): ParseVsCodeResult {

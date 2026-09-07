@@ -79,6 +79,10 @@
       keymap.getState().exportKeymap('keybinds.vim');
       return;
     }
+    if (program === 'vscode') {
+      keymap.getState().exportKeymap('keybindings.json');
+      return;
+    }
     const filename = `${$keymap.metadata.name || 'keymap'}.xml`;
     keymap.getState().exportKeymap(filename);
   }
@@ -126,6 +130,8 @@
             Скачать inputrc
           {:else if $keymap.selectedProgram === 'vim'}
             Скачать vimrc
+          {:else if $keymap.selectedProgram === 'vscode'}
+            Скачать keybindings.json
           {:else}
             Скачать XML
           {/if}

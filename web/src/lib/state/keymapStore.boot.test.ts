@@ -48,15 +48,24 @@ describe('keymapStore standard profile', () => {
     const state = keymapStore.getState();
     expect(state.selectedProgram).toBe('vim');
     expect(state.vimMode).toBe('normal');
+    expect(state.modifierVisibility.push).toBe(true);
+    expect(state.modifierVisibility.s).toBe(true);
     expect(state.bindings['h']?.push?.id).toBe('vim-h');
     expect(state.bindings['h']?.push?.sector).toBe('motion');
+    expect(state.bindings['g']?.s?.id).toBe('vim-G');
     expect(state.bindings['d']?.push?.roles).toContain('operator');
     expect(state.vimLayers.some((layer) => layer.id === 'g')).toBe(true);
     expect(state.vimRecipes.length).toBeGreaterThan(5);
+
+    const { isBoundedSlot } = await import('../keyboard/bindingPolicy');
+    expect(isBoundedSlot(state.catalog, 'vim', 'h', 'push', 'normal')).toBe(false);
+    expect(isBoundedSlot(state.catalog, 'vim', 'h', 's', 'normal')).toBe(false);
 
     keymapStore.getState().setVimMode('insert');
     const insert = keymapStore.getState();
     expect(insert.bindings['h']?.push).toBeUndefined();
     expect(insert.bindings['w']?.c?.id).toBe('vim-ins-ctrl-w');
+    expect(isBoundedSlot(insert.catalog, 'vim', 'h', 'push', 'insert')).toBe(true);
+    expect(isBoundedSlot(insert.catalog, 'vim', 'h', 's', 'insert')).toBe(true);
   });
 });

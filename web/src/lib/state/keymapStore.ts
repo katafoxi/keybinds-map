@@ -42,6 +42,10 @@ import {
 } from '../parsers/vim-serialize';
 import { serializePycharmKeymap, downloadXml } from '../parsers/pycharm-serialize';
 import { serializeBashInputrc, downloadInputrc } from '../parsers/bash-serialize';
+import {
+  downloadVsCodeKeymap,
+  serializeVsCodeKeymap,
+} from '../parsers/vscode-serialize';
 import { reduceVimView, type VimViewTransition } from '../vim/vimView';
 import defaultPycharmXml from '@fixtures/Windows.xml?raw';
 import defaultBashInputrc from '@fixtures/bash-emacs.inputrc?raw';
@@ -49,7 +53,8 @@ import defaultVimJson from '@fixtures/vim-default.json?raw';
 import defaultVimRecipes from '@fixtures/vim-recipes.json?raw';
 import { bundledCatalog } from '../catalog/bundledPrograms';
 import { canMutateBinding } from '../keyboard/bindingPolicy';
-import { get, set as idbSet } from 'idb-keyval';
+// Aliased: the store initializer below shadows a bare `get` with zustand's getter.
+import { get as idbGet, set as idbSet } from 'idb-keyval';
 
 const PROFILES_KEY = 'keybinds-profiles';
 const PROFILE_SLOTS_KEY = 'keybinds-profile-slots';
@@ -105,7 +110,14 @@ export type KeymapState = {
 
 type KeymapStateSnapshot = Pick<
   KeymapState,
-  'bindings' | 'unassigned' | 'metadata' | 'sourceXml' | 'dirty' | 'importWarnings'
+  | 'bindings'
+  | 'unassigned'
+  | 'metadata'
+  | 'sourceXml'
+  | 'dirty'
+  | 'importWarnings'
+  // Source of truth in Vim: `bindings` is only a projection of the active mode/layer.
+  | 'vimBindings'
 >;
 
 type AssignArgs = {
@@ -127,6 +139,7 @@ function snapshotState(state: KeymapState): KeymapStateSnapshot {
     sourceXml: state.sourceXml,
     dirty: state.dirty,
     importWarnings: [...state.importWarnings],
+    vimBindings: structuredClone(state.vimBindings ?? []),
   };
 }
 
@@ -239,8 +252,22 @@ function buildVimDisplayState(
   return { bindings, unassigned };
 }
 
+/**
+ * In Vim `bindings` is only a projection of `vimBindings` onto the visible
+ * mode/layer, so restoring a snapshot has to re-derive it for the current view.
+ */
+function restoreDisplay(
+  state: KeymapState,
+  snapshot: KeymapStateSnapshot,
+): Partial<KeymapState> {
+  if (state.selectedProgram !== 'vim') {
+    return {};
+  }
+  return buildVimDisplayState(state, { vimBindings: snapshot.vimBindings });
+}
+
 async function getProfileSlots(): Promise<ProfileSlotsStore> {
-  return (await get<ProfileSlotsStore>(PROFILE_SLOTS_KEY)) ?? {};
+  return (await idbGet<ProfileSlotsStore>(PROFILE_SLOTS_KEY)) ?? {};
 }
 
 async function setProfileSlots(slots: ProfileSlotsStore): Promise<void> {
@@ -348,6 +375,17 @@ function applySourceToState(
   };
 }
 
+const MODIFIER_VISIBILITY_DEFAULT = {
+  push: true,
+  a: true,
+  c: true,
+  s: true,
+  ac: true,
+  as: true,
+  cs: true,
+  acs: true,
+} as const;
+
 function applyVimToState(state: KeymapState, source: string): Partial<KeymapState> {
   const parsed = parseVimKeymap(source, defaultVimRecipes);
   const catalog = catalogFor(state);
@@ -373,6 +411,12 @@ function applyVimToState(state: KeymapState, source: string): Partial<KeymapStat
     vimHighlightCommandIds: [],
     vimRecipeActiveId: null,
     vimRecipeStepIndex: 0,
+    // Command modes need plain + Shift layers visible.
+    modifierVisibility: {
+      ...MODIFIER_VISIBILITY_DEFAULT,
+      push: true,
+      s: true,
+    },
   };
   return {
     ...next,
@@ -385,24 +429,13 @@ function serializeSource(state: KeymapState): string {
     return serializeBashInputrc(state.bindings);
   }
   if (state.selectedProgram === 'vscode') {
-    return state.sourceXml;
+    return serializeVsCodeKeymap(state.bindings);
   }
   if (state.selectedProgram === 'vim') {
     return state.sourceXml || defaultVimJson;
   }
   return serializePycharmKeymap(state.bindings, state.metadata);
 }
-
-const MODIFIER_VISIBILITY_DEFAULT = {
-  push: true,
-  a: true,
-  c: true,
-  s: true,
-  ac: true,
-  as: true,
-  cs: true,
-  acs: true,
-} as const;
 
 function emptyKeymapState(catalog: ProgramCatalog): KeymapState {
   return {
@@ -553,7 +586,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     await idbSet('keybinds-draft', undefined);
 
     const slots = await getProfileSlots();
-    const savedActive = await get<ProfileSlotId>(ACTIVE_PROFILE_KEY);
+    const savedActive = await idbGet<ProfileSlotId>(ACTIVE_PROFILE_KEY);
     let active: ProfileSlotId = savedActive ?? 'standard';
 
     if (active !== 'standard' && !slots[active]) {
@@ -1020,6 +1053,15 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     if (state.selectedProgram !== 'vim') {
       return;
     }
+    const visibility =
+      mode === 'insert'
+        ? state.modifierVisibility
+        : {
+            ...state.modifierVisibility,
+            // Normal/Visual/Cmdline: plain keys and Shift are first-class commands.
+            push: true,
+            s: true,
+          };
     const overrides = {
       vimMode: mode,
       vimView: { kind: 'idle' } as VimViewState,
@@ -1027,6 +1069,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
       vimHighlightRoles: [],
       vimHighlightCommandIds: [],
       vimRecipeActiveId: null,
+      modifierVisibility: visibility,
     };
     set({
       ...overrides,
@@ -1090,58 +1133,65 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 
   playVimRecipe(recipeId) {
     const state = get();
+    if (state.vimRecipeActiveId === recipeId) {
+      get().clearVimRecipe();
+      return;
+    }
     const recipe = state.vimRecipes.find((item) => item.id === recipeId);
     if (!recipe?.steps.length) {
       return;
     }
     const first = recipe.steps[0];
+    const sequence = recipe.steps
+      .map((step) => {
+        const binding = state.vimBindings.find(
+          (item) =>
+            item.mode === step.mode &&
+            item.keyName === step.keyName &&
+            item.slot === step.slot &&
+            (item.layer ?? null) === (step.layer ?? null),
+        );
+        if (binding) {
+          return resolveCommand(binding.commandId, catalogFor(state), 'vim').shortName;
+        }
+        return step.keyName;
+      })
+      .join(' → ');
+
+    // Highlight keys visible on the recipe's starting mode/layer (static, no timed walk).
+    const focusLayer = first.layer ?? null;
+    const highlightIds: string[] = [];
+    for (const step of recipe.steps) {
+      if (step.mode !== first.mode) {
+        continue;
+      }
+      if ((step.layer ?? null) !== focusLayer) {
+        continue;
+      }
+      const binding = state.vimBindings.find(
+        (item) =>
+          item.mode === step.mode &&
+          item.keyName === step.keyName &&
+          item.slot === step.slot &&
+          (item.layer ?? null) === (step.layer ?? null),
+      );
+      if (binding) {
+        highlightIds.push(binding.commandId);
+      }
+    }
+
     const overrides: Partial<KeymapState> = {
       vimRecipeActiveId: recipeId,
       vimRecipeStepIndex: 0,
       vimMode: first.mode,
-      vimView: first.layer
-        ? { kind: 'prefix', layerId: first.layer }
-        : { kind: 'idle' },
-      vimFlash: recipe.title,
-      vimHighlightCommandIds: [],
+      vimView: focusLayer ? { kind: 'prefix', layerId: focusLayer } : { kind: 'idle' },
+      vimFlash: sequence,
+      vimHighlightCommandIds: highlightIds,
       vimHighlightRoles: [],
     };
     set({
       ...overrides,
       ...buildVimDisplayState(state, overrides),
-    });
-
-    recipe.steps.forEach((step, index) => {
-      window.setTimeout(() => {
-        const current = get();
-        if (current.vimRecipeActiveId !== recipeId) {
-          return;
-        }
-        const stepOverrides: Partial<KeymapState> = {
-          vimRecipeStepIndex: index,
-          vimMode: step.mode,
-          vimView: step.layer
-            ? { kind: 'prefix', layerId: step.layer }
-            : { kind: 'idle' },
-          vimHighlightCommandIds: [],
-        };
-        // Highlight the key by temporarily marking via flash of short name
-        const display = buildVimDisplayState(current, stepOverrides);
-        const chip = display.bindings?.[step.keyName]?.[step.slot];
-        set({
-          ...stepOverrides,
-          ...display,
-          vimFlash: chip?.shortName ?? step.keyName,
-          vimHighlightCommandIds: chip ? [chip.id] : [],
-        });
-        if (index === recipe.steps.length - 1) {
-          window.setTimeout(() => {
-            if (get().vimRecipeActiveId === recipeId) {
-              get().clearVimRecipe();
-            }
-          }, 900);
-        }
-      }, index * 700);
     });
   },
 
@@ -1169,6 +1219,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     const current = snapshotState(state);
     set({
       ...previous,
+      ...restoreDisplay(state, previous),
       historyPast: state.historyPast.slice(0, -1),
       historyFuture: [current, ...state.historyFuture].slice(0, MAX_HISTORY),
       dirty: true,
@@ -1185,6 +1236,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     const current = snapshotState(state);
     set({
       ...next,
+      ...restoreDisplay(state, next),
       historyPast: [...state.historyPast, current].slice(-MAX_HISTORY),
       historyFuture: state.historyFuture.slice(1),
       dirty: true,
@@ -1207,6 +1259,8 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
     const source = serializeSource(state);
     if (state.selectedProgram === 'bash') {
       downloadInputrc(filename ?? 'inputrc', source);
+    } else if (state.selectedProgram === 'vscode') {
+      downloadVsCodeKeymap(filename ?? 'keybindings.json', source);
     } else {
       downloadXml(filename ?? 'keymap.xml', source);
     }
@@ -1246,7 +1300,7 @@ export const keymapStore = createStore<KeymapState & KeymapActions>((set, get) =
 });
 
 export async function getSavedProfiles(): Promise<SavedProfile[]> {
-  return (await get<SavedProfile[]>(PROFILES_KEY)) ?? [];
+  return (await idbGet<SavedProfile[]>(PROFILES_KEY)) ?? [];
 }
 
 export function bindKeymapStore() {
